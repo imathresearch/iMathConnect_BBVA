@@ -65,7 +65,7 @@ public class UserConnectController extends AbstractController{
     }
     
     @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
-    public UserConnect getPeer(String UUID) throws EntityNotFoundException {
+    public UserConnect getUserConnect(String UUID) throws EntityNotFoundException {
         UserConnect peer = this.db.getUserConnectDB().findById(UUID);
         if (peer == null) {
             throw new EntityNotFoundException();  
