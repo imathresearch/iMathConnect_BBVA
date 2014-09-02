@@ -7,10 +7,12 @@ import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Join;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
 import com.imath.connect.model.Project;
+import com.imath.connect.model.UserConnect;
 
 @RequestScoped
 public class ProjectDB {
@@ -60,7 +62,8 @@ public class ProjectDB {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Project> criteria = cb.createQuery(Project.class);
         Root<Project> project = criteria.from(Project.class);
-        Predicate p1 = cb.equal(project.get("owner").get("UUID"), UUID);      
+        Join<Project,UserConnect> projectJoin = project.join("collaborators");
+        Predicate p1 = cb.equal(projectJoin.get("UUID"), UUID);      
         criteria.select(project).where(p1);
         List<Project> out = em.createQuery(criteria).getResultList();
         return out;

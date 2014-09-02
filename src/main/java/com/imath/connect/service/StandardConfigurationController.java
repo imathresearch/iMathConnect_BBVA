@@ -7,7 +7,6 @@ import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
 import javax.persistence.EntityNotFoundException;
 
-import com.imath.connect.model.Instance;
 import com.imath.connect.model.StandardConfiguration;
 
 
