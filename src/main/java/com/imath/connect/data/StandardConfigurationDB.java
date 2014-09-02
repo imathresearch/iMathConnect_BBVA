@@ -39,7 +39,7 @@ public class StandardConfigurationDB {
      * Return the list of {@link StandardConfiguration} 
      */
     
-    public List<StandardConfiguration> findByOwner(String UUID) {
+    public List<StandardConfiguration> findAll() {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<StandardConfiguration> criteria = cb.createQuery(StandardConfiguration.class);
         Root<StandardConfiguration> standardConfiguration = criteria.from(StandardConfiguration.class);

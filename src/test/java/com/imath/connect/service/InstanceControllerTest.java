@@ -14,9 +14,6 @@ import java.util.List;
 import java.util.logging.Logger;
 
 import javax.persistence.EntityManager;
-import javax.persistence.EntityNotFoundException;
-import javax.persistence.PersistenceException;
-import javax.persistence.TransactionRequiredException;
 
 import org.junit.Before;
 import org.junit.Test;
