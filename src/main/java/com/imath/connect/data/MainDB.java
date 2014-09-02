@@ -42,4 +42,20 @@ public class MainDB {
 	public void setEntityManager(EntityManager em) {
 	    this.em = em;
 	}
+	
+	public void setUserConnectDB(UserConnectDB userConnectDB) {
+	    this.userConnectDB = userConnectDB;
+	}
+	
+	public void setProjectDB(ProjectDB projectDB) {
+	    this.projectDB = projectDB;
+	}
+	
+	public void setStandardConfigurationDB(StandardConfigurationDB standardConfigurationDB) {
+	    this.standardConfiguration = standardConfigurationDB;
+	}
+	
+	public void setInstanceDB(InstanceDB instanceDB) {
+	    this.instanceDB = instanceDB;
+	}
 }
