@@ -8,6 +8,10 @@ import javax.persistence.EntityManager;
 public class MainDB {
 
 	@Inject private EntityManager em;
+	@Inject private UserConnectDB userConnectDB;
+	@Inject private ProjectDB projectDB;
+	@Inject private StandardConfigurationDB standardConfiguration;
+	@Inject private InstanceDB instanceDB;
 	
 	public void makePersistent(Object obj) throws Exception {
 	    em.persist(obj);
@@ -19,7 +23,21 @@ public class MainDB {
 	    em.flush();
 	}
 
+	public UserConnectDB getUserConnectDB() {
+	    return this.userConnectDB;
+	}
 	
+	public ProjectDB getProjectDB() {
+	    return this.projectDB;
+	}
+	
+	public StandardConfigurationDB getStandardConfigurationDB() {
+	    return this.standardConfiguration;
+	}
+	
+	public InstanceDB getInstanceDB() {
+	    return this.instanceDB;
+	}
 	// For testing purposes only
 	public void setEntityManager(EntityManager em) {
 	    this.em = em;
