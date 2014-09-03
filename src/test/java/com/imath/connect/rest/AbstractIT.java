@@ -41,10 +41,11 @@ public abstract class AbstractIT {
                .addAsLibraries(resolver.artifact("org.jasypt:jasypt-hibernate4:1.9.0").resolveAsFiles())
                .addClasses(EncryptedStringType.class, MainDB.class, UserConnect.class , Project.class, StandardConfiguration.class, Instance.class,
                        InstanceDB.class, ProjectDB.class, StandardConfigurationDB.class, UserConnectDB.class,
-                       JaxRsActivator.class, ProjectRest.class, InstanceRest.class, com.imath.connect.security.SecurityManager.class, StandardConfigurationRest.class,
+                       JaxRsActivator.class, ProjectRest.class, InstanceRest.class, com.imath.connect.security.SecurityManager.class, 
+                       StandardConfigurationRest.class, UserConnectRest.class,
                        AbstractController.class, InstanceController.class, ProjectController.class, StandardConfigurationController.class, UserConnectController.class,
                        Constants.class, Resources.class, Util.class, Encryptor.class, AbstractIT.class, ProjectRestIT.class, InstanceRestIT.class, 
-                       StandardConfigurationRestIT.class)
+                       StandardConfigurationRestIT.class, UserConnectRestIT.class)
                .addAsResource("META-INF/persistence.xml", "META-INF/persistence.xml")
                .addAsWebInfResource("arquillian-ds.xml")
                .addAsWebInfResource(EmptyAsset.INSTANCE, "beans.xml");

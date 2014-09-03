@@ -72,4 +72,13 @@ public class UserConnectController extends AbstractController{
         }
         return peer;
     }
+    
+    @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
+    public UserConnect getUserConnectByUserName(String userName) throws EntityNotFoundException {
+        UserConnect peer = this.db.getUserConnectDB().findByUserName(userName);
+        if (peer == null) {
+            throw new EntityNotFoundException();  
+        }
+        return peer;
+    }
 }

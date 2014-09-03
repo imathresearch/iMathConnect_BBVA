@@ -10,5 +10,7 @@ public class Constants {
     static public final String newProject = "/newProject";
     static public final String instances = "/instances";
     static public final String configurations = "/configurations";
+    static public final String getUserByUserName = "/getUserByUserName";
+    static public final String getUser = "/getUser";
     
 }
