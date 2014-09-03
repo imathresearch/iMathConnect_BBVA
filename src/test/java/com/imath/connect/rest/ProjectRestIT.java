@@ -2,6 +2,7 @@ package com.imath.connect.rest;
 
 import static org.junit.Assert.assertEquals;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -132,4 +133,56 @@ public class ProjectRestIT extends AbstractIT{
         }
     }
     
+    @Test
+    public void getColProjectsIT() throws Exception {
+        // 1.- Base case: User does not exists
+        Response rest = prEndPoint.getColProjects("no user", null);
+        assertEquals(Response.Status.BAD_REQUEST.getStatusCode(), rest.getStatus());
+        
+        // 2.- Base case: User exists and has private projects but does not collaborate in any
+        UserConnect owner = ucc.newUserConnect("ipinyolll", "hola@ppeppp.com", "iath", "953333402", "933383402");
+        Instance instance1 = ic.newInstance(0, 0, 0, "123.333.44.55", owner);
+        Project project = pc.newProject("myprojectone", "mydesc", owner, instance1);
+        rest = prEndPoint.getColProjects(owner.getUUID(), null);
+        assertEquals(Response.Status.OK.getStatusCode(), rest.getStatus());
+        @SuppressWarnings("unchecked")
+        List<ProjectDTO> projectsDTO = (List<ProjectDTO>) rest.getEntity();
+        assertEquals(0,projectsDTO.size());
+        
+        // 3.- We add more projects and the user owner collaborates in it
+        UserConnect other = ucc.newUserConnect("ipinyolllother", "hhhb@ppeppp.com", "iath", "953333402", "933383402");
+        Instance instance2 = ic.newInstance(0, 0, 0, "133.366.44.55", other);
+        String name1="myprojjj";
+        String desc1="mydesccc";
+        String name2="gyprojjjfff";
+        String desc2="gydescccfff";
+        String name3="dddgyprojjjfff";
+        String desc3="dddgydescccfff";
+        
+        Project project1 = pc.newProject(name1, desc1, other, instance2);
+        Project project2 = pc.newProject(name2, desc2, other, instance2);
+        Project project3 = pc.newProject(name3, desc3, other, instance2);
+        
+        List<String> usersIds = new ArrayList<String>();
+        usersIds.add(owner.getUUID());
+        pc.addCollaborators(project1.getUUID(), usersIds);
+        pc.addCollaborators(project3.getUUID(), usersIds);
+        
+        rest = prEndPoint.getColProjects(owner.getUUID(), null);
+        assertEquals(Response.Status.OK.getStatusCode(), rest.getStatus());
+        @SuppressWarnings("unchecked")
+        List<ProjectDTO> projectsDTO2 = (List<ProjectDTO>) rest.getEntity();
+        assertEquals(2,projectsDTO2.size());
+        for(ProjectDTO pDTO: projectsDTO2) {
+            Project p = null;
+            if (pDTO.UUID.equals(project1.getUUID())) {
+                p = project1;
+            } else if (pDTO.UUID.equals(project3.getUUID())) {
+                p = project3;
+            }
+            assertEquals(p.getDescription(), pDTO.desc);
+            assertEquals(p.getName(), pDTO.name);
+            assertEquals(p.getCreationDate().getTime(), pDTO.creationDate.getTime());
+        }
+    }
 }

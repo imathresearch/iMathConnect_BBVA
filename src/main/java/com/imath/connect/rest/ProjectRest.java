@@ -71,7 +71,23 @@ public class ProjectRest {
             return Response.status(Response.Status.BAD_REQUEST).build();
         }
     }
-        
+
+    @GET
+    @Path(Constants.colProjects)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getColProjects(String uuid_user, @Context SecurityContext sc) {
+        try {
+            UserConnect owner = ucc.getUserConnect(uuid_user);
+            SecurityManager.secureBasic(owner.getUserName(), sc);
+            List<Project> myProjects = pc.getCollaborationProjects(uuid_user);
+            List<ProjectDTO> retDTO = convertList(myProjects);
+            return Response.status(Response.Status.OK).entity(retDTO).build();
+        } catch (Exception e) {
+            LOG.severe(e.getMessage());
+            return Response.status(Response.Status.BAD_REQUEST).build();
+        }
+    }
+    
     private List<ProjectDTO> convertList(List<Project> projects) {
         List<ProjectDTO> retDTO = new ArrayList<ProjectDTO>();
         if (projects != null) { 
