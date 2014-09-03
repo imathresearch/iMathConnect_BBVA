@@ -80,5 +80,15 @@ public class UserConnectRestIT extends AbstractIT {
         assertEquals(user2.getPhone1(), userDTO.phone1);
         assertEquals(user2.getPhone2(), userDTO.phone2);
     }
+    
+    @Test
+    public void getCollaboratorsByProjectIT() throws Exception {
+        //1.- Case Base Exception: DB completely empty
+        Response rest = ucrEndPoint.getColUsersByProject("no project", null);
+        assertEquals(Response.Status.BAD_REQUEST.getStatusCode(), rest.getStatus());
+        
+        //2.- Case base: we add a project but does not have collaborators
+        
+    }
 
 }

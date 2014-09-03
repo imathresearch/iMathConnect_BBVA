@@ -14,5 +14,6 @@ public class Constants {
     static public final String configurations = "/configurations";
     static public final String getUserByUserName = "/getUserByUserName";
     static public final String getUser = "/getUser";
+    static public final String getColUsersByProjectUser = "/getColUsersByProject";
     
 }

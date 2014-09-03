@@ -7,10 +7,12 @@ import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Join;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
 import com.imath.connect.model.Instance;
+import com.imath.connect.model.Project;
 import com.imath.connect.model.UserConnect;
 
 @RequestScoped
@@ -37,6 +39,12 @@ public class UserConnectDB {
         }
     }
     
+    /**
+     * Returns a {@link UserConnect} from the given userName
+     * @param userName
+     * @return
+     * @author imath
+     */
     public UserConnect findByUserName(String userName) {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<UserConnect> criteria = cb.createQuery(UserConnect.class);
@@ -47,6 +55,17 @@ public class UserConnectDB {
         if (out == null) return null;
         if (out.size()==0) return null;
         return out.get(0);
+    }
+    
+    public List<UserConnect> findByProject(String UUID_project) {
+        CriteriaBuilder cb = em.getCriteriaBuilder();
+        CriteriaQuery<UserConnect> criteria = cb.createQuery(UserConnect.class);
+        Root<UserConnect> userConnect = criteria.from(UserConnect.class);
+        Join<UserConnect, Project> userJoin = userConnect.join("projects");
+        Predicate p1 = cb.equal(userJoin.get("UUID"), UUID_project);      
+        criteria.select(userConnect).where(p1);
+        List<UserConnect> out = em.createQuery(criteria).getResultList();
+        return out;
     }
     
 }

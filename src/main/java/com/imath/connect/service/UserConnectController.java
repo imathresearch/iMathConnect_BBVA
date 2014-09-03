@@ -1,6 +1,7 @@
 package com.imath.connect.service;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
@@ -80,5 +81,10 @@ public class UserConnectController extends AbstractController{
             throw new EntityNotFoundException();  
         }
         return peer;
+    }
+    
+    @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
+    public List<UserConnect> getCollaborationUsersByProject(String UUID_project) {
+        return db.getUserConnectDB().findByProject(UUID_project);
     }
 }

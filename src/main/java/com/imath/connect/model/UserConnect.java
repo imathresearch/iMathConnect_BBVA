@@ -2,11 +2,13 @@ package com.imath.connect.model;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.Digits;
@@ -60,6 +62,17 @@ public class UserConnect implements Serializable {
     @NotNull
     private String organization;
     
+    @ManyToMany(mappedBy="collaborators")
+    private Set<Project> projects;
+    
+    public Set<Project> getProjects() {
+        return projects;
+    }
+
+    public void setProjects(Set<Project> projects) {
+        this.projects = projects;
+    }
+
     public String getOrganization() {
         return organization;
     }

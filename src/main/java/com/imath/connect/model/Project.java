@@ -68,8 +68,8 @@ public class Project implements Serializable{
     @JoinColumn(name="owner", nullable=false, updatable=true)
     private UserConnect owner;
     
-    @JoinTable(name="collaborators")
     @ManyToMany   
+    @JoinTable(name="collaborators")
     private Set<UserConnect> collaborators;
     
     @ManyToOne(optional=false) 
