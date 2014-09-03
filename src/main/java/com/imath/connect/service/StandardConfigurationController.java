@@ -27,6 +27,16 @@ public class StandardConfigurationController extends AbstractController {
     public List<StandardConfiguration> getConfigurations() {
         return db.getStandardConfigurationDB().findAll();
     }
+
+    @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
+    public StandardConfiguration newConfiguration(long cpu, double ram, double stg) {
+        StandardConfiguration sc = new StandardConfiguration();
+        sc.setCpu(cpu);
+        sc.setRam(ram);
+        sc.setStg(stg);
+        em.persist(sc);
+        return sc;
+    }
     
     @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
     public StandardConfiguration getConfiguration(String UUID) throws EntityNotFoundException {

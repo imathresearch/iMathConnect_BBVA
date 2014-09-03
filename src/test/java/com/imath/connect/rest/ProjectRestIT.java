@@ -4,8 +4,6 @@ import static org.junit.Assert.assertEquals;
 
 import java.util.Date;
 
-import javassist.bytecode.LineNumberAttribute.Pc;
-
 import javax.inject.Inject;
 import javax.ws.rs.core.Response;
 
