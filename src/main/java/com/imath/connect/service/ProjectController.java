@@ -15,6 +15,7 @@ import javax.persistence.EntityNotFoundException;
 import com.imath.connect.model.Instance;
 import com.imath.connect.model.Project;
 import com.imath.connect.model.UserConnect;
+import com.imath.connect.util.Encryptor;
 import com.imath.connect.util.Util;
 
 /**
@@ -40,6 +41,7 @@ public class ProjectController extends AbstractController {
      */
     @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
     public Project newProject(String name, String desc, UserConnect owner, Instance instance) throws Exception {
+        Encryptor.init();
         Project project = new Project();
         project.setName(name);
         project.setDescription(desc);

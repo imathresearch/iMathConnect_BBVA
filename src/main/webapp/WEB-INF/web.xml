@@ -4,19 +4,7 @@
     <javaee:web-resource-collection>
       <javaee:web-resource-name>All resources</javaee:web-resource-name>
       <javaee:description>Protects all resources</javaee:description>
-      <javaee:url-pattern>/indexNew.jsp</javaee:url-pattern>
-      <javaee:url-pattern>/bigcloud.jsp</javaee:url-pattern>
-      <javaee:url-pattern>/rest/file_service/*</javaee:url-pattern>
-      <javaee:url-pattern>/rest/jobpython_service/*</javaee:url-pattern>
-      <javaee:url-pattern>/rest/job_service/*</javaee:url-pattern>
-      <javaee:url-pattern>/rest/plugin_service/*</javaee:url-pattern>
-      <javaee:url-pattern>/rest/public/job_service/*</javaee:url-pattern>
-      <javaee:url-pattern>/rest/session_service/*</javaee:url-pattern>
-      <javaee:url-pattern>/rest/user_service/*</javaee:url-pattern>
-      <javaee:url-pattern>/rest/beta/api/data/*</javaee:url-pattern>
-      <javaee:url-pattern>/rest/beta/api/exec/*</javaee:url-pattern>
-      <javaee:url-pattern>/changePassword</javaee:url-pattern>
-      <javaee:url-pattern>/logout</javaee:url-pattern>
+      <javaee:url-pattern>/rest/*</javaee:url-pattern>
     </javaee:web-resource-collection>
     <javaee:auth-constraint>
       <javaee:role-name>WebAppUser</javaee:role-name>
@@ -30,44 +18,5 @@
 		<javaee:form-error-page>/loginerror.html</javaee:form-error-page>
 	</javaee:form-login-config>
   </javaee:login-config-->
-  <javaee:login-config>
-    <javaee:auth-method>BASIC</javaee:auth-method>
-    <javaee:realm-name>ApplicationRealm</javaee:realm-name>
-  </javaee:login-config>
-  <javaee:security-role>
-    <javaee:role-name>WebAppUser</javaee:role-name>
-  </javaee:security-role>
-  <javaee:servlet>
-    <javaee:servlet-name>register</javaee:servlet-name>
-    <javaee:servlet-class>com.imath.web.servlet.Register</javaee:servlet-class>
-  </javaee:servlet>
-  <javaee:servlet>
-    <javaee:servlet-name>changepassword</javaee:servlet-name>
-    <javaee:servlet-class>com.imath.web.servlet.ChangePassword</javaee:servlet-class>
-  </javaee:servlet>
-  <javaee:servlet>
-    <javaee:servlet-name>logout</javaee:servlet-name>
-    <javaee:servlet-class>com.imath.web.servlet.Logout</javaee:servlet-class>
-  </javaee:servlet>
-  <javaee:servlet>
-    <javaee:servlet-name>recoverpassword</javaee:servlet-name>
-    <javaee:servlet-class>com.imath.web.servlet.RecoverPassword</javaee:servlet-class>
-  </javaee:servlet>
-  <javaee:servlet-mapping>
-    <javaee:servlet-name>recoverpassword</javaee:servlet-name>
-    <javaee:url-pattern>/recoverpassword</javaee:url-pattern>
-  </javaee:servlet-mapping>
-  <javaee:servlet-mapping>
-    <javaee:servlet-name>register</javaee:servlet-name>
-    <javaee:url-pattern>/register</javaee:url-pattern>
-  </javaee:servlet-mapping>
-  <javaee:servlet-mapping>
-    <javaee:servlet-name>changepassword</javaee:servlet-name>
-    <javaee:url-pattern>/changePassword</javaee:url-pattern>
-  </javaee:servlet-mapping>
-  <javaee:servlet-mapping>
-    <javaee:servlet-name>logout</javaee:servlet-name>
-    <javaee:url-pattern>/logout</javaee:url-pattern>
-  </javaee:servlet-mapping>
   
 </web-app>
