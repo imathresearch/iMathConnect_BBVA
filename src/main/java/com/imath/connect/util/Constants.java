@@ -9,6 +9,8 @@ public class Constants {
     // The EndPonts URLS of the API
     static public final String newProject = "/newProject";
     static public final String instances = "/instances";
+    static public final String ownProjects = "/ownProjects";
+    static public final String colProjects = "/colProjects";
     static public final String configurations = "/configurations";
     static public final String getUserByUserName = "/getUserByUserName";
     static public final String getUser = "/getUser";

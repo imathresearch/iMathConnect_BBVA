@@ -1,6 +1,8 @@
 package com.imath.connect.rest;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.logging.Logger;
 
 import javax.ejb.Stateful;
@@ -52,6 +54,34 @@ public class ProjectRest {
             LOG.severe(e.getMessage());
             return Response.status(Response.Status.BAD_REQUEST).build();
         }
+    }
+    
+    @GET
+    @Path(Constants.ownProjects)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getOwnProjects(String uuid_user, @Context SecurityContext sc) {
+        try {
+            UserConnect owner = ucc.getUserConnect(uuid_user);
+            SecurityManager.secureBasic(owner.getUserName(), sc);
+            List<Project> myProjects = pc.getOwnProjects(uuid_user);
+            List<ProjectDTO> retDTO = convertList(myProjects);
+            return Response.status(Response.Status.OK).entity(retDTO).build();
+        } catch (Exception e) {
+            LOG.severe(e.getMessage());
+            return Response.status(Response.Status.BAD_REQUEST).build();
+        }
+    }
+        
+    private List<ProjectDTO> convertList(List<Project> projects) {
+        List<ProjectDTO> retDTO = new ArrayList<ProjectDTO>();
+        if (projects != null) { 
+            for(Project p: projects) {
+                ProjectDTO elemDTO = new ProjectDTO();
+                elemDTO.convert(p);
+                retDTO.add(elemDTO);
+            }
+        }
+        return retDTO;
     }
     
     static public class ProjectDTO {

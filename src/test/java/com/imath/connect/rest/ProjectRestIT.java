@@ -3,6 +3,7 @@ package com.imath.connect.rest;
 import static org.junit.Assert.assertEquals;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.inject.Inject;
 import javax.ws.rs.core.Response;
@@ -68,6 +69,67 @@ public class ProjectRestIT extends AbstractIT{
         Date projDate = project.getCreationDate();
         Date recDate = projectDTO.creationDate;
         assertEquals(projDate.getTime(), recDate.getTime());
-        
     }
+    
+    @Test
+    public void getOwnProjectsIT() throws Exception {
+        // 1.- Base case: User does not exists
+        Response rest = prEndPoint.getOwnProjects("no user", null);
+        assertEquals(Response.Status.BAD_REQUEST.getStatusCode(), rest.getStatus());
+        
+        // 2.- Base case: User exists but no projects yet
+        UserConnect owner = ucc.newUserConnect("ipinyol", "hola@ppe.com", "iath", "953333402", "933383402");
+        rest = prEndPoint.getOwnProjects(owner.getUUID(), null);
+        assertEquals(Response.Status.OK.getStatusCode(), rest.getStatus());
+        @SuppressWarnings("unchecked")
+        List<ProjectDTO> projectsDTO = (List<ProjectDTO>) rest.getEntity();
+        assertEquals(0,projectsDTO.size());
+        
+        // 3.- Normal case: We add an instance and two projects for the user and another project for another user
+        String name1="myproj";
+        String desc1="mydesc";
+        String name2="gyprojjj";
+        String desc2="gydesccc";
+        String name3="otherproj";
+        String desc3="descotherproj";
+        UserConnect other = ucc.newUserConnect("ramones", "ho@ppe.com", "rriath", "933333402", "944383402");
+        
+        Instance instance1 = ic.newInstance(0, 0, 0, "123.333.44.55", owner);
+        Instance instance2 = ic.newInstance(0, 0, 0, "123.333.44.55", other);
+        
+        Project project1 = pc.newProject(name1, desc1, owner, instance1);
+        Project project2 = pc.newProject(name2, desc2, owner, instance1);
+        Project project3 = pc.newProject(name3, desc3, other, instance2);
+        
+        rest = prEndPoint.getOwnProjects(owner.getUUID(), null);
+        assertEquals(Response.Status.OK.getStatusCode(), rest.getStatus());
+        @SuppressWarnings("unchecked")
+        List<ProjectDTO> projectsDTO2 = (List<ProjectDTO>) rest.getEntity();
+        assertEquals(2, projectsDTO2.size());
+        for(ProjectDTO pDTO: projectsDTO2) {
+            Project p = null;
+            if (pDTO.UUID.equals(project1.getUUID())) {
+                p = project1;
+            } else if (pDTO.UUID.equals(project2.getUUID())) {
+                p = project2;
+            }
+            assertEquals(p.getDescription(), pDTO.desc);
+            assertEquals(p.getName(), pDTO.name);
+            assertEquals(p.getCreationDate().getTime(), pDTO.creationDate.getTime());
+        }
+        
+        // 3.1- We retrieve the other project to make sure everything works
+        rest = prEndPoint.getOwnProjects(other.getUUID(), null);
+        assertEquals(Response.Status.OK.getStatusCode(), rest.getStatus());
+        @SuppressWarnings("unchecked")
+        List<ProjectDTO> projectsDTO3 = (List<ProjectDTO>) rest.getEntity();
+        assertEquals(1, projectsDTO3.size());
+        for(ProjectDTO pDTO: projectsDTO3) {
+            Project p = project3;
+            assertEquals(p.getDescription(), pDTO.desc);
+            assertEquals(p.getName(), pDTO.name);
+            assertEquals(p.getCreationDate().getTime(), pDTO.creationDate.getTime());
+        }
+    }
+    
 }
