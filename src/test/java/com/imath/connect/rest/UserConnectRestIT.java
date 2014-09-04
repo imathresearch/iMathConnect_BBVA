@@ -2,7 +2,9 @@ package com.imath.connect.rest;
 
 import static org.junit.Assert.assertEquals;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import javax.inject.Inject;
 import javax.ws.rs.core.Response;
@@ -13,13 +15,19 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import com.imath.connect.model.Instance;
+import com.imath.connect.model.Project;
 import com.imath.connect.model.UserConnect;
 import com.imath.connect.rest.UserConnectRest.UserConnectDTO;
+import com.imath.connect.service.InstanceController;
+import com.imath.connect.service.ProjectController;
 import com.imath.connect.service.UserConnectController;
 
 @RunWith(Arquillian.class)
 public class UserConnectRestIT extends AbstractIT {
     @Inject UserConnectController ucc;
+    @Inject InstanceController ic;
+    @Inject ProjectController pc;
     @Inject UserConnectRest ucrEndPoint;
     
     @Before
@@ -87,7 +95,53 @@ public class UserConnectRestIT extends AbstractIT {
         Response rest = ucrEndPoint.getColUsersByProject("no project", null);
         assertEquals(Response.Status.BAD_REQUEST.getStatusCode(), rest.getStatus());
         
-        //2.- Case base: we add a project but does not have collaborators
+        //2.- Normal case: we add a project but does not have collaborators
+        String userName1 = "theOnee";
+        String email1 = "hola@pepe.com";
+        String org1 = "org";
+        String phone11 = "988888888";
+        String phone12 = "999999999";
+        
+        UserConnect theOne1 = ucc.newUserConnect(userName1, email1, org1, phone11, phone12);
+        UserConnect owner = ucc.newUserConnect("owner", "hla@ppe.com", "iath", "953333402", "933383402");
+        Instance instance = ic.newInstance(0, 0, 0, "hola", owner);
+        Project project = pc.newProject("myProject", "myProject", owner, instance);
+        rest = ucrEndPoint.getColUsersByProject(project.getUUID(), null);
+        assertEquals(Response.Status.OK.getStatusCode(), rest.getStatus());
+        @SuppressWarnings("unchecked")
+		List<UserConnectDTO> users = (List<UserConnectDTO>) rest.getEntity();
+        assertEquals(0, users.size());
+        
+        //3.- Normal case: Now we add some collaborators
+        String userName2 = "theOneee";
+        String email2 = "holass@pepe.com";
+        String org2 = "org";
+        String phone21 = "988888888";
+        String phone22 = "999999999";
+        UserConnect theOne2 = ucc.newUserConnect(userName2, email2, org2, phone21, phone22);
+        List<String> users_uuid = new ArrayList<String>();
+        users_uuid.add(theOne1.getUUID());
+        users_uuid.add(theOne2.getUUID());
+        pc.addCollaborators(project.getUUID(), users_uuid);
+        rest = ucrEndPoint.getColUsersByProject(project.getUUID(), null);
+        assertEquals(Response.Status.OK.getStatusCode(), rest.getStatus());
+        @SuppressWarnings("unchecked")
+		List<UserConnectDTO> users2 = (List<UserConnectDTO>) rest.getEntity();
+        assertEquals(2, users2.size());
+        for(UserConnectDTO uDTO: users2) {
+        	UserConnect u = null;
+        	if (uDTO.UUID.equals(theOne1.getUUID())) {
+        		u = theOne1;
+        	} else if (uDTO.UUID.equals(theOne2.getUUID())) {
+        		u = theOne2;
+        	}
+        	assertEquals(u.getUserName(), uDTO.userName);
+        	assertEquals(u.getOrganization(), uDTO.organization);
+        	assertEquals(u.getPhone1(), uDTO.phone1);
+        	assertEquals(u.getPhone2(), uDTO.phone2);
+        	assertEquals(u.getLastConnection().getTime(), uDTO.lastConnection.getTime());
+        	assertEquals(u.getCreationDate().getTime(), uDTO.creationDate.getTime());
+        }
         
     }
 
