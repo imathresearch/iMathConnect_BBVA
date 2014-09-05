@@ -3,8 +3,11 @@
   <javaee:security-constraint>
     <javaee:web-resource-collection>
       <javaee:web-resource-name>All resources</javaee:web-resource-name>
-      <javaee:description>Protects all resources</javaee:description>
+      <javaee:description>Protects all rest methods and some html resources</javaee:description>
+      <javaee:url-pattern>/indexNew.jsp</javaee:url-pattern>
       <javaee:url-pattern>/rest/*</javaee:url-pattern>
+      <javaee:url-pattern>/changePassword</javaee:url-pattern>
+      <javaee:url-pattern>/logout</javaee:url-pattern>
     </javaee:web-resource-collection>
     <javaee:auth-constraint>
       <javaee:role-name>WebAppUser</javaee:role-name>
