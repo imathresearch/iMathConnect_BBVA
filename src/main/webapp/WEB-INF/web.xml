@@ -10,6 +10,13 @@
       <javaee:role-name>WebAppUser</javaee:role-name>
     </javaee:auth-constraint>
   </javaee:security-constraint>
+  <javaee:login-config>
+    <javaee:auth-method>BASIC</javaee:auth-method>
+    <javaee:realm-name>ApplicationRealm</javaee:realm-name>
+  </javaee:login-config>
+  <javaee:security-role>
+    <javaee:role-name>WebAppUser</javaee:role-name>
+  </javaee:security-role>
   <!-- javaee:login-config>
     <javaee:auth-method>BASIC</javaee:auth-method>
     <javaee:realm-name>ApplicationRealm</javaee:realm-name>
@@ -18,5 +25,36 @@
 		<javaee:form-error-page>/loginerror.html</javaee:form-error-page>
 	</javaee:form-login-config>
   </javaee:login-config-->
-  
+    <javaee:servlet>
+    <javaee:servlet-name>register</javaee:servlet-name>
+    <javaee:servlet-class>com.imath.connect.servlet.Register</javaee:servlet-class>
+  </javaee:servlet>
+  <javaee:servlet>
+    <javaee:servlet-name>changepassword</javaee:servlet-name>
+    <javaee:servlet-class>com.imath.connect.servlet.ChangePassword</javaee:servlet-class>
+  </javaee:servlet>
+  <javaee:servlet>
+    <javaee:servlet-name>logout</javaee:servlet-name>
+    <javaee:servlet-class>com.imath.connect.servlet.Logout</javaee:servlet-class>
+  </javaee:servlet>
+  <javaee:servlet>
+    <javaee:servlet-name>recoverpassword</javaee:servlet-name>
+    <javaee:servlet-class>com.imath.connect.servlet.RecoverPassword</javaee:servlet-class>
+  </javaee:servlet>
+  <javaee:servlet-mapping>
+    <javaee:servlet-name>recoverpassword</javaee:servlet-name>
+    <javaee:url-pattern>/recoverpassword</javaee:url-pattern>
+  </javaee:servlet-mapping>
+  <javaee:servlet-mapping>
+    <javaee:servlet-name>register</javaee:servlet-name>
+    <javaee:url-pattern>/register</javaee:url-pattern>
+  </javaee:servlet-mapping>
+  <javaee:servlet-mapping>
+    <javaee:servlet-name>changepassword</javaee:servlet-name>
+    <javaee:url-pattern>/changePassword</javaee:url-pattern>
+  </javaee:servlet-mapping>
+  <javaee:servlet-mapping>
+    <javaee:servlet-name>logout</javaee:servlet-name>
+    <javaee:url-pattern>/logout</javaee:url-pattern>
+  </javaee:servlet-mapping>
 </web-app>

@@ -87,4 +87,14 @@ public class UserConnectController extends AbstractController{
     public List<UserConnect> getCollaborationUsersByProject(String UUID_project) {
         return db.getUserConnectDB().findByProject(UUID_project);
     }
+    
+    @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
+    public UserConnect getUserByEMail(String eMail) throws EntityNotFoundException {
+        UserConnect peer = db.getUserConnectDB().findByEMail(eMail);
+        if (peer == null) {
+            throw new EntityNotFoundException();  
+        }
+        return peer;
+    }
+    
 }

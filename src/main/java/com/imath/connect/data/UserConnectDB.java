@@ -57,6 +57,30 @@ public class UserConnectDB {
         return out.get(0);
     }
     
+    /**
+     * Returns a {@link UserConnect} from the given eMail
+     * @param userName
+     * @return
+     * @author imath
+     */
+    public UserConnect findByEMail(String eMail) {
+        CriteriaBuilder cb = em.getCriteriaBuilder();
+        CriteriaQuery<UserConnect> criteria = cb.createQuery(UserConnect.class);
+        Root<UserConnect> userConnect = criteria.from(UserConnect.class);
+        Predicate p1 = cb.equal(userConnect.get("eMail"), eMail);      
+        criteria.select(userConnect).where(p1);
+        List<UserConnect> out = em.createQuery(criteria).getResultList();
+        if (out == null) return null;
+        if (out.size()==0) return null;
+        return out.get(0);
+    }
+    
+    /**
+     * Returns the list of {@link UserConnect} that collaborate in a project
+     * @param UUID_project
+     * @return
+     * @author imath
+     */
     public List<UserConnect> findByProject(String UUID_project) {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<UserConnect> criteria = cb.createQuery(UserConnect.class);
