@@ -235,8 +235,52 @@
 
                     <!-- Main row -->
                     <div class="row">
-  
-                   </div><!-- /.row (main row) -->
+ 						<section class="col-lg-7 connectedSortable">
+ 							<!-- Box Own projects -->
+ 							<div class="box">
+                                <div class="box-header">
+                                    <h3 class="box-title">Own Projects</h3>
+                                </div><!-- /.box-header -->
+                                <div class="box-body">
+                                    <table class="table table-bordered imath-own-projects">
+                                    </table>
+                                </div><!-- /.box-body -->
+                            </div><!-- /.box Own projects-->
+                            
+                            <!-- Box Own instances -->
+                            <div class="box">
+                                <div class="box-header">
+                                    <h3 class="box-title">Own Instances</h3>
+                                </div><!-- /.box-header -->
+                                <div class="box-body">
+                                    <table class="table table-bordered imath-own-instances">
+                                    </table>
+                                </div><!-- /.box-body -->
+                            </div><!-- /.box Own Instances-->
+                            
+ 							<!-- Box Collaborative projects -->
+                            <div class="box">
+                                <div class="box-header">
+                                    <h3 class="box-title">Collaborations</h3>
+                                </div><!-- /.box-header -->
+                                <div class="box-body">
+                                    <table class="table table-bordered imath-collaborations">
+                                    </table>
+                                </div><!-- /.box-body -->
+                            </div><!-- /.box collaborations-->
+                            
+                            <!-- Box public instances -->
+                            <div class="box">
+                                <div class="box-header">
+                                    <h3 class="box-title">Collaborations</h3>
+                                </div><!-- /.box-header -->
+                                <div class="box-body">
+                                    <table class="table table-bordered imath-public-instances">
+                                    </table>
+                                </div><!-- /.box-body -->
+                            </div><!-- /.box public instances-->
+ 						</section> 
+                   	</div><!-- /.row (main row) -->
 
                 </section><!-- /.content -->
             </aside><!-- /.right-side -->
@@ -278,96 +322,10 @@
 
         <!-- AdminLTE for demo purposes -->
         <script src="js/AdminLTE/demo.js" type="text/javascript"></script>
-
+		<script type="text/javascript">
+			var userName = "<%= request.getUserPrincipal().getName() %>";
+		</script>
+		<script src="js/imath/dashboard.js" type="text/javascript"></script>
     </body>
-    <script type="text/javascript">
-
-function numberToMonth(i) {
-	var ret;
-	switch(i) {
-    case 0:
-        ret="Jan"
-        break;
-    case 1:
-        ret="Feb"
-        break;
-    case 2:
-        ret="Mar"
-        break;
-    case 3:
-        ret="Apr"
-        break;
-    case 4:
-        ret="May"
-        break;
-    case 5:
-        ret="Jun"
-        break;
-    case 6:
-        ret="Jul"
-        break;
-    case 7:
-        ret="Aug"
-        break; 
-    case 8:
-        ret="Sep"
-        break;
-    case 9:
-        ret="Oct"
-        break;
-    case 10:
-        ret="Nov"
-        break;
-    case 11:
-        ret="Dec"
-        break;       
-    default:
-        ret=""
-	}
-	return ret; 
-}
-var userName = "<%= request.getUserPrincipal().getName() %>";
-var uuidUser = null;
-var userInfo = null;
-
-// We charge user info
-$.ajax({
-    url: "rest/api/agora/getUserByUserName/" + userName,
-    cache: false,
-    dataType: "json",
-    type: "GET",
-    success: function(user) {
-        userInfo = user;        	
-		uuidUser = user['UUID'];
-		$(".username").html(userName);
-		var cDate = new Date(user['creationDate']);
-		var month = numberToMonth(cDate.getMonth());
-		var year = cDate.getFullYear();
-		$(".usercreationdate").html('<small>Member since ' + month + ". " + year+'</small>');
-    },
-    error: function(error) {
-        console.log("Error getting user information");
-    }
-});	
-
-$("#changePassButton").click(function() {
-
-    url = "changePassword";
-    $("#profileMsg").html("");
-	$.ajax({
-        url: url,
-        cache: false,
-        data: JSON.stringify($("div#profile form").serializeObject()),
-        type: "POST",
-        success: function(data) {
-            $("#profileMsg").html("<span style='color:green'>" + data + "</span>");
-            setTimeout("$('#profilePopup').dialog('close')",1500);
-        },
-        error: function(data) {
-        	$("#profileMsg").html("<span style='color:red'>" + data.responseText + "</span>");
-        }
-	});
-});
-
-</script>
+	
 </html>
