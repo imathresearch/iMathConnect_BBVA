@@ -17,10 +17,10 @@ public class Constants {
     static public final String instances = "/instances";
     
     // Gets the own projects given the user
-    static public final String ownProjects = "/ownProjects";
+    static public final String ownProjects = "/getOwnProjects";
     
     // gets the collaborative projects given a user
-    static public final String colProjects = "/colProjects";
+    static public final String colProjects = "/getColProjects";
     
     // get the standard configurations
     static public final String configurations = "/configurations";

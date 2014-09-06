@@ -117,7 +117,10 @@ public class ProjectController extends AbstractController {
      */
     @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
     public List<Project> getOwnProjects(String UUID_user) {
-        return db.getProjectDB().findByOwner(UUID_user);
+    	Encryptor.init();
+        List<Project> projects = db.getProjectDB().findByOwner(UUID_user);
+        // We do this to have access without open transaction to all data of the project
+        return projects;
     }
     
     /**
@@ -127,11 +130,13 @@ public class ProjectController extends AbstractController {
      */
     @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
     public List<Project> getCollaborationProjects(String UUID_user) {
+    	Encryptor.init();
         return db.getProjectDB().findByCollaborators(UUID_user);
     }
     
     @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
     public Project getProject(String UUID) throws EntityNotFoundException {
+    	Encryptor.init();
         Project project = this.db.getProjectDB().findById(UUID);
         if (project == null) {
             throw new EntityNotFoundException();  

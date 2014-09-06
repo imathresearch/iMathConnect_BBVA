@@ -20,6 +20,8 @@ import javax.ws.rs.core.SecurityContext;
 import com.imath.connect.model.Instance;
 import com.imath.connect.model.Project;
 import com.imath.connect.model.UserConnect;
+import com.imath.connect.rest.InstanceRest.InstanceDTO;
+import com.imath.connect.rest.UserConnectRest.UserConnectDTO;
 import com.imath.connect.service.InstanceController;
 import com.imath.connect.service.ProjectController;
 import com.imath.connect.service.UserConnectController;
@@ -48,7 +50,7 @@ public class ProjectRest {
             Instance instance = ic.getInstance(uuid_instance);
             Project project = pc.newProject(name, desc, owner, instance);
             projectDTO = new ProjectDTO();
-            projectDTO.convert(project);
+            projectDTO.convert(project, null);
             return Response.status(Response.Status.OK).entity(projectDTO).build();
         } catch (Exception e) {
             LOG.severe(e.getMessage());
@@ -57,9 +59,10 @@ public class ProjectRest {
     }
     
     @GET
-    @Path(Constants.ownProjects)
+    @Path(Constants.ownProjects + "/{uuid_user}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getOwnProjects(String uuid_user, @Context SecurityContext sc) {
+    public Response getOwnProjects(@PathParam("uuid_user") String uuid_user, @Context SecurityContext sc) {
+    	LOG.info("getOwnProjects called with uuid: " + uuid_user);
         try {
             UserConnect owner = ucc.getUserConnect(uuid_user);
             SecurityManager.secureBasic(owner.getUserName(), sc);
@@ -93,7 +96,8 @@ public class ProjectRest {
         if (projects != null) { 
             for(Project p: projects) {
                 ProjectDTO elemDTO = new ProjectDTO();
-                elemDTO.convert(p);
+                List<UserConnect> users =ucc.getCollaborationUsersByProject(p.getUUID()); 
+                elemDTO.convert(p, users);
                 retDTO.add(elemDTO);
             }
         }
@@ -105,12 +109,23 @@ public class ProjectRest {
         public Date creationDate;
         public String name;
         public String desc;
-        
-        public void convert(Project project) {
+        public InstanceDTO instance;
+        public List<UserConnectDTO> userCol; 
+        public void convert(Project project, List<UserConnect> users) {
             this.UUID = project.getUUID();
             this.creationDate = project.getCreationDate();
             this.name = project.getName();
             this.desc = project.getDescription();
+            this.instance = new InstanceDTO();
+            this.instance.convert(project.getInstance());
+            this.userCol = new ArrayList<UserConnectDTO>();
+            if(users!=null) {
+            	for(UserConnect user:users) {
+            		UserConnectDTO newDTO = new UserConnectDTO();
+            		newDTO.convert(user);
+            		this.userCol.add(newDTO);
+            	}
+            }
         }
     }
 }

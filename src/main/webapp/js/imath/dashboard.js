@@ -61,6 +61,7 @@ function ajaxUserInfo() {
 			var month = numberToMonth(cDate.getMonth());
 			var year = cDate.getFullYear();
 			$(".usercreationdate").html('<small>Member since ' + month + ". " + year+'</small>');
+			ajaxOwnProjects();
 	    },
 	    error: function(error) {
 	        console.log("Error getting user information");
@@ -92,7 +93,7 @@ function dateToNice(date) {
 	dayText = day.toString();
 	lastDigit = dayText[dayText.length-1];
 	ord = getOrdinal(lastDigit);
-	var ret = monthText + " " + dayText + ord + " " year;
+	var ret = monthText + " " + dayText + ord + " " + year;
 	return ret;
 }
 
@@ -103,7 +104,30 @@ function getOrdinal(digitT) {
 	return ret;
 }
 
+function htmlTableRowHead(rows) {
+	return htmlTableRow(rows, "th");
+}
+
+function htmlTableRowData(rows) {
+	return htmlTableRow(rows, "td");
+}
+
+function faIcon(icon) {
+	return '<i class="' + icon + '"></i>';
+}
+
+function htmlTableRow(rows, tag) {
+	var ret = "<tr>";
+	for(var i=0; i<rows.length; i++) {
+		ret += "<" + tag + ">" + rows[i] + "</" + tag + ">";
+	}
+	ret += "</tr>";
+	return ret;
+}
+
+
 function generateTableOfProjects(projects) {
+	var ret = htmlTableRowHead(['Name', 'CreationDate', 'Description', 'Collaborators', 'Resources']);
 	for(var i=0; i<projects.length; i++) {
 		project = projects[i];
 		var creationDate = new Date(project['creationDate']);
@@ -111,19 +135,24 @@ function generateTableOfProjects(projects) {
 		var name = project['name'];
 		var desc = project['desc'];
 		var uuid = project['UUID'];
-		var date = new Date(job['startDate']);
-		var aux = "<tr id='" + uuid + "' class='" + genClassJobContextMenu(job['id']) + "' >";
-		aux = aux +"<td>" + getImageJobStatus(job['state']) + "</td>";
-		aux = aux + "<td><a onclick='showJobStatus(\""+ job['id'] + "\")' + >" + job['id'] + "</a></td>";
-		aux = aux + "<td><a onclick='showJobStatus(\""+ job['id'] + "\")' + >" + job['description'] + "</a></td>";
-		aux = aux + '<td data-value="' + job['startDate'] + '">' + date + '</td>';		
-		aux = aux + '<td data-value="' + jobPercentCompletion(job) + '">' + jobPercentCompletion(job) + '</td>';
-		aux = aux + "</tr>";
-		$( "#jobsTBODY" ).append(aux);
-		jobsTable[job['id'].toString()] = job['state'];
-		
-	}	
+		var collaborators = project['userCol'];
+		var rowCol = "";
+		for(var i=0; i< collaborators.length; i++) {
+			rowCol = rowCol + '<small><img src="img/avatar5.png" alt="' + name + '" class="offline"  height="42" width="42"/>' +
+			collaborators[i]['userName'] + ", " + collaborators[i]['organization'] 
+			+'</small> '; 
+		}
+		if (collaborators.length>0) {
+			name += faIcon ("fa-users");
+		} else {
+			name += faIcon ("fa-user");
+		}
+		var rowInstance = faIcon("fa-gears") + " " + project['instance']['cpu'] + " ";
+		rowInstance += faIcon("fa-film") + " " + project['instance']['ram'] + " MiB ";
+		rowInstance += faIcon("fa-cloud") + " " + project['instance']['stg'] + " GiB ";
+		ret += htmlTableRowData([name,dateText,desc,rowCol,rowInstance]);
+	}
+	return ret;
 }
 
 ajaxUserInfo();
-ajaxOwnProjects();
