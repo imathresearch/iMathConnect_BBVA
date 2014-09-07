@@ -76,9 +76,9 @@ public class ProjectRest {
     }
 
     @GET
-    @Path(Constants.colProjects)
+    @Path(Constants.colProjects + "/{uuid_user}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getColProjects(String uuid_user, @Context SecurityContext sc) {
+    public Response getColProjects(@PathParam("uuid_user") String uuid_user, @Context SecurityContext sc) {
         try {
             UserConnect owner = ucc.getUserConnect(uuid_user);
             SecurityManager.secureBasic(owner.getUserName(), sc);
@@ -110,6 +110,7 @@ public class ProjectRest {
         public String name;
         public String desc;
         public InstanceDTO instance;
+        public UserConnectDTO owner;
         public List<UserConnectDTO> userCol; 
         public void convert(Project project, List<UserConnect> users) {
             this.UUID = project.getUUID();
@@ -118,6 +119,8 @@ public class ProjectRest {
             this.desc = project.getDescription();
             this.instance = new InstanceDTO();
             this.instance.convert(project.getInstance());
+            this.owner = new UserConnectDTO();
+            this.owner.convert(project.getOwner());
             this.userCol = new ArrayList<UserConnectDTO>();
             if(users!=null) {
             	for(UserConnect user:users) {

@@ -64,6 +64,7 @@ function ajaxUserInfo() {
 			ajaxOwnProjects();
 			ajaxOwnInstances();
 			ajaxPublicInstances();
+			ajaxColProjects();
 	    },
 	    error: function(error) {
 	        console.log("Error getting user information");
@@ -88,6 +89,23 @@ function ajaxOwnProjects() {
 	
 }
 
+function ajaxColProjects() {
+	$.ajax({
+	    url: "rest/api/agora/getColProjects/" + uuidUser,
+	    cache: false,
+	    dataType: "json",
+	    type: "GET",
+	    success: function(projects) {
+	    	var htmlTable = generateTableOfColProjects(projects);
+			$(".imath-collaborations").html(htmlTable);
+	    },
+	    error: function(error) {
+	        console.log("Error getting own projects");
+	    }
+	});	
+	
+}
+
 function ajaxOwnInstances() {
 	$.ajax({
 	    url: "rest/api/agora/instances/" + uuidUser,
@@ -95,7 +113,7 @@ function ajaxOwnInstances() {
 	    dataType: "json",
 	    type: "GET",
 	    success: function(instances) {
-	    	var htmlTable = generateTableOfInstances(instances);
+	    	var htmlTable = generateTableOfInstances(instances, false);
 			$(".imath-own-instances").html(htmlTable);
 	    },
 	    error: function(error) {
@@ -106,12 +124,12 @@ function ajaxOwnInstances() {
 
 function ajaxPublicInstances() {
 	$.ajax({
-	    url: "rest/api/agora/instances/",
+	    url: "rest/api/agora/instances/ ",
 	    cache: false,
 	    dataType: "json",
 	    type: "GET",
 	    success: function(instances) {
-	    	var htmlTable = generateTableOfInstances(instances);
+	    	var htmlTable = generateTableOfInstances(instances, true);
 			$(".imath-public-instances").html(htmlTable);
 	    },
 	    error: function(error) {
@@ -160,6 +178,40 @@ function htmlTableRow(rows, tag) {
 }
 
 
+function generateTableOfColProjects(projects) {
+	var ret = htmlTableRowHead(['#', 'Name', 'Date', 'Description', 'Owner', 'Collaborators', 'Resources']);
+	for(var i=0; i<projects.length; i++) {
+		project = projects[i];
+		var creationDate = new Date(project['creationDate']);
+		var dateText = dateToNice(creationDate);
+		var name = project['name'];
+		var desc = project['desc'];
+		var uuid = project['UUID'];
+		var collaborators = project['userCol'];
+		var rowCol = "";
+		for(var ii=0; ii< collaborators.length; ii++) {
+			rowCol = rowCol + "<table><tr>";
+			rowCol = rowCol + '<td><img src="img/avatar5.png" alt="' + collaborators[ii]['userName'] + '" class="offline"  height="32" width="32"/></td><td><i>' + collaborators[ii]['userName'] + "</i><br><small>" + collaborators[ii]['organization'] +'</small> </td></tr></table>'; 
+		}
+		var rowIcon = null;
+		if (collaborators.length>0) {
+			rowIcon = faIcon ("fa-users");
+		} else {
+			rowIcon = faIcon ("fa-eye");
+		}
+		var rowInstance = faIcon("fa-gears") + " <b>" + project['instance']['cpu'] + "</b> <small>vCPUs</small> <br>";
+		rowInstance += faIcon("fa-film") + " <b>" + project['instance']['ram'] + "</b> <small>MiB</small><br> ";
+		rowInstance += faIcon("fa-cloud") + " <b>" + project['instance']['stg'] + "</b> <small>GiB</small> ";
+		rowName = "<a href='onclick=showProjectPage(\""+uuid+ "\")'>" + name + "</a>"; 
+		
+		var owner = project['owner'];
+		var rowOwner = "<table><tr>";
+		rowOwner = rowOwner + '<td><img src="img/avatar5.png" alt="' + owner['userName'] + '" class="offline"  height="32" width="32"/></td><td><i>' + owner['userName'] + "</i><br><small>" + owner['organization'] + '</small> </td></tr></table>'; 
+		ret = ret + htmlTableRowData([rowIcon, rowName,dateText,desc,rowOwner,rowCol,rowInstance]);	
+	}
+	return ret;
+}
+
 function generateTableOfProjects(projects) {
 	var ret = htmlTableRowHead(['#', 'Name', 'Date', 'Description', 'Collaborators', 'Resources']);
 	for(var i=0; i<projects.length; i++) {
@@ -192,7 +244,7 @@ function generateTableOfProjects(projects) {
 	return ret;
 }
 
-function generateTableOfInstances(instances) {
+function generateTableOfInstances(instances, pub) {
 	var ret = htmlTableRowHead(['#', faIcon("fa-gears")+' vCPUs', 
 	                            faIcon("fa-film") + ' RAM', 
 	                            faIcon("fa-cloud") + 'Storage', 'Date', '']);
@@ -204,9 +256,12 @@ function generateTableOfInstances(instances) {
 		var ram = instance['ram'];
 		var stg = instance['stg'];
 		var uuid = instance['uuid'];
-		var rowIcon = faIcon("fa-certificate");
+		var rowIcon = '<span class="badge bg-red">Pr</span>';
+		if (pub) {
+			rowIcon = '<span class="badge bg-light-blue">Pu</span>';
+		}
 		
-		rowMore = "<a href='onclick=showInstancePage(\""+uuid+ "\")'>Detail</a>"; 
+		rowMore = "<a href='onclick=showInstancePage(\""+uuid+ "\")'>+</a>"; 
 		ret = ret + htmlTableRowData([rowIcon, cpu, ram, stg, dateText,rowMore]);	
 	}
 	return ret;

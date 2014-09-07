@@ -54,7 +54,7 @@
                         <li class="dropdown notifications-menu">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                                 <i class="fa fa-warning"></i>
-                                <span class="label label-warning">10</span>
+                                <span class="label label-warning">2</span>
                             </a>
                             <ul class="dropdown-menu">
                                 <li class="header">You have 2 notifications</li>
@@ -239,7 +239,7 @@
  							<!-- Box Own projects -->
  							<div class="box">
                                 <div class="box-header">
-                                    <h3 class="box-title">Own Projects</h3>
+                                    <h3 class="box-title"><i class="fa-bar-chart-o"></i>&nbsp;&nbsp;&nbsp; Own Projects</h3>
                                 </div><!-- /.box-header -->
                                 <div class="box-body">
                                     <table class="table table-bordered imath-own-projects">
@@ -250,7 +250,7 @@
                             <!-- Box Collaborative projects -->
                             <div class="box">
                                 <div class="box-header">
-                                    <h3 class="box-title">Collaborations</h3>
+                                    <h3 class="box-title"><i class="fa-bar-chart-o"></i>&nbsp;&nbsp;&nbsp; Collaborations</h3>
                                 </div><!-- /.box-header -->
                                 <div class="box-body">
                                     <table class="table table-bordered imath-collaborations">
@@ -262,7 +262,7 @@
  						    <!-- Box Own instances -->
                             <div class="box">
                                 <div class="box-header">
-                                    <h3 class="box-title">Own Instances</h3>
+                                    <h3 class="box-title"><i class="fa-cog"></i>&nbsp;&nbsp;&nbsp; Own Instances</h3>
                                 </div><!-- /.box-header -->
                                 <div class="box-body">
                                     <table class="table table-bordered imath-own-instances">
@@ -273,7 +273,8 @@
  							<!-- Box public instances -->
                             <div class="box">
                                 <div class="box-header">
-                                    <h3 class="box-title">Public Instances</h3>
+                                	<i class="fa-cop"></i> 
+                                    <h3 class="box-title"><i class="fa-cog"></i>&nbsp;&nbsp;&nbsp; Public Instances</h3>
                                 </div><!-- /.box-header -->
                                 <div class="box-body">
                                     <table class="table table-bordered imath-public-instances">

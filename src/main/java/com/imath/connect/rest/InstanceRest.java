@@ -1,6 +1,7 @@
 package com.imath.connect.rest;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -35,7 +36,11 @@ public class InstanceRest {
     @Path(Constants.instances + "/{uuid_user}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getInstances(@PathParam("uuid_user") String uuid_user, @Context SecurityContext sc) {
-        try {
+        LOG.info("instances called with uuis_user:" + uuid_user);
+    	try {
+    		if (uuid_user==null) uuid_user="";
+    		uuid_user=uuid_user.trim();
+    		
             if (!uuid_user.isEmpty()) {
                 UserConnect owner = ucc.getUserConnect(uuid_user);
                 SecurityManager.secureBasic(owner.getUserName(), sc);
@@ -70,6 +75,7 @@ public class InstanceRest {
         public long cpu;
         public double ram;
         public double stg;
+        public Date creationDate;
         public String url;
         public void convert(Instance inst) {
             this.UUID = inst.getUUID();
@@ -77,6 +83,7 @@ public class InstanceRest {
             this.ram = inst.getRam();
             this.stg = inst.getStg();
             this.url = inst.getUrl();
+            this.creationDate = inst.getCreationDate();
         }
     }
     
