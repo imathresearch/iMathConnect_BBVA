@@ -247,18 +247,7 @@
                                 </div><!-- /.box-body -->
                             </div><!-- /.box Own projects-->
                             
-                            <!-- Box Own instances -->
-                            <div class="box">
-                                <div class="box-header">
-                                    <h3 class="box-title">Own Instances</h3>
-                                </div><!-- /.box-header -->
-                                <div class="box-body">
-                                    <table class="table table-bordered imath-own-instances">
-                                    </table>
-                                </div><!-- /.box-body -->
-                            </div><!-- /.box Own Instances-->
-                            
- 							<!-- Box Collaborative projects -->
+                            <!-- Box Collaborative projects -->
                             <div class="box">
                                 <div class="box-header">
                                     <h3 class="box-title">Collaborations</h3>
@@ -268,18 +257,30 @@
                                     </table>
                                 </div><!-- /.box-body -->
                             </div><!-- /.box collaborations-->
-                            
-                            <!-- Box public instances -->
+ 						</section> 
+ 						<section class="col-lg-5 connectedSortable">
+ 						    <!-- Box Own instances -->
                             <div class="box">
                                 <div class="box-header">
-                                    <h3 class="box-title">Collaborations</h3>
+                                    <h3 class="box-title">Own Instances</h3>
+                                </div><!-- /.box-header -->
+                                <div class="box-body">
+                                    <table class="table table-bordered imath-own-instances">
+                                    </table>
+                                </div><!-- /.box-body -->
+                            </div><!-- /.box Own Instances-->
+ 						 
+ 							<!-- Box public instances -->
+                            <div class="box">
+                                <div class="box-header">
+                                    <h3 class="box-title">Public Instances</h3>
                                 </div><!-- /.box-header -->
                                 <div class="box-body">
                                     <table class="table table-bordered imath-public-instances">
                                     </table>
                                 </div><!-- /.box-body -->
                             </div><!-- /.box public instances-->
- 						</section> 
+ 						</section>
                    	</div><!-- /.row (main row) -->
 
                 </section><!-- /.content -->

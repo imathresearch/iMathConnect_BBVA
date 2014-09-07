@@ -30,6 +30,9 @@ INSERT INTO userconnect(uuid, creationdate, email, lastconnection, organization,
 INSERT INTO userconnect(uuid, creationdate, email, lastconnection, organization, phone1, phone2, username) VALUES ('useruuid5', '2014-01-01', 'ipiyol@gmail.com', '2014-01-01', 'imath', '999999999', '11111111111', 'user5');
 
 INSERT INTO instance(uuid, cpu, creationdate, ram, stg, url, owner_instance) VALUES ('instuuid1', 8, '2014-01-01', 8, 500, '127.0.0.1', null);
+INSERT INTO instance(uuid, cpu, creationdate, ram, stg, url, owner_instance) VALUES ('instuuid2', 1, '2014-01-01', 2, 100, '127.0.0.1', 'useruuid1');
+INSERT INTO instance(uuid, cpu, creationdate, ram, stg, url, owner_instance) VALUES ('instuuid3', 4, '2014-01-01', 3.5, 200, '127.0.0.1', 'useruuid1');
+INSERT INTO instance(uuid, cpu, creationdate, ram, stg, url, owner_instance) VALUES ('instuuid4', 4, '2014-01-01', 8, 300, '127.0.0.1', null);
 
 INSERT INTO project(uuid, creationdate, description, key, name, instance, owner) VALUES ('projuuid1', '2014-01-01', 'My first project', 'IV0p34cDmXFCzA3p9V7/Hg==', 'Cassandra', 'instuuid1', 'useruuid1');
 INSERT INTO project(uuid, creationdate, description, key, name, instance, owner) VALUES ('projuuid2', '2014-01-01', 'Simulating the Game of Live', 'IV0p34cDmXFCzA3p9V7/Hg==', 'Fenix', 'instuuid1', 'useruuid1');

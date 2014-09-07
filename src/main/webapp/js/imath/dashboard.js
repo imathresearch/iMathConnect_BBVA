@@ -62,6 +62,8 @@ function ajaxUserInfo() {
 			var year = cDate.getFullYear();
 			$(".usercreationdate").html('<small>Member since ' + month + ". " + year+'</small>');
 			ajaxOwnProjects();
+			ajaxOwnInstances();
+			ajaxPublicInstances();
 	    },
 	    error: function(error) {
 	        console.log("Error getting user information");
@@ -80,10 +82,42 @@ function ajaxOwnProjects() {
 			$(".imath-own-projects").html(htmlTable);
 	    },
 	    error: function(error) {
-	        console.log("Error getting user information");
+	        console.log("Error getting own projects");
 	    }
 	});	
 	
+}
+
+function ajaxOwnInstances() {
+	$.ajax({
+	    url: "rest/api/agora/instances/" + uuidUser,
+	    cache: false,
+	    dataType: "json",
+	    type: "GET",
+	    success: function(instances) {
+	    	var htmlTable = generateTableOfInstances(instances);
+			$(".imath-own-instances").html(htmlTable);
+	    },
+	    error: function(error) {
+	        console.log("Error getting own instances");
+	    }
+	});	
+}
+
+function ajaxPublicInstances() {
+	$.ajax({
+	    url: "rest/api/agora/instances/",
+	    cache: false,
+	    dataType: "json",
+	    type: "GET",
+	    success: function(instances) {
+	    	var htmlTable = generateTableOfInstances(instances);
+			$(".imath-public-instances").html(htmlTable);
+	    },
+	    error: function(error) {
+	        console.log("Error getting public instances");
+	    }
+	});	
 }
 
 function dateToNice(date) {
@@ -127,7 +161,7 @@ function htmlTableRow(rows, tag) {
 
 
 function generateTableOfProjects(projects) {
-	var ret = htmlTableRowHead(['Name', 'CreationDate', 'Description', 'Collaborators', 'Resources']);
+	var ret = htmlTableRowHead(['#', 'Name', 'Date', 'Description', 'Collaborators', 'Resources']);
 	for(var i=0; i<projects.length; i++) {
 		project = projects[i];
 		var creationDate = new Date(project['creationDate']);
@@ -137,20 +171,43 @@ function generateTableOfProjects(projects) {
 		var uuid = project['UUID'];
 		var collaborators = project['userCol'];
 		var rowCol = "";
-		for(var i=0; i< collaborators.length; i++) {
-			rowCol = rowCol + '<small><img src="img/avatar5.png" alt="' + name + '" class="offline"  height="42" width="42"/>' +
-			collaborators[i]['userName'] + ", " + collaborators[i]['organization'] 
-			+'</small> '; 
+		for(var ii=0; ii< collaborators.length; ii++) {
+			rowCol = rowCol + "<table><tr>";
+			rowCol = rowCol + '<td><img src="img/avatar5.png" alt="' + collaborators[ii]['userName'] + '" class="offline"  height="32" width="32"/></td><td><i>' +
+			collaborators[ii]['userName'] + "</i><br><small>" + collaborators[ii]['organization'] 
+			+'</small> </td></tr></table>'; 
 		}
+		var rowIcon = null;
 		if (collaborators.length>0) {
-			name += faIcon ("fa-users");
+			rowIcon = faIcon ("fa-users");
 		} else {
-			name += faIcon ("fa-user");
+			rowIcon = faIcon ("fa-eye");
 		}
-		var rowInstance = faIcon("fa-gears") + " " + project['instance']['cpu'] + " ";
-		rowInstance += faIcon("fa-film") + " " + project['instance']['ram'] + " MiB ";
-		rowInstance += faIcon("fa-cloud") + " " + project['instance']['stg'] + " GiB ";
-		ret += htmlTableRowData([name,dateText,desc,rowCol,rowInstance]);
+		var rowInstance = faIcon("fa-gears") + " <b>" + project['instance']['cpu'] + "</b> <small>vCPUs</small> <br>";
+		rowInstance += faIcon("fa-film") + " <b>" + project['instance']['ram'] + "</b> <small>MiB</small><br> ";
+		rowInstance += faIcon("fa-cloud") + " <b>" + project['instance']['stg'] + "</b> <small>GiB</small> ";
+		rowName = "<a href='onclick=showProjectPage(\""+uuid+ "\")'>" + name + "</a>"; 
+		ret = ret + htmlTableRowData([rowIcon, rowName,dateText,desc,rowCol,rowInstance]);	
+	}
+	return ret;
+}
+
+function generateTableOfInstances(instances) {
+	var ret = htmlTableRowHead(['#', faIcon("fa-gears")+' vCPUs', 
+	                            faIcon("fa-film") + ' RAM', 
+	                            faIcon("fa-cloud") + 'Storage', 'Date', '']);
+	for(var i=0; i<instances.length; i++) {
+		instance = instances[i];
+		var creationDate = new Date(instance['creationDate']);
+		var dateText = dateToNice(creationDate);
+		var cpu = instance['cpu'];
+		var ram = instance['ram'];
+		var stg = instance['stg'];
+		var uuid = instance['uuid'];
+		var rowIcon = faIcon("fa-certificate");
+		
+		rowMore = "<a href='onclick=showInstancePage(\""+uuid+ "\")'>Detail</a>"; 
+		ret = ret + htmlTableRowData([rowIcon, cpu, ram, stg, dateText,rowMore]);	
 	}
 	return ret;
 }
