@@ -58,6 +58,28 @@ public class ProjectRest {
         }
     }
     
+    
+    @GET
+    @Path(Constants.getProject + "/{uuid_user}/{uuid_project}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getProject(@PathParam("uuid_user") String uuid_user, @PathParam("uuid_project") String uuid_project, @Context SecurityContext sc) {
+        //TODO: IT
+        LOG.info("getProject called with uuid: " + uuid_user + " and uuid_project:" + uuid_project);
+        try {
+            UserConnect owner = ucc.getUserConnect(uuid_user);
+            Project project = pc.getProject(uuid_project);
+            SecurityManager.secureBasic(owner.getUserName(), sc);
+            if (!owner.getUUID().equals(project.getOwner().getUUID()))  {
+                throw new Exception ("No privileges");
+            }
+            ProjectDTO retDTO = convert(project);
+            return Response.status(Response.Status.OK).entity(retDTO).build();
+        } catch (Exception e) {
+            LOG.severe(e.getMessage());
+            return Response.status(Response.Status.BAD_REQUEST).build();
+        }
+    }
+    
     @GET
     @Path(Constants.ownProjects + "/{uuid_user}")
     @Produces(MediaType.APPLICATION_JSON)
@@ -91,14 +113,21 @@ public class ProjectRest {
         }
     }
     
+    private ProjectDTO convert(Project project) {
+        ProjectDTO elemDTO = new ProjectDTO();
+        List<UserConnect> users =ucc.getCollaborationUsersByProject(project.getUUID()); 
+        elemDTO.convert(project, users);
+        return elemDTO;
+    }
+    
     private List<ProjectDTO> convertList(List<Project> projects) {
         List<ProjectDTO> retDTO = new ArrayList<ProjectDTO>();
         if (projects != null) { 
             for(Project p: projects) {
-                ProjectDTO elemDTO = new ProjectDTO();
-                List<UserConnect> users =ucc.getCollaborationUsersByProject(p.getUUID()); 
-                elemDTO.convert(p, users);
-                retDTO.add(elemDTO);
+                //ProjectDTO elemDTO = new ProjectDTO();
+                //List<UserConnect> users =ucc.getCollaborationUsersByProject(p.getUUID()); 
+                //elemDTO.convert(p, users);
+                retDTO.add(convert(p));
             }
         }
         return retDTO;
@@ -120,7 +149,9 @@ public class ProjectRest {
             this.instance = new InstanceDTO();
             this.instance.convert(project.getInstance());
             this.owner = new UserConnectDTO();
-            this.owner.convert(project.getOwner());
+            if (project.getOwner()!=null) {
+                this.owner.convert(project.getOwner());
+            }
             this.userCol = new ArrayList<UserConnectDTO>();
             if(users!=null) {
             	for(UserConnect user:users) {

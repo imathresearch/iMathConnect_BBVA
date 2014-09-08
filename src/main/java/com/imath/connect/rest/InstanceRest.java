@@ -19,6 +19,7 @@ import javax.ws.rs.core.SecurityContext;
 
 import com.imath.connect.model.Instance;
 import com.imath.connect.model.UserConnect;
+import com.imath.connect.rest.UserConnectRest.UserConnectDTO;
 import com.imath.connect.security.SecurityManager;
 import com.imath.connect.service.InstanceController;
 import com.imath.connect.service.UserConnectController;
@@ -77,6 +78,7 @@ public class InstanceRest {
         public double stg;
         public Date creationDate;
         public String url;
+        public UserConnectDTO owner;
         public void convert(Instance inst) {
             this.UUID = inst.getUUID();
             this.cpu = inst.getCpu();
@@ -84,6 +86,12 @@ public class InstanceRest {
             this.stg = inst.getStg();
             this.url = inst.getUrl();
             this.creationDate = inst.getCreationDate();
+            owner = new UserConnectDTO();
+            if (inst.getOwner()!=null) {
+                owner.convert(inst.getOwner());            
+            } else {
+                owner = null;
+            }
         }
     }
     

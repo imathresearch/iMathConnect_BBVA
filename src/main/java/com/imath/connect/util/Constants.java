@@ -19,6 +19,10 @@ public class Constants {
     // Gets the own projects given the user
     static public final String ownProjects = "/getOwnProjects";
     
+ // Gets the own projects given the user
+    static public final String getProject = "/getProject";
+    
+    
     // gets the collaborative projects given a user
     static public final String colProjects = "/getColProjects";
     

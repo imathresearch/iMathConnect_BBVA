@@ -139,8 +139,8 @@
                             </a>
                         </li>
                         <li>
-                            <a href="pages/widgets.html">
-                                <i class="fa fa-th"></i> <span>Widgets</span> <small class="badge pull-right bg-green">new</small>
+                            <a onclick='placeLayoutProjects()')>
+                                <i class="fa fa-th"></i> <span>Projects</span> <small class="badge pull-right bg-green">new</small>
                             </a>
                         </li>
                     </ul>
@@ -234,12 +234,12 @@
                     </div><!-- /.row -->
 
                     <!-- Main row -->
-                    <div class="row">
+                    <div class="row imath-main-row">
  						<section class="col-lg-7 connectedSortable">
  							<!-- Box Own projects -->
  							<div class="box">
                                 <div class="box-header">
-                                    <h3 class="box-title"><i class="fa-bar-chart-o"></i>&nbsp;&nbsp;&nbsp; Own Projects</h3>
+                                    <h3 class="box-title"><i class="fa fa-bar-chart-o"></i>&nbsp;&nbsp;&nbsp; Own Projects</h3>
                                 </div><!-- /.box-header -->
                                 <div class="box-body">
                                     <table class="table table-bordered imath-own-projects">
@@ -250,7 +250,7 @@
                             <!-- Box Collaborative projects -->
                             <div class="box">
                                 <div class="box-header">
-                                    <h3 class="box-title"><i class="fa-bar-chart-o"></i>&nbsp;&nbsp;&nbsp; Collaborations</h3>
+                                    <h3 class="box-title"><i class="fa fa-bar-chart-o"></i>&nbsp;&nbsp;&nbsp; Collaborations</h3>
                                 </div><!-- /.box-header -->
                                 <div class="box-body">
                                     <table class="table table-bordered imath-collaborations">
@@ -262,7 +262,7 @@
  						    <!-- Box Own instances -->
                             <div class="box">
                                 <div class="box-header">
-                                    <h3 class="box-title"><i class="fa-cog"></i>&nbsp;&nbsp;&nbsp; Own Instances</h3>
+                                    <h3 class="box-title"><i class="fa fa-cog"></i>&nbsp;&nbsp;&nbsp; Own Instances</h3>
                                 </div><!-- /.box-header -->
                                 <div class="box-body">
                                     <table class="table table-bordered imath-own-instances">
@@ -274,7 +274,7 @@
                             <div class="box">
                                 <div class="box-header">
                                 	<i class="fa-cop"></i> 
-                                    <h3 class="box-title"><i class="fa-cog"></i>&nbsp;&nbsp;&nbsp; Public Instances</h3>
+                                    <h3 class="box-title"><i class="fa fa-cog"></i>&nbsp;&nbsp;&nbsp; Public Instances</h3>
                                 </div><!-- /.box-header -->
                                 <div class="box-body">
                                     <table class="table table-bordered imath-public-instances">
@@ -328,6 +328,7 @@
 			var userName = "<%= request.getUserPrincipal().getName() %>";
 		</script>
 		<script src="js/imath/dashboard.js" type="text/javascript"></script>
+		<script src="js/imath/projects.js" type="text/javascript"></script>
     </body>
 	
 </html>

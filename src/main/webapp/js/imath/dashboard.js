@@ -1,3 +1,8 @@
+/**
+ * This module manages the dash board screen
+ * @author imath 
+ */
+
 function numberToMonth(i) {
 	var ret;
 	switch(i) {
@@ -43,7 +48,8 @@ function numberToMonth(i) {
 	return ret; 
 }
 
-var uuidUser = null;
+var global_uuid_user = null;
+
 var userInfo = null;
 // We charge user info
 
@@ -55,7 +61,7 @@ function ajaxUserInfo() {
 	    type: "GET",
 	    success: function(user) {
 	        userInfo = user;        	
-			uuidUser = user['UUID'];
+	        global_uuid_user = user['UUID'];
 			$(".username").html(userName);
 			var cDate = new Date(user['creationDate']);
 			var month = numberToMonth(cDate.getMonth());
@@ -74,7 +80,7 @@ function ajaxUserInfo() {
 
 function ajaxOwnProjects() {
 	$.ajax({
-	    url: "rest/api/agora/getOwnProjects/" + uuidUser,
+	    url: "rest/api/agora/getOwnProjects/" + global_uuid_user,
 	    cache: false,
 	    dataType: "json",
 	    type: "GET",
@@ -91,7 +97,7 @@ function ajaxOwnProjects() {
 
 function ajaxColProjects() {
 	$.ajax({
-	    url: "rest/api/agora/getColProjects/" + uuidUser,
+	    url: "rest/api/agora/getColProjects/" + global_uuid_user,
 	    cache: false,
 	    dataType: "json",
 	    type: "GET",
@@ -108,7 +114,7 @@ function ajaxColProjects() {
 
 function ajaxOwnInstances() {
 	$.ajax({
-	    url: "rest/api/agora/instances/" + uuidUser,
+	    url: "rest/api/agora/instances/" + global_uuid_user,
 	    cache: false,
 	    dataType: "json",
 	    type: "GET",
@@ -160,16 +166,22 @@ function htmlTableRowHead(rows) {
 	return htmlTableRow(rows, "th");
 }
 
-function htmlTableRowData(rows) {
-	return htmlTableRow(rows, "td");
+function htmlTableRowData(rows, uuid) {
+	return htmlTableRow(rows, "td", uuid);
 }
 
 function faIcon(icon) {
-	return '<i class="' + icon + '"></i>';
+	return '<i class="fa ' + icon + '"></i>';
 }
 
-function htmlTableRow(rows, tag) {
-	var ret = "<tr>";
+function htmlTableRow(rows, tag, uuid) {
+	var ret;
+	if (uuid != null) {
+		ret = "<tr id='" + uuid + "'>";
+	} else {
+		ret = "<tr>";
+	} 
+	
 	for(var i=0; i<rows.length; i++) {
 		ret += "<" + tag + ">" + rows[i] + "</" + tag + ">";
 	}
@@ -207,7 +219,7 @@ function generateTableOfColProjects(projects) {
 		var owner = project['owner'];
 		var rowOwner = "<table><tr>";
 		rowOwner = rowOwner + '<td><img src="img/avatar5.png" alt="' + owner['userName'] + '" class="offline"  height="32" width="32"/></td><td><i>' + owner['userName'] + "</i><br><small>" + owner['organization'] + '</small> </td></tr></table>'; 
-		ret = ret + htmlTableRowData([rowIcon, rowName,dateText,desc,rowOwner,rowCol,rowInstance]);	
+		ret = ret + htmlTableRowData([rowIcon, rowName,dateText,desc,rowOwner,rowCol,rowInstance], uuid);	
 	}
 	return ret;
 }
@@ -239,7 +251,7 @@ function generateTableOfProjects(projects) {
 		rowInstance += faIcon("fa-film") + " <b>" + project['instance']['ram'] + "</b> <small>MiB</small><br> ";
 		rowInstance += faIcon("fa-cloud") + " <b>" + project['instance']['stg'] + "</b> <small>GiB</small> ";
 		rowName = "<a href='onclick=showProjectPage(\""+uuid+ "\")'>" + name + "</a>"; 
-		ret = ret + htmlTableRowData([rowIcon, rowName,dateText,desc,rowCol,rowInstance]);	
+		ret = ret + htmlTableRowData([rowIcon, rowName,dateText,desc,rowCol,rowInstance], uuid);	
 	}
 	return ret;
 }
@@ -262,9 +274,10 @@ function generateTableOfInstances(instances, pub) {
 		}
 		
 		rowMore = "<a href='onclick=showInstancePage(\""+uuid+ "\")'>+</a>"; 
-		ret = ret + htmlTableRowData([rowIcon, cpu, ram, stg, dateText,rowMore]);	
+		ret = ret + htmlTableRowData([rowIcon, cpu, ram, stg, dateText,rowMore], uuid);	
 	}
 	return ret;
 }
+
 
 ajaxUserInfo();
