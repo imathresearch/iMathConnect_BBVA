@@ -26,7 +26,7 @@ public class Instance implements Serializable {
 
     @Id
     @GeneratedValue(generator="system-uuid")
-    @GenericGenerator(name="system-uuid", strategy = "uuid")
+    @GenericGenerator(name="system-uuid2", strategy = "uuid")
     @Column(name = "uuid", unique = true)
     private String UUID;
     

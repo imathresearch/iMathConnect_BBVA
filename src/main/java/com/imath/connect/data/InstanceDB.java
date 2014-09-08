@@ -12,13 +12,14 @@ import javax.persistence.criteria.Root;
 
 import com.imath.connect.model.Instance;
 
+/**
+ * The Instance DB repository
+ * @author imath
+ *
+ */
+
 @RequestScoped
 public class InstanceDB {
-    /**
-     * The Instance DB repository
-     * @author imath
-     *
-     */
     @Inject
     private EntityManager em;
     

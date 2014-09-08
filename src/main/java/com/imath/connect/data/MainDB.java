@@ -12,6 +12,7 @@ public class MainDB {
 	@Inject private ProjectDB projectDB;
 	@Inject private StandardConfigurationDB standardConfiguration;
 	@Inject private InstanceDB instanceDB;
+	@Inject private NotificationDB notificationDB;
 	
 	public void makePersistent(Object obj) throws Exception {
 	    em.persist(obj);
@@ -38,6 +39,10 @@ public class MainDB {
 	public InstanceDB getInstanceDB() {
 	    return this.instanceDB;
 	}
+	
+	public NotificationDB getNotificationDB() {
+		return this.notificationDB;
+	}
 	// For testing purposes only
 	public void setEntityManager(EntityManager em) {
 	    this.em = em;
@@ -57,5 +62,9 @@ public class MainDB {
 	
 	public void setInstanceDB(InstanceDB instanceDB) {
 	    this.instanceDB = instanceDB;
+	}
+	
+	public void setNotificationDB(NotificationDB notificationDB) {
+		this.notificationDB = notificationDB;
 	}
 }

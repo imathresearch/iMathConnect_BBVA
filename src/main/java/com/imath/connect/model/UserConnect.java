@@ -26,7 +26,7 @@ public class UserConnect implements Serializable {
     // The ID. We use UUIDs
     @Id
     @GeneratedValue(generator="system-uuid")
-    @GenericGenerator(name="system-uuid", strategy = "uuid")
+    @GenericGenerator(name="system-uuid4", strategy = "uuid")
     @Column(name = "uuid", unique = true)
     private String UUID;
     
