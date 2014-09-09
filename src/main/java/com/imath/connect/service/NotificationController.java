@@ -51,6 +51,7 @@ public class NotificationController extends AbstractController {
     	notif.setSubject(subject);
     	notif.setText(text);
     	notif.setType(type);
+    	db.makePersistent(notif);
     	return notif;
     }
     
@@ -90,6 +91,7 @@ public class NotificationController extends AbstractController {
      */
     @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
     public void removeNotificationForUser(String uuid_notification, List<String> uuids) throws Exception{
+        //TODO: Unit test
     	Notification notif = this.getNotification(uuid_notification);
     	Set<UserConnect> usersNotif = notif.getNotificationUsers();
     	List<UserConnect> toRemove = new ArrayList<UserConnect>();
@@ -105,4 +107,10 @@ public class NotificationController extends AbstractController {
     	notif.getNotificationUsers().removeAll(toRemove);
     	db.makePersistent(notif);
     }
+    
+    // For testing purposes only
+    public void setUserConnectController(UserConnectController ucc) {
+        this.ucc = ucc;
+    }
+    
 }
