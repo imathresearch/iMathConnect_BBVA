@@ -4,7 +4,7 @@
 			<h3 class="box-title"><i class="fa fa-bar-chart-o"></i>&nbsp;&nbsp;&nbsp; Own Projects &nbsp;&nbsp;&nbsp;</h3>
 			<div class="box-tools pull-right">
 				<div class="btn-group" data-toggle="btn-toggle">
-					<button type="button" class="btn btn-primary active">New</button>
+					<button id="idNewProjectButton" type="button" class="btn btn-primary active">New</button>
 				</div>
 			</div>
 		</div><!-- /.box-header -->
@@ -18,13 +18,18 @@
 	<div class="box">
 		<div class="box-header">
 			<h3 class="box-title imath-project-name">Project detail</h3>
+			<div class="box-tools pull-right">
+				<div class="btn-group" data-toggle="btn-toggle">
+					<button id="imath-id-save-buton-project" type="button" class="btn btn-primary active">Save</button>
+				</div>
+			</div>
 		</div><!-- /.box-header -->
 		<!-- form start -->
 		<form role="form">
 			<div class="box-body">
 				<div class="form-group">
 					<label for="exampleInputEmail1">Project Name</label>
-					<input type="text" class="form-control" id="idProjectName" placeholder="Enter project name">
+					<input type="text" class="form-control" id="idProjectName" placeholder="Enter project name" disabled>
 				</div>
 				<div class="form-group">
 					<label for="exampleInputPassword1">Description</label>
@@ -38,17 +43,51 @@
 					<label>Resources</label>
 					<table id="imath-id-instances" class="table table-bordered table-hover imath-select-instance">
 					</table>
+					<div class="box-tools pull-right">
+						<div class="btn-group" data-toggle="btn-toggle">
+							<a class="btn btn-block btn-primary" data-toggle="modal" data-target="#instance-select">Select Resources</a>
+						</div>
+					</div>
+					
 				</div>
 				<div class="form-group">
 					<label>Collaborators</label>
 					<table class="table table-bordered imath-collaborators">
                     </table>
+                    <table>
+                    	<tr>
+                    		<td><input type="text" class="form-control" id="idCollaborationBox" placeholder="Enter username or email"></td>
+                    		<td>
+                    			<div class="box-tools pull-right">
+									<div class="btn-group" data-toggle="btn-toggle">
+                    					<button id="idAddCollaboratorButton" type="button" class="btn btn-primary active">Add Collaborator</button>
+                    				</div>
+                    			</div>
+                    		</td>
+                    	</tr>
+                    </table>
 				</div>
 			</div><!-- /.box-body -->
-			<div class="box-footer">
-				<button type="submit" class="btn btn-primary">Submit</button>
-			</div>
 		</form>
 	</div><!-- /.box Own projects-->
 </div>
+<!-- COMPOSE MESSAGE MODAL -->
+        <div class="modal fade" id="instance-select" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+						<h4 class="modal-title"><i class="fa fa-cog"></i> Select Resources</h4>
+					</div>
+					<div class="modal-body">
+						<table id="imath-id-instances-select" class="table table-bordered table-hover imath-select-instances">
+						</table>
+					</div>
+					<div class="modal-footer clearfix">
+						<button id="imath-id-cancel-button-select" type="button" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-times"></i> Discard</button>
+					</div>
+				</div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div><!-- /.modal -->
+
 

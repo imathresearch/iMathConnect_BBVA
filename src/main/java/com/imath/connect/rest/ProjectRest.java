@@ -59,7 +59,7 @@ public class ProjectRest {
         }
     }
     
-    @POST
+    @GET
     @Path(Constants.updateProject + "/{uuid_user}/{uuid_project}/{desc}/{uuid_instance}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response updateProject(@PathParam("uuid_user") String uuid_user, @PathParam("uuid_project") String uuid_project, @PathParam("desc") String desc, @PathParam("uuid_instance") String uuid_instance, @Context SecurityContext sc) {

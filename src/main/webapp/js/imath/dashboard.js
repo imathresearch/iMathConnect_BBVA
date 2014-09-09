@@ -119,7 +119,7 @@ function ajaxOwnInstances() {
 	    dataType: "json",
 	    type: "GET",
 	    success: function(instances) {
-	    	var htmlTable = generateTableOfInstances(instances, false);
+	    	var htmlTable = generateTableOfInstances(instances, false, true);
 			$(".imath-own-instances").html(htmlTable);
 	    },
 	    error: function(error) {
@@ -135,7 +135,7 @@ function ajaxPublicInstances() {
 	    dataType: "json",
 	    type: "GET",
 	    success: function(instances) {
-	    	var htmlTable = generateTableOfInstances(instances, true);
+	    	var htmlTable = generateTableOfInstances(instances, true, true);
 			$(".imath-public-instances").html(htmlTable);
 	    },
 	    error: function(error) {
@@ -256,10 +256,21 @@ function generateTableOfProjects(projects) {
 	return ret;
 }
 
-function generateTableOfInstances(instances, pub) {
-	var ret = htmlTableRowHead(['#', faIcon("fa-gears")+' vCPUs', 
+/**
+ * Generates the content of a html table for instances 
+ * @param instances		The list of InstanceDTO received from the server
+ * @param pub			Boolean indicating they are public (true) or private (false)
+ * @param putHeader		
+ * @returns {String}
+ */
+function generateTableOfInstances(instances, pub, putHeader) {
+	var ret = "";
+	if (putHeader) {
+		ret = htmlTableRowHead(['#', faIcon("fa-gears")+' vCPUs', 
 	                            faIcon("fa-film") + ' RAM', 
 	                            faIcon("fa-cloud") + 'Storage', 'Date', '']);
+	}
+	
 	for(var i=0; i<instances.length; i++) {
 		instance = instances[i];
 		var creationDate = new Date(instance['creationDate']);
@@ -267,7 +278,7 @@ function generateTableOfInstances(instances, pub) {
 		var cpu = instance['cpu'];
 		var ram = instance['ram'];
 		var stg = instance['stg'];
-		var uuid = instance['uuid'];
+		var uuid = instance['UUID'];
 		var rowIcon = '<span class="badge bg-red">Pr</span>';
 		if (pub) {
 			rowIcon = '<span class="badge bg-light-blue">Pu</span>';
