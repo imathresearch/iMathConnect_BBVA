@@ -140,7 +140,7 @@
                         </li>
                         <li>
                             <a onclick='placeLayoutProjects()')>
-                                <i class="fa fa-th"></i> <span>Projects</span> <small class="badge pull-right bg-green">new</small>
+                                <i class="fa fa-th"></i> <span>My Projects</span>
                             </a>
                         </li>
                     </ul>
@@ -239,7 +239,7 @@
  							<!-- Box Own projects -->
  							<div class="box">
                                 <div class="box-header">
-                                    <h3 class="box-title"><i class="fa fa-bar-chart-o"></i>&nbsp;&nbsp;&nbsp; Own Projects</h3>
+                                    <h3 class="box-title"><i class="fa fa-bar-chart-o"></i>&nbsp;&nbsp;&nbsp; My Projects</h3>
                                 </div><!-- /.box-header -->
                                 <div class="box-body">
                                     <table class="table table-bordered imath-own-projects">
@@ -262,7 +262,7 @@
  						    <!-- Box Own instances -->
                             <div class="box">
                                 <div class="box-header">
-                                    <h3 class="box-title"><i class="fa fa-cog"></i>&nbsp;&nbsp;&nbsp; Own Instances</h3>
+                                    <h3 class="box-title"><i class="fa fa-cog"></i>&nbsp;&nbsp;&nbsp; My Instances</h3>
                                 </div><!-- /.box-header -->
                                 <div class="box-body">
                                     <table class="table table-bordered imath-own-instances">
