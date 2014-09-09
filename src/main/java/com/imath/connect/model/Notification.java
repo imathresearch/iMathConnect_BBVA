@@ -25,7 +25,7 @@ public class Notification implements Serializable {
 	
 	@Id
     @GeneratedValue(generator="system-uuid")
-    @GenericGenerator(name="system-uuid1", strategy = "uuid")
+    @GenericGenerator(name="system-uuid", strategy = "uuid")
     @Column(name = "uuid", unique = true)
     private String UUID;
 	

@@ -9,6 +9,7 @@ import javax.ejb.Stateful;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -58,6 +59,68 @@ public class ProjectRest {
         }
     }
     
+    @POST
+    @Path(Constants.updateProject + "/{uuid_user}/{uuid_project}/{desc}/{uuid_instance}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response updateProject(@PathParam("uuid_user") String uuid_user, @PathParam("uuid_project") String uuid_project, @PathParam("desc") String desc, @PathParam("uuid_instance") String uuid_instance, @Context SecurityContext sc) {
+        try {
+            UserConnect owner = ucc.getUserConnect(uuid_user);
+            SecurityManager.secureBasic(owner.getUserName(), sc);
+            Project project = pc.getProject(uuid_project);
+            if (!project.getOwner().getUUID().equals(owner.getUUID())) {
+                throw new Exception("Not enough privileges");
+            }
+            project = pc.updateProject(uuid_project, desc, uuid_instance);
+            ProjectDTO retDTO = convert(project);
+            return Response.status(Response.Status.OK).entity(retDTO).build();
+            
+        } catch (Exception e) {
+            LOG.severe(e.getMessage());
+            return Response.status(Response.Status.BAD_REQUEST).build();
+        }
+    }
+    
+    @POST
+    @Path(Constants.addCollaborator + "/{uuid_user}/{uuid_project}/{uuid_col}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response addCollaborator(@PathParam("uuid_user") String uuid_user, @PathParam("uuid_project") String uuid_project, @PathParam("uuid_col") String uuid_col, @Context SecurityContext sc) {
+        try {
+            UserConnect owner = ucc.getUserConnect(uuid_user);
+            SecurityManager.secureBasic(owner.getUserName(), sc);
+            Project project = pc.getProject(uuid_project);
+            if (!project.getOwner().getUUID().equals(owner.getUUID())) {
+                throw new Exception("Not enough privileges");
+            }
+            List<String> uuids = new ArrayList<String>();
+            uuids.add(uuid_col);
+            project = pc.addCollaborators(uuid_project, uuids);
+            ProjectDTO retDTO = convert(project);
+            return Response.status(Response.Status.OK).entity(retDTO).build();
+        } catch (Exception e) {
+            LOG.severe(e.getMessage());
+            return Response.status(Response.Status.BAD_REQUEST).build();
+        }
+    }
+    
+    @POST
+    @Path(Constants.removeCollaborator + "/{uuid_user}/{uuid_project}/{uuid_col}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response removeCollaborator(@PathParam("uuid_user") String uuid_user, @PathParam("uuid_project") String uuid_project, @PathParam("uuid_col") String uuid_col, @Context SecurityContext sc) {
+        try {
+            UserConnect owner = ucc.getUserConnect(uuid_user);
+            SecurityManager.secureBasic(owner.getUserName(), sc);
+            Project project = pc.getProject(uuid_project);
+            if (!project.getOwner().getUUID().equals(owner.getUUID())) {
+                throw new Exception("Not enough privileges");
+            }
+            project = pc.removeCollaborator(uuid_project, uuid_col);
+            ProjectDTO retDTO = convert(project);
+            return Response.status(Response.Status.OK).entity(retDTO).build();
+        } catch (Exception e) {
+            LOG.severe(e.getMessage());
+            return Response.status(Response.Status.BAD_REQUEST).build();
+        }
+    }
     
     @GET
     @Path(Constants.getProject + "/{uuid_user}/{uuid_project}")

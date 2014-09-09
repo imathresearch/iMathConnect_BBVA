@@ -42,7 +42,7 @@ public class Project implements Serializable{
 
     @Id
     @GeneratedValue(generator="system-uuid")
-    @GenericGenerator(name="system-uuid3", strategy = "uuid")
+    @GenericGenerator(name="system-uuid", strategy = "uuid")
     @Column(name = "uuid", unique = true)
     private String UUID;
     

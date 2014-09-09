@@ -30,6 +30,9 @@ public class ProjectController extends AbstractController {
     @Inject 
     UserConnectController ucc;
     
+    @Inject
+    InstanceController ic;
+    
     /**
      * Creates and return a new Project
      * @param name
@@ -53,6 +56,23 @@ public class ProjectController extends AbstractController {
         return project;
     }
     
+    /**
+     * Updates the project data
+     * @param uuid
+     * @param desc
+     * @param uuid_instance
+     * @return
+     * @throws Exception
+     */
+    @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
+    public Project updateProject(String uuid, String desc, String uuid_instance) throws Exception {
+        Project project = this.getProject(uuid);
+        Instance instance = ic.getInstance(uuid_instance);
+        project.setInstance(instance);
+        project.setDescription(desc);
+        db.makePersistent(project);
+        return project;
+    }
     
     /**
      * Adds a list of Users to the collaborator list 

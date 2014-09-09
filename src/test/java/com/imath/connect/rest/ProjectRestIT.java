@@ -1,6 +1,7 @@
 package com.imath.connect.rest;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -23,6 +24,7 @@ import com.imath.connect.service.ProjectController;
 import com.imath.connect.service.UserConnectController;
 import com.imath.connect.rest.ProjectRest;
 import com.imath.connect.rest.ProjectRest.ProjectDTO;
+import com.imath.connect.rest.UserConnectRest.UserConnectDTO;
 
 @RunWith(Arquillian.class)
 public class ProjectRestIT extends AbstractIT{
@@ -50,7 +52,7 @@ public class ProjectRestIT extends AbstractIT{
         assertEquals(Response.Status.BAD_REQUEST.getStatusCode(), rest.getStatus());
         
         // 2.- We add a new UserConnect, and pass it, but instance is still not there
-        UserConnect owner = ucc.newUserConnect("myself", "hola@pepe.com", "imath", "958183402", "958183402");
+        UserConnect owner = ucc.newUserConnect("myselffffrghnb", "hola@pepehhgre.com", "imath", "958183402", "958183402");
         rest = prEndPoint.newProject(name, desc, owner.getUUID(), "no_instance", null);
         assertEquals(Response.Status.BAD_REQUEST.getStatusCode(), rest.getStatus());
         
@@ -70,6 +72,94 @@ public class ProjectRestIT extends AbstractIT{
         Date projDate = project.getCreationDate();
         Date recDate = projectDTO.creationDate;
         assertEquals(projDate.getTime(), recDate.getTime());
+    }
+    
+    @Test
+    public void addCollaboratorIT() throws Exception {
+        String name = "myProject";
+        String desc = " A very nice project";
+        // 1.- Exception path: UserConnect does not exists
+        Response rest = prEndPoint.addCollaborator("noid", "nouuid", "nouuid", null);
+        assertEquals(Response.Status.BAD_REQUEST.getStatusCode(), rest.getStatus());
+        
+        // 2.- Exception path: Project does not exists
+        UserConnect owner = ucc.newUserConnect("myselfqqqaz", "hola@pepehhj.com", "imath", "958183402", "958183402");
+        rest = prEndPoint.addCollaborator(owner.getUUID(), "nouuid", "nouuid", null);
+        assertEquals(Response.Status.BAD_REQUEST.getStatusCode(), rest.getStatus());
+        
+        // 3.- Exception path: Project does not belong to owner
+        Instance instance = ic.newInstance(0, 0, 0, "127.0.0.1", owner);
+        UserConnect owner2 = ucc.newUserConnect("myselfff", "hola@ppellk.com", "imath", "958183402", "958183402");
+        Project project = pc.newProject(name, desc, owner2, instance);
+        rest = prEndPoint.addCollaborator(owner.getUUID(), project.getUUID(), "nouuid", null);
+        assertEquals(Response.Status.BAD_REQUEST.getStatusCode(), rest.getStatus());
+        
+        // 4.- Exception path: Collaborator does not exists
+        Project project2 = pc.newProject(name+"h", desc+"h", owner, instance);
+        rest = prEndPoint.addCollaborator(owner.getUUID(), project2.getUUID(), "nouuid", null);
+        assertEquals(Response.Status.BAD_REQUEST.getStatusCode(), rest.getStatus());
+        
+        // 5.- Happy path
+        rest = prEndPoint.addCollaborator(owner.getUUID(), project2.getUUID(), owner2.getUUID(), null);
+        assertEquals(Response.Status.OK.getStatusCode(), rest.getStatus());
+        ProjectDTO projDTO = (ProjectDTO) rest.getEntity();
+        List<UserConnectDTO> list = projDTO.userCol;
+        assertEquals(1,list.size());
+        assertEquals(owner2.getUUID(), list.get(0).UUID);
+        // Also, we check that we retrieve the same when we directly access the DB
+        List<UserConnect> user = ucc.getCollaborationUsersByProject(project2.getUUID());
+        assertEquals(1,user.size());
+        assertEquals(owner2.getUUID(), user.get(0).getUUID());
+    }
+    
+    @Test
+    public void removeCollaboratorIT() throws Exception {
+        String name = "myProject";
+        String desc = " A very nice project";
+        // 1.- Exception path: UserConnect does not exists
+        Response rest = prEndPoint.removeCollaborator("noid", "nouuid", "nouuid", null);
+        assertEquals(Response.Status.BAD_REQUEST.getStatusCode(), rest.getStatus());
+        
+        // 2.- Exception path: Project does not exists
+        UserConnect owner = ucc.newUserConnect("zmyselfqqq", "hola@pepessskk.com", "imath", "958183402", "958183402");
+        rest = prEndPoint.removeCollaborator(owner.getUUID(), "nouuid", "nouuid", null);
+        assertEquals(Response.Status.BAD_REQUEST.getStatusCode(), rest.getStatus());
+        
+        // 3.- Exception path: Project does not belong to owner
+        Instance instance = ic.newInstance(0, 0, 0, "127.0.0.1", owner);
+        UserConnect owner2 = ucc.newUserConnect("myselfffaaa", "hola@ppeqqq.com", "imath", "958183402", "958183402");
+        Project project = pc.newProject(name, desc, owner2, instance);
+        rest = prEndPoint.removeCollaborator(owner.getUUID(), project.getUUID(), "nouuid", null);
+        assertEquals(Response.Status.BAD_REQUEST.getStatusCode(), rest.getStatus());
+        
+        // 4.- OK path: If collaborator does not exists, the entity remains the same, and returns OK 
+        Project project2 = pc.newProject(name+"h", desc+"h", owner, instance);
+        rest = prEndPoint.removeCollaborator(owner.getUUID(), project2.getUUID(), "nouuid", null);
+        assertEquals(Response.Status.OK.getStatusCode(), rest.getStatus());
+        
+        // 5.- Happy path: We add two collaborator and remove one.
+        UserConnect owner3 = ucc.newUserConnect("myselfffdd", "ddhola@ppejjj.com", "imath", "958183402", "958183402");
+        rest = prEndPoint.addCollaborator(owner.getUUID(), project2.getUUID(), owner2.getUUID(), null);
+        assertEquals(Response.Status.OK.getStatusCode(), rest.getStatus());
+        rest = prEndPoint.addCollaborator(owner.getUUID(), project2.getUUID(), owner3.getUUID(), null);
+        assertEquals(Response.Status.OK.getStatusCode(), rest.getStatus());
+        
+        List<UserConnect> user = ucc.getCollaborationUsersByProject(project2.getUUID());
+        assertEquals(2,user.size()); 
+        // We make sure they are in the DB
+        assertTrue(owner2.getUUID().equals(user.get(1).getUUID()) || owner3.getUUID().equals(user.get(1).getUUID()));
+        assertTrue(owner2.getUUID().equals(user.get(1).getUUID()) || owner3.getUUID().equals(user.get(1).getUUID()));
+        // here we remove it
+        rest = prEndPoint.removeCollaborator(owner.getUUID(), project2.getUUID(), owner2.getUUID(), null);
+        assertEquals(Response.Status.OK.getStatusCode(), rest.getStatus());
+        ProjectDTO projDTO = (ProjectDTO) rest.getEntity();
+        List<UserConnectDTO> list = projDTO.userCol;
+        assertEquals(1,list.size());
+        assertEquals(owner3.getUUID(), list.get(0).UUID);
+        // and we check again in the DB that everythng have been modified
+        List<UserConnect> user2 = ucc.getCollaborationUsersByProject(project2.getUUID());
+        assertEquals(1,user2.size());
+        assertEquals(owner3.getUUID(), user2.get(0).getUUID());
     }
     
     @Test

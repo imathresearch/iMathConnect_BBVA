@@ -10,15 +10,18 @@ import org.jboss.shrinkwrap.resolver.api.maven.MavenDependencyResolver;
 
 import com.imath.connect.data.InstanceDB;
 import com.imath.connect.data.MainDB;
+import com.imath.connect.data.NotificationDB;
 import com.imath.connect.data.ProjectDB;
 import com.imath.connect.data.StandardConfigurationDB;
 import com.imath.connect.data.UserConnectDB;
 import com.imath.connect.model.Instance;
+import com.imath.connect.model.Notification;
 import com.imath.connect.model.Project;
 import com.imath.connect.model.StandardConfiguration;
 import com.imath.connect.model.UserConnect;
 import com.imath.connect.service.AbstractController;
 import com.imath.connect.service.InstanceController;
+import com.imath.connect.service.NotificationController;
 import com.imath.connect.service.ProjectController;
 import com.imath.connect.service.StandardConfigurationController;
 import com.imath.connect.service.UserConnectController;
@@ -39,10 +42,10 @@ public abstract class AbstractIT {
                .addAsLibraries(resolver.artifact("org.mockito:mockito-all:1.8.3").resolveAsFiles())
                .addAsLibraries(resolver.artifact("org.jasypt:jasypt:1.9.0").resolveAsFiles())
                .addAsLibraries(resolver.artifact("org.jasypt:jasypt-hibernate4:1.9.0").resolveAsFiles())
-               .addClasses(EncryptedStringType.class, MainDB.class, UserConnect.class , Project.class, StandardConfiguration.class, Instance.class,
-                       InstanceDB.class, ProjectDB.class, StandardConfigurationDB.class, UserConnectDB.class,
+               .addClasses(EncryptedStringType.class, MainDB.class, UserConnect.class , Project.class, StandardConfiguration.class, Instance.class, Notification.class,
+                       InstanceDB.class, ProjectDB.class, StandardConfigurationDB.class, UserConnectDB.class, NotificationDB.class, 
                        JaxRsActivator.class, ProjectRest.class, InstanceRest.class, com.imath.connect.security.SecurityManager.class, 
-                       StandardConfigurationRest.class, UserConnectRest.class,
+                       StandardConfigurationRest.class, UserConnectRest.class, NotificationController.class,
                        AbstractController.class, InstanceController.class, ProjectController.class, StandardConfigurationController.class, UserConnectController.class,
                        Constants.class, Resources.class, Util.class, Encryptor.class, AbstractIT.class, ProjectRestIT.class, InstanceRestIT.class, 
                        StandardConfigurationRestIT.class, UserConnectRestIT.class)

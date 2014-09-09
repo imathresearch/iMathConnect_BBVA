@@ -19,9 +19,11 @@ public class Constants {
     // Gets the own projects given the user
     static public final String ownProjects = "/getOwnProjects";
     
- // Gets the own projects given the user
+    // Gets the own projects given the user
     static public final String getProject = "/getProject";
     
+    // Updates the information of a project
+    static public final String updateProject = "/updateProject";
     
     // gets the collaborative projects given a user
     static public final String colProjects = "/getColProjects";
@@ -41,7 +43,11 @@ public class Constants {
     // gets the users that collaborate on a project, given the project
     static public final String getColUsersByProjectUser = "/getColUsersByProject";
     
+    // Adds a new collaborator to the given project
+    static public final String addCollaborator = "/addCollaborator";
     
+    // remove a collaborator of the given project
+    static public final String removeCollaborator = "/removeCollaborator";
     
     // IMPORTANT: We assume that JBOSS is launched from JBOSS-HOME/bin
     static public final String ADD_USER_CLI = "./add-user.sh";
