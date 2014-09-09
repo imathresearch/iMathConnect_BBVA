@@ -203,7 +203,7 @@ function generateTableOfColProjects(projects) {
 		var rowCol = "";
 		for(var ii=0; ii< collaborators.length; ii++) {
 			rowCol = rowCol + "<table><tr>";
-			rowCol = rowCol + '<td><img src="img/avatar5.png" alt="' + collaborators[ii]['userName'] + '" class="offline"  height="32" width="32"/></td><td><i>' + collaborators[ii]['userName'] + "</i><br><small>" + collaborators[ii]['organization'] +'</small> </td></tr></table>'; 
+			rowCol = rowCol + '<td><img src="img/avatar04.png" alt="' + collaborators[ii]['userName'] + '" class="offline"  height="32" width="32"/></td><td><i>' + collaborators[ii]['userName'] + "</i><br><small>" + collaborators[ii]['organization'] +'</small> </td></tr></table>'; 
 		}
 		var rowIcon = null;
 		if (collaborators.length>0) {
@@ -218,7 +218,7 @@ function generateTableOfColProjects(projects) {
 		
 		var owner = project['owner'];
 		var rowOwner = "<table><tr>";
-		rowOwner = rowOwner + '<td><img src="img/avatar5.png" alt="' + owner['userName'] + '" class="offline"  height="32" width="32"/></td><td><i>' + owner['userName'] + "</i><br><small>" + owner['organization'] + '</small> </td></tr></table>'; 
+		rowOwner = rowOwner + '<td><img src="img/avatar04.png" alt="' + owner['userName'] + '" class="offline"  height="32" width="32"/></td><td><i>' + owner['userName'] + "</i><br><small>" + owner['organization'] + '</small> </td></tr></table>'; 
 		ret = ret + htmlTableRowData([rowIcon, rowName,dateText,desc,rowOwner,rowCol,rowInstance], uuid);	
 	}
 	return ret;
@@ -237,7 +237,7 @@ function generateTableOfProjects(projects) {
 		var rowCol = "";
 		for(var ii=0; ii< collaborators.length; ii++) {
 			rowCol = rowCol + "<table><tr>";
-			rowCol = rowCol + '<td><img src="img/avatar5.png" alt="' + collaborators[ii]['userName'] + '" class="offline"  height="32" width="32"/></td><td><i>' +
+			rowCol = rowCol + '<td><img src="img/avatar04.png" alt="' + collaborators[ii]['userName'] + '" class="offline"  height="32" width="32"/></td><td><i>' +
 			collaborators[ii]['userName'] + "</i><br><small>" + collaborators[ii]['organization'] 
 			+'</small> </td></tr></table>'; 
 		}

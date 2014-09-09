@@ -19,30 +19,35 @@ function initProjectView() {
 	ajaxOwnProjects();
 	ajaxInstancesLoad();
 	$("#imath-id-own-projects").delegate("tr", "click", function(e) {
-		var uuid = $(e.currentTarget).attr('id');
-		uploadProject(uuid);
+		if (!(typeof $(e.currentTarget).attr('id') == "undefined")){
+			var uuid = $(e.currentTarget).attr('id');
+			uploadProject(uuid);
+		}
 	});
 	$("#imath-id-instances-select").delegate("tr", "click", function(e) {
-		var uuid = $(e.currentTarget).attr('id');
-		if (uuid !== null) {
-			var instance = getGlobalInstance(uuid);
-			if (instance!==null) {
-				var fakeInstances = [];
-				fakeInstances[0] = instance;
-				instanceTableHtml = generateTableOfInstances(fakeInstances, instance['pub'], true);
-				$(".imath-select-instance").html(instanceTableHtml);
-				$('#imath-id-cancel-button-select').trigger('click');
-			} else {
-				console.log("Error getting selected instances");
+		if (!(typeof $(e.currentTarget).attr('id') == "undefined")){
+			var uuid = $(e.currentTarget).attr('id');
+			if (uuid !== null) {
+				var instance = getGlobalInstance(uuid);
+				if (instance!==null) {
+					var fakeInstances = [];
+					fakeInstances[0] = instance;
+					instanceTableHtml = generateTableOfInstances(fakeInstances, instance['pub'], true);
+					$(".imath-select-instance").html(instanceTableHtml);
+					$('#imath-id-cancel-button-select').trigger('click');
+				} else {
+					console.log("Error getting selected instances");
+				}
 			}
 		}
 	});
 	$( "#imath-id-save-buton-project" ).click(function() {
 		if (global_uuid_project_selected!==null) {
-			var newDesc = $("#idProjectDescription").attr("value");
+			var newDesc = $("#idProjectDescription").val();
+			alert(newDesc);
 			var uuid_project = global_uuid_project_selected;
 			var uuid_instance = $('#imath-id-instances tr').eq(1).attr("id");	// We get the id of the second tr of the table
-			saveProject(uuid_project, newDesc, uuid_instance)
+			saveProject(uuid_project, newDesc, uuid_instance);
 		}
 	});
 }
@@ -129,7 +134,7 @@ function generateTableOfInstancesSelect(instances, pub) {
 			rowIcon = '<span class="badge bg-light-blue">Pu</span>';
 		}
 		var line = rowIcon + cpu + ram +stg;
-		ret = ret + "<option value='" + uuid + "'>" + line + "</option>"
+		ret = ret + "<option value='" + uuid + "'>" + line + "</option>";
 	}
 	return ret;
 }
@@ -144,16 +149,15 @@ function uploadProject(uuid) {
 	    success: function(project) {
 	    	global_uuid_project_selected = uuid;
 	    	$(".imath-project-name").html(project['name']);
-	    	$("#idProjectName").attr("value", project['name']);
-	    	$("#idProjectDescription").attr("value", project['desc']);
+	    	$("#idProjectName").val(project['name']);
+	    	$("#idProjectDescription").val(project['desc']);
 	    	var creationDate = new Date(project['creationDate']);
 			var dateText = dateToNice(creationDate);
-			$("#idCreationDate").attr("value", dateText);
-			var b = false;
+			$("#idCreationDate").val(dateText);
 			var instance = project['instance'];
 			var instanceTableHtml;
 			var fakeInstances = [];
-			fakeInstances[0] = instance
+			fakeInstances[0] = instance;
 			if(project['instance']['owner']===null) {	// public
 				instanceTableHtml = generateTableOfInstances(fakeInstances, true, true);
 			} else {
@@ -171,12 +175,13 @@ function uploadProject(uuid) {
 }
 
 function generateTableOfCollaborators(collaborators) {
-	var htmlRet = htmlTableRowHead(["Pic", "User Name", "Organization"]);
+	var htmlRet = htmlTableRowHead(["Pic", "User Name", "eMail", "Organization"]);
 	for(var ii=0; ii< collaborators.length; ii++) {
-		var image = '<img src="img/avatar5.png" alt="' + collaborators[ii]['userName'] + '" class="offline"  height="32" width="32"/>';
+		var image = '<img src="img/avatar04.png" alt="' + collaborators[ii]['userName'] + '" class="offline"  height="32" width="32"/>';
 		var name = collaborators[ii]['userName'] ;
-		var org = collaborators[ii]['organization'] ;
-		htmlRet = htmlRet + htmlTableRowData([image, name, org]);
+		var org = collaborators[ii]['organization'];
+		var email = collaborators[ii]['eMail'];
+		htmlRet = htmlRet + htmlTableRowData([image, name, email, org]);
 	}
 	return htmlRet;
 }

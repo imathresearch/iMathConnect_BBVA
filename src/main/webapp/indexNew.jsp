@@ -87,7 +87,7 @@
                             <ul class="dropdown-menu">
                                 <!-- User image -->
                                 <li class="user-header bg-light-blue">
-                                    <img src="img/avatar5.png" class="img-circle" alt="User Image" />
+                                    <img src="img/avatar04.png" class="img-circle" alt="User Image" />
                                     <p class="username">-</p>
                                     <p class="usercreationdate">-</p>
                                 </li>
@@ -114,7 +114,7 @@
                     <!-- Sidebar user panel -->
                     <div class="user-panel">
                         <div class="pull-left image">
-                            <img src="img/avatar5.png" class="img-circle" alt="User Image" />
+                            <img src="img/avatar04.png" class="img-circle" alt="User Image" />
                         </div>
                         <div class="pull-left info">
                             <p class="username">-</p>
