@@ -119,7 +119,7 @@ function ajaxOwnInstances() {
 	    dataType: "json",
 	    type: "GET",
 	    success: function(instances) {
-	    	var htmlTable = generateTableOfInstances(instances, false);
+	    	var htmlTable = generateTableOfInstances(instances, false, true);
 			$(".imath-own-instances").html(htmlTable);
 	    },
 	    error: function(error) {
@@ -135,7 +135,7 @@ function ajaxPublicInstances() {
 	    dataType: "json",
 	    type: "GET",
 	    success: function(instances) {
-	    	var htmlTable = generateTableOfInstances(instances, true);
+	    	var htmlTable = generateTableOfInstances(instances, true, true);
 			$(".imath-public-instances").html(htmlTable);
 	    },
 	    error: function(error) {
@@ -203,7 +203,7 @@ function generateTableOfColProjects(projects) {
 		var rowCol = "";
 		for(var ii=0; ii< collaborators.length; ii++) {
 			rowCol = rowCol + "<table><tr>";
-			rowCol = rowCol + '<td><img src="img/avatar5.png" alt="' + collaborators[ii]['userName'] + '" class="offline"  height="32" width="32"/></td><td><i>' + collaborators[ii]['userName'] + "</i><br><small>" + collaborators[ii]['organization'] +'</small> </td></tr></table>'; 
+			rowCol = rowCol + '<td><img src="img/avatar04.png" alt="' + collaborators[ii]['userName'] + '" class="offline"  height="32" width="32"/></td><td><i>' + collaborators[ii]['userName'] + "</i><br><small>" + collaborators[ii]['organization'] +'</small> </td></tr></table>'; 
 		}
 		var rowIcon = null;
 		if (collaborators.length>0) {
@@ -218,7 +218,7 @@ function generateTableOfColProjects(projects) {
 		
 		var owner = project['owner'];
 		var rowOwner = "<table><tr>";
-		rowOwner = rowOwner + '<td><img src="img/avatar5.png" alt="' + owner['userName'] + '" class="offline"  height="32" width="32"/></td><td><i>' + owner['userName'] + "</i><br><small>" + owner['organization'] + '</small> </td></tr></table>'; 
+		rowOwner = rowOwner + '<td><img src="img/avatar04.png" alt="' + owner['userName'] + '" class="offline"  height="32" width="32"/></td><td><i>' + owner['userName'] + "</i><br><small>" + owner['organization'] + '</small> </td></tr></table>'; 
 		ret = ret + htmlTableRowData([rowIcon, rowName,dateText,desc,rowOwner,rowCol,rowInstance], uuid);	
 	}
 	return ret;
@@ -237,7 +237,7 @@ function generateTableOfProjects(projects) {
 		var rowCol = "";
 		for(var ii=0; ii< collaborators.length; ii++) {
 			rowCol = rowCol + "<table><tr>";
-			rowCol = rowCol + '<td><img src="img/avatar5.png" alt="' + collaborators[ii]['userName'] + '" class="offline"  height="32" width="32"/></td><td><i>' +
+			rowCol = rowCol + '<td><img src="img/avatar04.png" alt="' + collaborators[ii]['userName'] + '" class="offline"  height="32" width="32"/></td><td><i>' +
 			collaborators[ii]['userName'] + "</i><br><small>" + collaborators[ii]['organization'] 
 			+'</small> </td></tr></table>'; 
 		}
@@ -256,10 +256,21 @@ function generateTableOfProjects(projects) {
 	return ret;
 }
 
-function generateTableOfInstances(instances, pub) {
-	var ret = htmlTableRowHead(['#', faIcon("fa-gears")+' vCPUs', 
+/**
+ * Generates the content of a html table for instances 
+ * @param instances		The list of InstanceDTO received from the server
+ * @param pub			Boolean indicating they are public (true) or private (false)
+ * @param putHeader		
+ * @returns {String}
+ */
+function generateTableOfInstances(instances, pub, putHeader) {
+	var ret = "";
+	if (putHeader) {
+		ret = htmlTableRowHead(['#', faIcon("fa-gears")+' vCPUs', 
 	                            faIcon("fa-film") + ' RAM', 
 	                            faIcon("fa-cloud") + 'Storage', 'Date', '']);
+	}
+	
 	for(var i=0; i<instances.length; i++) {
 		instance = instances[i];
 		var creationDate = new Date(instance['creationDate']);
@@ -267,7 +278,7 @@ function generateTableOfInstances(instances, pub) {
 		var cpu = instance['cpu'];
 		var ram = instance['ram'];
 		var stg = instance['stg'];
-		var uuid = instance['uuid'];
+		var uuid = instance['UUID'];
 		var rowIcon = '<span class="badge bg-red">Pr</span>';
 		if (pub) {
 			rowIcon = '<span class="badge bg-light-blue">Pu</span>';
