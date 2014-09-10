@@ -13,6 +13,7 @@ public class UserConnectTest {
     String UUID = "IDENT";
     Date creation = new Date();
     Date lastCon = new Date();
+    Date currCon = new Date();
     Date lastMessage = new Date();
     String eMail = "test@test.com";
     String phone1="1234567";
@@ -26,6 +27,7 @@ public class UserConnectTest {
         user.setUUID(UUID);
         user.setCreationDate(creation);
         user.setLastConnection(lastCon);
+        user.setCurrentConnection(currCon);
         user.setEMail(eMail);
         user.setPhone1(phone1);
         user.setPhone2(phone2);
@@ -45,6 +47,11 @@ public class UserConnectTest {
     @Test
     public void testGetLastConnection() {
         assertEquals(lastCon, user.getLastConnection());
+    }
+    
+    @Test
+    public void testGetCurrentConnection() {
+        assertEquals(currCon, user.getCurrentConnection());
     }
     
     @Test

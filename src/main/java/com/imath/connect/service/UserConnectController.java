@@ -36,6 +36,7 @@ public class UserConnectController extends AbstractController{
         UserConnect peer = new UserConnect();
         peer.setEMail(eMail);
         peer.setLastConnection(now);
+        peer.setCurrentConnection(now);
         peer.setCreationDate(now);
         peer.setPhone1(phone1);
         peer.setPhone2(phone2);
@@ -52,12 +53,13 @@ public class UserConnectController extends AbstractController{
      * @throws PersistenceException if there is an error when persisting the entity
      */
     @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
-    public void setLastConnection(String UUID) throws EntityNotFoundException, PersistenceException {
+    public void setCurrentConnection(String UUID) throws EntityNotFoundException, PersistenceException {
         UserConnect peer = this.db.getUserConnectDB().findById(UUID);
         if (peer == null) {
             throw new EntityNotFoundException();  
         }
-        peer.setLastConnection(new Date());
+        peer.setLastConnection(peer.getCurrentConnection());
+        peer.setCurrentConnection(new Date());
         try {
             this.db.makePersistent(peer);
         } catch (Exception e) {

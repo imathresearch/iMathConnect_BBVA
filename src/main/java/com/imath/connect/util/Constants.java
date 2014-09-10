@@ -22,6 +22,9 @@ public class Constants {
     // Gets the own projects given the user
     static public final String getProject = "/getProject";
     
+    // Gets the notifications given the user
+    static public final String getNotifications = "/getNotifications";
+    
     // Updates the information of a project
     static public final String updateProject = "/updateProject";
     

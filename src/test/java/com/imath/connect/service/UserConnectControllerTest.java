@@ -9,6 +9,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.mockito.Mockito.doThrow;
 
+import java.util.Date;
 import java.util.logging.Logger;
 
 import javax.persistence.EntityManager;
@@ -73,23 +74,24 @@ public class UserConnectControllerTest {
     
     //Happy Path setLastConnection
     @Test
-    public void setLastConnectionTest() throws Exception {
+    public void setCurrentConnectionTest() throws Exception {
         String UUID = "ident";
         UserConnect peer = createUserConnect(UUID);
         when(db.getUserConnectDB().findById(UUID)).thenReturn(peer);
-        pc.setLastConnection(UUID);
+        pc.setCurrentConnection(UUID);
         
+        assertTrue(peer.getCurrentConnection() != null);
         assertTrue(peer.getLastConnection() != null);
         verify(em).persist((UserConnect)Matchers.anyObject());
     }
     
     //Exception Path one setLastConnection
     @Test
-    public void setLastConnectionExceptionTest() throws Exception {
+    public void setCurrentConnectionExceptionTest() throws Exception {
         String UUID = "ident";
         when(db.getUserConnectDB().findById(UUID)).thenReturn(null);
         try {
-            pc.setLastConnection(UUID);
+            pc.setCurrentConnection(UUID);
             fail();
         } catch (EntityNotFoundException e) {
             // Fine
@@ -101,13 +103,13 @@ public class UserConnectControllerTest {
 
     //Exception Path two setLastConnection
     @Test
-    public void setLastConnectionException2Test() throws Exception {
+    public void setCurrentConnectionException2Test() throws Exception {
         String UUID = "ident";
         UserConnect peer = createUserConnect(UUID);
         when(db.getUserConnectDB().findById(UUID)).thenReturn(peer);
         doThrow(new TransactionRequiredException()).when(em).persist(peer);
         try {
-            pc.setLastConnection(UUID);
+            pc.setCurrentConnection(UUID);
             fail();
         } catch (PersistenceException e) {
             // Fine
@@ -119,6 +121,7 @@ public class UserConnectControllerTest {
     private UserConnect createUserConnect(String UUID) {
         UserConnect peer = new UserConnect();
         peer.setUUID(UUID);
+        peer.setCurrentConnection(new Date());
         return peer;
     }
 }

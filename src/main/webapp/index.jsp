@@ -35,7 +35,7 @@
                     <a class="hiddenanchor" id="tologin"></a>
                     <div id="wrapper">
                         <div id="login" class="animated form in">
-                            <form  action="login.jsp" method="POST" autocomplete="on"> 
+                            <form  action="login" method="POST" autocomplete="on"> 
                                 <h1> iMath Cloud - Log in </h1> 
                                 <p> 
                                     <label for="username" class="uname" data-icon="u" > Your username </label>

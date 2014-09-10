@@ -7,7 +7,7 @@
       <javaee:url-pattern>/indexNew.jsp</javaee:url-pattern>
       <javaee:url-pattern>/rest/*</javaee:url-pattern>
       <javaee:url-pattern>/changePassword</javaee:url-pattern>
-      <javaee:url-pattern>/logout</javaee:url-pattern>
+      <javaee:url-pattern>/logout</javaee:url-pattern>      
     </javaee:web-resource-collection>
     <javaee:auth-constraint>
       <javaee:role-name>WebAppUser</javaee:role-name>
@@ -37,6 +37,10 @@
     <javaee:servlet-class>com.imath.connect.servlet.ChangePassword</javaee:servlet-class>
   </javaee:servlet>
   <javaee:servlet>
+    <javaee:servlet-name>login</javaee:servlet-name>
+    <javaee:servlet-class>com.imath.connect.servlet.Login</javaee:servlet-class>
+  </javaee:servlet>
+  <javaee:servlet>
     <javaee:servlet-name>logout</javaee:servlet-name>
     <javaee:servlet-class>com.imath.connect.servlet.Logout</javaee:servlet-class>
   </javaee:servlet>
@@ -59,5 +63,9 @@
   <javaee:servlet-mapping>
     <javaee:servlet-name>logout</javaee:servlet-name>
     <javaee:url-pattern>/logout</javaee:url-pattern>
+  </javaee:servlet-mapping>
+  <javaee:servlet-mapping>
+    <javaee:servlet-name>login</javaee:servlet-name>
+    <javaee:url-pattern>/login</javaee:url-pattern>
   </javaee:servlet-mapping>
 </web-app>

@@ -46,6 +46,11 @@ public class UserConnect implements Serializable {
     // The TIMESTAMP of the last connection
     @Temporal(TemporalType.TIMESTAMP)
     @NotNull
+    private Date currentConnection;
+    
+    // The TIMESTAMP of the last connection
+    @Temporal(TemporalType.TIMESTAMP)
+    @NotNull
     private Date lastConnection;
     
     // The TIMESTAMP of the last connection
@@ -119,6 +124,14 @@ public class UserConnect implements Serializable {
     
     public void setLastConnection(Date lastConnection) {
         this.lastConnection = lastConnection;
+    }
+    
+    public Date getCurrentConnection() {
+        return this.currentConnection;
+    }
+    
+    public void setCurrentConnection(Date currentConnection) {
+        this.currentConnection = currentConnection;
     }
     
     public Date getCreationDate() {

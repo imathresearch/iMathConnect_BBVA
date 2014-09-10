@@ -1,6 +1,7 @@
 package com.imath.connect.service;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -51,6 +52,7 @@ public class NotificationController extends AbstractController {
     	notif.setSubject(subject);
     	notif.setText(text);
     	notif.setType(type);
+    	notif.setCreationDate(new Date());
     	db.makePersistent(notif);
     	return notif;
     }
@@ -63,14 +65,21 @@ public class NotificationController extends AbstractController {
     }
     
     /**
-     * Returns the list of notifications for a given user
+     * Returns the list of notifications (PUBLIC and PRIVATES) for a given user. 
+     * Only notifications created after the last connection of the user are retrieved
      * @param uuid_user
      * @return
      * @throws Exception
      */
     @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
     public List<Notification> getNotificationsByUser(String uuid_user) throws Exception{
-    	return db.getNotificationDB().findByUser(uuid_user);
+    	UserConnect user = db.getUserConnectDB().findById(uuid_user);
+    	List<Notification> privateNotifications = db.getNotificationDB().findPrivateByUserDate(uuid_user, user.getLastConnection()); 	
+    	List<Notification> publicNotifications = db.getNotificationDB().findPublicByDate(user.getLastConnection());
+    	List<Notification> allNotifications = new ArrayList<Notification>();
+    	allNotifications.addAll(privateNotifications);
+    	allNotifications.addAll(publicNotifications);
+    	return allNotifications;
     }
     
     /**
