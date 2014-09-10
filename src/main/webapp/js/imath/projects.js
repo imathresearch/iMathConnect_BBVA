@@ -54,6 +54,16 @@ function initProjectView(uuid_project) {
 			saveProject(uuid_project, newDesc, uuid_instance);
 		}
 	});
+	
+	$("#idAddCollaboratorButton").click(function() {
+		if (global_uuid_project_selected!==null) {
+			var other = $("#idCollaborationBox").val();
+			other = other.trim();
+			if(other !=="") {
+				addCollaborator(other, global_uuid_project_selected);
+			}
+		}
+	});
 }
 
 function getGlobalInstance(uuid) {
@@ -63,6 +73,25 @@ function getGlobalInstance(uuid) {
 		}
 	}
 	return null;
+}
+
+function addCollaborator(other, uuid_project) {
+	$.ajax({
+	    url: "rest/api/agora/addCollaboratorByOther/" + global_uuid_user + "/" + uuid_project + "/" + other,
+	    cache: false,
+	    dataType: "json",
+	    type: "POST",
+	    success: function(project) {
+	    	var collaborators = project['userCol'];
+			collaboratorsHtml = generateTableOfCollaborators(collaborators);
+			$(".imath-collaborators"). html(collaboratorsHtml);
+			ajaxOwnProjects("uploadProject");
+			$("#idCollaborationBox").val("");
+	    },
+	    error: function(error) {
+	    	$('#imath-id-error-message-col').modal('show');
+	    }
+	});		
 }
 
 function saveProject(uuid_project, newDesc, uuid_instance) {
