@@ -29,10 +29,17 @@ INSERT INTO userconnect(uuid, creationdate, email, lastconnection, organization,
 INSERT INTO userconnect(uuid, creationdate, email, lastconnection, organization, phone1, phone2, username) VALUES ('useruuid4', '2014-01-01', 'ipnyol@gmail.com', '2014-01-01', 'imath', '999999999', '11111111111', 'user4');
 INSERT INTO userconnect(uuid, creationdate, email, lastconnection, organization, phone1, phone2, username) VALUES ('useruuid5', '2014-01-01', 'ipiyol@gmail.com', '2014-01-01', 'imath', '999999999', '11111111111', 'user5');
 
+--AMMARTINEZ
+INSERT INTO userconnect(uuid, creationdate, email, lastconnection, organization, phone1, phone2, username) VALUES ('amtuuid1', '2014-01-01', 'ammartinez@imathresearch.com', '2014-01-01', 'imath', '999999999', '11111111111', 'amtTest');
+
 INSERT INTO instance(uuid, cpu, creationdate, ram, stg, url, owner_instance) VALUES ('instuuid1', 8, '2014-01-01', 8, 500, '127.0.0.1', null);
 INSERT INTO instance(uuid, cpu, creationdate, ram, stg, url, owner_instance) VALUES ('instuuid2', 1, '2014-01-01', 2, 100, '127.0.0.1', 'useruuid1');
 INSERT INTO instance(uuid, cpu, creationdate, ram, stg, url, owner_instance) VALUES ('instuuid3', 4, '2014-01-01', 3.5, 200, '127.0.0.1', 'useruuid1');
 INSERT INTO instance(uuid, cpu, creationdate, ram, stg, url, owner_instance) VALUES ('instuuid4', 4, '2014-01-01', 8, 300, '127.0.0.1', null);
+
+--AMMARTINEZ
+INSERT INTO instance(uuid, cpu, creationdate, ram, stg, url, owner_instance) VALUES ('instuuid5', 4, '2014-01-01', 8, 300, '127.0.0.1', 'amtuuid1');
+INSERT INTO instance(uuid, cpu, creationdate, ram, stg, url, owner_instance) VALUES ('instuuid6', 1, '2014-01-01', 8, 300, '127.0.0.1', 'amtuuid1');
 
 INSERT INTO project(uuid, creationdate, description, key, name, instance, owner) VALUES ('projuuid1', '2014-01-01', 'My first project', 'IV0p34cDmXFCzA3p9V7/Hg==', 'Cassandra', 'instuuid1', 'useruuid1');
 INSERT INTO project(uuid, creationdate, description, key, name, instance, owner) VALUES ('projuuid2', '2014-01-01', 'Simulating the Game of Live', 'IV0p34cDmXFCzA3p9V7/Hg==', 'Fenix', 'instuuid1', 'useruuid1');
@@ -40,6 +47,11 @@ INSERT INTO project(uuid, creationdate, description, key, name, instance, owner)
 INSERT INTO project(uuid, creationdate, description, key, name, instance, owner) VALUES ('projuuid4', '2014-01-01', 'Cartoon automatic drawing ', 'IV0p34cDmXFCzA3p9V7/Hg==', 'Cartoon', 'instuuid1', 'useruuid2');
 INSERT INTO project(uuid, creationdate, description, key, name, instance, owner) VALUES ('projuuid5', '2014-01-01', 'B-tree new implementation ', 'IV0p34cDmXFCzA3p9V7/Hg==', 'TreePlus', 'instuuid1', 'useruuid3');
 INSERT INTO project(uuid, creationdate, description, key, name, instance, owner) VALUES ('projuuid6', '2014-01-01', 'Altas experiment', 'IV0p34cDmXFCzA3p9V7/Hg==', 'Atlas', 'instuuid1', 'useruuid3');
+
+--AMMARTINEZ
+INSERT INTO project(uuid, creationdate, description, key, name, instance, owner) VALUES ('projuuid7', '2014-01-01', 'My first project', 'IV0p34cDmXFCzA3p9V7/Hg==', 'Cassandra', 'instuuid5', 'amtuuid1');
+INSERT INTO project(uuid, creationdate, description, key, name, instance, owner) VALUES ('projuuid8', '2014-01-01', 'Search Engine', 'IV0p34cDmXFCzA3p9V7/Hg==', 'Searcher', 'instuuid6', 'amtuuid1');
+
 
 INSERT INTO collaborators(projects_uuid, collaborators_uuid) VALUES ('projuuid1', 'useruuid3');
 INSERT INTO collaborators(projects_uuid, collaborators_uuid) VALUES ('projuuid1', 'useruuid4');
@@ -53,6 +65,11 @@ INSERT INTO collaborators(projects_uuid, collaborators_uuid) VALUES ('projuuid5'
 INSERT INTO collaborators(projects_uuid, collaborators_uuid) VALUES ('projuuid5', 'useruuid5');
 INSERT INTO collaborators(projects_uuid, collaborators_uuid) VALUES ('projuuid6', 'useruuid1');
 
-
+--AMMARTINEZ
+INSERT INTO collaborators(projects_uuid, collaborators_uuid) VALUES ('projuuid7', 'useruuid1');
+INSERT INTO collaborators(projects_uuid, collaborators_uuid) VALUES ('projuuid7', 'useruuid3');
+INSERT INTO collaborators(projects_uuid, collaborators_uuid) VALUES ('projuuid8', 'useruuid5');
+INSERT INTO collaborators(projects_uuid, collaborators_uuid) VALUES ('projuuid8', 'useruuid4');
+INSERT INTO collaborators(projects_uuid, collaborators_uuid) VALUES ('projuuid8', 'useruuid1');
 
 
