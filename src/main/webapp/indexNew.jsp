@@ -81,14 +81,12 @@
                         <li class="dropdown user user-menu">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                                 <i class="glyphicon glyphicon-user"></i>
-                                <span><p class="username">-</p> <i class="caret"></i>
-                                </span>
+                                <span class="username"></span> <i class="caret"></i>
                             </a>
                             <ul class="dropdown-menu">
                                 <!-- User image -->
                                 <li class="user-header bg-light-blue">
-                                    <img src="img/avatar04.png" class="img-circle" alt="User Image" />
-                                    <p class="username">-</p>
+                                    <img src="img/avatar04.png" class="img-circle" alt="User Image" /><span class="username">-</span>
                                     <p class="usercreationdate">-</p>
                                 </li>
                                 <!-- Menu Footer-->

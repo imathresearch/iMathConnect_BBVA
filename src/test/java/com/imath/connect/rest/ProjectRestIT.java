@@ -113,6 +113,60 @@ public class ProjectRestIT extends AbstractIT{
     }
     
     @Test
+    public void addCollaboratorByOtherIT() throws Exception {
+        String name = "myProject";
+        String desc = " A very nice project";
+        // 1.- Exception path: UserConnect does not exists
+        Response rest = prEndPoint.addCollaboratorByOther("noid", "nouuid", "nousermail", null);
+        assertEquals(Response.Status.BAD_REQUEST.getStatusCode(), rest.getStatus());
+        
+        // 2.- Exception path: Project does not exists
+        UserConnect owner = ucc.newUserConnect("myselfqQQqqaz", "holQQa@pepehhj.com", "imath", "958183402", "958183402");
+        rest = prEndPoint.addCollaboratorByOther(owner.getUUID(), "nouuid", "nouuid", null);
+        assertEquals(Response.Status.BAD_REQUEST.getStatusCode(), rest.getStatus());
+        
+        // 3.- Exception path: Project does not belong to owner
+        Instance instance = ic.newInstance(0, 0, 0, "127.0.0.1", owner);
+        UserConnect owner2 = ucc.newUserConnect("myselfQQff", "holQQa@ppellk.com", "imath", "958183402", "958183402");
+        Project project = pc.newProject(name, desc, owner2, instance);
+        rest = prEndPoint.addCollaboratorByOther(owner.getUUID(), project.getUUID(), "nouuid", null);
+        assertEquals(Response.Status.BAD_REQUEST.getStatusCode(), rest.getStatus());
+        
+        // 4.- Exception path: userName does not exists
+        Project project2 = pc.newProject(name+"h", desc+"h", owner, instance);
+        rest = prEndPoint.addCollaboratorByOther(owner.getUUID(), project2.getUUID(), "nouname", null);
+        assertEquals(Response.Status.BAD_REQUEST.getStatusCode(), rest.getStatus());
+        
+        // 5.- Exception path: email does not exists
+        rest = prEndPoint.addCollaboratorByOther(owner.getUUID(), project2.getUUID(), "noname@mail.com", null);
+        assertEquals(Response.Status.BAD_REQUEST.getStatusCode(), rest.getStatus());
+        
+        // 6.- Happy path: Add collaborator by userName
+        rest = prEndPoint.addCollaboratorByOther(owner.getUUID(), project2.getUUID(), owner2.getUserName(), null);
+        assertEquals(Response.Status.OK.getStatusCode(), rest.getStatus());
+        ProjectDTO projDTO = (ProjectDTO) rest.getEntity();
+        List<UserConnectDTO> list = projDTO.userCol;
+        assertEquals(1,list.size());
+        assertEquals(owner2.getUUID(), list.get(0).UUID);
+        // Also, we check that we retrieve the same when we directly access the DB
+        List<UserConnect> user = ucc.getCollaborationUsersByProject(project2.getUUID());
+        assertEquals(1,user.size());
+        assertEquals(owner2.getUUID(), user.get(0).getUUID());
+        
+        // 7.- Happy path: Add collaborator by email
+        UserConnect owner3 = ucc.newUserConnect("myQQQselfqqqazDDD", "mygoodmail@pepemail.com", "imath", "958183402", "958183402");
+        rest = prEndPoint.addCollaboratorByOther(owner.getUUID(), project2.getUUID(), owner3.getEMail(), null);
+        assertEquals(Response.Status.OK.getStatusCode(), rest.getStatus());
+        projDTO = (ProjectDTO) rest.getEntity();
+        list = projDTO.userCol;
+        assertEquals(2,list.size());
+        // Also, we check that we retrieve the same when we directly access the DB
+        user = ucc.getCollaborationUsersByProject(project2.getUUID());
+        assertEquals(2,user.size());
+    }
+    
+    
+    @Test
     public void removeCollaboratorIT() throws Exception {
         String name = "myProject";
         String desc = " A very nice project";

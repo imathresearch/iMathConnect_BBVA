@@ -102,6 +102,42 @@ public class ProjectRest {
         }
     }
     
+    /**
+     * Add a collaborator by username or email
+     * @param uuid_user
+     * @param uuid_project
+     * @param other         The user name or email of the collaborator
+     * @param sc
+     * @return
+     */
+    @POST
+    @Path(Constants.addCollaboratorByUserNameOrEmail + "/{uuid_user}/{uuid_project}/{other}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response addCollaboratorByOther(@PathParam("uuid_user") String uuid_user, @PathParam("uuid_project") String uuid_project, @PathParam("other") String other, @Context SecurityContext sc) {
+        try {
+            UserConnect owner = ucc.getUserConnect(uuid_user);
+            SecurityManager.secureBasic(owner.getUserName(), sc);
+            Project project = pc.getProject(uuid_project);
+            if (!project.getOwner().getUUID().equals(owner.getUUID())) {
+                throw new Exception("Not enough privileges");
+            }
+            UserConnect collaborator;
+            if(other.contains("@")) {
+                collaborator = ucc.getUserByEMail(other);
+            } else {
+                collaborator = ucc.getUserConnectByUserName(other);
+            }
+            List<String> uuids = new ArrayList<String>();
+            uuids.add(collaborator.getUUID());
+            project = pc.addCollaborators(uuid_project, uuids);
+            ProjectDTO retDTO = convert(project);
+            return Response.status(Response.Status.OK).entity(retDTO).build();
+        } catch (Exception e) {
+            LOG.severe(e.getMessage());
+            return Response.status(Response.Status.BAD_REQUEST).build();
+        }
+    }
+    
     @POST
     @Path(Constants.removeCollaborator + "/{uuid_user}/{uuid_project}/{uuid_col}")
     @Produces(MediaType.APPLICATION_JSON)
