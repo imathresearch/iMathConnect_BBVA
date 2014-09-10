@@ -41,16 +41,16 @@ INSERT INTO instance(uuid, cpu, creationdate, ram, stg, url, owner_instance) VAL
 INSERT INTO instance(uuid, cpu, creationdate, ram, stg, url, owner_instance) VALUES ('instuuid5', 4, '2014-01-01', 8, 300, '127.0.0.1', 'amtuuid1');
 INSERT INTO instance(uuid, cpu, creationdate, ram, stg, url, owner_instance) VALUES ('instuuid6', 1, '2014-01-01', 8, 300, '127.0.0.1', 'amtuuid1');
 
-INSERT INTO project(uuid, creationdate, description, key, name, instance, owner) VALUES ('projuuid1', '2014-01-01', 'My first project', 'IV0p34cDmXFCzA3p9V7/Hg==', 'Cassandra', 'instuuid1', 'useruuid1');
-INSERT INTO project(uuid, creationdate, description, key, name, instance, owner) VALUES ('projuuid2', '2014-01-01', 'Simulating the Game of Live', 'IV0p34cDmXFCzA3p9V7/Hg==', 'Fenix', 'instuuid1', 'useruuid1');
-INSERT INTO project(uuid, creationdate, description, key, name, instance, owner) VALUES ('projuuid3', '2014-01-01', 'Matrix implementation algorithms', 'IV0p34cDmXFCzA3p9V7/Hg==', 'Matrix', 'instuuid1', 'useruuid1');
-INSERT INTO project(uuid, creationdate, description, key, name, instance, owner) VALUES ('projuuid4', '2014-01-01', 'Cartoon automatic drawing ', 'IV0p34cDmXFCzA3p9V7/Hg==', 'Cartoon', 'instuuid1', 'useruuid2');
-INSERT INTO project(uuid, creationdate, description, key, name, instance, owner) VALUES ('projuuid5', '2014-01-01', 'B-tree new implementation ', 'IV0p34cDmXFCzA3p9V7/Hg==', 'TreePlus', 'instuuid1', 'useruuid3');
-INSERT INTO project(uuid, creationdate, description, key, name, instance, owner) VALUES ('projuuid6', '2014-01-01', 'Altas experiment', 'IV0p34cDmXFCzA3p9V7/Hg==', 'Atlas', 'instuuid1', 'useruuid3');
+INSERT INTO project(uuid, creationdate, description, key, name, instance, owner, linux_group) VALUES ('projuuid1', '2014-01-01', 'My first project', 'TD+oizX1YBbqtvO4RkKL8Q==', 'Cassandra', 'instuuid1', 'useruuid1', 'conanc');
+INSERT INTO project(uuid, creationdate, description, key, name, instance, owner, linux_group) VALUES ('projuuid2', '2014-01-01', 'Simulating the Game of Live', 'TD+oizX1YBbqtvO4RkKL8Q==', 'Fenix', 'instuuid1', 'useruuid1', 'conanc');
+INSERT INTO project(uuid, creationdate, description, key, name, instance, owner, linux_group) VALUES ('projuuid3', '2014-01-01', 'Matrix implementation algorithms', 'TD+oizX1YBbqtvO4RkKL8Q==', 'Matrix', 'instuuid1', 'useruuid1', 'conanc');
+INSERT INTO project(uuid, creationdate, description, key, name, instance, owner, linux_group) VALUES ('projuuid4', '2014-01-01', 'Cartoon automatic drawing ', 'TD+oizX1YBbqtvO4RkKL8Q==', 'Cartoon', 'instuuid1', 'useruuid2', 'conanc');
+INSERT INTO project(uuid, creationdate, description, key, name, instance, owner, linux_group) VALUES ('projuuid5', '2014-01-01', 'B-tree new implementation ', 'TD+oizX1YBbqtvO4RkKL8Q==', 'TreePlus', 'instuuid1', 'useruuid3', 'conanc');
+INSERT INTO project(uuid, creationdate, description, key, name, instance, owner, linux_group) VALUES ('projuuid6', '2014-01-01', 'Altas experiment', 'TD+oizX1YBbqtvO4RkKL8Q==', 'Atlas', 'instuuid1', 'useruuid3', 'conanc');
 
 --AMMARTINEZ
-INSERT INTO project(uuid, creationdate, description, key, name, instance, owner) VALUES ('projuuid7', '2014-01-01', 'My first project', 'IV0p34cDmXFCzA3p9V7/Hg==', 'Cassandra', 'instuuid5', 'amtuuid1');
-INSERT INTO project(uuid, creationdate, description, key, name, instance, owner) VALUES ('projuuid8', '2014-01-01', 'Search Engine', 'IV0p34cDmXFCzA3p9V7/Hg==', 'Searcher', 'instuuid6', 'amtuuid1');
+INSERT INTO project(uuid, creationdate, description, key, name, instance, owner, linux_group) VALUES ('projuuid7', '2014-01-01', 'My first project', 'IV0p34cDmXFCzA3p9V7/Hg==', 'Cassandra', 'instuuid5', 'amtuuid1', 'conanc');
+INSERT INTO project(uuid, creationdate, description, key, name, instance, owner, linux_group) VALUES ('projuuid8', '2014-01-01', 'Search Engine', 'IV0p34cDmXFCzA3p9V7/Hg==', 'Searcher', 'instuuid6', 'amtuuid1', 'conanc');
 
 
 INSERT INTO collaborators(projects_uuid, collaborators_uuid) VALUES ('projuuid1', 'useruuid3');
@@ -59,7 +59,6 @@ INSERT INTO collaborators(projects_uuid, collaborators_uuid) VALUES ('projuuid1'
 INSERT INTO collaborators(projects_uuid, collaborators_uuid) VALUES ('projuuid2', 'useruuid5');
 INSERT INTO collaborators(projects_uuid, collaborators_uuid) VALUES ('projuuid4', 'useruuid1');
 INSERT INTO collaborators(projects_uuid, collaborators_uuid) VALUES ('projuuid4', 'useruuid5');
-INSERT INTO collaborators(projects_uuid, collaborators_uuid) VALUES ('projuuid5', 'useruuid1');
 INSERT INTO collaborators(projects_uuid, collaborators_uuid) VALUES ('projuuid5', 'useruuid2');
 INSERT INTO collaborators(projects_uuid, collaborators_uuid) VALUES ('projuuid5', 'useruuid4');
 INSERT INTO collaborators(projects_uuid, collaborators_uuid) VALUES ('projuuid5', 'useruuid5');

@@ -51,6 +51,12 @@ public class Project implements Serializable{
     @NotEmpty
     private String name;
     
+    @Pattern(regexp = "[A-Za-z_]*", message = "Only letters and _")
+    @NotNull
+    @NotEmpty
+    @Column(name = "linux_group", unique = true)
+    private String linuxGroup;
+    
     @NotNull
     @NotEmpty
     @Size(min = 2, max = 200, message = "2-200")
@@ -142,6 +148,14 @@ public class Project implements Serializable{
 
     public void setInstance(Instance instance) {
         this.instance = instance;
+    }
+
+    public String getLinuxGroup() {
+        return linuxGroup;
+    }
+
+    public void setLinuxGroup(String linuxGroup) {
+        this.linuxGroup = linuxGroup;
     }
 
 }

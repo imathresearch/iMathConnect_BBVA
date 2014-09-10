@@ -86,7 +86,8 @@
                             <ul class="dropdown-menu">
                                 <!-- User image -->
                                 <li class="user-header bg-light-blue">
-                                    <img src="img/avatar04.png" class="img-circle" alt="User Image" /><span class="username">-</span>
+                                    <img src="img/avatar04.png" class="img-circle" alt="User Image" />
+                                    <p class="username">-</p>
                                     <p class="usercreationdate">-</p>
                                 </li>
                                 <!-- Menu Footer-->

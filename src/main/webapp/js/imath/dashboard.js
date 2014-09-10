@@ -286,7 +286,7 @@ function generateTableOfInstances(instances, pub, putHeader) {
 	if (putHeader) {
 		ret = htmlTableRowHead(['#', faIcon("fa-gears")+' vCPUs', 
 	                            faIcon("fa-film") + ' RAM', 
-	                            faIcon("fa-cloud") + 'Storage', 'Date', '']);
+	                            faIcon("fa-cloud") + 'Storage', 'Date']);
 	}
 	
 	for(var i=0; i<instances.length; i++) {
@@ -302,8 +302,8 @@ function generateTableOfInstances(instances, pub, putHeader) {
 			rowIcon = '<span class="badge bg-light-blue">Pu</span>';
 		}
 		
-		rowMore = "<a href='onclick=showInstancePage(\""+uuid+ "\")'>+</a>"; 
-		ret = ret + htmlTableRowData([rowIcon, cpu, ram, stg, dateText,rowMore], uuid);	
+		//rowMore = "<a href='onclick=showInstancePage(\""+uuid+ "\")'>+</a>"; 
+		ret = ret + htmlTableRowData([rowIcon, cpu, ram, stg, dateText], uuid);	
 	}
 	return ret;
 }

@@ -52,6 +52,7 @@ public class ProjectController extends AbstractController {
         project.setOwner(owner);
         project.setInstance(instance);
         project.setKey(Util.randomString());
+        project.setLinuxGroup(name+"_"+owner.getUserName());
         db.makePersistent(project);
         return project;
     }

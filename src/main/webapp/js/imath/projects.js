@@ -89,9 +89,32 @@ function addCollaborator(other, uuid_project) {
 			$("#idCollaborationBox").val("");
 	    },
 	    error: function(error) {
-	    	$('#imath-id-error-message-col').modal('show');
+	    	console.log("Error adding collaborator");
+	    	showErrorForm("Error adding a collaborator");
 	    }
 	});		
+}
+
+function removeCollaborator(uuid_col) {
+	if (global_uuid_project_selected!==null) {
+		$.ajax({
+		    url: "rest/api/agora/removeCollaborator/" + global_uuid_user + "/" + global_uuid_project_selected + "/" + uuid_col,
+		    cache: false,
+		    dataType: "json",
+		    type: "POST",
+		    success: function(project) {
+		    	var collaborators = project['userCol'];
+				collaboratorsHtml = generateTableOfCollaborators(collaborators);
+				$(".imath-collaborators"). html(collaboratorsHtml);
+				ajaxOwnProjects("uploadProject");
+				$("#idCollaborationBox").val("");
+		    },
+		    error: function(error) {
+		    	console.log("Error removing collaborator");
+		    	showErrorForm("Error removing the collaborator");
+		    }
+		});
+	}
 }
 
 function saveProject(uuid_project, newDesc, uuid_instance) {
@@ -105,6 +128,7 @@ function saveProject(uuid_project, newDesc, uuid_instance) {
 	    },
 	    error: function(error) {
 	        console.log("Error saving project");
+	        showErrorForm("Error saving the project");
 	    }
 	});	
 }
@@ -172,6 +196,11 @@ function generateTableOfInstancesSelect(instances, pub) {
 	return ret;
 }
 
+function showErrorForm(message) {
+	$('.imath-error-message').html(message);
+	$('#imath-id-error-message-col').modal('show');
+	
+}
 
 function uploadProject(uuid) {
 	$.ajax({
@@ -208,13 +237,15 @@ function uploadProject(uuid) {
 }
 
 function generateTableOfCollaborators(collaborators) {
-	var htmlRet = htmlTableRowHead(["Pic", "User Name", "eMail", "Organization"]);
+	var htmlRet = htmlTableRowHead(["Pic", "User Name", "eMail", "Organization", "#"]);
 	for(var ii=0; ii< collaborators.length; ii++) {
 		var image = '<img src="img/avatar04.png" alt="' + collaborators[ii]['userName'] + '" class="offline"  height="32" width="32"/>';
 		var name = collaborators[ii]['userName'] ;
 		var org = collaborators[ii]['organization'];
 		var email = collaborators[ii]['eMail'];
-		htmlRet = htmlRet + htmlTableRowData([image, name, email, org]);
+		var uuid = collaborators[ii]['UUID'];
+		var action = "<a onclick='removeCollaborator(\"" + uuid + "\")' style='cursor: pointer;' title='Remove' )><i class='fa fa-minus-circle'></i></a>";
+		htmlRet = htmlRet + htmlTableRowData([image, name, email, org, action], uuid);
 	}
 	return htmlRet;
 }

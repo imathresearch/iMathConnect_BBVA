@@ -21,6 +21,7 @@ public class ProjectTest {
     String key = "wwwlllddd";
     String name = "MyProject";
     Set<UserConnect> collaborators = new HashSet<UserConnect>();
+    String group = "mygroup";
     
     
     @Before
@@ -35,6 +36,7 @@ public class ProjectTest {
         test.setName(name);
         collaborators.add(owner);
         test.setCollaborators(collaborators);
+        test.setGroup(group);
     }
     
     @After
@@ -82,6 +84,11 @@ public class ProjectTest {
         Set<UserConnect> col = test.getCollaborators();
         assertTrue(col.contains(owner));
         assertEquals(1, col.size());
+    }
+    
+    @Test
+    public void testGetGroup() {
+        assertEquals(group, test.getGroup());
     }
 }
 

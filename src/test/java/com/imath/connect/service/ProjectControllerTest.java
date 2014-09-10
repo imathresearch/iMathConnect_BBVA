@@ -66,7 +66,9 @@ public class ProjectControllerTest {
     public void newProjectTest() throws Exception {
         String name = "project";
         String desc = "the project";
+        String userName = "owner";
         UserConnect owner = new UserConnect();
+        owner.setUserName(userName);
         Instance instance = new Instance();
         
         Project project = pc.newProject(name, desc, owner, instance);
@@ -75,7 +77,7 @@ public class ProjectControllerTest {
         assertEquals(desc, project.getDescription());
         assertEquals(owner, project.getOwner());
         assertEquals(instance, project.getInstance());
-        
+        assertEquals(name+"_"+userName, project.getLinuxGroup());
         verify(em).persist((Project)Matchers.anyObject());
     }
     
