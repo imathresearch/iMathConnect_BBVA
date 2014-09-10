@@ -36,7 +36,7 @@ public class ProjectTest {
         test.setName(name);
         collaborators.add(owner);
         test.setCollaborators(collaborators);
-        test.setGroup(group);
+        test.setLinuxGroup(group);
     }
     
     @After
@@ -88,7 +88,7 @@ public class ProjectTest {
     
     @Test
     public void testGetGroup() {
-        assertEquals(group, test.getGroup());
+        assertEquals(group, test.getLinuxGroup());
     }
 }
 

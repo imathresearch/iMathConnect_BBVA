@@ -2,6 +2,7 @@ package com.imath.connect.rest;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -179,6 +180,37 @@ public class ProjectRest {
         }
     }
     
+    // WARNING: This is a security hole!!!!!
+    // TODO: change it before production release
+    @GET
+    @Path(Constants.getProjectCredentials + "/{uuid_user}/{uuid_project}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getProjectCredentials(@PathParam("uuid_user") String uuid_user, @PathParam("uuid_project") String uuid_project, @Context SecurityContext sc) {
+        // TODO IT
+        try {
+            UserConnect user = ucc.getUserConnect(uuid_user);
+            Project project = pc.getProject(uuid_project);
+            SecurityManager.secureBasic(user.getUserName(), sc);
+            if (!user.getUUID().equals(project.getOwner().getUUID())) {    // If the petitioner is not the owner of the project we check if its a collaborator 
+                List<UserConnect> cols = ucc.getCollaborationUsersByProject(uuid_project);
+                Iterator<UserConnect> it = cols.iterator();
+                boolean found = false;
+                while(it.hasNext() && !found) {
+                    UserConnect col = it.next();
+                    found = (col.getUUID().equals(user.getUUID()));
+                }
+                if (!found) throw new Exception ("Not enough privileges");
+            }
+            // At this point we know that the user is the owner of the project or a collaborator
+            ProjectAdminDTO retDTO = new ProjectAdminDTO();
+            retDTO.convert(project);
+            return Response.status(Response.Status.OK).entity(retDTO).build();
+        } catch (Exception e) {
+            LOG.severe(e.getMessage());
+            return Response.status(Response.Status.BAD_REQUEST).build();
+        }
+    }
+    
     @GET
     @Path(Constants.ownProjects + "/{uuid_user}")
     @Produces(MediaType.APPLICATION_JSON)
@@ -230,6 +262,21 @@ public class ProjectRest {
             }
         }
         return retDTO;
+    }
+    
+    static public class ProjectAdminDTO {
+        public String UUID;
+        public String name;
+        public String key;
+        public String linuxGroup;
+        public String url;
+        public void convert(Project project) {
+            this.UUID = project.getUUID();
+            this.name = project.getName();
+            this.key = project.getKey();
+            this.linuxGroup = project.getLinuxGroup();
+            this.url = project.getInstance().getUrl();
+        }
     }
     
     static public class ProjectDTO {

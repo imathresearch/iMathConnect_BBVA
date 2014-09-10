@@ -23,6 +23,7 @@ import com.imath.connect.service.InstanceController;
 import com.imath.connect.service.ProjectController;
 import com.imath.connect.service.UserConnectController;
 import com.imath.connect.rest.ProjectRest;
+import com.imath.connect.rest.ProjectRest.ProjectAdminDTO;
 import com.imath.connect.rest.ProjectRest.ProjectDTO;
 import com.imath.connect.rest.UserConnectRest.UserConnectDTO;
 
@@ -72,6 +73,52 @@ public class ProjectRestIT extends AbstractIT{
         Date projDate = project.getCreationDate();
         Date recDate = projectDTO.creationDate;
         assertEquals(projDate.getTime(), recDate.getTime());
+    }
+    
+    @Test
+    public void getProjectCredentialsIT() throws Exception {
+        String name = "myProject";
+        String desc = " A very nice project";
+        
+        // 1.- Exception path: UserConnect does not exists
+        Response rest = prEndPoint.getProjectCredentials("noid", "nouuid", null);
+        assertEquals(Response.Status.BAD_REQUEST.getStatusCode(), rest.getStatus());
+        
+        // 2.- Exception path: Project does not exists
+        UserConnect owner = ucc.newUserConnect("myselfqqqazGGG", "GGGhola@pepehhj.com", "imath", "958183402", "958183402");
+        rest = prEndPoint.getProjectCredentials(owner.getUUID(), "nouuid", null);
+        assertEquals(Response.Status.BAD_REQUEST.getStatusCode(), rest.getStatus());
+        
+        // 3.- Exception path: Project exists but petitioner is not the owner and is not a collaborator
+        Instance instance = ic.newInstance(0, 0, 0, "127.0.0.1", owner);
+        UserConnect owner2 = ucc.newUserConnect("myselfffGG", "hoGGla@ppellk.com", "imath", "958183402", "958183402");
+        Project project = pc.newProject(name, desc, owner2, instance);
+        rest = prEndPoint.getProjectCredentials(owner.getUUID(), project.getUUID(), null);
+        assertEquals(Response.Status.BAD_REQUEST.getStatusCode(), rest.getStatus());
+        
+        // 4.- Happy path: we add the user as a collaborator
+        List<String> uuids = new ArrayList<String>();
+        uuids.add(owner.getUUID());
+        pc.addCollaborators(project.getUUID(), uuids);
+        rest = prEndPoint.getProjectCredentials(owner.getUUID(), project.getUUID(), null);
+        assertEquals(Response.Status.OK.getStatusCode(), rest.getStatus());
+        ProjectAdminDTO pDTO = (ProjectAdminDTO) rest.getEntity();
+        assertEquals(project.getUUID(), pDTO.UUID);
+        assertEquals(project.getName(), pDTO.name);
+        assertEquals(project.getLinuxGroup(), pDTO.linuxGroup);
+        assertEquals(project.getInstance().getUrl(), pDTO.url);
+        assertTrue(pDTO.key != null);
+        
+        // 5.- Happy path: we check that if the petitioner is the owner, the credentials are obtained
+        rest = prEndPoint.getProjectCredentials(owner2.getUUID(), project.getUUID(), null);
+        assertEquals(Response.Status.OK.getStatusCode(), rest.getStatus());
+        pDTO = (ProjectAdminDTO) rest.getEntity();
+        assertEquals(project.getUUID(), pDTO.UUID);
+        assertEquals(project.getName(), pDTO.name);
+        assertEquals(project.getLinuxGroup(), pDTO.linuxGroup);
+        assertEquals(project.getInstance().getUrl(), pDTO.url);
+        assertTrue(pDTO.key != null);
+        
     }
     
     @Test

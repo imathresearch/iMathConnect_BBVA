@@ -249,3 +249,23 @@ function generateTableOfCollaborators(collaborators) {
 	}
 	return htmlRet;
 }
+
+function runiMathCloud(uuid_project) {
+	$.ajax({
+	    url: "rest/api/agora/getProjectCredentials/" + global_uuid_user + "/" + uuid_project,
+	    cache: false,
+	    dataType: "json",
+	    type: "GET",
+	    success: function(project) {
+	    	var linux = project['linuxGroup'];
+	    	var key = project['key'];
+	    	var url = project['url'] + "/login.jsp?j_username=" +linux + "&j_password=" + key;
+	    	var win=window.open(url, '_blank');
+	    	win.focus();
+	    },
+	    error: function(error) {
+	        console.log("Error opening iMathCloud");
+	        showErrorForm("Error opening iMath Cloud. Try again in few minutes.");
+	    }
+	});	
+}

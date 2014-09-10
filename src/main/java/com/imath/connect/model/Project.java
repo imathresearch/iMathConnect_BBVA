@@ -54,7 +54,7 @@ public class Project implements Serializable{
     @Pattern(regexp = "[A-Za-z_]*", message = "Only letters and _")
     @NotNull
     @NotEmpty
-    @Column(name = "linux_group", unique = true)
+    @Column(name = "linux_group")
     private String linuxGroup;
     
     @NotNull
