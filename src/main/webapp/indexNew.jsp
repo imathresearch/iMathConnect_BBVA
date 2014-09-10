@@ -133,13 +133,13 @@
                     <!-- /.search form -->
                     <!-- sidebar menu: : style can be found in sidebar.less -->
                     <ul class="sidebar-menu">
-                        <li class="active">
+                        <li id="imath-id-dashboard-menu" class="imath-menu">
                             <a href="indexNew.jsp">
                                 <i class="fa fa-dashboard"></i> <span>Dashboard</span>
                             </a>
                         </li>
-                        <li>
-                            <a onclick='placeLayoutProjects()')>
+                        <li id="imath-id-projects-menu" class="imath-menu">
+                            <a onclick='placeLayoutProjects()' style='cursor: pointer;')>
                                 <i class="fa fa-th"></i> <span>My Projects</span>
                             </a>
                         </li>
@@ -152,9 +152,7 @@
             <aside class="right-side">
                 <!-- Content Header (Page header) -->
                 <section class="content-header">
-                    <h1>
-                        Dashboard
-                        <small>Control panel</small>
+                    <h1 class="imath-title-menu">
                     </h1>
                     <ol class="breadcrumb">
                         <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
@@ -297,22 +295,15 @@
         <script src="js/jquery-ui-1.10.3.min.js" type="text/javascript"></script>
         <!-- Bootstrap -->
         <script src="js/bootstrap.min.js" type="text/javascript"></script>
-        <!-- Morris.js charts -->
-        <script src="//cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
-        <script src="js/plugins/morris/morris.min.js" type="text/javascript"></script>
         <!-- Sparkline -->
         <script src="js/plugins/sparkline/jquery.sparkline.min.js" type="text/javascript"></script>
         <!-- jvectormap -->
         <script src="js/plugins/jvectormap/jquery-jvectormap-1.2.2.min.js" type="text/javascript"></script>
         <script src="js/plugins/jvectormap/jquery-jvectormap-world-mill-en.js" type="text/javascript"></script>
-        <!-- jQuery Knob Chart -->
-        <script src="js/plugins/jqueryKnob/jquery.knob.js" type="text/javascript"></script>
         <!-- daterangepicker -->
         <script src="js/plugins/daterangepicker/daterangepicker.js" type="text/javascript"></script>
         <!-- datepicker -->
         <script src="js/plugins/datepicker/bootstrap-datepicker.js" type="text/javascript"></script>
-        <!-- Bootstrap WYSIHTML5 -->
-        <script src="js/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js" type="text/javascript"></script>
         <!-- iCheck -->
         <script src="js/plugins/iCheck/icheck.min.js" type="text/javascript"></script>
 

@@ -6,17 +6,21 @@
 var global_uuid_project_selected = null;
 var global_instances = [];
 
-function placeLayoutProjects() {
+function placeLayoutProjects(uuid_project) {
+	setSelectMenu("imath-id-projects-menu");
 	jQuery.get('projects.html', function(data) {
 		$(".imath-main-row").html(data);
-		initProjectView();
+		initProjectView(uuid_project);
 	});
 }
 
-function initProjectView() {
+function initProjectView(uuid_project) {
 	global_uuid_project_selected=null;
+	if (!(typeof uuid_project =="undefined")) {
+		uploadProject(uuid_project);
+	}
 	global_instances = [];
-	ajaxOwnProjects();
+	ajaxOwnProjects("uploadProject");
 	ajaxInstancesLoad();
 	$("#imath-id-own-projects").delegate("tr", "click", function(e) {
 		if (!(typeof $(e.currentTarget).attr('id') == "undefined")){
@@ -68,7 +72,7 @@ function saveProject(uuid_project, newDesc, uuid_instance) {
 	    dataType: "json",
 	    type: "GET",
 	    success: function(project) {
-	    	ajaxOwnProjects();
+	    	ajaxOwnProjects("uploadProject");
 	    },
 	    error: function(error) {
 	        console.log("Error saving project");
