@@ -48,6 +48,9 @@ function numberToMonth(i) {
 	return ret; 
 }
 
+// This links each id menu with its title
+var gloabal_menu_text = JSON.parse('{"imath-id-projects-menu":"My Projects","imath-id-dashboard-menu": "Dashboard"}');
+
 var global_uuid_user = null;
 
 var userInfo = null;
@@ -71,6 +74,7 @@ function ajaxUserInfo() {
 			ajaxOwnInstances();
 			ajaxPublicInstances();
 			ajaxColProjects();
+			setSelectMenu("imath-id-dashboard-menu");
 	    },
 	    error: function(error) {
 	        console.log("Error getting user information");
@@ -78,14 +82,23 @@ function ajaxUserInfo() {
 	});	
 }
 
-function ajaxOwnProjects() {
+function setSelectMenu(idDOM) {
+	// first we unselect everything
+	$(".imath-menu").removeClass("active");
+	// and we select the concrete menu item
+	$("#" + idDOM).addClass("active");
+	// We plce the proper text in the title
+	$(".imath-title-menu").html(gloabal_menu_text[idDOM]);
+}
+
+function ajaxOwnProjects(callbackString) {
 	$.ajax({
 	    url: "rest/api/agora/getOwnProjects/" + global_uuid_user,
 	    cache: false,
 	    dataType: "json",
 	    type: "GET",
 	    success: function(projects) {
-	    	var htmlTable = generateTableOfProjects(projects);
+	    	var htmlTable = generateTableOfProjects(projects, callbackString);
 			$(".imath-own-projects").html(htmlTable);
 	    },
 	    error: function(error) {
@@ -214,8 +227,8 @@ function generateTableOfColProjects(projects) {
 		var rowInstance = faIcon("fa-gears") + " <b>" + project['instance']['cpu'] + "</b> <small>vCPUs</small> <br>";
 		rowInstance += faIcon("fa-film") + " <b>" + project['instance']['ram'] + "</b> <small>MiB</small><br> ";
 		rowInstance += faIcon("fa-cloud") + " <b>" + project['instance']['stg'] + "</b> <small>GiB</small> ";
-		rowName = "<a href='onclick=showProjectPage(\""+uuid+ "\")'>" + name + "</a>"; 
-		
+		//rowName = "<a href='onclick=showProjectPage(\""+uuid+ "\")'>" + name + "</a>";
+		rowName = name;
 		var owner = project['owner'];
 		var rowOwner = "<table><tr>";
 		rowOwner = rowOwner + '<td><img src="img/avatar04.png" alt="' + owner['userName'] + '" class="offline"  height="32" width="32"/></td><td><i>' + owner['userName'] + "</i><br><small>" + owner['organization'] + '</small> </td></tr></table>'; 
@@ -224,7 +237,7 @@ function generateTableOfColProjects(projects) {
 	return ret;
 }
 
-function generateTableOfProjects(projects) {
+function generateTableOfProjects(projects, callbackString) {
 	var ret = htmlTableRowHead(['#', 'Name', 'Date', 'Description', 'Collaborators', 'Resources']);
 	for(var i=0; i<projects.length; i++) {
 		project = projects[i];
@@ -250,7 +263,12 @@ function generateTableOfProjects(projects) {
 		var rowInstance = faIcon("fa-gears") + " <b>" + project['instance']['cpu'] + "</b> <small>vCPUs</small> <br>";
 		rowInstance += faIcon("fa-film") + " <b>" + project['instance']['ram'] + "</b> <small>MiB</small><br> ";
 		rowInstance += faIcon("fa-cloud") + " <b>" + project['instance']['stg'] + "</b> <small>GiB</small> ";
-		rowName = "<a href='onclick=showProjectPage(\""+uuid+ "\")'>" + name + "</a>"; 
+		if (typeof callbackString == "undefined") {
+			rowName = "<a onclick='placeLayoutProjects(\""+uuid+ "\")' style='color:blue;cursor: pointer;text-decoration: underline;'>" + name + "</a>";
+		} else {
+			rowName = "<a onclick='" + callbackString + "(\""+uuid+ "\")' style='color:blue;cursor: pointer;text-decoration: underline;'>" + name + "</a>";
+		}
+			
 		ret = ret + htmlTableRowData([rowIcon, rowName,dateText,desc,rowCol,rowInstance], uuid);	
 	}
 	return ret;

@@ -49,6 +49,8 @@ public class Constants {
     // Adds a new collaborator to the given project
     static public final String addCollaborator = "/addCollaborator";
     
+    static public final String addCollaboratorByUserNameOrEmail = "/addCollaboratorByOther";
+    
     // remove a collaborator of the given project
     static public final String removeCollaborator = "/removeCollaborator";
     
