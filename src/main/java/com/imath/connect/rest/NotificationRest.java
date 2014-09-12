@@ -46,7 +46,8 @@ public class NotificationRest {
             UserConnect owner = ucc.getUserConnect(uuid_user);
             List<Notification> myNotifications = nc.getNotificationsByUser(uuid_user);
             SecurityManager.secureBasic(owner.getUserName(), sc);
-            List<NotificationDTO> retDTO = convertList(myNotifications);            
+            List<NotificationDTO> retDTO = convertList(myNotifications);
+            System.out.println("Number of notifications " + retDTO.size());
             return Response.status(Response.Status.OK).entity(retDTO).build();
         } catch (Exception e) {
             LOG.severe(e.getMessage());

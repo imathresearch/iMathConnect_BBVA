@@ -72,6 +72,7 @@ function ajaxUserInfo() {
 			$(".usercreationdate").html('<small>Member since ' + month + ". " + year+'</small>');
 			ajaxOwnProjects();
 			ajaxOwnInstances();
+			ajaxOwnNotifications();
 			ajaxPublicInstances();
 			ajaxColProjects();
 			setSelectMenu("imath-id-dashboard-menu");

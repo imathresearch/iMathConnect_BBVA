@@ -72,3 +72,15 @@ INSERT INTO collaborators(projects_uuid, collaborators_uuid) VALUES ('projuuid8'
 INSERT INTO collaborators(projects_uuid, collaborators_uuid) VALUES ('projuuid8', 'useruuid1');
 
 
+--AMMARTINEZ
+INSERT INTO notification(uuid, subject, text, creationdate, type) VALUES ('notuuid1', 'Release of iMathCloud', 'The beta release of iMathCloud will soon be released', '2014-07-01', '0');
+INSERT INTO notification(uuid, subject, text, creationdate, type) VALUES ('notuuid2', 'Contact with us', 'If you have any questions or suggestions please contact us at info@imathresearch.com', '2014-05-01', '0');
+INSERT INTO notification(uuid, subject, text, creationdate, type) VALUES ('notuuid3', 'New collaborators', 'Check your projects to see your new collaborators', '2014-08-01', '1');
+
+
+INSERT INTO notifications_user(notification_uuid, notificationusers_uuid) VALUES ('notuuid3', 'amtuuid1');
+
+--ADD A PRIVATE NOTIFICATION FOR IPINYOLTEST USER
+INSERT INTO notifications_user(notification_uuid, notificationusers_uuid) VALUES ('notuuid3', 'useruuid1');
+
+
