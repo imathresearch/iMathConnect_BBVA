@@ -31,6 +31,8 @@
           <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
           <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
         <![endif]-->
+        
+        
     </head>
     <body class="skin-blue">
         <!-- header logo: style can be found in header.less -->
@@ -52,14 +54,13 @@
                     <ul class="nav navbar-nav">
                         <!-- Notifications: style can be found in dropdown.less -->
                         <li class="dropdown notifications-menu">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                <i class="fa fa-warning"></i>
-                                <span class="label label-warning">2</span>
+                            <a href="#" class="dropdown-toggle number-notifications" data-toggle="dropdown">
+                                <!-- i class="fa fa-warning"></i>
+                                <span class="label label-warning">2</span-->
                             </a>
-                            <ul class="dropdown-menu">
-                                <li class="header">You have 2 notifications</li>
-                                <li>
-                                    <!-- inner menu: contains the actual data -->
+                            <ul class="dropdown-menu list-notifications">
+                                <!--li class="header">You have 2 notifications</li>
+                                <li>                                 
                                     <ul class="menu">
                                         <li>
                                             <a href="#">
@@ -72,7 +73,7 @@
                                             </a>
                                         </li>
                                     </ul>
-                                </li>
+                                </li-->
 
                             </ul>
                         </li>
@@ -284,6 +285,23 @@
                 </section><!-- /.content -->
             </aside><!-- /.right-side -->
         </div><!-- ./wrapper -->
+        
+        
+        <!-- COMPOSE MESSAGE MODAL FOR NOTIFICATIONS -->
+        <div class="modal fade" id="notification-detail" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+						<h3 class="modal-title"><i class="fa fa-info-circle"></i>  Notification Details</h3>
+					</div>
+					<div class= "notification-info">
+					<!-- div class="modal-body notification-info" >						
+					</div-->
+					</div>					
+				</div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div><!-- /.modal -->
 
         <!-- add new calendar event modal -->
 
@@ -319,6 +337,7 @@
 		</script>
 		<script src="js/imath/dashboard.js" type="text/javascript"></script>
 		<script src="js/imath/projects.js" type="text/javascript"></script>
+		<script src="js/imath/notifications.js" type="text/javascript"></script>
     </body>
 	
 </html>
