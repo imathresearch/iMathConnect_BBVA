@@ -2,6 +2,7 @@ package com.imath.connect.rest;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -441,6 +442,13 @@ public class ProjectRestIT extends AbstractIT{
         pc.removeCollaborator(project.getUUID(), coll.getUUID());
         rest = prEndPoint.removeProject(owner2.getUUID(), project.getUUID(), null);
         assertEquals(Response.Status.OK.getStatusCode(), rest.getStatus());
+        // We make sure that the project is not in the DB anymore
+        try {
+            pc.getProject(project.getUUID());
+            fail("exception expected");
+        } catch (Exception e) {
+            // Fine
+        }
     }
     
 }

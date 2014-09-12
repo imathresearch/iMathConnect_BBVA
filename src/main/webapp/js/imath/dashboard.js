@@ -22,8 +22,6 @@ function numberToMonth(i) {
 	return ret; 
 }
 
-
-
 function ajaxUserInfo() {
 	$.ajax({
 	    url: "rest/api/agora/getUserByUserName/" + userName,
