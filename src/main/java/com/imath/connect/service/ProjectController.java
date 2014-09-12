@@ -6,6 +6,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import javax.ejb.Stateful;
 import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
@@ -16,6 +17,8 @@ import com.imath.connect.model.Instance;
 import com.imath.connect.model.Project;
 import com.imath.connect.model.UserConnect;
 import com.imath.connect.util.Encryptor;
+import com.imath.connect.util.IMathCloudAccess;
+import com.imath.connect.util.IMathCloudInterface;
 import com.imath.connect.util.Util;
 
 /**
@@ -27,11 +30,10 @@ import com.imath.connect.util.Util;
 @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
 public class ProjectController extends AbstractController {
     
-    @Inject 
-    UserConnectController ucc;
+    @Inject UserConnectController ucc;
+    @Inject InstanceController ic;
     
-    @Inject
-    InstanceController ic;
+    private IMathCloudInterface imathcloud;
     
     /**
      * Creates and return a new Project
@@ -54,6 +56,7 @@ public class ProjectController extends AbstractController {
         project.setKey(Util.randomString());
         project.setLinuxGroup(name+"_"+owner.getUserName());
         db.makePersistent(project);
+        //imathcloud.newProject(project.getLinuxGroup(), project.getKey(), instance.getUrl());
         return project;
     }
     
@@ -169,5 +172,9 @@ public class ProjectController extends AbstractController {
     
     public void setUserConnectController(UserConnectController ucc) {
         this.ucc = ucc;
+    }
+    
+    public void setIMathCloudAccess(IMathCloudInterface imathcloud) {
+    	this.imathcloud = imathcloud;
     }
 }

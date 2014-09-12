@@ -27,6 +27,8 @@ import com.imath.connect.service.StandardConfigurationController;
 import com.imath.connect.service.UserConnectController;
 import com.imath.connect.util.Constants;
 import com.imath.connect.util.Encryptor;
+import com.imath.connect.util.IMathCloudAccess;
+import com.imath.connect.util.IMathCloudInterface;
 import com.imath.connect.util.Resources;
 import com.imath.connect.util.Util;
 
@@ -42,15 +44,26 @@ public abstract class AbstractIT {
                .addAsLibraries(resolver.artifact("org.mockito:mockito-all:1.8.3").resolveAsFiles())
                .addAsLibraries(resolver.artifact("org.jasypt:jasypt:1.9.0").resolveAsFiles())
                .addAsLibraries(resolver.artifact("org.jasypt:jasypt-hibernate4:1.9.0").resolveAsFiles())
+               .addAsLibraries(resolver.artifact("com.iMathCloud.API:iMathCloud_API:0.0.1-SNAPSHOT").resolveAsFiles())
                .addClasses(EncryptedStringType.class, MainDB.class, UserConnect.class , Project.class, StandardConfiguration.class, Instance.class, Notification.class,
                        InstanceDB.class, ProjectDB.class, StandardConfigurationDB.class, UserConnectDB.class, NotificationDB.class, 
                        JaxRsActivator.class, ProjectRest.class, InstanceRest.class, com.imath.connect.security.SecurityManager.class, 
                        StandardConfigurationRest.class, UserConnectRest.class, NotificationRest.class, NotificationController.class,
                        AbstractController.class, InstanceController.class, ProjectController.class, StandardConfigurationController.class, UserConnectController.class,
                        Constants.class, Resources.class, Util.class, Encryptor.class, AbstractIT.class, ProjectRestIT.class, InstanceRestIT.class, 
-                       StandardConfigurationRestIT.class, UserConnectRestIT.class, NotificationRestIT.class)
+                       StandardConfigurationRestIT.class, UserConnectRestIT.class, NotificationRestIT.class,
+                       IMathCloudAccess.class, com.api.iMathCloud.class, com.exception.iMathAPIException.class, IMathCloudInterface.class)
                .addAsResource("META-INF/persistence.xml", "META-INF/persistence.xml")
                .addAsWebInfResource("arquillian-ds.xml")
                .addAsWebInfResource(EmptyAsset.INSTANCE, "beans.xml");
       }
+    
+    // Provisional: For whatever reason, Arquillian and Mockito do not work together!
+    protected class Mock_IMathCloudAccess implements IMathCloudInterface {
+    	@Override
+    	public synchronized void newProject(String projectName, String keyAccess, String baseURL) throws Exception {
+    		// Empty body
+    	}
+    	
+    }
 }

@@ -571,6 +571,12 @@
             <artifactId>json</artifactId>
             <version>20140107</version>
         </dependency>
+        <dependency>
+			<groupId>com.iMathCloud.API</groupId>
+			<artifactId>iMathCloud_API</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+    		<scope>compile</scope>
+		</dependency>
     </dependencies>
 
     <build>
