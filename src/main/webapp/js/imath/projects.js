@@ -4,6 +4,7 @@
  */
 
 var global_uuid_project_selected = null;
+var global_uuid_project_selected_prev = null;
 var global_instances = [];
 
 function placeLayoutProjects(uuid_project) {
@@ -14,8 +15,27 @@ function placeLayoutProjects(uuid_project) {
 	});
 }
 
-function initProjectView(uuid_project) {
+function disableLink(e) {
+    // cancels the event
+    e.preventDefault();
+    return false;
+}
+
+function unselectProject() {
+	disable('imath-id-select-resource-button');
+	disable('imath-id-add-colls-button');
+	disable('imath-id-cancel-buton-project');
 	global_uuid_project_selected=null;
+	$('#imath-id-instances').html("");			// We empty out the instance tables
+	$("#imath-id-project-name").val("");		// We empty the project name input
+	$("#imath-id-project-desc").val("");		// We empty the project description input
+	$("#imath-id-project-date").val("");		// We empty the project creation date input
+	$(".imath-collaborators"). html("");
+	$(".imath-project-name").html("");
+}
+
+function initProjectView(uuid_project) {
+	unselectProject();
 	if (!(typeof uuid_project =="undefined")) {
 		uploadProject(uuid_project);
 	}
@@ -46,16 +66,20 @@ function initProjectView(uuid_project) {
 		}
 	});
 	$( "#imath-id-save-buton-project" ).click(function() {
+		var uuid_instance = $('#imath-id-instances tr').eq(1).attr("id");	// We get the id of the second tr of the table
+		var newDesc = $("#imath-id-project-desc").val();
 		if (global_uuid_project_selected!==null) {
-			var newDesc = $("#idProjectDescription").val();
-			alert(newDesc);
+			// saving the project
 			var uuid_project = global_uuid_project_selected;
-			var uuid_instance = $('#imath-id-instances tr').eq(1).attr("id");	// We get the id of the second tr of the table
 			saveProject(uuid_project, newDesc, uuid_instance);
+		} else {
+			// if global_uuid_project_selected === null, we create a new project!
+			var newName = $("#imath-id-project-name").val();
+			newProject(newName, newDesc, uuid_instance);
 		}
 	});
 	
-	$("#idAddCollaboratorButton").click(function() {
+	$("#imath-id-add-colls-button").click(function() {
 		if (global_uuid_project_selected!==null) {
 			var other = $("#idCollaborationBox").val();
 			other = other.trim();
@@ -64,6 +88,45 @@ function initProjectView(uuid_project) {
 			}
 		}
 	});
+	
+	$("#imath-id-select-resource-button").click(function() {
+		$('#instance-select').modal('show');
+	});
+	
+	$("#imath-id-new-project-button").click(function() {
+		setNewProjectForm();
+	});
+	
+	$('#imath-id-project-name').on('input', function() {
+		$(".imath-project-name").html($("#imath-id-project-name").val());
+	});
+}
+
+function setNewProjectForm() {
+	// We set the cancel button to upload the previous uploaded project
+	global_uuid_project_selected_prev = global_uuid_project_selected;
+	$("#imath-id-cancel-buton-project").click(function () {
+		if (global_uuid_project_selected_prev !== null) {
+			uploadProject(global_uuid_project_selected_prev);
+			global_uuid_project_selected_prev == null;
+		} else {
+			unselectProject();
+		}
+	});
+	
+	global_uuid_project_selected=null;	// We "unselect" any possible current selected project
+	
+	enable('imath-id-cancel-buton-project');	// We enable the cancel button;
+	$('#imath-id-instances').html("");			// We empty out the instance tables
+	$("#imath-id-project-name").val("");		// We empty the project name input
+	$("#imath-id-project-desc").val("");		// We empty the project description input
+	$("#imath-id-project-date").val("");		// We empty the project createion date input
+	enable("imath-id-project-name");			// we enable the name input
+	enable("imath-id-select-resource-button");	// We enable the resource selection button
+	disable("imath-id-add-colls-button");			// We disable the collaboration button
+	$(".imath-collaborators"). html("");			// We empty out the table of collaborators
+	$(".imath-project-name").html("");
+
 }
 
 function getGlobalInstance(uuid) {
@@ -115,6 +178,9 @@ function removeCollaborator(uuid_col) {
 		    }
 		});
 	}
+}
+function newProject(newName, newDesc, uuid_instance) {
+	alert(newName + "  " + newDesc + "  " + uuid_instance);
 }
 
 function saveProject(uuid_project, newDesc, uuid_instance) {
@@ -196,12 +262,6 @@ function generateTableOfInstancesSelect(instances, pub) {
 	return ret;
 }
 
-function showErrorForm(message) {
-	$('.imath-error-message').html(message);
-	$('#imath-id-error-message-col').modal('show');
-	
-}
-
 function uploadProject(uuid) {
 	$.ajax({
 	    url: "rest/api/agora/getProject/" + global_uuid_user + "/" + uuid,
@@ -211,11 +271,15 @@ function uploadProject(uuid) {
 	    success: function(project) {
 	    	global_uuid_project_selected = uuid;
 	    	$(".imath-project-name").html(project['name']);
-	    	$("#idProjectName").val(project['name']);
-	    	$("#idProjectDescription").val(project['desc']);
+	    	$("#imath-id-project-name").val(project['name']);
+	    	disable("imath-id-project-name");
+	    	$("#imath-id-project-desc").val(project['desc']);
+	    	disable("imath-id-cancel-buton-project");
+	    	disable("imath-id-select-resource-button"); // We disable the selection of resources
+	    	enable("imath-id-add-colls-button");		// we enable the add collaborators button
 	    	var creationDate = new Date(project['creationDate']);
 			var dateText = dateToNice(creationDate);
-			$("#idCreationDate").val(dateText);
+			$("#imath-id-project-date").val(dateText);
 			var instance = project['instance'];
 			var instanceTableHtml;
 			var fakeInstances = [];
@@ -259,12 +323,11 @@ function runiMathCloud(uuid_project) {
 	    success: function(project) {
 	    	var linux = project['linuxGroup'];
 	    	var key = project['key'];
-	    	//var url = project['url'] + "/login.jsp?j_username=" +linux + "&j_password=" + key;
-	    	//var win=window.open(url, '_blank');
 	    	var url = project['url'] + "/login.jsp";
 	    	// Ugly... but it works
 	    	document.body.innerHTML += '<form target="_blank" id="fakeForm" action="' + url + '" method="post"><input type="hidden" name="j_username" value="' + linux + '"><input type="hidden" name="j_password" value="' + key + '"></form>';
 	    	document.getElementById("fakeForm").submit();
+	    	document.getElementById("fakeForm").remove();
 	    	//win.focus();
 	    },
 	    error: function(error) {
@@ -273,3 +336,26 @@ function runiMathCloud(uuid_project) {
 	    }
 	});	
 }
+
+function disable(id) {
+	$("#" + id).prop('disabled', true);
+}
+
+function enable(id) {
+	$("#" + id).prop('disabled', false);
+}
+
+function enableLink(id) {
+	$('#' + id).unbind('click', disableLink);
+}
+
+function disableLink(id) {
+	$('#' + id).bind('click', disableLink);
+}
+
+function showErrorForm(message) {
+	$('.imath-error-message').html(message);
+	$('#imath-id-error-message-col').modal('show');
+	
+}
+
