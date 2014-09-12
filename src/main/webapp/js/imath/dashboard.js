@@ -145,6 +145,14 @@ function dateToNice(date) {
 	dayText = day.toString();
 	lastDigit = dayText[dayText.length-1];
 	ord = getOrdinal(lastDigit);
+	if (day==11) {
+		ord = "th";
+	}
+	else {
+		if (day==12) {
+			ord = "th";
+		}
+	}
 	var ret = monthText + " " + dayText + ord + " " + year;
 	return ret;
 }
@@ -153,6 +161,7 @@ function getOrdinal(digitT) {
 	ret = "th";
 	if (digitT=="1") ret="st";
 	if (digitT=="2") ret="nd";
+	if (digitT=="3") ret="rd";
 	return ret;
 }
 
