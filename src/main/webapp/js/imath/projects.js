@@ -259,9 +259,13 @@ function runiMathCloud(uuid_project) {
 	    success: function(project) {
 	    	var linux = project['linuxGroup'];
 	    	var key = project['key'];
-	    	var url = project['url'] + "/login.jsp?j_username=" +linux + "&j_password=" + key;
-	    	var win=window.open(url, '_blank');
-	    	win.focus();
+	    	//var url = project['url'] + "/login.jsp?j_username=" +linux + "&j_password=" + key;
+	    	//var win=window.open(url, '_blank');
+	    	var url = project['url'] + "/login.jsp";
+	    	// Ugly... but it works
+	    	document.body.innerHTML += '<form target="_blank" id="fakeForm" action="' + url + '" method="post"><input type="hidden" name="j_username" value="' + linux + '"><input type="hidden" name="j_password" value="' + key + '"></form>';
+	    	document.getElementById("fakeForm").submit();
+	    	//win.focus();
 	    },
 	    error: function(error) {
 	        console.log("Error opening iMathCloud");
