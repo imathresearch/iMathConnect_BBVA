@@ -3,51 +3,6 @@
  * @author imath 
  */
 
-function numberToMonth(i) {
-	var ret;
-	switch(i) {
-    case 0:
-        ret="Jan";
-        break;
-    case 1:
-        ret="Feb";
-        break;
-    case 2:
-        ret="Mar";
-        break;
-    case 3:
-        ret="Apr";
-        break;
-    case 4:
-        ret="May";
-        break;
-    case 5:
-        ret="Jun";
-        break;
-    case 6:
-        ret="Jul";
-        break;
-    case 7:
-        ret="Aug";
-        break; 
-    case 8:
-        ret="Sep";
-        break;
-    case 9:
-        ret="Oct";
-        break;
-    case 10:
-        ret="Nov";
-        break;
-    case 11:
-        ret="Dec";
-        break;       
-    default:
-        ret="";
-	}
-	return ret; 
-}
-
 // This links each id menu with its title
 var gloabal_menu_text = JSON.parse('{"imath-id-projects-menu":"My Projects","imath-id-dashboard-menu": "Dashboard"}');
 
@@ -55,6 +10,17 @@ var global_uuid_user = null;
 
 var userInfo = null;
 // We charge user info
+var global_month_array = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+
+function numberToMonth(i) {
+	ret = "";
+	if (i>=0 && i <=11) {
+		ret = global_month_array[i];
+	}
+	return ret; 
+}
+
+
 
 function ajaxUserInfo() {
 	$.ajax({
