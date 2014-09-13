@@ -33,7 +33,7 @@ public class ProjectController extends AbstractController {
     @Inject UserConnectController ucc;
     @Inject InstanceController ic;
     
-    private IMathCloudInterface imathcloud;
+    @Inject IMathCloudInterface imathcloud;
     
     /**
      * Creates and return a new Project
@@ -56,10 +56,17 @@ public class ProjectController extends AbstractController {
         project.setKey(Util.randomString());
         project.setLinuxGroup(name+"_"+owner.getUserName());
         db.makePersistent(project);
-        //imathcloud.newProject(project.getLinuxGroup(), project.getKey(), instance.getUrl());
+        imathcloud.newProject(project.getLinuxGroup(), project.getKey(), instance.getUrl());
         return project;
     }
     
+    //********* for testing purposes only
+    @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
+    public Project newProject(String name, String desc, UserConnect owner, Instance instance, IMathCloudInterface imathcloud) throws Exception {
+    	this.imathcloud = imathcloud;
+    	return newProject(name,desc,owner,instance);
+    }
+    //*********
     /**
      * Updates the project data
      * @param uuid

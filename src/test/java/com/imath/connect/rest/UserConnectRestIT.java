@@ -115,7 +115,7 @@ public class UserConnectRestIT extends AbstractIT {
         UserConnect theOne1 = ucc.newUserConnect(userName1, email1, org1, phone11, phone12);
         UserConnect owner = ucc.newUserConnect("owner", "hla@ppe.com", "iath", "953333402", "933383402");
         Instance instance = ic.newInstance(0, 0, 0, "hola", owner);
-        Project project = pc.newProject("myProject", "myProject", owner, instance);
+        Project project = pc.newProject("myProject", "myProject", owner, instance, imathcloud);
         rest = ucrEndPoint.getColUsersByProject(project.getUUID(), null);
         assertEquals(Response.Status.OK.getStatusCode(), rest.getStatus());
         @SuppressWarnings("unchecked")

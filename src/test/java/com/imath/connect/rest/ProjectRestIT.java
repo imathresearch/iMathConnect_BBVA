@@ -107,7 +107,7 @@ public class ProjectRestIT extends AbstractIT{
         Instance instance = ic.newInstance(0, 0, 0, "127.0.0.1", owner);
         UserConnect owner2 = ucc.newUserConnect("myselfffGG", "hoGGla@ppellk.com", "imath", "958183402", "958183402");
         
-        Project project = pc.newProject(name, desc, owner2, instance);
+        Project project = pc.newProject(name, desc, owner2, instance,imathcloud);
         rest = prEndPoint.getProjectCredentials(owner.getUUID(), project.getUUID(), null);
         assertEquals(Response.Status.BAD_REQUEST.getStatusCode(), rest.getStatus());
         
@@ -155,12 +155,12 @@ public class ProjectRestIT extends AbstractIT{
         // 3.- Exception path: Project does not belong to owner
         Instance instance = ic.newInstance(0, 0, 0, "127.0.0.1", owner);
         UserConnect owner2 = ucc.newUserConnect("myselfff", "hola@ppellk.com", "imath", "958183402", "958183402");
-        Project project = pc.newProject(name, desc, owner2, instance);
+        Project project = pc.newProject(name, desc, owner2, instance, imathcloud);
         rest = prEndPoint.addCollaborator(owner.getUUID(), project.getUUID(), "nouuid", null);
         assertEquals(Response.Status.BAD_REQUEST.getStatusCode(), rest.getStatus());
         
         // 4.- Exception path: Collaborator does not exists
-        Project project2 = pc.newProject(name+"h", desc+"h", owner, instance);
+        Project project2 = pc.newProject(name+"h", desc+"h", owner, instance, imathcloud);
         rest = prEndPoint.addCollaborator(owner.getUUID(), project2.getUUID(), "nouuid", null);
         assertEquals(Response.Status.BAD_REQUEST.getStatusCode(), rest.getStatus());
         
@@ -196,12 +196,12 @@ public class ProjectRestIT extends AbstractIT{
         // 3.- Exception path: Project does not belong to owner
         Instance instance = ic.newInstance(0, 0, 0, "127.0.0.1", owner);
         UserConnect owner2 = ucc.newUserConnect("myselfQQff", "holQQa@ppellk.com", "imath", "958183402", "958183402");
-        Project project = pc.newProject(name, desc, owner2, instance);
+        Project project = pc.newProject(name, desc, owner2, instance, imathcloud);
         rest = prEndPoint.addCollaboratorByOther(owner.getUUID(), project.getUUID(), "nouuid", null);
         assertEquals(Response.Status.BAD_REQUEST.getStatusCode(), rest.getStatus());
         
         // 4.- Exception path: userName does not exists
-        Project project2 = pc.newProject(name+"h", desc+"h", owner, instance);
+        Project project2 = pc.newProject(name+"h", desc+"h", owner, instance, imathcloud);
         rest = prEndPoint.addCollaboratorByOther(owner.getUUID(), project2.getUUID(), "nouname", null);
         assertEquals(Response.Status.BAD_REQUEST.getStatusCode(), rest.getStatus());
         
@@ -253,12 +253,12 @@ public class ProjectRestIT extends AbstractIT{
         // 3.- Exception path: Project does not belong to owner
         Instance instance = ic.newInstance(0, 0, 0, "127.0.0.1", owner);
         UserConnect owner2 = ucc.newUserConnect("myselfffaaa", "hola@ppeqqq.com", "imath", "958183402", "958183402");
-        Project project = pc.newProject(name, desc, owner2, instance);
+        Project project = pc.newProject(name, desc, owner2, instance, imathcloud);
         rest = prEndPoint.removeCollaborator(owner.getUUID(), project.getUUID(), "nouuid", null);
         assertEquals(Response.Status.BAD_REQUEST.getStatusCode(), rest.getStatus());
         
         // 4.- OK path: If collaborator does not exists, the entity remains the same, and returns OK 
-        Project project2 = pc.newProject(name+"h", desc+"h", owner, instance);
+        Project project2 = pc.newProject(name+"h", desc+"h", owner, instance, imathcloud);
         rest = prEndPoint.removeCollaborator(owner.getUUID(), project2.getUUID(), "nouuid", null);
         assertEquals(Response.Status.OK.getStatusCode(), rest.getStatus());
         
@@ -316,9 +316,9 @@ public class ProjectRestIT extends AbstractIT{
         Instance instance1 = ic.newInstance(0, 0, 0, "123.333.44.55", owner);
         Instance instance2 = ic.newInstance(0, 0, 0, "123.333.44.55", other);
         
-        Project project1 = pc.newProject(name1, desc1, owner, instance1);
-        Project project2 = pc.newProject(name2, desc2, owner, instance1);
-        Project project3 = pc.newProject(name3, desc3, other, instance2);
+        Project project1 = pc.newProject(name1, desc1, owner, instance1, imathcloud);
+        Project project2 = pc.newProject(name2, desc2, owner, instance1, imathcloud);
+        Project project3 = pc.newProject(name3, desc3, other, instance2, imathcloud);
         
         rest = prEndPoint.getOwnProjects(owner.getUUID(), null);
         assertEquals(Response.Status.OK.getStatusCode(), rest.getStatus());
@@ -380,9 +380,9 @@ public class ProjectRestIT extends AbstractIT{
         String name3="dddgyprojjjfff";
         String desc3="dddgydescccfff";
         
-        Project project1 = pc.newProject(name1, desc1, other, instance2);
-        Project project2 = pc.newProject(name2, desc2, other, instance2);
-        Project project3 = pc.newProject(name3, desc3, other, instance2);
+        Project project1 = pc.newProject(name1, desc1, other, instance2, imathcloud);
+        Project project2 = pc.newProject(name2, desc2, other, instance2, imathcloud);
+        Project project3 = pc.newProject(name3, desc3, other, instance2, imathcloud);
         
         List<String> usersIds = new ArrayList<String>();
         usersIds.add(owner.getUUID());
