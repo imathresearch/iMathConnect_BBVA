@@ -143,6 +143,11 @@
                                 <i class="fa fa-th"></i> <span>My Projects</span>
                             </a>
                         </li>
+                        <li id="imath-id-instances-menu" class="imath-menu">
+                            <a onclick='placeLayoutInstances()' style='cursor: pointer;')>
+                                <i class="fa fa-th"></i> <span>My Instances</span>
+                            </a>
+                        </li>
                     </ul>
                 </section>
                 <!-- /.sidebar -->
