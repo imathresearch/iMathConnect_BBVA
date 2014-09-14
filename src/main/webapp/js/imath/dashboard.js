@@ -59,16 +59,19 @@ function setSelectMenu(idDOM) {
 }
 
 function ajaxOwnProjects(callbackString) {
+	placeWaiting("imath-waiting-own-projects");
 	$.ajax({
 	    url: "rest/api/agora/getOwnProjects/" + global_uuid_user,
 	    cache: false,
 	    dataType: "json",
 	    type: "GET",
 	    success: function(projects) {
+	    	unplaceWaiting("imath-waiting-own-projects");
 	    	var htmlTable = generateTableOfProjects(projects, callbackString);
 			$(".imath-own-projects").html(htmlTable);
 	    },
 	    error: function(error) {
+	    	unplaceWaiting("imath-waiting-own-projects");
 	        console.log("Error getting own projects");
 	    }
 	});	
@@ -76,16 +79,19 @@ function ajaxOwnProjects(callbackString) {
 }
 
 function ajaxColProjects() {
+	placeWaiting("imath-waiting-col-projects");
 	$.ajax({
 	    url: "rest/api/agora/getColProjects/" + global_uuid_user,
 	    cache: false,
 	    dataType: "json",
 	    type: "GET",
 	    success: function(projects) {
+	    	unplaceWaiting("imath-waiting-col-projects");
 	    	var htmlTable = generateTableOfColProjects(projects);
 			$(".imath-collaborations").html(htmlTable);
 	    },
 	    error: function(error) {
+	    	unplaceWaiting("imath-waiting-col-projects");
 	        console.log("Error getting own projects");
 	    }
 	});	
@@ -93,32 +99,38 @@ function ajaxColProjects() {
 }
 
 function ajaxOwnInstances() {
+	placeWaiting("imath-waiting-own-instances");
 	$.ajax({
 	    url: "rest/api/agora/instances/" + global_uuid_user,
 	    cache: false,
 	    dataType: "json",
 	    type: "GET",
 	    success: function(instances) {
+	    	unplaceWaiting("imath-waiting-own-instances");
 	    	var htmlTable = generateTableOfInstances(instances, false, true);
 			$(".imath-own-instances").html(htmlTable);
 	    },
 	    error: function(error) {
+	    	unplaceWaiting("imath-waiting-own-instances");
 	        console.log("Error getting own instances");
 	    }
 	});	
 }
 
 function ajaxPublicInstances() {
+	placeWaiting("imath-waiting-pub-instances");
 	$.ajax({
 	    url: "rest/api/agora/instances/ ",
 	    cache: false,
 	    dataType: "json",
 	    type: "GET",
 	    success: function(instances) {
+	    	unplaceWaiting("imath-waiting-pub-instances");
 	    	var htmlTable = generateTableOfInstances(instances, true, true);
 			$(".imath-public-instances").html(htmlTable);
 	    },
 	    error: function(error) {
+	    	unplaceWaiting("imath-waiting-pub-instances");
 	        console.log("Error getting public instances");
 	    }
 	});	

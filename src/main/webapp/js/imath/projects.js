@@ -43,7 +43,7 @@ function initProjectView(uuid_project) {
 		ajaxUploadProject(uuid_project);
 	}
 	global_instances = [];
-	ajaxOwnProjects("uploadProject");
+	ajaxOwnProjects("ajaxUploadProject");
 	ajaxInstancesLoad();
 	$("#imath-id-own-projects").delegate("tr", "click", function(e) {
 		if (!(typeof $(e.currentTarget).attr('id') == "undefined")){
@@ -126,9 +126,11 @@ function setNewProjectForm() {
 	$("#imath-id-project-date").val("");		// We empty the project createion date input
 	enable("imath-id-project-name");			// we enable the name input
 	enable("imath-id-select-resource-button");	// We enable the resource selection button
-	disable("imath-id-add-colls-button");			// We disable the collaboration button
-	$(".imath-collaborators"). html("");			// We empty out the table of collaborators
-	$(".imath-project-name").html("");
+	enable("imath-id-project-desc");			// We enable the description input
+	disable("imath-id-add-colls-button");		// We disable the collaboration button
+	$(".imath-collaborators").html("");			// We empty out the table of collaborators
+	$(".imath-project-name").html("");			// we empty the head project name
+	enable('imath-id-save-buton-project');		// We enable the save button
 
 }
 
@@ -151,7 +153,7 @@ function addCollaborator(other, uuid_project) {
 	    	var collaborators = project['userCol'];
 			collaboratorsHtml = generateTableOfCollaborators(collaborators);
 			$(".imath-collaborators"). html(collaboratorsHtml);
-			ajaxOwnProjects("uploadProject");
+			ajaxOwnProjects("ajaxUploadProject");
 			$("#imath-id-coll-text").val("");
 	    },
 	    error: function(error) {
@@ -183,20 +185,31 @@ function removeCollaborator(uuid_col) {
 	}
 }
 function ajaxNewProject(newName, newDesc, uuid_instance) {
+	placeWaiting("imath-waiting-creation");
 	$.ajax({
 	    url: "rest/api/agora/newProject/" + global_uuid_user + "/" + newName + "/" + newDesc + "/" + uuid_instance,
 	    cache: false,
 	    dataType: "json",
 	    type: "GET",
 	    success: function(project) {
+	    	unplaceWaiting("imath-waiting-creation");
 	    	ajaxOwnProjects("uploadProject");
 	    	viewUploadProject(project);
 	    },
 	    error: function(error) {
+	    	unplaceWaiting("imath-waiting-creation");
 	        console.log("Error saving project");
 	        showErrorForm("Error creating the project");
 	    }
 	});	
+}
+
+function placeWaiting(classid) {
+	$("."+ classid).append("<div class='overlay " + classid+"X" + "'></div><div class='loading-img " + classid+"X" + "'></div>");
+}
+
+function unplaceWaiting(classid) {
+	$("." + classid+"X").remove();
 }
 
 function saveProject(uuid_project, newDesc, uuid_instance) {

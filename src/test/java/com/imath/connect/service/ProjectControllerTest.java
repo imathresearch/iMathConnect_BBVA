@@ -82,7 +82,7 @@ public class ProjectControllerTest {
         assertEquals(desc, project.getDescription());
         assertEquals(owner, project.getOwner());
         assertEquals(instance, project.getInstance());
-        assertEquals(name+"_"+userName, project.getLinuxGroup());
+        assertEquals(name+"XYZ"+userName, project.getLinuxGroup());
         verify(em).persist((Project)Matchers.anyObject());
     }
     

@@ -44,7 +44,6 @@ public class ProjectRest {
     @Produces(MediaType.APPLICATION_JSON)
     public Response newProject(@PathParam("uuid_user") String uuid_user, @PathParam("name") String name, @PathParam("desc") String desc, 
             @PathParam("uuid_instance") String uuid_instance, @Context SecurityContext sc) {
-        
         ProjectDTO projectDTO = null;
         try {
             UserConnect owner = ucc.getUserConnect(uuid_user);
