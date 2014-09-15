@@ -290,6 +290,7 @@ public class ProjectRest {
         public InstanceDTO instance;
         public UserConnectDTO owner;
         public List<UserConnectDTO> userCol; 
+        
         public void convert(Project project, List<UserConnect> users) {
             this.UUID = project.getUUID();
             this.creationDate = project.getCreationDate();

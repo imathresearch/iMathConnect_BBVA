@@ -47,6 +47,7 @@ public class InstanceRestIT extends AbstractIT{
         
         // 2.- We create some public instances
         String IP1 = "123.333.44.55";
+        String name1 = "myinstance1";
         long cpu1 = 2;
         double ram1= 4.5;
         double stg1 = 56.9;
@@ -55,9 +56,10 @@ public class InstanceRestIT extends AbstractIT{
         long cpu2 = 5;
         double ram2= 6.9;
         double stg2 = 776.8;
+        String name2 = "myinstance2";
         
-        Instance instance1 = ic.newInstance(cpu1, ram1, stg1, IP1, null);
-        Instance instance2 = ic.newInstance(cpu2, ram2, stg2, IP2, null);
+        Instance instance1 = ic.newInstance(cpu1, ram1, stg1, IP1, name1, null);
+        Instance instance2 = ic.newInstance(cpu2, ram2, stg2, IP2, name2, null);
         
         rest = irEndPoint.getInstances("", null);
         assertEquals(Response.Status.OK.getStatusCode(), rest.getStatus());
@@ -76,6 +78,7 @@ public class InstanceRestIT extends AbstractIT{
             assertEquals(inst.getRam(), e.ram, 0.001);
             assertEquals(inst.getStg(), e.stg, 0.001);
             assertEquals(inst.getUrl(), e.url);
+            assertEquals(inst.getName(), e.name);
         }
         
         // 3.- Now we ask for the private ones given a user
@@ -91,14 +94,17 @@ public class InstanceRestIT extends AbstractIT{
         long cpu3 = 5;
         double ram3= 6.9;
         double stg3 = 776.8;
+        String name3 = "myinstance3";
+        
         String IP4 = "1.777.44.55";
         long cpu4 = 8;
         double ram4= 9.9;
         double stg4 = 786.8;
+        String name4 = "myinstance4";
         
         UserConnect notOwner = ucc.newUserConnect("myselff", "hola2@pepe.com", "imath2", "358183402", "758183402");
-        Instance instance3 = ic.newInstance(cpu3, ram3, stg3, IP3, owner);
-        ic.newInstance(cpu4, ram4, stg4, IP4, notOwner);
+        Instance instance3 = ic.newInstance(cpu3, ram3, stg3, IP3,name3, owner);
+        ic.newInstance(cpu4, ram4, stg4, IP4, name4, notOwner);
         
         // 4.1 We check that still when asking for public ones, we receive only two
         rest = irEndPoint.getInstances("", null);
@@ -118,6 +124,7 @@ public class InstanceRestIT extends AbstractIT{
             assertEquals(inst.getRam(), e.ram, 0.001);
             assertEquals(inst.getStg(), e.stg, 0.001);
             assertEquals(inst.getUrl(), e.url);
+            assertEquals(inst.getName(), e.name);
         }
         
         // 4.2 We get the private instances of owner
@@ -132,6 +139,7 @@ public class InstanceRestIT extends AbstractIT{
         assertEquals(instance3.getRam(), e.ram, 0.001);
         assertEquals(instance3.getStg(), e.stg, 0.001);
         assertEquals(instance3.getUrl(), e.url);
+        assertEquals(instance3.getName(), e.name);
     }
 
 }

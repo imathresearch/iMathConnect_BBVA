@@ -140,12 +140,12 @@
                         </li>
                         <li id="imath-id-projects-menu" class="imath-menu">
                             <a onclick='placeLayoutProjects()' style='cursor: pointer;')>
-                                <i class="fa fa-th"></i> <span>My Projects</span>
+                                <i class="fa fa-bar-chart-o"></i> <span>My Projects</span>
                             </a>
                         </li>
                         <li id="imath-id-instances-menu" class="imath-menu">
                             <a onclick='placeLayoutInstances()' style='cursor: pointer;')>
-                                <i class="fa fa-th"></i> <span>My Instances</span>
+                                <i class="fa fa-cog"></i> <span>My Instances</span>
                             </a>
                         </li>
                     </ul>
@@ -331,7 +331,7 @@
 		<script src="js/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js" type="text/javascript"></script>
         <!-- AdminLTE App -->
         <script src="js/AdminLTE/app.js" type="text/javascript"></script>
-
+		<script src="js/plugins/ionslider/ion.rangeSlider.min.js" type="text/javascript"></script>
         <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
         <script src="js/AdminLTE/dashboard.js" type="text/javascript"></script>
 
@@ -342,6 +342,7 @@
 		</script>
 		<script src="js/imath/dashboard.js" type="text/javascript"></script>
 		<script src="js/imath/projects.js" type="text/javascript"></script>
+		<script src="js/imath/instances.js" type="text/javascript"></script>
 		<script src="js/imath/notifications.js" type="text/javascript"></script>
     </body>
 	
