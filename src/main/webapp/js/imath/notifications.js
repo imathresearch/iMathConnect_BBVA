@@ -77,7 +77,7 @@ function generateNotificationInfo(notification){
 	
 	code = code + '<div class="form-group">';
 	code = code + '<label>Description</label>';
-	code = code + '<input type="text" class="form-control" placeholder="' + notification['text'] + '" disabled>';
+	code = code + '<textarea rows="4" cols="50" type="text" class="form-control" placeholder="' + notification['text'] + '" disabled></textarea>';
 	code = code + '</div>';
 	code = code + '<div class="form-group">';
 	code = code + '<label>Creation Date</label>';
