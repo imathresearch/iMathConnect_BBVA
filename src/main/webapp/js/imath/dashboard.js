@@ -4,9 +4,8 @@
  */
 
 // This links each id menu with its title
-var jsonMenus = '{"imath-id-projects-menu": "My Projects",' + 
-				'"imath-id-dashboard-menu": "Dashboard"},' +
-				'"imath-id-instances-menu": "My Instances"';
+var jsonMenus = '{"imath-id-projects-menu": "My Projects","imath-id-dashboard-menu": "Dashboard","imath-id-instances-menu": "My Instances"}';
+
 var gloabal_menu_text = JSON.parse(jsonMenus);
 
 var global_uuid_user = null;
