@@ -40,11 +40,10 @@ public class ProjectRest {
     @Inject private Logger LOG;
     
     @GET
-    @Path(Constants.newProject + "/{name}/{desc}/{uuid_user}/{uuid_instance}")
+    @Path(Constants.newProject + "/{uuid_user}/{name}/{desc}/{uuid_instance}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response newProject(@PathParam("name") String name, @PathParam("desc") String desc, 
-            @PathParam("uuid_user") String uuid_user, @PathParam("uuid_instance") String uuid_instance, @Context SecurityContext sc) {
-        
+    public Response newProject(@PathParam("uuid_user") String uuid_user, @PathParam("name") String name, @PathParam("desc") String desc, 
+            @PathParam("uuid_instance") String uuid_instance, @Context SecurityContext sc) {
         ProjectDTO projectDTO = null;
         try {
             UserConnect owner = ucc.getUserConnect(uuid_user);
@@ -191,6 +190,9 @@ public class ProjectRest {
             UserConnect user = ucc.getUserConnect(uuid_user);
             Project project = pc.getProject(uuid_project);
             SecurityManager.secureBasic(user.getUserName(), sc);
+            System.out.println(user.getUUID());
+            UserConnect userOnwer = project.getOwner();
+            System.out.println(userOnwer.getUUID());
             if (!user.getUUID().equals(project.getOwner().getUUID())) {    // If the petitioner is not the owner of the project we check if its a collaborator 
                 List<UserConnect> cols = ucc.getCollaborationUsersByProject(uuid_project);
                 Iterator<UserConnect> it = cols.iterator();
@@ -206,6 +208,7 @@ public class ProjectRest {
             retDTO.convert(project);
             return Response.status(Response.Status.OK).entity(retDTO).build();
         } catch (Exception e) {
+        	e.printStackTrace();
             LOG.severe(e.getMessage());
             return Response.status(Response.Status.BAD_REQUEST).build();
         }
@@ -307,5 +310,11 @@ public class ProjectRest {
             	}
             }
         }
+    }
+    
+    // Just for testing purposes
+    
+    public ProjectController getProjectController() {
+    	return this.pc;
     }
 }

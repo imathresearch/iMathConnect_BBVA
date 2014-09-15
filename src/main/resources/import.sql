@@ -32,10 +32,10 @@ INSERT INTO userconnect(uuid, creationdate, email, currentconnection, lastconnec
 --AMMARTINEZ
 INSERT INTO userconnect(uuid, creationdate, email, currentconnection, lastconnection, organization, phone1, phone2, username) VALUES ('amtuuid1', '2014-01-01', 'ammartinez@imathresearch.com', '2014-02-01', '2014-01-01', 'imath', '999999999', '11111111111', 'amtTest');
 
-INSERT INTO instance(uuid, cpu, creationdate, ram, stg, url, owner_instance) VALUES ('instuuid1', 8, '2014-01-01', 8, 500, 'http://127.0.0.1:8080/iMathCloud', null);
-INSERT INTO instance(uuid, cpu, creationdate, ram, stg, url, owner_instance) VALUES ('instuuid2', 1, '2014-01-01', 2, 100, 'http://127.0.0.1:8080/iMathCloud', 'useruuid1');
-INSERT INTO instance(uuid, cpu, creationdate, ram, stg, url, owner_instance) VALUES ('instuuid3', 4, '2014-01-01', 3.5, 200, 'http://127.0.0.1:8080/iMathCloud', 'useruuid1');
-INSERT INTO instance(uuid, cpu, creationdate, ram, stg, url, owner_instance) VALUES ('instuuid4', 4, '2014-01-01', 8, 300, 'http://127.0.0.1:8080/iMathCloud', null);
+INSERT INTO instance(uuid, cpu, creationdate, ram, stg, url, owner_instance) VALUES ('instuuid1', 8, '2014-01-01', 8, 500, 'http://127.0.0.1:8080', null);
+INSERT INTO instance(uuid, cpu, creationdate, ram, stg, url, owner_instance) VALUES ('instuuid2', 1, '2014-01-01', 2, 100, 'http://127.0.0.1:8080', 'useruuid1');
+INSERT INTO instance(uuid, cpu, creationdate, ram, stg, url, owner_instance) VALUES ('instuuid3', 4, '2014-01-01', 3.5, 200, 'http://127.0.0.1:8080', 'useruuid1');
+INSERT INTO instance(uuid, cpu, creationdate, ram, stg, url, owner_instance) VALUES ('instuuid4', 4, '2014-01-01', 8, 300, 'http://127.0.0.1:8080', null);
 
 --AMMARTINEZ
 INSERT INTO instance(uuid, cpu, creationdate, ram, stg, url, owner_instance) VALUES ('instuuid5', 4, '2014-01-01', 8, 300, '127.0.0.1', 'amtuuid1');

@@ -27,6 +27,7 @@ import com.imath.connect.data.UserConnectDB;
 import com.imath.connect.model.Instance;
 import com.imath.connect.model.Project;
 import com.imath.connect.model.UserConnect;
+import com.imath.connect.util.IMathCloudAccess;
 
 public class ProjectControllerTest {
     private ProjectController pc;
@@ -47,6 +48,9 @@ public class ProjectControllerTest {
     @Mock
     private ProjectDB projectDB;
     
+    @Mock 
+    private IMathCloudAccess imathcloud;
+    
     @Before
     public void setUp() throws Exception {
         MockitoAnnotations.initMocks(this);
@@ -58,6 +62,7 @@ public class ProjectControllerTest {
         
         pc = new ProjectController();
         pc.setUserConnectController(ucc);
+        pc.setIMathCloudAccess(imathcloud);
         pc.setMainDB(db);
         pc.setLog(LOG);
     }
@@ -77,7 +82,7 @@ public class ProjectControllerTest {
         assertEquals(desc, project.getDescription());
         assertEquals(owner, project.getOwner());
         assertEquals(instance, project.getInstance());
-        assertEquals(name+"_"+userName, project.getLinuxGroup());
+        assertEquals(name+"XYZ"+userName, project.getLinuxGroup());
         verify(em).persist((Project)Matchers.anyObject());
     }
     

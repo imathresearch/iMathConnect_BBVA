@@ -14,14 +14,19 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 
 import com.imath.connect.model.Instance;
 import com.imath.connect.model.Project;
 import com.imath.connect.model.UserConnect;
+import com.imath.connect.rest.AbstractIT.Mock_IMathCloudAccess;
 import com.imath.connect.rest.UserConnectRest.UserConnectDTO;
 import com.imath.connect.service.InstanceController;
 import com.imath.connect.service.ProjectController;
 import com.imath.connect.service.UserConnectController;
+import com.imath.connect.util.IMathCloudAccess;
+import com.imath.connect.util.IMathCloudInterface;
 
 @RunWith(Arquillian.class)
 public class UserConnectRestIT extends AbstractIT {
@@ -30,8 +35,13 @@ public class UserConnectRestIT extends AbstractIT {
     @Inject ProjectController pc;
     @Inject UserConnectRest ucrEndPoint;
     
+    // We mock iMathCloudAccess
+    private IMathCloudInterface imathcloud = new Mock_IMathCloudAccess();
+    
     @Before
-    public void setUp() throws Exception {}
+    public void setUp() throws Exception {
+    	pc.setIMathCloudAccess(imathcloud);
+    }
     
     @After
     public void tearDown() throws Exception {
@@ -105,7 +115,7 @@ public class UserConnectRestIT extends AbstractIT {
         UserConnect theOne1 = ucc.newUserConnect(userName1, email1, org1, phone11, phone12);
         UserConnect owner = ucc.newUserConnect("owner", "hla@ppe.com", "iath", "953333402", "933383402");
         Instance instance = ic.newInstance(0, 0, 0, "hola", owner);
-        Project project = pc.newProject("myProject", "myProject", owner, instance);
+        Project project = pc.newProject("myProject", "myProject", owner, instance, imathcloud);
         rest = ucrEndPoint.getColUsersByProject(project.getUUID(), null);
         assertEquals(Response.Status.OK.getStatusCode(), rest.getStatus());
         @SuppressWarnings("unchecked")
@@ -144,5 +154,7 @@ public class UserConnectRestIT extends AbstractIT {
         }
         
     }
+    
+    
 
 }

@@ -143,6 +143,11 @@
                                 <i class="fa fa-th"></i> <span>My Projects</span>
                             </a>
                         </li>
+                        <li id="imath-id-instances-menu" class="imath-menu">
+                            <a onclick='placeLayoutInstances()' style='cursor: pointer;')>
+                                <i class="fa fa-th"></i> <span>My Instances</span>
+                            </a>
+                        </li>
                     </ul>
                 </section>
                 <!-- /.sidebar -->
@@ -235,7 +240,7 @@
                     <div class="row imath-main-row">
  						<section class="col-lg-7 connectedSortable">
  							<!-- Box Own projects -->
- 							<div class="box">
+ 							<div class="box imath-waiting-creation imath-waiting-own-projects">
                                 <div class="box-header">
                                     <h3 class="box-title"><i class="fa fa-bar-chart-o"></i>&nbsp;&nbsp;&nbsp; My Projects</h3>
                                 </div><!-- /.box-header -->
@@ -246,7 +251,7 @@
                             </div><!-- /.box Own projects-->
                             
                             <!-- Box Collaborative projects -->
-                            <div class="box">
+                            <div class="box imath-waiting-col-projects">
                                 <div class="box-header">
                                     <h3 class="box-title"><i class="fa fa-bar-chart-o"></i>&nbsp;&nbsp;&nbsp; Collaborations</h3>
                                 </div><!-- /.box-header -->
@@ -258,7 +263,7 @@
  						</section> 
  						<section class="col-lg-5 connectedSortable">
  						    <!-- Box Own instances -->
-                            <div class="box">
+                            <div class="box imath-waiting-own-instances">
                                 <div class="box-header">
                                     <h3 class="box-title"><i class="fa fa-cog"></i>&nbsp;&nbsp;&nbsp; My Instances</h3>
                                 </div><!-- /.box-header -->
@@ -269,7 +274,7 @@
                             </div><!-- /.box Own Instances-->
  						 
  							<!-- Box public instances -->
-                            <div class="box">
+                            <div class="box imath-waiting-pub-instances">
                                 <div class="box-header">
                                 	<i class="fa-cop"></i> 
                                     <h3 class="box-title"><i class="fa fa-cog"></i>&nbsp;&nbsp;&nbsp; Public Instances</h3>

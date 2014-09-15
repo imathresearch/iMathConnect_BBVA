@@ -25,6 +25,9 @@ function unselectProject() {
 	disable('imath-id-select-resource-button');
 	disable('imath-id-add-colls-button');
 	disable('imath-id-cancel-buton-project');
+	disable('imath-id-save-buton-project');
+	disable('imath-id-project-desc');
+	disable('imath-id-coll-text');
 	global_uuid_project_selected=null;
 	$('#imath-id-instances').html("");			// We empty out the instance tables
 	$("#imath-id-project-name").val("");		// We empty the project name input
@@ -37,15 +40,15 @@ function unselectProject() {
 function initProjectView(uuid_project) {
 	unselectProject();
 	if (!(typeof uuid_project =="undefined")) {
-		uploadProject(uuid_project);
+		ajaxUploadProject(uuid_project);
 	}
 	global_instances = [];
-	ajaxOwnProjects("uploadProject");
+	ajaxOwnProjects("ajaxUploadProject");
 	ajaxInstancesLoad();
 	$("#imath-id-own-projects").delegate("tr", "click", function(e) {
 		if (!(typeof $(e.currentTarget).attr('id') == "undefined")){
 			var uuid = $(e.currentTarget).attr('id');
-			uploadProject(uuid);
+			ajaxUploadProject(uuid);
 		}
 	});
 	$("#imath-id-instances-select").delegate("tr", "click", function(e) {
@@ -75,13 +78,13 @@ function initProjectView(uuid_project) {
 		} else {
 			// if global_uuid_project_selected === null, we create a new project!
 			var newName = $("#imath-id-project-name").val();
-			newProject(newName, newDesc, uuid_instance);
+			ajaxNewProject(newName, newDesc, uuid_instance);
 		}
 	});
 	
 	$("#imath-id-add-colls-button").click(function() {
 		if (global_uuid_project_selected!==null) {
-			var other = $("#idCollaborationBox").val();
+			var other = $("#imath-id-coll-text").val();
 			other = other.trim();
 			if(other !=="") {
 				addCollaborator(other, global_uuid_project_selected);
@@ -107,7 +110,7 @@ function setNewProjectForm() {
 	global_uuid_project_selected_prev = global_uuid_project_selected;
 	$("#imath-id-cancel-buton-project").click(function () {
 		if (global_uuid_project_selected_prev !== null) {
-			uploadProject(global_uuid_project_selected_prev);
+			ajaxUploadProject(global_uuid_project_selected_prev);
 			global_uuid_project_selected_prev == null;
 		} else {
 			unselectProject();
@@ -123,9 +126,11 @@ function setNewProjectForm() {
 	$("#imath-id-project-date").val("");		// We empty the project createion date input
 	enable("imath-id-project-name");			// we enable the name input
 	enable("imath-id-select-resource-button");	// We enable the resource selection button
-	disable("imath-id-add-colls-button");			// We disable the collaboration button
-	$(".imath-collaborators"). html("");			// We empty out the table of collaborators
-	$(".imath-project-name").html("");
+	enable("imath-id-project-desc");			// We enable the description input
+	disable("imath-id-add-colls-button");		// We disable the collaboration button
+	$(".imath-collaborators").html("");			// We empty out the table of collaborators
+	$(".imath-project-name").html("");			// we empty the head project name
+	enable('imath-id-save-buton-project');		// We enable the save button
 
 }
 
@@ -148,8 +153,8 @@ function addCollaborator(other, uuid_project) {
 	    	var collaborators = project['userCol'];
 			collaboratorsHtml = generateTableOfCollaborators(collaborators);
 			$(".imath-collaborators"). html(collaboratorsHtml);
-			ajaxOwnProjects("uploadProject");
-			$("#idCollaborationBox").val("");
+			ajaxOwnProjects("ajaxUploadProject");
+			$("#imath-id-coll-text").val("");
 	    },
 	    error: function(error) {
 	    	console.log("Error adding collaborator");
@@ -170,7 +175,7 @@ function removeCollaborator(uuid_col) {
 				collaboratorsHtml = generateTableOfCollaborators(collaborators);
 				$(".imath-collaborators"). html(collaboratorsHtml);
 				ajaxOwnProjects("uploadProject");
-				$("#idCollaborationBox").val("");
+				$("#imath-id-coll-text").val("");
 		    },
 		    error: function(error) {
 		    	console.log("Error removing collaborator");
@@ -179,8 +184,32 @@ function removeCollaborator(uuid_col) {
 		});
 	}
 }
-function newProject(newName, newDesc, uuid_instance) {
-	alert(newName + "  " + newDesc + "  " + uuid_instance);
+function ajaxNewProject(newName, newDesc, uuid_instance) {
+	placeWaiting("imath-waiting-creation");
+	$.ajax({
+	    url: "rest/api/agora/newProject/" + global_uuid_user + "/" + newName + "/" + newDesc + "/" + uuid_instance,
+	    cache: false,
+	    dataType: "json",
+	    type: "GET",
+	    success: function(project) {
+	    	unplaceWaiting("imath-waiting-creation");
+	    	ajaxOwnProjects("uploadProject");
+	    	viewUploadProject(project);
+	    },
+	    error: function(error) {
+	    	unplaceWaiting("imath-waiting-creation");
+	        console.log("Error saving project");
+	        showErrorForm("Error creating the project");
+	    }
+	});	
+}
+
+function placeWaiting(classid) {
+	$("."+ classid).append("<div class='overlay " + classid+"X" + "'></div><div class='loading-img " + classid+"X" + "'></div>");
+}
+
+function unplaceWaiting(classid) {
+	$("." + classid+"X").remove();
 }
 
 function saveProject(uuid_project, newDesc, uuid_instance) {
@@ -234,6 +263,7 @@ function ajaxInstancesLoad() {
 	    	    },
 	    	    error: function(error) {
 	    	        console.log("Error getting public instances");
+	    	        showErrorForm("Error getting public instances.");
 	    	    }
 	    	});	
 			
@@ -262,40 +292,49 @@ function generateTableOfInstancesSelect(instances, pub) {
 	return ret;
 }
 
-function uploadProject(uuid) {
+function viewUploadProject(project) {
+	global_uuid_project_selected = project['UUID'];
+	$(".imath-project-name").html(project['name']);
+	$("#imath-id-project-name").val(project['name']);
+	disable("imath-id-project-name");
+	$("#imath-id-project-desc").val(project['desc']);
+	disable("imath-id-cancel-buton-project");
+	disable("imath-id-select-resource-button"); // We disable the selection of resources
+	enable("imath-id-add-colls-button");		// we enable the add collaborators button
+	enable('imath-id-save-buton-project');		// The save button
+	enable('imath-id-project-desc');			// The description input
+	enable('imath-id-coll-text');				// And the coll text input
+	var creationDate = new Date(project['creationDate']);
+	var dateText = dateToNice(creationDate);
+	$("#imath-id-project-date").val(dateText);
+	var instance = project['instance'];
+	var instanceTableHtml;
+	var fakeInstances = [];
+	fakeInstances[0] = instance;
+	if(project['instance']['owner']===null) {	// public
+		instanceTableHtml = generateTableOfInstances(fakeInstances, true, true);
+	} else {
+		instanceTableHtml = generateTableOfInstances(fakeInstances, false, true);
+	}
+	$(".imath-select-instance").html(instanceTableHtml);
+	var collaborators = project['userCol'];
+	collaboratorsHtml = generateTableOfCollaborators(collaborators);
+	$(".imath-collaborators"). html(collaboratorsHtml);
+	
+}
+
+function ajaxUploadProject(uuid) {
 	$.ajax({
 	    url: "rest/api/agora/getProject/" + global_uuid_user + "/" + uuid,
 	    cache: false,
 	    dataType: "json",
 	    type: "GET",
 	    success: function(project) {
-	    	global_uuid_project_selected = uuid;
-	    	$(".imath-project-name").html(project['name']);
-	    	$("#imath-id-project-name").val(project['name']);
-	    	disable("imath-id-project-name");
-	    	$("#imath-id-project-desc").val(project['desc']);
-	    	disable("imath-id-cancel-buton-project");
-	    	disable("imath-id-select-resource-button"); // We disable the selection of resources
-	    	enable("imath-id-add-colls-button");		// we enable the add collaborators button
-	    	var creationDate = new Date(project['creationDate']);
-			var dateText = dateToNice(creationDate);
-			$("#imath-id-project-date").val(dateText);
-			var instance = project['instance'];
-			var instanceTableHtml;
-			var fakeInstances = [];
-			fakeInstances[0] = instance;
-			if(project['instance']['owner']===null) {	// public
-				instanceTableHtml = generateTableOfInstances(fakeInstances, true, true);
-			} else {
-				instanceTableHtml = generateTableOfInstances(fakeInstances, false, true);
-			}
-			$(".imath-select-instance").html(instanceTableHtml);
-			var collaborators = project['userCol'];
-			collaboratorsHtml = generateTableOfCollaborators(collaborators);
-			$(".imath-collaborators"). html(collaboratorsHtml);
+	    	viewUploadProject(project);
 	    },
 	    error: function(error) {
 	        console.log("Error getting project");
+	        showErrorForm("Error uploading the project.");
 	    }
 	});	
 }
@@ -323,7 +362,7 @@ function runiMathCloud(uuid_project) {
 	    success: function(project) {
 	    	var linux = project['linuxGroup'];
 	    	var key = project['key'];
-	    	var url = project['url'] + "/login.jsp";
+	    	var url = project['url'] + "/iMathCloud/login.jsp";
 	    	// Ugly... but it works
 	    	document.body.innerHTML += '<form target="_blank" id="fakeForm" action="' + url + '" method="post"><input type="hidden" name="j_username" value="' + linux + '"><input type="hidden" name="j_password" value="' + key + '"></form>';
 	    	document.getElementById("fakeForm").submit();

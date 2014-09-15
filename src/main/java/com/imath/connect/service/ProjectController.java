@@ -6,6 +6,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import javax.ejb.Stateful;
 import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
@@ -16,6 +17,8 @@ import com.imath.connect.model.Instance;
 import com.imath.connect.model.Project;
 import com.imath.connect.model.UserConnect;
 import com.imath.connect.util.Encryptor;
+import com.imath.connect.util.IMathCloudAccess;
+import com.imath.connect.util.IMathCloudInterface;
 import com.imath.connect.util.Util;
 
 /**
@@ -27,11 +30,10 @@ import com.imath.connect.util.Util;
 @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
 public class ProjectController extends AbstractController {
     
-    @Inject 
-    UserConnectController ucc;
+    @Inject UserConnectController ucc;
+    @Inject InstanceController ic;
     
-    @Inject
-    InstanceController ic;
+    @Inject IMathCloudInterface imathcloud;
     
     /**
      * Creates and return a new Project
@@ -52,11 +54,26 @@ public class ProjectController extends AbstractController {
         project.setOwner(owner);
         project.setInstance(instance);
         project.setKey(Util.randomString());
-        project.setLinuxGroup(name+"_"+owner.getUserName());
+        project.setLinuxGroup(name+"XYZ"+owner.getUserName());
         db.makePersistent(project);
+        try {
+        	imathcloud.newProject(project.getLinuxGroup(), project.getKey(), instance.getUrl());
+        } catch (Exception e) {
+        	// Don't get why the project is created anyway! On exception, the transaction should roll back
+        	// Investigate
+        	db.delete(project);
+        	throw e;
+        }
         return project;
     }
     
+    //********* for testing purposes only
+    @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
+    public Project newProject(String name, String desc, UserConnect owner, Instance instance, IMathCloudInterface imathcloud) throws Exception {
+    	this.imathcloud = imathcloud;
+    	return newProject(name,desc,owner,instance);
+    }
+    //*********
     /**
      * Updates the project data
      * @param uuid
@@ -169,5 +186,9 @@ public class ProjectController extends AbstractController {
     
     public void setUserConnectController(UserConnectController ucc) {
         this.ucc = ucc;
+    }
+    
+    public void setIMathCloudAccess(IMathCloudInterface imathcloud) {
+    	this.imathcloud = imathcloud;
     }
 }
