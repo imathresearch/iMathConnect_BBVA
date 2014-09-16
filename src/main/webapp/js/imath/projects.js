@@ -6,6 +6,7 @@
 var global_uuid_project_selected = null;
 var global_uuid_project_selected_prev = null;
 var global_instances = [];
+var global_ok = false;
 
 function placeLayoutProjects(uuid_project) {
 	setSelectMenu("imath-id-projects-menu");
@@ -111,7 +112,7 @@ function setNewProjectForm() {
 	$("#imath-id-cancel-buton-project").click(function () {
 		if (global_uuid_project_selected_prev !== null) {
 			ajaxUploadProject(global_uuid_project_selected_prev);
-			global_uuid_project_selected_prev == null;
+			global_uuid_project_selected_prev = null;
 		} else {
 			unselectProject();
 		}
@@ -184,6 +185,24 @@ function removeCollaborator(uuid_col) {
 		});
 	}
 }
+
+function removeProject(uuid) {
+	var message = "Are you sure you want to remove the project? The process is irreversible.";
+	var func = function() {
+		ajaxRemoveProject(uuid);
+	};
+	confirmationForm(message, func);
+}
+
+function ajaxRemoveProject(uuid) {
+}
+	
+function confirmationForm(message, func) {
+	$('.imath-conf-message').html(message);
+	$('#imath-id-ok-button-select').click(func)
+	$('#imath-id-conf-message').modal('show');
+}
+
 function ajaxNewProject(newName, newDesc, uuid_instance) {
 	placeWaiting("imath-waiting-creation");
 	$.ajax({
