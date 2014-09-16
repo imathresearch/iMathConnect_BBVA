@@ -58,10 +58,11 @@ public class InstanceControllerTest {
         double ram = 1.34;
         double stg = 23.4;
         String url = "158.127.56.89:8080";
+        String name = "myinstance";
         UserConnect owner = new UserConnect();
         owner.setUUID("ID");
         
-        Instance instance = pc.newInstance(cpu, ram, stg, url, owner);
+        Instance instance = pc.newInstance(cpu, ram, stg, url, name, owner);
         assertEquals(cpu, instance.getCpu());
         assertEquals(ram, instance.getRam(),0.001);
         assertEquals(stg, instance.getStg(),0.001);
@@ -74,13 +75,14 @@ public class InstanceControllerTest {
     @Test
     public void getInstancesTest() throws Exception {
         String UUID = "id";
+        String name = "myinstance";
         UserConnect owner = new UserConnect();
         owner.setUUID(UUID);
         List<Instance> publicInstaces = new ArrayList<Instance>();
-        publicInstaces.add(pc.newInstance(4, 2, 2, "111.222.111.222", null));
+        publicInstaces.add(pc.newInstance(4, 2, 2, "111.222.111.222",name, null));
         
         List<Instance> privateInstaces = new ArrayList<Instance>();
-        privateInstaces.add(pc.newInstance(5, 1, 7, "151.252.151.252", owner));
+        privateInstaces.add(pc.newInstance(5, 1, 7, "151.252.151.252", name,owner));
         
         when(db.getInstanceDB().findByPublic()).thenReturn(publicInstaces);
         when(db.getInstanceDB().findByOwner(UUID)).thenReturn(privateInstaces);

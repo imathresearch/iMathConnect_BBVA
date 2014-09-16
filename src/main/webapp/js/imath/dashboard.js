@@ -237,11 +237,13 @@ function generateTableOfProjects(projects, callbackString) {
 		var rowInstance = faIcon("fa-gears") + " <b>" + project['instance']['cpu'] + "</b> <small>vCPUs</small> <br>";
 		rowInstance += faIcon("fa-film") + " <b>" + project['instance']['ram'] + "</b> <small>MiB</small><br> ";
 		rowInstance += faIcon("fa-cloud") + " <b>" + project['instance']['stg'] + "</b> <small>GiB</small> ";
+		var rowName = "";
 		if (typeof callbackString == "undefined") {
 			rowName = "<a onclick='placeLayoutProjects(\""+uuid+ "\")' style='color:blue;cursor: pointer;text-decoration: underline;'>" + name + "</a>";
 		} else {
 			rowName = "<a onclick='" + callbackString + "(\""+uuid+ "\")' style='color:blue;cursor: pointer;text-decoration: underline;'>" + name + "</a>";
 		}
+
 			
 		ret = ret + htmlTableRowData([rowIcon, rowName,dateText,desc,rowCol,rowInstance], uuid);	
 	}
@@ -255,10 +257,10 @@ function generateTableOfProjects(projects, callbackString) {
  * @param putHeader		
  * @returns {String}
  */
-function generateTableOfInstances(instances, pub, putHeader) {
+function generateTableOfInstances(instances, pub, putHeader, callbackString) {
 	var ret = "";
 	if (putHeader) {
-		ret = htmlTableRowHead(['#', faIcon("fa-gears")+' vCPUs', 
+		ret = htmlTableRowHead(['#', 'Name', faIcon("fa-gears")+' vCPUs', 
 	                            faIcon("fa-film") + ' RAM', 
 	                            faIcon("fa-cloud") + 'Storage', 'Date']);
 	}
@@ -275,9 +277,15 @@ function generateTableOfInstances(instances, pub, putHeader) {
 		if (pub) {
 			rowIcon = '<span class="badge bg-light-blue">Pu</span>';
 		}
-		
+		var name = instance['name'];
+		var rowName = "";
+		if (typeof callbackString == "undefined") {
+			rowName = "<a onclick='placeLayoutInstances(\""+uuid+ "\")' style='color:blue;cursor: pointer;text-decoration: underline;'>" + name + "</a>";
+		} else {
+			rowName = "<a onclick='" + callbackString + "(\""+uuid+ "\")' style='color:blue;cursor: pointer;text-decoration: underline;'>" + name + "</a>";
+		}
 		//rowMore = "<a href='onclick=showInstancePage(\""+uuid+ "\")'>+</a>"; 
-		ret = ret + htmlTableRowData([rowIcon, cpu, ram, stg, dateText], uuid);	
+		ret = ret + htmlTableRowData([rowIcon, rowName, cpu, ram, stg, dateText], uuid);	
 	}
 	return ret;
 }

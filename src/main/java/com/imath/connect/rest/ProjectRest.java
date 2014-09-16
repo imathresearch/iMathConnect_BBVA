@@ -28,6 +28,7 @@ import com.imath.connect.service.InstanceController;
 import com.imath.connect.service.ProjectController;
 import com.imath.connect.service.UserConnectController;
 import com.imath.connect.util.Constants;
+import com.imath.connect.util.IMathCloudInterface;
 import com.imath.connect.security.SecurityManager;
 
 @Path(Constants.baseURL)
@@ -102,6 +103,7 @@ public class ProjectRest {
         }
     }
     
+    
     /**
      * Add a collaborator by username or email
      * @param uuid_user
@@ -158,6 +160,32 @@ public class ProjectRest {
         }
     }
     
+    @POST
+    @Path(Constants.removeProject + "/{uuid_user}/{uuid_project}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response removeProject(@PathParam("uuid_user") String uuid_user, @PathParam("uuid_project") String uuid_project, @Context SecurityContext sc) {
+        try {
+            UserConnect owner = ucc.getUserConnect(uuid_user);
+            SecurityManager.secureBasic(owner.getUserName(), sc);
+            Project project = pc.getProject(uuid_project);
+            // We check that the user is the owner of the project
+            if (!project.getOwner().getUUID().equals(owner.getUUID())) {
+                throw new Exception("Not enough privileges");
+            }
+            // We check that the list of collaborators is empty
+            List<UserConnect> users =ucc.getCollaborationUsersByProject(project.getUUID());
+            if (users.size()>0) {
+                throw new Exception("Not possible to remove the project if it has collaborators");
+            }
+            pc.removeProject(project.getUUID());
+            return Response.status(Response.Status.OK).build();
+            
+        } catch (Exception e) {
+            LOG.severe(e.getMessage());
+            return Response.status(Response.Status.BAD_REQUEST).build();
+        }
+    }
+
     @GET
     @Path(Constants.getProject + "/{uuid_user}/{uuid_project}")
     @Produces(MediaType.APPLICATION_JSON)
@@ -290,6 +318,7 @@ public class ProjectRest {
         public InstanceDTO instance;
         public UserConnectDTO owner;
         public List<UserConnectDTO> userCol; 
+        
         public void convert(Project project, List<UserConnect> users) {
             this.UUID = project.getUUID();
             this.creationDate = project.getCreationDate();

@@ -4,7 +4,7 @@
 <html>
     <head>
         <meta charset="UTF-8">
-        <title>iMath Connect | Dashboard</title>
+        <title>iMath Connect</title>
         <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
         <!-- bootstrap 3.0.2 -->
         <link href="css/bootstrap.min.css" rel="stylesheet" type="text/css" />
@@ -24,7 +24,7 @@
         <link href="css/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css" rel="stylesheet" type="text/css" />
         <!-- Theme style -->
         <link href="css/AdminLTE.css" rel="stylesheet" type="text/css" />
-
+		<link rel="shortcut icon" href="images/favicon.ico"> 
         <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
         <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
         <!--[if lt IE 9]>
@@ -140,14 +140,14 @@
                         </li>
                         <li id="imath-id-projects-menu" class="imath-menu">
                             <a onclick='placeLayoutProjects()' style='cursor: pointer;')>
-                                <i class="fa fa-th"></i> <span>My Projects</span>
+                                <i class="fa fa-bar-chart-o"></i> <span>My Projects</span>
                             </a>
                         </li>
-                        <li id="imath-id-instances-menu" class="imath-menu">
-                            <a onclick='placeLayoutInstances()' style='cursor: pointer;')>
-                                <i class="fa fa-th"></i> <span>My Instances</span>
+                        <!-- li id="imath-id-instances-menu" class="imath-menu">
+                            <a onclick='placeLayoutInstances()')>
+                                <i class="fa fa-cog"></i> <span>My Instances</span>
                             </a>
-                        </li>
+                        </li-->
                     </ul>
                 </section>
                 <!-- /.sidebar -->
@@ -331,7 +331,7 @@
 		<script src="js/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js" type="text/javascript"></script>
         <!-- AdminLTE App -->
         <script src="js/AdminLTE/app.js" type="text/javascript"></script>
-
+		<script src="js/plugins/ionslider/ion.rangeSlider.min.js" type="text/javascript"></script>
         <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
         <script src="js/AdminLTE/dashboard.js" type="text/javascript"></script>
 
@@ -342,6 +342,7 @@
 		</script>
 		<script src="js/imath/dashboard.js" type="text/javascript"></script>
 		<script src="js/imath/projects.js" type="text/javascript"></script>
+		<script src="js/imath/instances.js" type="text/javascript"></script>
 		<script src="js/imath/notifications.js" type="text/javascript"></script>
     </body>
 	
