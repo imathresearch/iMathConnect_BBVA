@@ -28,6 +28,9 @@ INSERT INTO userconnect(uuid, creationdate, email, currentconnection, lastconnec
 INSERT INTO userconnect(uuid, creationdate, email, currentconnection, lastconnection, organization, phone1, phone2, username) VALUES ('useruuid3', '2014-01-01', 'iinyol@gmail.com', '2014-02-01', '2014-01-01', 'imath', '999999999', '11111111111', 'user3');
 INSERT INTO userconnect(uuid, creationdate, email, currentconnection, lastconnection, organization, phone1, phone2, username) VALUES ('useruuid4', '2014-01-01', 'ipnyol@gmail.com', '2014-02-01', '2014-01-01', 'imath', '999999999', '11111111111', 'user4');
 INSERT INTO userconnect(uuid, creationdate, email, currentconnection, lastconnection, organization, phone1, phone2, username) VALUES ('useruuid5', '2014-01-01', 'ipiyol@gmail.com', '2014-02-01', '2014-01-01', 'imath', '999999999', '11111111111', 'user5');
+--IZUBIZARRETA
+
+INSERT INTO userconnect(uuid, creationdate, email, currentconnection, lastconnection, organization, phone1, phone2, username) VALUES ('useruuid6', '2014-01-01', 'izubnaf@gmail.com', '2014-02-01', '2014-01-01', 'imath', '999999999', '11111111111', 'izubizarreta');
 
 --AMMARTINEZ
 INSERT INTO userconnect(uuid, creationdate, email, currentconnection, lastconnection, organization, phone1, phone2, username) VALUES ('amtuuid1', '2014-01-01', 'ammartinez@imathresearch.com', '2014-02-01', '2014-01-01', 'imath', '999999999', '11111111111', 'amtTest');
@@ -35,6 +38,11 @@ INSERT INTO userconnect(uuid, creationdate, email, currentconnection, lastconnec
 INSERT INTO instance(uuid, cpu, creationdate, ram, stg, url, owner_instance) VALUES ('instuuid1', 8, '2014-01-01', 8, 500, 'http://127.0.0.1:8080', null);
 INSERT INTO instance(uuid, cpu, creationdate, ram, stg, url, owner_instance) VALUES ('instuuid2', 1, '2014-01-01', 2, 100, 'http://127.0.0.1:8080', 'useruuid1');
 INSERT INTO instance(uuid, cpu, creationdate, ram, stg, url, owner_instance) VALUES ('instuuid3', 4, '2014-01-01', 3.5, 200, 'http://127.0.0.1:8080', 'useruuid1');
+
+--IZUBIZARRETA
+INSERT INTO instance(uuid, cpu, creationdate, ram, stg, url, owner_instance) VALUES ('instuuid7', 1, '2014-01-01', 2, 100, 'http://127.0.0.1:8080', 'useruuid6');
+INSERT INTO instance(uuid, cpu, creationdate, ram, stg, url, owner_instance) VALUES ('instuuid8', 4, '2014-01-01', 3.5, 200, 'http://127.0.0.1:8080', 'useruuid6');
+
 INSERT INTO instance(uuid, cpu, creationdate, ram, stg, url, owner_instance) VALUES ('instuuid4', 4, '2014-01-01', 8, 300, 'http://127.0.0.1:8080', null);
 
 --AMMARTINEZ
@@ -47,6 +55,11 @@ INSERT INTO project(uuid, creationdate, description, key, name, instance, owner,
 INSERT INTO project(uuid, creationdate, description, key, name, instance, owner, linux_group) VALUES ('projuuid4', '2014-01-01', 'Cartoon automatic drawing ', 'TD+oizX1YBbqtvO4RkKL8Q==', 'Cartoon', 'instuuid1', 'useruuid2', 'conanc');
 INSERT INTO project(uuid, creationdate, description, key, name, instance, owner, linux_group) VALUES ('projuuid5', '2014-01-01', 'B-tree new implementation ', 'TD+oizX1YBbqtvO4RkKL8Q==', 'TreePlus', 'instuuid1', 'useruuid3', 'conanc');
 INSERT INTO project(uuid, creationdate, description, key, name, instance, owner, linux_group) VALUES ('projuuid6', '2014-01-01', 'Altas experiment', 'TD+oizX1YBbqtvO4RkKL8Q==', 'Atlas', 'instuuid1', 'useruuid3', 'conanc');
+
+--IZUBIZARRETA
+INSERT INTO project(uuid, creationdate, description, key, name, instance, owner, linux_group) VALUES ('projuuid9', '2014-01-01', 'B-tree new implementation ', 'TD+oizX1YBbqtvO4RkKL8Q==', 'TreePlus', 'instuuid7', 'useruuid6', 'conanc');
+INSERT INTO project(uuid, creationdate, description, key, name, instance, owner, linux_group) VALUES ('projuuid10', '2014-01-01', 'Altas experiment', 'TD+oizX1YBbqtvO4RkKL8Q==', 'Atlas', 'instuuid8', 'useruuid6', 'conanc');
+
 
 --AMMARTINEZ
 INSERT INTO project(uuid, creationdate, description, key, name, instance, owner, linux_group) VALUES ('projuuid7', '2014-01-01', 'My first project', 'IV0p34cDmXFCzA3p9V7/Hg==', 'Cassandra', 'instuuid5', 'amtuuid1', 'conanc');
@@ -71,6 +84,13 @@ INSERT INTO collaborators(projects_uuid, collaborators_uuid) VALUES ('projuuid8'
 INSERT INTO collaborators(projects_uuid, collaborators_uuid) VALUES ('projuuid8', 'useruuid4');
 INSERT INTO collaborators(projects_uuid, collaborators_uuid) VALUES ('projuuid8', 'useruuid1');
 
+--IZUBIZARRETA
+INSERT INTO collaborators(projects_uuid, collaborators_uuid) VALUES ('projuuid9', 'useruuid1');
+INSERT INTO collaborators(projects_uuid, collaborators_uuid) VALUES ('projuuid9', 'useruuid6');
+INSERT INTO collaborators(projects_uuid, collaborators_uuid) VALUES ('projuuid10', 'useruuid5');
+INSERT INTO collaborators(projects_uuid, collaborators_uuid) VALUES ('projuuid10', 'useruuid6');
+INSERT INTO collaborators(projects_uuid, collaborators_uuid) VALUES ('projuuid10', 'useruuid1');
+
 
 --AMMARTINEZ
 INSERT INTO notification(uuid, subject, text, creationdate, type) VALUES ('notuuid1', 'Release of iMathCloud', 'The beta release of iMathCloud will soon be released', '2014-07-01', '0');
@@ -83,4 +103,6 @@ INSERT INTO notifications_user(notification_uuid, notificationusers_uuid) VALUES
 --ADD A PRIVATE NOTIFICATION FOR IPINYOLTEST USER
 INSERT INTO notifications_user(notification_uuid, notificationusers_uuid) VALUES ('notuuid3', 'useruuid1');
 
+--ADD A PRIVATE NOTIFICATION FOR IZUBIZARRETA USER
+INSERT INTO notifications_user(notification_uuid, notificationusers_uuid) VALUES ('notuuid3', 'useruuid6');
 

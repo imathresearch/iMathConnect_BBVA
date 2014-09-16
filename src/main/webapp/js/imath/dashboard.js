@@ -141,7 +141,7 @@ function ajaxPublicInstances() {
 function dateToNice(date) {
 	var year = date.getFullYear();
 	var monthText = numberToMonth(date.getMonth());
-	var day = date.getDay();
+	var day = date.getDate();
 	dayText = day.toString();
 	lastDigit = dayText[dayText.length-1];
 	ord = getOrdinal(lastDigit);
