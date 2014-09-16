@@ -183,7 +183,7 @@ function htmlTableRow(rows, tag, uuid) {
 
 
 function generateTableOfColProjects(projects) {
-	var ret = htmlTableRowHead(['#', 'Name', 'Date', 'Description', 'Owner', 'Collaborators', 'Resources']);
+	var ret = htmlTableRowHead(['', 'Name', 'Date', 'Description', 'Owner', 'Collaborators', 'Resources']);
 	for(var i=0; i<projects.length; i++) {
 		project = projects[i];
 		var creationDate = new Date(project['creationDate']);
@@ -207,14 +207,14 @@ function generateTableOfColProjects(projects) {
 		
 		var owner = project['owner'];
 		var rowOwner = "<table><tr>";
-		rowOwner = rowOwner + '<td><img src="img/avatar04.png" alt="' + owner['userName'] + '" class="offline"  height="32" width="32"/></td><td><i>' + owner['userName'] + "</i><br><small>" + owner['organization'] + '</small> </td></tr></table>'; 
+		rowOwner = rowOwner + '<td><img src="img/avatar04.png" alt="' + owner['userName'] + '" class="offline"  height="32" width="32"/></td><td><i>' + owner['userName'] + "</i><br><small>" + owner['organization'] + '</small> </td></tr></table>';
 		ret = ret + htmlTableRowData([rowIcon, rowName,dateText,desc,rowOwner,rowCol,rowInstance], uuid);	
 	}
 	return ret;
 }
 
 function generateTableOfProjects(projects, callbackString) {
-	var ret = htmlTableRowHead(['#', 'Name', 'Date', 'Description', 'Collaborators', 'Resources']);
+	var ret = htmlTableRowHead(['', 'Name', 'Date', 'Description', 'Collaborators', 'Resources', '#']);
 	for(var i=0; i<projects.length; i++) {
 		project = projects[i];
 		var creationDate = new Date(project['creationDate']);
@@ -241,9 +241,8 @@ function generateTableOfProjects(projects, callbackString) {
 		} else {
 			rowName = "<a onclick='" + callbackString + "(\""+uuid+ "\")' style='color:blue;cursor: pointer;text-decoration: underline;'>" + name + "</a>";
 		}
-
-			
-		ret = ret + htmlTableRowData([rowIcon, rowName,dateText,desc,rowCol,rowInstance], uuid);	
+		var action = "<a onclick='removeProject(\"" + uuid + "\")' style='cursor: pointer;' title='Remove' )><i class='fa fa-minus-circle'></i></a>";
+		ret = ret + htmlTableRowData([rowIcon, rowName,dateText,desc,rowCol,rowInstance, action], uuid);	
 	}
 	return ret;
 }

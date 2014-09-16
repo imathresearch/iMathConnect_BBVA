@@ -308,8 +308,42 @@
             </div><!-- /.modal-dialog -->
         </div><!-- /.modal -->
 
-        <!-- add new calendar event modal -->
+		<!-- COMPOSE MESSAGE MODAL FOR CONFIRMATIONS-->
+        <div class="modal fade" id="imath-id-conf-message" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+						<h4 class="modal-title"><i class="fa fa-warning danger"></i> Confirmation! </h4>
+					</div>
+					<div class="modal-body">
+						<p class="imath-conf-message"></p>
+					</div>
+					<div class="modal-footer clearfix">
+						<button id="imath-id-ok-button-select" type="button" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-times"></i> OK</button>
+						<button id="imath-id-cancel-button-select" type="button" class="btn" data-dismiss="modal"><i class="fa fa-times"></i> Cancel</button>
+					</div>
+				</div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div><!-- /.modal -->
 
+		<!-- COMPOSE MESSAGE MODAL FOR ERROR MESSAGES-->
+        <div class="modal fade" id="imath-id-error-message-col" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+						<h4 class="modal-title"><i class="fa fa-warning danger"></i> Error</h4>
+					</div>
+					<div class="modal-body">
+						<p class="imath-error-message"></p>
+					</div>
+					<div class="modal-footer clearfix">
+						<button id="imath-id-cancel-button-select" type="button" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-times"></i> OK</button>
+					</div>
+				</div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div><!-- /.modal -->
 
         <!-- jQuery 2.0.2 -->
         <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
