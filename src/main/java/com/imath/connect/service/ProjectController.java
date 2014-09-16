@@ -57,7 +57,7 @@ public class ProjectController extends AbstractController {
         project.setLinuxGroup(name+"XYZ"+owner.getUserName());
         db.makePersistent(project);
         try {
-        	imathcloud.newProject(project.getLinuxGroup(), project.getKey(), instance.getUrl());
+        	imathcloud.newProject(project.getLinuxGroup(), project.getKey(), project.getName(), instance.getUrl());
         } catch (Exception e) {
         	// Don't get why the project is created anyway! On exception, the transaction should roll back
         	// Investigate

@@ -1,5 +1,5 @@
 package com.imath.connect.util;
 
 public interface IMathCloudInterface {
-	public void newProject(String projectName, String keyAccess, String baseURL) throws Exception;
+	public void newProject(String privateProjectName, String keyAccess, String publicProjectName, String baseURL) throws Exception;
 }
