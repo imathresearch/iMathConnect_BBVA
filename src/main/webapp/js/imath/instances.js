@@ -13,6 +13,18 @@ function initInstanceView(uuid) {
 }
 
 function initializeSliders() {
+	alert("init sliders");
+	
+	$("#imath-id-cpu").ionRangeSlider({
+        min: 0,
+        max: 10,
+        type: 'single',
+        step: 0.1,
+        postfix: " mm",
+        prettify: false,
+        hasGrid: true
+    });
+	/*
 	$("#imath-id-cpu").ionRangeSlider({
         from:"1",
         type: 'single',
@@ -20,7 +32,7 @@ function initializeSliders() {
         prettify: false,
         values: ["1", "2", "4", "8", "16", "32", "64", "128", "256", "512"],
         hasGrid: true
-    });
+    });*/
 	$("#imath-id-ram").ionRangeSlider({
 		values: ["1", "2", "4", "8", "16", "32", "64", "128", "256", "512"],
         from:"1",

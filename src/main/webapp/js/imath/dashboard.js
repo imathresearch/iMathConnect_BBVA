@@ -237,7 +237,12 @@ function generateTableOfProjects(projects, callbackString) {
 		var rowInstance = faIcon("fa-gears") + " <b>" + project['instance']['cpu'] + "</b> <small>vCPUs</small> <br>";
 		rowInstance += faIcon("fa-film") + " <b>" + project['instance']['ram'] + "</b> <small>MiB</small><br> ";
 		rowInstance += faIcon("fa-cloud") + " <b>" + project['instance']['stg'] + "</b> <small>GiB</small> ";
-		
+		var rowName = "";
+		if (typeof callbackString == "undefined") {
+			rowName = "<a onclick='placeLayoutProjects(\""+uuid+ "\")' style='color:blue;cursor: pointer;text-decoration: underline;'>" + name + "</a>";
+		} else {
+			rowName = "<a onclick='" + callbackString + "(\""+uuid+ "\")' style='color:blue;cursor: pointer;text-decoration: underline;'>" + name + "</a>";
+		}
 
 			
 		ret = ret + htmlTableRowData([rowIcon, rowName,dateText,desc,rowCol,rowInstance], uuid);	
@@ -273,6 +278,7 @@ function generateTableOfInstances(instances, pub, putHeader, callbackString) {
 			rowIcon = '<span class="badge bg-light-blue">Pu</span>';
 		}
 		var name = instance['name'];
+		var rowName = "";
 		if (typeof callbackString == "undefined") {
 			rowName = "<a onclick='placeLayoutInstances(\""+uuid+ "\")' style='color:blue;cursor: pointer;text-decoration: underline;'>" + name + "</a>";
 		} else {

@@ -1,0 +1,66 @@
+<div class="col-md-6">
+	<div class="box imath-waiting-own-instances imath-waiting-creation">
+		<div class="box-header">
+			<h3 class="box-title"><i class="fa fa-cog"></i>&nbsp;&nbsp;&nbsp; My Instances &nbsp;&nbsp;&nbsp;</h3>
+			<div class="box-tools pull-right">
+				<div class="btn-group" data-toggle="btn-toggle">
+					<button id="imath-id-new-instance-button" type="button" class="btn btn-primary active">New</button>
+				</div>
+			</div>
+		</div><!-- /.box-header -->
+		<div class="box-body">
+			<table id="imath-id-own-instances" class="table table-bordered table-hover imath-own-instances">
+			</table>
+		</div><!-- /.box-body -->
+	</div><!-- /.box Own projects-->
+</div>
+<div class="col-md-6">
+	<div class="box imath-waiting-creation">
+		<div class="box-header">
+			<h3 class="box-title imath-instance-name"></h3>
+			<div class="box-tools pull-right">
+				<div class="btn-group" data-toggle="btn-toggle">
+					<button id="imath-id-save-buton-instance" type="button" class="btn btn-primary active">Save</button>
+					<button id="imath-id-cancel-buton-instance" type="button" class="btn btn-primary active">Cancel</button>
+				</div>
+			</div>
+		</div><!-- /.box-header -->
+		<!-- form start -->
+		<div class="box-body">
+			<div class="form-group">
+				<label for="exampleInputEmail1">Instance Name</label>
+				<input type="text" class="form-control" id="imath-id-instance-name" placeholder="Enter instance name">
+			</div>
+			<div class="form-group">
+				<label for="exampleInputPassword1"><i class="fa fa-gears"></i>&nbsp;&nbsp;vCPUs</label>
+				<input id="imath-id-cpu" type="text" name="imath-id-cpu" value="" />
+			</div>
+			<div class="form-group">
+				<label for="exampleInputPassword1"><i class="fa fa-film"></i>&nbsp;&nbsp;RAM</label>
+				<input id="imath-id-ram" type="text" name="imath-id-ram" value="" />
+			</div>
+			<div class="form-group">
+				<label for="exampleInputPassword1"><i class="fa fa-cloud"></i>&nbsp;&nbsp;Storage</label>
+				<input id="imath-id-stg" type="text" name="imath-id-stg" value="" />
+			</div>
+		</div><!-- /.box-body -->
+	</div><!-- /.box Own projects-->
+</div>
+
+<!-- COMPOSE MESSAGE MODAL -->
+        <div class="modal fade" id="imath-id-error-message-col" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+						<h4 class="modal-title"><i class="fa fa-warning danger"></i> Error</h4>
+					</div>
+					<div class="modal-body">
+						<p class="imath-error-message"></p>
+					</div>
+					<div class="modal-footer clearfix">
+						<button id="imath-id-cancel-button-select" type="button" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-times"></i> OK</button>
+					</div>
+				</div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div><!-- /.modal -->
