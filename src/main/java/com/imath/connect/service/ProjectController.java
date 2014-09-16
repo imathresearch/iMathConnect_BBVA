@@ -74,6 +74,24 @@ public class ProjectController extends AbstractController {
     	return newProject(name,desc,owner,instance);
     }
     //*********
+    
+    @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
+    public void removeProject(String uuid) throws Exception {
+        Project project = this.getProject(uuid);
+        Instance instance = project.getInstance();
+        String baseURL = instance.getUrl();
+        db.delete(project);
+        imathcloud.removeProject(project.getLinuxGroup(), baseURL);
+    }
+    
+    //********* for testing purposes only
+    @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
+    public void removeProject(String uuid, IMathCloudInterface imathcloud) throws Exception {
+        this.imathcloud = imathcloud;
+        removeProject(uuid);
+    }
+    //*********
+    
     /**
      * Updates the project data
      * @param uuid

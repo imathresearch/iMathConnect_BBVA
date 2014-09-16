@@ -58,11 +58,15 @@ public abstract class AbstractIT {
                .addAsWebInfResource(EmptyAsset.INSTANCE, "beans.xml");
       }
     
-    // Provisional: For whatever reason, Arquillian and Mockito do not work together!
+    // Provisional: Mock of iMathClound access for Arquillian 
     protected class Mock_IMathCloudAccess implements IMathCloudInterface {
     	@Override
     	public synchronized void newProject(String projectName, String keyAccess,  String publicProjectName, String baseURL) throws Exception {
     		// Empty body
+    	}
+    	
+    	public void removeProject(String privateProjectName, String baseURL) throws Exception {
+    	    // Empty body
     	}
     	
     }

@@ -406,4 +406,41 @@ public class ProjectRestIT extends AbstractIT{
             assertEquals(p.getCreationDate().getTime(), pDTO.creationDate.getTime());
         }
     }
+    
+    @Test 
+    public void removeProjectIT() throws Exception {
+        Mock_IMathCloudAccess imathcloud = new Mock_IMathCloudAccess();
+        pc.setIMathCloudAccess(imathcloud);
+        prEndPoint.getProjectController().setIMathCloudAccess(imathcloud);
+        
+        // 1.- Exception path: UserConnect does not exists
+        Response rest = prEndPoint.removeProject("nouuid", "nouuid proj", null);
+        assertEquals(Response.Status.BAD_REQUEST.getStatusCode(), rest.getStatus());
+        
+        // 2.- Exception path: Project does not exists
+        UserConnect owner = ucc.newUserConnect("myselfqQQqqazOYEAH", "holQQaMAIL@pepehhj.com", "imath", "958183402", "958183402");
+        rest = prEndPoint.removeProject(owner.getUUID(), "nouuid", null);
+        assertEquals(Response.Status.BAD_REQUEST.getStatusCode(), rest.getStatus());
+        
+        // 3.- Exception path: Project does not belong to owner
+        Instance instance = ic.newInstance(0, 0, 0, "127.0.0.1", "inst", owner);
+        UserConnect owner2 = ucc.newUserConnect("myselfQQffOYEAH", "holQQMAILa@ppellk.com", "imath", "958183402", "958183402");
+        Project project = pc.newProject("QQWWname", "QQWWEEdesc", owner2, instance, imathcloud);
+        rest = prEndPoint.removeProject(owner.getUUID(), project.getUUID(), null);
+        assertEquals(Response.Status.BAD_REQUEST.getStatusCode(), rest.getStatus());
+        
+        // 4.- Exception path: Project has collaborators
+        UserConnect coll = ucc.newUserConnect("myselfColqQQqqazOYEAH", "holSQQMAILaCol@pepehhj.com", "imath", "958183402", "958183402");
+        List<String> uuids = new ArrayList<String>();
+        uuids.add(coll.getUUID());
+        pc.addCollaborators(project.getUUID(), uuids);
+        rest = prEndPoint.removeProject(owner.getUUID(), project.getUUID(), null);
+        assertEquals(Response.Status.BAD_REQUEST.getStatusCode(), rest.getStatus());
+        
+        // 5.- Happy path: Everything works fine
+        pc.removeCollaborator(project.getUUID(), coll.getUUID());
+        rest = prEndPoint.removeProject(owner2.getUUID(), project.getUUID(), null);
+        assertEquals(Response.Status.OK.getStatusCode(), rest.getStatus());
+    }
+    
 }

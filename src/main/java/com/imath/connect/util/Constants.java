@@ -55,6 +55,9 @@ public class Constants {
     // remove a collaborator of the given project
     static public final String removeCollaborator = "/removeCollaborator";
     
+    // remove a project
+    static public final String removeProject = "/removeProject";
+    
     // IMPORTANT: We assume that JBOSS is launched from JBOSS-HOME/bin
     static public final String ADD_USER_CLI = "./add-user.sh";
     static public final String ADD_USER_LINUX = "useradd";
