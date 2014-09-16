@@ -32,14 +32,14 @@ INSERT INTO userconnect(uuid, creationdate, email, currentconnection, lastconnec
 --AMMARTINEZ
 INSERT INTO userconnect(uuid, creationdate, email, currentconnection, lastconnection, organization, phone1, phone2, username) VALUES ('amtuuid1', '2014-01-01', 'ammartinez@imathresearch.com', '2014-02-01', '2014-01-01', 'imath', '999999999', '11111111111', 'amtTest');
 
-INSERT INTO instance(uuid, cpu, creationdate, ram, stg, url, owner_instance) VALUES ('instuuid1', 8, '2014-01-01', 8, 500, 'http://127.0.0.1:8080', null);
-INSERT INTO instance(uuid, cpu, creationdate, ram, stg, url, owner_instance) VALUES ('instuuid2', 1, '2014-01-01', 2, 100, 'http://127.0.0.1:8080', 'useruuid1');
-INSERT INTO instance(uuid, cpu, creationdate, ram, stg, url, owner_instance) VALUES ('instuuid3', 4, '2014-01-01', 3.5, 200, 'http://127.0.0.1:8080', 'useruuid1');
-INSERT INTO instance(uuid, cpu, creationdate, ram, stg, url, owner_instance) VALUES ('instuuid4', 4, '2014-01-01', 8, 300, 'http://127.0.0.1:8080', null);
+INSERT INTO instance(uuid, cpu, creationdate, ram, stg, url, name, owner_instance) VALUES ('instuuid1', 8, '2014-01-01', 8, 500, 'http://127.0.0.1:8080','Public Instance 1', null);
+INSERT INTO instance(uuid, cpu, creationdate, ram, stg, url, name, owner_instance) VALUES ('instuuid2', 1, '2014-01-01', 2, 100, 'http://127.0.0.1:8080', 'My First Instance','useruuid1');
+INSERT INTO instance(uuid, cpu, creationdate, ram, stg, url, name, owner_instance) VALUES ('instuuid3', 4, '2014-01-01', 3.5, 200, 'http://127.0.0.1:8080','Death Star', 'useruuid1');
+INSERT INTO instance(uuid, cpu, creationdate, ram, stg, url, name, owner_instance) VALUES ('instuuid4', 4, '2014-01-01', 8, 300, 'http://127.0.0.1:8080', 'Public Instance 2', null);
 
 --AMMARTINEZ
-INSERT INTO instance(uuid, cpu, creationdate, ram, stg, url, owner_instance) VALUES ('instuuid5', 4, '2014-01-01', 8, 300, '127.0.0.1', 'amtuuid1');
-INSERT INTO instance(uuid, cpu, creationdate, ram, stg, url, owner_instance) VALUES ('instuuid6', 1, '2014-01-01', 8, 300, '127.0.0.1', 'amtuuid1');
+INSERT INTO instance(uuid, cpu, creationdate, ram, stg, url, name, owner_instance) VALUES ('instuuid5', 4, '2014-01-01', 8, 300, '127.0.0.1', 'Barcelona', 'amtuuid1');
+INSERT INTO instance(uuid, cpu, creationdate, ram, stg, url, name, owner_instance) VALUES ('instuuid6', 1, '2014-01-01', 8, 300, '127.0.0.1', 'Granada', 'amtuuid1');
 
 INSERT INTO project(uuid, creationdate, description, key, name, instance, owner, linux_group) VALUES ('projuuid1', '2014-01-01', 'My first project', 'TD+oizX1YBbqtvO4RkKL8Q==', 'Cassandra', 'instuuid1', 'useruuid1', 'conanc');
 INSERT INTO project(uuid, creationdate, description, key, name, instance, owner, linux_group) VALUES ('projuuid2', '2014-01-01', 'Simulating the Game of Live', 'TD+oizX1YBbqtvO4RkKL8Q==', 'Fenix', 'instuuid1', 'useruuid1', 'conanc');

@@ -13,6 +13,7 @@ public class InstanceTest {
     double stg = 122.43;
     long cpu = 18;
     String url ="123.567.8.9:8080";
+    String name = "my instance";
     UserConnect user = new UserConnect();
     
     @Before
@@ -24,6 +25,7 @@ public class InstanceTest {
         test.setCpu(cpu);
         test.setOwner(user);
         test.setUrl(url);
+        test.setName(name);
     }
     
     @After
@@ -58,5 +60,10 @@ public class InstanceTest {
     @Test
     public void testGetOwner() {
         assertEquals(user,test.getOwner());
+    }
+    
+    @Test
+    public void testGetName() {
+        assertEquals(name, test.getName());
     }
 }

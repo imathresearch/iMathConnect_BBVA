@@ -78,6 +78,7 @@ public class InstanceRest {
         public double stg;
         public Date creationDate;
         public String url;
+        public String name;
         public UserConnectDTO owner;
         public void convert(Instance inst) {
             this.UUID = inst.getUUID();
@@ -85,6 +86,7 @@ public class InstanceRest {
             this.ram = inst.getRam();
             this.stg = inst.getStg();
             this.url = inst.getUrl();
+            this.name = inst.getName();
             this.creationDate = inst.getCreationDate();
             owner = new UserConnectDTO();
             if (inst.getOwner()!=null) {

@@ -31,13 +31,14 @@ public class InstanceController extends AbstractController {
      * @throws Exception when persistence is not possible
      */
     @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
-    public Instance newInstance(long cpu, double ram, double stg, String url, UserConnect user) throws Exception {
+    public Instance newInstance(long cpu, double ram, double stg, String url, String name, UserConnect user) throws Exception {
         Instance instance = new Instance();
         instance.setCpu(cpu);
         instance.setCreationDate(new Date());
         instance.setRam(ram);
         instance.setStg(stg);
         instance.setUrl(url);
+        instance.setName(name);
         instance.setOwner(user);
         db.makePersistent(instance);
         return instance;

@@ -43,6 +43,10 @@ public class Instance implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     private Date creationDate;
     
+    @NotNull
+    @NotEmpty
+    private String name;
+    
     @ManyToOne(optional=true) 
     @JoinColumn(name="owner_instance", nullable=true, updatable=true)
     private UserConnect owner;
@@ -105,6 +109,13 @@ public class Instance implements Serializable {
 
     public void setUrl(String url) {
         this.url = url;
+    }
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
 }
