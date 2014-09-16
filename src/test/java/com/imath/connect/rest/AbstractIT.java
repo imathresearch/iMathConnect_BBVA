@@ -61,7 +61,7 @@ public abstract class AbstractIT {
     // Provisional: For whatever reason, Arquillian and Mockito do not work together!
     protected class Mock_IMathCloudAccess implements IMathCloudInterface {
     	@Override
-    	public synchronized void newProject(String projectName, String keyAccess, String baseURL) throws Exception {
+    	public synchronized void newProject(String projectName, String keyAccess,  String publicProjectName, String baseURL) throws Exception {
     		// Empty body
     	}
     	
