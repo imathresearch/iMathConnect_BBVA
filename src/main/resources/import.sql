@@ -42,8 +42,8 @@ INSERT INTO instance(uuid, cpu, creationdate, ram, stg, url, name, owner_instanc
 INSERT INTO instance(uuid, cpu, creationdate, ram, stg, url, name, owner_instance) VALUES ('instuuid4', 4, '2014-01-01', 8, 300, 'http://127.0.0.1:8080', 'Public Instance 2', null);
 
 --AMMARTINEZ
-INSERT INTO instance(uuid, cpu, creationdate, ram, stg, url, name, owner_instance) VALUES ('instuuid5', 4, '2014-01-01', 8, 300, '127.0.0.1', 'Barcelona', 'amtuuid1');
-INSERT INTO instance(uuid, cpu, creationdate, ram, stg, url, name, owner_instance) VALUES ('instuuid6', 1, '2014-01-01', 8, 300, '127.0.0.1', 'Granada', 'amtuuid1');
+INSERT INTO instance(uuid, cpu, creationdate, ram, stg, url, name, owner_instance) VALUES ('instuuid5', 4, '2014-01-01', 8, 300, 'http://127.0.0.1:8080', 'Barcelona', 'amtuuid1');
+INSERT INTO instance(uuid, cpu, creationdate, ram, stg, url, name, owner_instance) VALUES ('instuuid6', 1, '2014-01-01', 8, 300, 'http://127.0.0.1:8080', 'Granada', 'amtuuid1');
 
 --IZUBIZARRETA
 INSERT INTO instance(uuid, cpu, creationdate, ram, stg, url, name, owner_instance) VALUES ('instuuid7', 4, '2014-01-01', 8, 300, '127.0.0.1', 'Barcelona', 'iztuuid1');

@@ -267,8 +267,8 @@ function generateTableOfInstances(instances, pub, putHeader, callbackString) {
 	var ret = "";
 	if (putHeader) {
 		ret = htmlTableRowHead(['#', 'Name', faIcon("fa-gears")+' vCPUs', 
-	                            faIcon("fa-film") + ' RAM', 
-	                            faIcon("fa-cloud") + 'Storage', 'Date']);
+	                            faIcon("fa-film") + ' RAM <small>MiB</small>', 
+	                            faIcon("fa-cloud") + 'Storage <small>GiB</small>', 'Date']);
 	}
 	
 	for(var i=0; i<instances.length; i++) {
