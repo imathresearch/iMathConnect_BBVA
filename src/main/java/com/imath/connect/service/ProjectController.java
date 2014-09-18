@@ -70,8 +70,8 @@ public class ProjectController extends AbstractController {
         Project project = this.getProject(uuid);
         Instance instance = project.getInstance();
         String baseURL = instance.getUrl();
-        db.delete(project);
         imathcloud.removeProject(project.getLinuxGroup(), project.getKey(), baseURL);
+        db.delete(project);
     }
     
 
