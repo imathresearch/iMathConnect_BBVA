@@ -156,6 +156,7 @@ function addCollaborator(other, uuid_project) {
 			$(".imath-collaborators"). html(collaboratorsHtml);
 			ajaxOwnProjects("ajaxUploadProject");
 			$("#imath-id-coll-text").val("");
+			showFlyingMessageOK(" Collaborator added ");
 	    },
 	    error: function(error) {
 	    	console.log("Error adding collaborator");
@@ -177,6 +178,7 @@ function removeCollaborator(uuid_col) {
 				$(".imath-collaborators"). html(collaboratorsHtml);
 				ajaxOwnProjects("uploadProject");
 				$("#imath-id-coll-text").val("");
+				showFlyingMessageOK(" Collaborator removed ");
 		    },
 		    error: function(error) {
 		    	console.log("Error removing collaborator");
@@ -203,6 +205,7 @@ function ajaxRemoveProject(uuid) {
 	    success: function() {
 	    	unplaceWaiting("imath-waiting-creation");
 	    	ajaxOwnProjects("uploadProject");
+	    	showFlyingMessageOK(" Project removed ");
 	    },
 	    error: function(error) {
 	    	unplaceWaiting("imath-waiting-creation");
@@ -214,7 +217,7 @@ function ajaxRemoveProject(uuid) {
 	
 function confirmationForm(message, func) {
 	$('.imath-conf-message').html(message);
-	$('#imath-id-ok-button-select').click(func)
+	$('#imath-id-ok-button-select').click(func);
 	$('#imath-id-conf-message').modal('show');
 }
 
@@ -265,19 +268,24 @@ function saveProject(uuid_project, newDesc, uuid_instance) {
 }
 
 function showSaveProjectOKNotification () {
-	    
-    var msg = " Project saved ";
+	showFlyingMessageOK(" Project saved ");
+}
+
+function showFlyingMessageOK(text) {
+	var msg = text;
     var timeout = 2000;
     $( ".notification" ).text(msg);
-    $( ".notification" ).attr("style", "display:inline;");
-   
+    //$( ".notification" ).attr("style", "display:inline;");
+    $( ".notification" ).slideDown(250);
+    
     if (timeout !== undefined) {
         this.timeout = setTimeout(function () {
         	$( ".notification" ).text('');
-        	$( ".notification" ).attr("style", "display:none;");
+        	//$( ".notification" ).attr("style", "display:none;");
+        	$( ".notification" ).slideUp(250);
         }, timeout);
-    };
-};
+    }
+} 
 
 function keepIntancesGlobal(instances, pub) {
 	var j = global_instances.length;
