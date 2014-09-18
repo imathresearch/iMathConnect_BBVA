@@ -38,6 +38,8 @@ public class ProjectRest {
     @Inject private ProjectController pc;
     @Inject private UserConnectController ucc;
     @Inject private InstanceController ic;
+    @Inject private IMathCloudInterface imathcloud;
+    
     @Inject private Logger LOG;
     
     @GET
@@ -50,7 +52,7 @@ public class ProjectRest {
             UserConnect owner = ucc.getUserConnect(uuid_user);
             SecurityManager.secureBasic(owner.getUserName(), sc);
             Instance instance = ic.getInstance(uuid_instance);
-            Project project = pc.newProject(name, desc, owner, instance);
+            Project project = pc.newProject(name, desc, owner, instance, imathcloud);
             projectDTO = new ProjectDTO();
             projectDTO.convert(project, null);
             return Response.status(Response.Status.OK).entity(projectDTO).build();
@@ -177,7 +179,7 @@ public class ProjectRest {
             if (users.size()>0) {
                 throw new Exception("Not possible to remove the project if it has collaborators");
             }
-            pc.removeProject(project.getUUID());
+            pc.removeProject(project.getUUID(), imathcloud);
             return Response.status(Response.Status.OK).build();
             
         } catch (Exception e) {
@@ -345,5 +347,9 @@ public class ProjectRest {
     
     public ProjectController getProjectController() {
     	return this.pc;
+    }
+    
+    public void setIMathCloud(IMathCloudInterface imathcloud) {
+        this.imathcloud = imathcloud;
     }
 }

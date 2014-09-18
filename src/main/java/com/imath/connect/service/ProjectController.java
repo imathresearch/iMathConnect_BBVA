@@ -33,8 +33,6 @@ public class ProjectController extends AbstractController {
     @Inject UserConnectController ucc;
     @Inject InstanceController ic;
     
-    @Inject IMathCloudInterface imathcloud;
-    
     /**
      * Creates and return a new Project
      * @param name
@@ -45,7 +43,7 @@ public class ProjectController extends AbstractController {
      * @throws Exception If persistence fails
      */
     @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
-    public Project newProject(String name, String desc, UserConnect owner, Instance instance) throws Exception {
+    public Project newProject(String name, String desc, UserConnect owner, Instance instance, IMathCloudInterface imathcloud) throws Exception {
         Encryptor.init();
         Project project = new Project();
         project.setName(name);
@@ -67,30 +65,16 @@ public class ProjectController extends AbstractController {
         return project;
     }
     
-    //********* for testing purposes only
     @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
-    public Project newProject(String name, String desc, UserConnect owner, Instance instance, IMathCloudInterface imathcloud) throws Exception {
-    	this.imathcloud = imathcloud;
-    	return newProject(name,desc,owner,instance);
-    }
-    //*********
-    
-    @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
-    public void removeProject(String uuid) throws Exception {
+    public void removeProject(String uuid, IMathCloudInterface imathcloud) throws Exception {
         Project project = this.getProject(uuid);
         Instance instance = project.getInstance();
         String baseURL = instance.getUrl();
         db.delete(project);
-        imathcloud.removeProject(project.getLinuxGroup(), baseURL);
+        imathcloud.removeProject(project.getLinuxGroup(), project.getKey(), baseURL);
     }
     
-    //********* for testing purposes only
-    @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
-    public void removeProject(String uuid, IMathCloudInterface imathcloud) throws Exception {
-        this.imathcloud = imathcloud;
-        removeProject(uuid);
-    }
-    //*********
+
     
     /**
      * Updates the project data
@@ -204,9 +188,5 @@ public class ProjectController extends AbstractController {
     
     public void setUserConnectController(UserConnectController ucc) {
         this.ucc = ucc;
-    }
-    
-    public void setIMathCloudAccess(IMathCloudInterface imathcloud) {
-    	this.imathcloud = imathcloud;
     }
 }
