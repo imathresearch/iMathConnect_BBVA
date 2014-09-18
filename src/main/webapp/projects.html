@@ -1,3 +1,13 @@
+<style>
+	.notification{
+		margin: 0px 3px;
+		padding:  6px 15px;
+		display: none;
+		float: left;
+	}
+
+</style>
+
 <div class="col-md-6">
 	<div class="box imath-waiting-own-projects imath-waiting-creation">
 		<div class="box-header">
@@ -17,16 +27,17 @@
 <div class="col-md-6">
 	<div class="box imath-waiting-creation">
 		<div class="box-header">
-			<h3 class="box-title imath-project-name"></h3>
-			<div class="box-tools pull-right">
+			<h3 class="box-title imath-project-name"></h3>	
+			<div class="box-tools pull-right">				
+				<div class="notification alert alert-success" role="alert" ></div>																					
 				<div class="btn-group" data-toggle="btn-toggle">
 					<button id="imath-id-save-buton-project" type="button" class="btn btn-primary active">Save</button>
 					<button id="imath-id-cancel-buton-project" type="button" class="btn btn-primary active">Cancel</button>
 				</div>
-			</div>
+			</div>								
 		</div><!-- /.box-header -->
 		<!-- form start -->
-		<form role="form">
+		<form role="form">		
 			<div class="box-body">
 				<div class="form-group">
 					<label for="exampleInputEmail1">Project Name</label>

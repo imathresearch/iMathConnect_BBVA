@@ -214,6 +214,7 @@ function ajaxNewProject(newName, newDesc, uuid_instance) {
 	    	unplaceWaiting("imath-waiting-creation");
 	    	ajaxOwnProjects("uploadProject");
 	    	viewUploadProject(project);
+	    	showSaveProjectOKNotification();
 	    },
 	    error: function(error) {
 	    	unplaceWaiting("imath-waiting-creation");
@@ -239,6 +240,7 @@ function saveProject(uuid_project, newDesc, uuid_instance) {
 	    type: "GET",
 	    success: function(project) {
 	    	ajaxOwnProjects("uploadProject");
+	    	showSaveProjectOKNotification();
 	    },
 	    error: function(error) {
 	        console.log("Error saving project");
@@ -246,6 +248,21 @@ function saveProject(uuid_project, newDesc, uuid_instance) {
 	    }
 	});	
 }
+
+function showSaveProjectOKNotification () {
+	    
+    var msg = " Project saved ";
+    var timeout = 2000;
+    $( ".notification" ).text(msg);
+    $( ".notification" ).attr("style", "display:inline;");
+   
+    if (timeout !== undefined) {
+        this.timeout = setTimeout(function () {
+        	$( ".notification" ).text('');
+        	$( ".notification" ).attr("style", "display:none;");
+        }, timeout);
+    };
+};
 
 function keepIntancesGlobal(instances, pub) {
 	var j = global_instances.length;
