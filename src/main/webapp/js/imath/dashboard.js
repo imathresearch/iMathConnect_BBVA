@@ -212,7 +212,7 @@ function generateTableOfColProjects(projects) {
 		var rowInstance = faIcon("fa-gears") + " <b>" + project['instance']['cpu'] + "</b> <small>vCPUs</small> <br>";
 		rowInstance += faIcon("fa-film") + " <b>" + project['instance']['ram'] + "</b> <small>MiB</small><br> ";
 		rowInstance += faIcon("fa-cloud") + " <b>" + project['instance']['stg'] + "</b> <small>GiB</small> ";
-		rowName = "<a href='onclick=showProjectPage(\""+uuid+ "\")'>" + name + "</a>";
+		rowName =  name;
 		
 		var owner = project['owner'];
 		var rowOwner = "<table><tr>";

@@ -195,6 +195,21 @@ function removeProject(uuid) {
 }
 
 function ajaxRemoveProject(uuid) {
+	placeWaiting("imath-waiting-creation");
+	$.ajax({
+	    url: "rest/api/agora/removeProject/" + global_uuid_user + "/" + uuid,
+	    cache: false,
+	    type: "POST",
+	    success: function() {
+	    	unplaceWaiting("imath-waiting-creation");
+	    	ajaxOwnProjects("uploadProject");
+	    },
+	    error: function(error) {
+	    	unplaceWaiting("imath-waiting-creation");
+	        console.log("Error removing the project");
+	        showErrorForm("Error removing the project");
+	    }
+	});	
 }
 	
 function confirmationForm(message, func) {

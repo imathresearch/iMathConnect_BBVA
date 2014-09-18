@@ -65,7 +65,7 @@ public abstract class AbstractIT {
     		// Empty body
     	}
     	
-    	public void removeProject(String privateProjectName, String baseURL) throws Exception {
+    	public void removeProject(String privateProjectName, String key, String baseURL) throws Exception {
     	    // Empty body
     	}
     	
