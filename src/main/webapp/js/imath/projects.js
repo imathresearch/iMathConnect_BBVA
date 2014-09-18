@@ -292,6 +292,7 @@ function keepIntancesGlobal(instances, pub) {
 	for(var i=0; i<instances.length; i++) {
 		global_instances[i+j]=[];
 		global_instances[i+j]['pub'] = pub;
+		global_instances[i+j]['name'] = instances[i]['name'];
 		global_instances[i+j]['cpu'] = instances[i]['cpu'];
 		global_instances[i+j]['ram'] = instances[i]['ram'];
 		global_instances[i+j]['stg'] = instances[i]['stg'];
