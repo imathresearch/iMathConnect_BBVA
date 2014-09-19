@@ -98,6 +98,7 @@ function initProjectView(uuid_project) {
 	});
 	
 	$("#imath-id-new-project-button").click(function() {
+		console.log("New project");
 		setNewProjectForm();
 	});
 	
@@ -424,9 +425,12 @@ function runiMathCloud(uuid_project) {
 	    	var key = project['key'];
 	    	var url = project['url'] + "/iMathCloud/login.jsp";
 	    	// Ugly... but it works
-	    	document.body.innerHTML += '<form target="_blank" id="fakeForm" action="' + url + '" method="post"><input type="hidden" name="j_username" value="' + linux + '"><input type="hidden" name="j_password" value="' + key + '"></form>';
-	    	document.getElementById("fakeForm").submit();
-	    	document.getElementById("fakeForm").remove();
+	    	var form = '<form target="_blank" id="fakeForm" action="' + url + '" method="post"><input type="hidden" name="j_username" value="' + linux + '"><input type="hidden" name="j_password" value="' + key + '"></form>'; 
+	    	$(form).submit();
+	    	$('#fakeForm').remove();
+	    	//document.body.innerHTML += '<form target="_blank" id="fakeForm" action="' + url + '" method="post"><input type="hidden" name="j_username" value="' + linux + '"><input type="hidden" name="j_password" value="' + key + '"></form>';
+	    	//document.getElementById("fakeForm").submit();
+	    	//document.getElementById("fakeForm").remove();
 	    	//win.focus();
 	    },
 	    error: function(error) {

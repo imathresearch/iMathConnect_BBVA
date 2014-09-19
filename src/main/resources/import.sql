@@ -59,6 +59,8 @@ INSERT INTO project(uuid, creationdate, description, key, name, instance, owner,
 --AMMARTINEZ
 INSERT INTO project(uuid, creationdate, description, key, name, instance, owner, linux_group) VALUES ('projuuid7', '2014-01-01', 'My first project', 'IV0p34cDmXFCzA3p9V7/Hg==', 'Cassandra', 'instuuid5', 'amtuuid1', 'conanc');
 INSERT INTO project(uuid, creationdate, description, key, name, instance, owner, linux_group) VALUES ('projuuid8', '2014-01-01', 'Search Engine', 'IV0p34cDmXFCzA3p9V7/Hg==', 'Searcher', 'instuuid6', 'amtuuid1', 'conanc');
+INSERT INTO project(uuid, creationdate, description, key, name, instance, owner, linux_group) VALUES ('ff8081814887817d014888a6ebd80055', '2014-09-18 14:05:13.815', 'ddd', 'gY/bBSQSVXOcilB/JkfwrndC3UNcDI/pIJZJd6ZdLQFcpC6dnynn8Q==', 'dd', 'instuuid1', 'amtuuid1', 'ddXYZamtTest');
+
 
 --IZUBIZARRETA
 INSERT INTO project(uuid, creationdate, description, key, name, instance, owner, linux_group) VALUES ('projuuid9', '2014-01-01', 'My first project', 'IV0p34cDmXFCzA3p9V7/Hg==', 'Cassandra', 'instuuid7', 'iztuuid1', 'conanc');
