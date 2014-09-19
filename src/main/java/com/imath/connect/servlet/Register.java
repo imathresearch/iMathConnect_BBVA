@@ -35,13 +35,16 @@ public class Register extends HttpServlet {
         String passwordRep = request.getParameter("passwordsignup_confirm");
         String eMail = request.getParameter("emailsignup");
         
+        System.out.println(userName + " " + password + " " + passwordRep + " " + eMail);
+        
         if (!password.equals(passwordRep)) {
             response.sendRedirect("registererrorPasswords.html");
             return;
         }
         
         try {
-            ucc.newUserConnect(userName, eMail, "", "", "");
+            ucc.newUserConnect(userName, eMail, "", null, null);
+            System.out.println("After new user connect");
             security.createSystemUser(userName, passwordRep, Constants.SYSTEM_ROLE);
             try {
                 Mail mail = new Mail();
