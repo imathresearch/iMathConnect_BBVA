@@ -25,6 +25,12 @@
     </head>
     <br><br>
     <body>
+    <%
+    if (request.getUserPrincipal() != null) {
+    	// It means we are already authenticated!
+    	response.sendRedirect("indexNew.jsp");     	
+    }
+	%>
     <br><br>
         <div class="container">
             <section>				
