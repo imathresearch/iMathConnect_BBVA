@@ -31,8 +31,8 @@
 			
 			.form
 			{
-				background-color: rgba(0,63,76,0.9);
-				border: 5px solid rgba(255, 255, 255, 0.6);
+				background-color: rgba(54,127,169,0.9);
+				border: 5px solid rgba(255, 255, 255, 0.4);
 			}
 			
 			h1 {
@@ -50,6 +50,12 @@
     </head>
     <br><br>
     <body>
+    <%
+    if (request.getUserPrincipal() != null) {
+    	// It means we are already authenticated!
+    	response.sendRedirect("indexNew.jsp");     	
+    }
+	%>
     <br><br>
     
 <!-- div id="fullscreen_bg" class="fullscreen_bg"/>
