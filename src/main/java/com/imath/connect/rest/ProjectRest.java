@@ -183,6 +183,7 @@ public class ProjectRest {
             return Response.status(Response.Status.OK).build();
             
         } catch (Exception e) {
+            e.printStackTrace();
             LOG.severe(e.getMessage());
             return Response.status(Response.Status.BAD_REQUEST).build();
         }

@@ -1,22 +1,15 @@
 package com.imath.connect.util;
 
-import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.FileReader;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
 import java.lang.ProcessBuilder.Redirect;
 import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.util.Properties;
-
-
 
 /**
  * Implements a set of utilities to create users in the jboss 
@@ -36,17 +29,21 @@ public class Security {
      * @param password
      * @throws Exception
      */
-    public void updateSystemPassword(String userName, String password) throws Exception {
-        
-        String hexPass = generateHexMd5Password(userName, password);
-        
-        // Here the pass in hex(md5) is set as property
-        updateProperty(userName, hexPass.toString(), Constants.USERS_FILE);
-        updateProperty(userName, hexPass.toString(), Constants.USERS_DOMAIN_FILE);
-        
-        // Here the role "WebAppUser" is set as property
-        updateProperty(userName, "WebAppUser", Constants.ROLES_FILE);
-        updateProperty(userName, "WebAppUser", Constants.ROLES_DOMAIN_FILE);
+    
+    private static Object lock = new Object();
+    
+    public static void updateSystemPassword(String userName, String password) throws Exception {
+        synchronized(lock) {
+            String hexPass = generateHexMd5Password(userName, password);
+            
+            // Here the pass in hex(md5) is set as property
+            updateProperty(userName, hexPass.toString(), Constants.USERS_FILE);
+            updateProperty(userName, hexPass.toString(), Constants.USERS_DOMAIN_FILE);
+            
+            // Here the role "WebAppUser" is set as property
+            updateProperty(userName, "WebAppUser", Constants.ROLES_FILE);
+            updateProperty(userName, "WebAppUser", Constants.ROLES_DOMAIN_FILE);
+        }
 
     }
     
@@ -78,7 +75,7 @@ public class Security {
         return hexPass.toString();
     }
     
-    private void updateProperty(String key, String value, String propertiesPath) {
+    private static void updateProperty(String key, String value, String propertiesPath) {
         try {
             // Get property of userName in JBOSS' file
             FileReader reader = new FileReader(propertiesPath);
@@ -96,35 +93,39 @@ public class Security {
         }
     }
     
-    public void createLinuxUser(String userName) throws Exception {
-        ProcessBuilder pb = new ProcessBuilder(Constants.ADD_USER_LINUX, "-d",  "/home/" + userName, "-m", userName, "-g", Constants.IMATHSYSTEMGROUP);
-        pb.redirectInput(Redirect.INHERIT);
-        pb.redirectOutput(Redirect.INHERIT);
-        pb.redirectError(Redirect.INHERIT);
-        Process p = pb.start();
-        p.waitFor();
+    public static void createLinuxUser(String userName) throws Exception {
+        synchronized(lock) {
+            ProcessBuilder pb = new ProcessBuilder(Constants.ADD_USER_LINUX, "-d",  "/home/" + userName, "-m", userName, "-g", Constants.IMATHSYSTEMGROUP);
+            pb.redirectInput(Redirect.INHERIT);
+            pb.redirectOutput(Redirect.INHERIT);
+            pb.redirectError(Redirect.INHERIT);
+            Process p = pb.start();
+            p.waitFor();
+        }
     }
     
-    public void createSystemUser(String userName, String password, String role) throws Exception {
+    public static void createSystemUser(String userName, String password, String role) throws Exception {
         // We add the system user
         //Process p = Runtime.getRuntime().exec(Constants.ADD_USER_CLI + " -a " + userName + " " + password + " > /dev/tty");
-        ProcessBuilder pb = new ProcessBuilder(Constants.ADD_USER_CLI, "-a",  userName, password);
-
-        pb.redirectInput(Redirect.INHERIT);
-        pb.redirectOutput(Redirect.INHERIT);
-        pb.redirectError(Redirect.INHERIT);
-
-        Process p = pb.start();
-        int signal = p.waitFor();
-        
-        System.out.println("SIGNAL " + signal);
-        
-        // We add the role of the user if role is not null
-        if (role != null) {
-            String line = userName + "=" + role;
-            Writer writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(Constants.ROLES_FILE, true), "UTF-8"));
-            writer.append(line + "\n");
-            writer.close();
+        synchronized(lock) {
+            ProcessBuilder pb = new ProcessBuilder(Constants.ADD_USER_CLI, "-a",  userName, password);
+    
+            pb.redirectInput(Redirect.INHERIT);
+            pb.redirectOutput(Redirect.INHERIT);
+            pb.redirectError(Redirect.INHERIT);
+    
+            Process p = pb.start();
+            int signal = p.waitFor();
+            
+            System.out.println("SIGNAL " + signal);
+            
+            // We add the role of the user if role is not null
+            if (role != null) {
+                String line = userName + "=" + role;
+                Writer writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(Constants.ROLES_FILE, true), "UTF-8"));
+                writer.append(line + "\n");
+                writer.close();
+            }
         }
     }
 }

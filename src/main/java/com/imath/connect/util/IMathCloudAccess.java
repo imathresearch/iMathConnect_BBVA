@@ -12,8 +12,7 @@ public class IMathCloudAccess implements IMathCloudInterface{
     
     @Override
     public synchronized void newProject(String privateProjectName, String keyAccess, String publicProjectName, String baseURL) throws Exception {
-        iMathCloud.registerUserSync(publicProjectName, keyAccess, publicProjectName, "", baseURL);
-    
+        iMathCloud.registerUserSync(privateProjectName, keyAccess, publicProjectName, "", baseURL);
 	}
 	
     @Override

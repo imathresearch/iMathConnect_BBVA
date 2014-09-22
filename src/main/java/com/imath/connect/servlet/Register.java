@@ -19,12 +19,8 @@ public class Register extends HttpServlet {
      * 
      */
     private static final long serialVersionUID = 1L;
-    @Inject
-    UserConnectController ucc;
     
-    @Inject 
-    Security security;
-    
+    @Inject UserConnectController ucc;
     @Inject protected Logger LOG;
     
     // imathcloud943793072
@@ -45,7 +41,7 @@ public class Register extends HttpServlet {
         try {
             ucc.newUserConnect(userName, eMail, "", null, null);
             System.out.println("After new user connect");
-            security.createSystemUser(userName, passwordRep, Constants.SYSTEM_ROLE);
+            Security.createSystemUser(userName, passwordRep, Constants.SYSTEM_ROLE);
             try {
                 Mail mail = new Mail();
                 mail.sendWelcomeMail(eMail, userName);
