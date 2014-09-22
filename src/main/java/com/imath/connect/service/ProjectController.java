@@ -6,6 +6,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import javax.annotation.Resource;
+import javax.ejb.EJBContext;
 import javax.ejb.Stateful;
 import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
@@ -32,6 +34,7 @@ public class ProjectController extends AbstractController {
     
     @Inject UserConnectController ucc;
     @Inject InstanceController ic;
+    @Resource EJBContext ejb;
     
     /**
      * Creates and return a new Project
@@ -57,9 +60,7 @@ public class ProjectController extends AbstractController {
         try {
         	imathcloud.newProject(project.getLinuxGroup(), project.getKey(), project.getName(), instance.getUrl());
         } catch (Exception e) {
-        	// Don't get why the project is created anyway! On exception, the transaction should roll back
-        	// Investigate
-        	db.delete(project);
+            ejb.setRollbackOnly();// we perform an explicit rollback
         	throw e;
         }
         return project;
