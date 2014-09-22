@@ -30,7 +30,7 @@
 				-o-background-size: cover;
 				background-size: cover;
 			}
-			.container {
+			.container-centered {
 				position: absolute;
                 top: 0;
                 bottom: 0;
@@ -53,7 +53,7 @@
 	%>
         <div class="container">
             <section>				
-                <div id="container_demo" >
+                <div id="container_demo" class="container-centered" >
                     <!-- hidden anchor to stop jump http://www.css3create.com/Astuce-Empecher-le-scroll-avec-l-utilisation-de-target#wrap4  -->
                     <a class="hiddenanchor" id="torecover"></a>
                     <a class="hiddenanchor" id="toregister"></a>

@@ -46,6 +46,10 @@ function initProjectView(uuid_project) {
 	global_instances = [];
 	ajaxOwnProjects("ajaxUploadProject");
 	ajaxInstancesLoad();
+	setButtonsCode();
+}
+
+function setButtonsCode() {
 	$("#imath-id-own-projects").delegate("tr", "click", function(e) {
 		if (!(typeof $(e.currentTarget).attr('id') == "undefined")){
 			var uuid = $(e.currentTarget).attr('id');
@@ -425,13 +429,16 @@ function runiMathCloud(uuid_project) {
 	    	var key = project['key'];
 	    	var url = project['url'] + "/iMathCloud/login.jsp";
 	    	// Ugly... but it works
-	    	var form = '<form target="_blank" id="fakeForm" action="' + url + '" method="post"><input type="hidden" name="j_username" value="' + linux + '"><input type="hidden" name="j_password" value="' + key + '"></form>'; 
-	    	$(form).submit();
-	    	$('#fakeForm').remove();
-	    	//document.body.innerHTML += '<form target="_blank" id="fakeForm" action="' + url + '" method="post"><input type="hidden" name="j_username" value="' + linux + '"><input type="hidden" name="j_password" value="' + key + '"></form>';
-	    	//document.getElementById("fakeForm").submit();
-	    	//document.getElementById("fakeForm").remove();
-	    	//win.focus();
+	    	//var form = '<form target="_blank" id="fakeForm" action="' + url + '" method="post"><input type="hidden" name="j_username" value="' + linux + '"><input type="hidden" name="j_password" value="' + key + '"></form>';
+	    	//$("#imath-id-fake-form").html(form);
+	    	//$("#fakeForm").submit();
+	    	//$('#imath-id-fake-form').html("");
+	    	document.body.innerHTML += '<form target="_blank" id="fakeForm" action="' + url + '" method="post"><input type="hidden" name="j_username" value="' + linux + '"><input type="hidden" name="j_password" value="' + key + '"></form>';
+	    	document.getElementById("fakeForm").submit();
+	    	document.getElementById("fakeForm").remove();
+	    	// For whatever reason, all events set up programatically are dismished when doing submit. 
+	    	setButtonsCode();
+	    	
 	    },
 	    error: function(error) {
 	        console.log("Error opening iMathCloud");
