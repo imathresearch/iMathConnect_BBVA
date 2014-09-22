@@ -58,6 +58,9 @@ public class Constants {
     // remove a project
     static public final String removeProject = "/removeProject";
     
+    // Gets general information of the system
+    static public final String getInfo = "/getInfo";
+    
     // IMPORTANT: We assume that JBOSS is launched from JBOSS-HOME/bin
     static public final String ADD_USER_CLI = "./add-user.sh";
     static public final String ADD_USER_LINUX = "useradd";

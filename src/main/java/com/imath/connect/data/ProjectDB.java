@@ -69,5 +69,16 @@ public class ProjectDB {
         return out;
     }
     
+    /**
+     * Returns the number of projects
+     * @return
+     */
+    public Long countProjects() {
+        CriteriaBuilder qb = em.getCriteriaBuilder();
+        CriteriaQuery<Long> cq = qb.createQuery(Long.class);
+        cq.select(qb.count(cq.from(Project.class)));
+        return em.createQuery(cq).getSingleResult();
+    }
+    
     
 }

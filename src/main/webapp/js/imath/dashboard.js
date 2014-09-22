@@ -41,12 +41,35 @@ function ajaxUserInfo() {
 			ajaxOwnNotifications();
 			ajaxPublicInstances();
 			ajaxColProjects();
+			ajaxInfo();
 			setSelectMenu("imath-id-dashboard-menu");
 	    },
 	    error: function(error) {
 	        console.log("Error getting user information");
 	    }
 	});	
+}
+
+function ajaxInfo() {
+	$.ajax({
+	    url: "rest/api/agora/getInfo/" + global_uuid_user,
+	    cache: false,
+	    dataType: "json",
+	    type: "GET",
+	    success: function(info) {
+	        var numUsers = info['numUsers'];
+	        var numProjects = info['numProjects'];
+	        var numInstances = info['numInstances'];
+	        var numUsersCol = info['numUsersCol'];
+	        $(".imath-num-users-col").html(numUsersCol);
+	        $(".imath-num-users").html(numUsers);
+	        $(".imath-num-projects").html(numProjects);
+	        $(".imath-num-instances").html(numInstances);
+	    },
+	    error: function(error) {
+	        console.log("Error getting information");
+	    }
+	});
 }
 
 function setSelectMenu(idDOM) {

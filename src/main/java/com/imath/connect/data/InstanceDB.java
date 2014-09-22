@@ -65,4 +65,11 @@ public class InstanceDB {
         List<Instance> out = em.createQuery(criteria).getResultList();
         return out;
     }
+    
+    public Long countInstances() {
+        CriteriaBuilder qb = em.getCriteriaBuilder();
+        CriteriaQuery<Long> cq = qb.createQuery(Long.class);
+        cq.select(qb.count(cq.from(Instance.class)));
+        return em.createQuery(cq).getSingleResult();
+    }
 }

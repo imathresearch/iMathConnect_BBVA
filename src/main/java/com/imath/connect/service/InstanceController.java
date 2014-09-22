@@ -67,4 +67,9 @@ public class InstanceController extends AbstractController {
         }
         return instance;
     }
+    
+    @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
+    public long countInstances() {
+        return db.getInstanceDB().countInstances();
+    }
 }

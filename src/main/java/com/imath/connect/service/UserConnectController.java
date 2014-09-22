@@ -99,4 +99,14 @@ public class UserConnectController extends AbstractController{
         return peer;
     }
     
+    @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
+    public long countUsers() {
+        return db.getUserConnectDB().countUsers();
+    }
+    
+    @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
+    public long countUsersCol() {
+        return db.getUserConnectDB().countUsersCol();
+    }
+    
 }

@@ -184,6 +184,11 @@ public class ProjectController extends AbstractController {
         return project;
     }
     
+    @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
+    public long countProjects() {
+        return db.getProjectDB().countProjects();
+    }
+    
     // just for testing purposes
     
     public void setUserConnectController(UserConnectController ucc) {
