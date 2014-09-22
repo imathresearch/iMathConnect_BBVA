@@ -22,8 +22,28 @@
 		<!-- link rel="stylesheet" type="text/css" href="css/animate-custom.css" /-->
 		<link rel="stylesheet" type="text/css" href="css/login.css" />
 		
+		<style type="text/css">    
+			body {
+				background: url(img/background7.jpg) no-repeat center center fixed #000; 
+				-webkit-background-size: cover;
+				-moz-background-size: cover;
+				-o-background-size: cover;
+				background-size: cover;
+			}
+			.container {
+				position: absolute;
+                top: 0;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                display: flex;
+                justify-content: space-around;
+                align-items: center;
+                flex-wrap: wrap;
+    		}
+		</style>
+		
     </head>
-    <br><br>
     <body>
     <%
     if (request.getUserPrincipal() != null) {
@@ -31,7 +51,6 @@
     	response.sendRedirect("indexNew.jsp");     	
     }
 	%>
-    <br><br>
         <div class="container">
             <section>				
                 <div id="container_demo" >
