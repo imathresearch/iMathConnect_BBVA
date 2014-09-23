@@ -38,6 +38,7 @@ function ajaxUserInfo() {
 			$(".usercreationdate").html('<small>Member since ' + month + ". " + year+'</small>');
 			if (user['photo']!=null) {
 				document.getElementById("userphoto").src = "data:image/png;base64," + user['photo'];
+				document.getElementById("userphoto2").src = "data:image/png;base64," + user['photo'];
 	    	}
 			ajaxOwnProjects();
 			ajaxOwnInstances();

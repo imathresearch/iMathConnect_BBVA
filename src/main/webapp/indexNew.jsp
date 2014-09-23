@@ -115,7 +115,7 @@
                     <!-- Sidebar user panel -->
                     <div class="user-panel">
                         <div class="pull-left image">
-                            <img src="img/avatar04.png" class="img-circle" alt="User Image" />
+                            <img id="userphoto2" src="img/avatar04.png" class="img-circle" alt="User Image" />
                         </div>
                         <div class="pull-left info">
                             <p class="username">-</p>
@@ -376,7 +376,7 @@
                                 <input class="form-control" id="phone2" name="phone2" type="text" placeholder="" disabled />
                             </p>
                             <p>
-                                <img id="photoUser" src="img/avatar04.png" />
+                                <img id="photoUser" src="img/avatar04.png" alt="No photograph" />
                             </p>
                             <input id="changePassButton" type="button" value="Change Password" class="btn btn-flat"/>
                             <input id="changePhotograph" type="button" value="Change Photograph" class="btn btn-flat"/>

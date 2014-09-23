@@ -24,7 +24,12 @@ function AjaxUserData(userName) {
 			$("#email").val(user['eMail']);
 			$("#phone1").val(user['phone1']);
 			$("#phone2").val(user['phone2']);
-			document.getElementById("photoUser").src = "data:image/png;base64," + user['photo'];
+			if (user['phone2']!=null) {
+				document.getElementById("photoUser").src = "data:image/png;base64," + user['photo'];
+			}
+			else {
+				document.getElementById("photoUser").src = "img/avatar04.png";
+			}
 	    },
 	    error: function(error) {
 	    	$("#profilePhotographsg").html("");
