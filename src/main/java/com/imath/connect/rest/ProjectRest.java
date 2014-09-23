@@ -9,6 +9,7 @@ import java.util.logging.Logger;
 import javax.ejb.Stateful;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
+import javax.persistence.EntityNotFoundException;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -125,11 +126,20 @@ public class ProjectRest {
             if (!project.getOwner().getUUID().equals(owner.getUUID())) {
                 throw new Exception("Not enough privileges");
             }
-            UserConnect collaborator;
-            if(other.contains("@")) {
-                collaborator = ucc.getUserByEMail(other);
-            } else {
-                collaborator = ucc.getUserConnectByUserName(other);
+            UserConnect collaborator = null;
+            boolean newUser = false;
+            boolean isMail = other.contains("@");
+            try {
+                if(isMail) {
+                    collaborator = ucc.getUserByEMail(other);
+                } else {
+                    collaborator = ucc.getUserConnectByUserName(other);
+                }
+            } catch (EntityNotFoundException e) {
+                if (!isMail) throw e;   // If a user name was given but it does not exists, we throw the exception
+                // Otherwise, we create the user
+                newUser=true;
+                collaborator = ucc.newUserConnectInvitation(other);
             }
             List<String> uuids = new ArrayList<String>();
             uuids.add(collaborator.getUUID());

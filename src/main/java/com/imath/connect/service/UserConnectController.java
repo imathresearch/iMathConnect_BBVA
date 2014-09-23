@@ -46,6 +46,50 @@ public class UserConnectController extends AbstractController{
         return peer;
     }
     
+    
+    @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
+    public UserConnect newUserConnectInvitation(String eMail) throws Exception {
+        String userName = findUserName(eMail);
+        Date now = new Date();
+        UserConnect peer = new UserConnect();
+        peer.setEMail(eMail);
+        peer.setLastConnection(now);
+        peer.setCurrentConnection(now);
+        peer.setCreationDate(now);
+        peer.setOrganization("");
+        peer.setUserName(userName);
+        this.db.makePersistent(peer);
+        return peer;
+    }
+    
+    @TransactionAttribute(TransactionAttributeType.REQUIRED)
+    private String findUserName(String eMail) throws Exception {
+        String errMsg = "No possible userName";
+        String [] split = eMail.split("@");
+        if (split.length!=2) throw new Exception(errMsg);
+        String pre = split[0];
+        String potencialUserName = keepLetters(pre);
+        if (pre.trim().equals("")) throw new Exception(errMsg);
+        UserConnect user = db.getUserConnectDB().findByUserName(potencialUserName);
+        if (user!=null) {
+            potencialUserName = potencialUserName + "AT"+split[1];
+            user = db.getUserConnectDB().findByUserName(potencialUserName);
+            if (user!=null) throw new Exception(errMsg);
+        }
+        return potencialUserName;
+    }
+    
+    private String keepLetters(String pre) {
+        StringBuffer out = new StringBuffer("");
+        for(int i=0; i<pre.length(); i++) {
+            char ch = pre.charAt(i);
+            if (Character.isLetter(ch)) {
+                out.append(ch);
+            }
+        }
+        return out.toString();
+    }
+    
     /**
      * Updates the date of the last connection
      * @param UUID

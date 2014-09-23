@@ -72,6 +72,65 @@ public class UserConnectControllerTest {
         verify(em).persist((UserConnect)Matchers.anyObject());
     }
     
+    
+    @Test
+    public void newUserConnectInvitationTest() throws Exception {
+        String eMail = "t_e_s2t89@test.com";
+        String expectedUserName = "test";
+        String expectedUserNameAlter = "testATtest.com";
+        //1.- Exception case: no valid email is passed
+        try {
+            pc.newUserConnectInvitation("");
+            fail("Expected Exception");
+        } catch (Exception e) {
+            verify(em,times(0)).persist((UserConnect)Matchers.anyObject());
+        }
+        try {
+            pc.newUserConnectInvitation("NoMail");
+            fail("Expected Exception");
+        } catch (Exception e) {
+            // Fine
+            verify(em,times(0)).persist((UserConnect)Matchers.anyObject());
+        }
+        try {
+            pc.newUserConnectInvitation("mail@mail@mail.com");
+            fail("Expected Exception");
+        } catch (Exception e) {
+            // Fine
+            verify(em,times(0)).persist((UserConnect)Matchers.anyObject());
+        }
+        
+        //2.- Happy path. first username does not exists:
+        when(db.getUserConnectDB().findByUserName(expectedUserName)).thenReturn(null);
+        UserConnect user = pc.newUserConnectInvitation(eMail);
+        assertEquals(expectedUserName, user.getUserName());
+        assertEquals(eMail, user.getEMail());
+        assertEquals("", user.getOrganization());
+        verify(em).persist((UserConnect)Matchers.anyObject());
+        
+        //3.- Happy path. first username exists but composed no
+        UserConnect userExist = new UserConnect();
+        when(db.getUserConnectDB().findByUserName(expectedUserName)).thenReturn(userExist);
+        when(db.getUserConnectDB().findByUserName(expectedUserNameAlter)).thenReturn(null);
+        user = pc.newUserConnectInvitation(eMail);
+        assertEquals(expectedUserNameAlter, user.getUserName());
+        assertEquals(eMail, user.getEMail());
+        assertEquals("", user.getOrganization());
+        verify(em, times(2)).persist((UserConnect)Matchers.anyObject());
+        
+        //4.- Exception path. All usernames exist
+        UserConnect userExist2 = new UserConnect();
+        when(db.getUserConnectDB().findByUserName(expectedUserName)).thenReturn(userExist);
+        when(db.getUserConnectDB().findByUserName(expectedUserNameAlter)).thenReturn(userExist2);
+        try {
+            pc.newUserConnectInvitation(eMail);
+            fail();
+        } catch (Exception e) {
+            //Fine
+            verify(em, times(2)).persist((UserConnect)Matchers.anyObject());
+        }
+    }
+    
     //Happy Path setLastConnection
     @Test
     public void setCurrentConnectionTest() throws Exception {
