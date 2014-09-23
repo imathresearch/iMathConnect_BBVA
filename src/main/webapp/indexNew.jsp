@@ -354,10 +354,31 @@
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                    
+                        <button id="closeModalProfile" type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title"><i class="fa fa-warning danger"></i>User Profile</h4>
                     </div>
                     <div class="modal-body">
-
+                        <p> 
+                            <label for="" class="" data-icon="">Username </label>
+                            <input id="username" name="username" type="text" placeholder="" disabled />
+                        </p>
+                        <p>
+                            <label for="" class="" data-icon="">Email </label>
+                            <input id="email" name="email" type="text" placeholder="" disabled />
+                        </p>
+                        <p>
+                            <label for="" class="" data-icon="">Phone 1 </label>
+                            <input id="phone1" name="phone1" type="text" placeholder="" disabled />
+                        </p>
+                        <p>
+                            <label for="" class="" data-icon="">Phone 2 </label>
+                            <input id="phone2" name="phone2" type="text" placeholder="" disabled />
+                        </p>
+                        <p>
+                            <img id="photoUser" src="" />
+                        </p>
+                        <input id="changePassButton" type="button" value="Change Password"/>
+                        <input id="changePhotograph" type="button" value="Change Photograph"/>
                     </div>
                     <div class="modal-footer clearfix">
 
@@ -371,10 +392,26 @@
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                    
+                        <button id="closeModalPassword" type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title"><i class="fa fa-warning danger"></i>Password modification</h4>
                     </div>
                     <div class="modal-body">
-
+                        <form id="profileForm" action="#" method="post" autocomplete="off" > 
+                            <p>
+                                <label for="passwordsignup" class="youpasswd" data-icon="p">Your current password </label>
+                                <input id="passwordOld" name="passwordOld" required="required" type="password" placeholder="eg. X8df!90EO"/>
+                            </p>
+                            <p>
+                                <label for="passwordsignup" class="youpasswd" data-icon="p">Your new password </label>
+                                <input id="passwordNew" name="passwordNew" required="required" type="password" placeholder="eg. X8df!90EO"/>
+                            </p>
+                            <p>
+                                <label for="passwordsignup_confirm" class="youpasswd" data-icon="p">Please confirm your new password </label>
+                                <input id="passwordNewConf" name="passwordNewConf" required="required" type="password" placeholder="eg. X8df!90EO"/>
+                            </p>
+                            <div id="profileMsg" style="float:left"></div>
+                            <div style="float:right"> <input id="changePassButton" type="button" value="Change"/></div>
+                        </form>
                     </div>
                     <div class="modal-footer clearfix">
 
@@ -388,10 +425,17 @@
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                    
+                        <button id="closeModalPhotograph" type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title"><i class="fa fa-warning danger"></i>User's Photograph Modification</h4>
                     </div>
                     <div class="modal-body">
-
+                        <form action="#" id="changePhoto" name="changePhoto" method="post" enctype="multipart/form-data" class="sidebar-form">
+                            <p>
+                            <label for="" class="" data-icon="">Select new photograph </label>
+                            <input type="file" id="uploadedFile" name="uploadedFile" size="50" multiple />
+                            </p>
+                            <input type="button" name="uploadFile" id="uploadFile" value="Upload It" />
+                        </form>
                     </div>
                     <div class="modal-footer clearfix">
 

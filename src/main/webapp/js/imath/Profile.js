@@ -1,5 +1,9 @@
+$("#closeModalProfile").click(function() {
+	
+});
 
 $("#profileForm").click(function() {
+	$("#imath-profile-user").modal();
 	$.ajax({
 	    url: "rest/api/agora/getUserByUserName/" + userName,
 	    cache: false,

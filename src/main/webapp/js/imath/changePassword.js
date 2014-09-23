@@ -1,13 +1,10 @@
-/*$("#selfButton").button({
-    text: false,
-    icons: { primary: "ui-icon-person" }
+$("#closeModalPassword").click(function() {
+	
 });
 
-$("#selfButton").click(function() {
-    $("#profilePopup").dialog();
-    $("#profilePopup form")[0].reset()
-    $("#profilePopup div#profileMsg").html("");
-});*/
+$("#changePassButton").click(function(){
+	$("#imath-modify-password-user").modal();
+});
 
 function serializeToJson(serializer){
     var _string = '{';

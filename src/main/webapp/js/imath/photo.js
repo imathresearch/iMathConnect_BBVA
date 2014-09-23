@@ -1,3 +1,11 @@
+$("#closeModalPhotograph").click(function() {
+	
+});
+
+$("#changePhotograph").click(function() {
+	$("#imath-modify-user-photograph").modal();
+});
+
 $("#uploadFile").click(function() {
 	ajaxModify();
 });
@@ -17,12 +25,9 @@ function ajaxModify() {
 	    processData : false,
 		contentType : false,
 	    success: function(user) {
-	        alert("Correct modification"); 
-	        alert(user);
 	        console.log("Correct execution");
 	    },
 	    error: function(error) {
-	    	alert("Error");
 	        console.log("Error getting user information");
 	    }
 	});	
