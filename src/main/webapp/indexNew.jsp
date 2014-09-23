@@ -95,7 +95,7 @@
                                 <li class="user-footer">
                                     <div class="pull-left">
                                     <!-- This link has to open a pop-up to see the user's information and for modify the password and picture. -->
-                                        <a href="#" class="btn btn-default btn-flat">Profile</a>
+                                        <a class="btn btn-default btn-flat" id="profileForm">Profile</a>
                                     </div>
                                     <div class="pull-right">
                                         <a href="logout" class="btn btn-default btn-flat">Sign out</a>
@@ -144,6 +144,7 @@
                                 <i class="fa fa-bar-chart-o"></i> <span>My Projects</span>
                             </a>
                         </li>
+
                         <!-- li id="imath-id-instances-menu" class="imath-menu">
                             <a onclick='placeLayoutInstances()')>
                                 <i class="fa fa-cog"></i> <span>My Instances</span>
@@ -346,6 +347,60 @@
             </div><!-- /.modal-dialog -->
         </div><!-- /.modal -->
 
+        <!-- The following modals permit to visualize user's profile, modify password and modify photograph -->
+
+        <!-- COMPOSE MESSAGE MODAL FOR PROFILE-->
+        <div class="modal fade" id="imath-profile-user" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                    
+                    </div>
+                    <div class="modal-body">
+
+                    </div>
+                    <div class="modal-footer clearfix">
+
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div><!-- /.modal -->
+
+        <!-- COMPOSE MESSAGE MODAL FOR MODIFY PASSWORD-->
+        <div class="modal fade" id="imath-modify-password-user" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                    
+                    </div>
+                    <div class="modal-body">
+
+                    </div>
+                    <div class="modal-footer clearfix">
+
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div><!-- /.modal -->
+
+        <!-- COMPOSE MESSAGE MODAL MODIFY PHOTOGRAPH-->
+        <div class="modal fade" id="imath-modify-user-photograph" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                    
+                    </div>
+                    <div class="modal-body">
+
+                    </div>
+                    <div class="modal-footer clearfix">
+
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div><!-- /.modal -->
+
+
         <!-- jQuery 2.0.2 -->
         <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
         <!-- jQuery UI 1.10.3 -->
@@ -381,6 +436,7 @@
 		<script src="js/imath/notifications.js" type="text/javascript"></script>
 		<script src="js/imath/photo.js" type="text/javascript"></script>
 		<script src="js/imath/changePassword.js" type="text/javascript"></script>
+		<script src="js/imath/Profile.js" type="text/javascript"></script>
     </body>
 	
 </html>
