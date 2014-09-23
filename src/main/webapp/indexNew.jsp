@@ -87,7 +87,7 @@
                             <ul class="dropdown-menu">
                                 <!-- User image -->
                                 <li class="user-header bg-light-blue">
-                                    <img src="img/avatar04.png" class="img-circle" alt="User Image" />
+                                    <img id="userphoto" src="img/avatar04.png" class="img-circle" alt="User Image" />
                                     <p class="username">-</p>
                                     <p class="usercreationdate">-</p>
                                 </li>
@@ -376,7 +376,7 @@
                                 <input class="form-control" id="phone2" name="phone2" type="text" placeholder="" disabled />
                             </p>
                             <p>
-                                <img id="photoUser" src="" />
+                                <img id="photoUser" src="img/avatar04.png" />
                             </p>
                             <input id="changePassButton" type="button" value="Change Password" class="btn btn-flat"/>
                             <input id="changePhotograph" type="button" value="Change Photograph" class="btn btn-flat"/>

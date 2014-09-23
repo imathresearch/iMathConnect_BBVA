@@ -36,6 +36,9 @@ function ajaxUserInfo() {
 			var month = numberToMonth(cDate.getMonth());
 			var year = cDate.getFullYear();
 			$(".usercreationdate").html('<small>Member since ' + month + ". " + year+'</small>');
+			if (user['photo']!=null) {
+				document.getElementById("userphoto").src = "data:image/png;base64," + user['photo'];
+	    	}
 			ajaxOwnProjects();
 			ajaxOwnInstances();
 			ajaxOwnNotifications();
