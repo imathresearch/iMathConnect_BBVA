@@ -236,6 +236,7 @@ public class ProjectRestIT extends AbstractIT{
         rest = prEndPoint.addCollaboratorByOther(owner.getUUID(), project2.getUUID(), "noname@mail.com", null, mailMock, securityMock);
         assertEquals(Response.Status.OK.getStatusCode(), rest.getStatus());
         UserConnect owner4 = ucc.getUserConnectByUserName("noname");
+        assertEquals("mail", owner4.getOrganization());
         user = ucc.getCollaborationUsersByProject(project2.getUUID());
         assertEquals(3,user.size());
         verify(mailMock,times(1)).sendInvitationNewUserMail(Matchers.eq(owner4.getEMail()), Matchers.eq(owner4.getUserName()), (String) Matchers.anyObject(),  Matchers.eq(project2.getName()));
@@ -244,7 +245,8 @@ public class ProjectRestIT extends AbstractIT{
         // 8 Happy path: email does not exists, by tries to create a username that already exists, but end up creating a user
         rest = prEndPoint.addCollaboratorByOther(owner.getUUID(), project2.getUUID(), "noname@mailyes.com", null, mailMock, securityMock);
         assertEquals(Response.Status.OK.getStatusCode(), rest.getStatus());
-        UserConnect owner5 = ucc.getUserConnectByUserName("nonameATmailyescom");
+        UserConnect owner5 = ucc.getUserConnectByUserName("nonameATmailyes");
+        assertEquals("mailyes", owner5.getOrganization());
         user = ucc.getCollaborationUsersByProject(project2.getUUID());
         assertEquals(4,user.size());
         verify(mailMock,times(1)).sendInvitationNewUserMail(Matchers.eq(owner5.getEMail()), Matchers.eq(owner5.getUserName()), (String) Matchers.anyObject(),  Matchers.eq(project2.getName()));

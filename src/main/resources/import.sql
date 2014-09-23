@@ -23,8 +23,8 @@ INSERT INTO standardconfiguration(uuid, cpu, ram, stg) VALUES ('stda2', 1, 0.5, 
 INSERT INTO standardconfiguration(uuid, cpu, ram, stg) VALUES ('stda3', 2, 2, 300);
 INSERT INTO standardconfiguration(uuid, cpu, ram, stg) VALUES ('stda4', 8, 16, 5000);
 
-INSERT INTO userconnect(uuid, creationdate, email, currentconnection, lastconnection, organization, phone1, phone2, username) VALUES ('useruuid1', '2014-01-01', 'ipinyol@gmail.com', '2014-02-01', '2014-01-01', 'imath', '999999999', '11111111111', 'ipinyolTest');
-INSERT INTO userconnect(uuid, creationdate, email, currentconnection, lastconnection, organization, phone1, phone2, username) VALUES ('useruuid2', '2014-01-01', 'pinyol@gmail.com', '2014-02-01', '2014-01-01', 'imath', '999999999', '11111111111', 'user2');
+INSERT INTO userconnect(uuid, creationdate, email, currentconnection, lastconnection, organization, phone1, phone2, username) VALUES ('useruuid1', '2014-01-01', 'rap@rup.com', '2014-02-01', '2014-01-01', 'imath', '999999999', '11111111111', 'ipinyolTest');
+INSERT INTO userconnect(uuid, creationdate, email, currentconnection, lastconnection, organization, phone1, phone2, username) VALUES ('useruuid2', '2014-01-01', 'ipinyol@gmail.com', '2014-02-01', '2014-01-01', 'imath', '999999999', '11111111111', 'ipinyol');
 INSERT INTO userconnect(uuid, creationdate, email, currentconnection, lastconnection, organization, phone1, phone2, username) VALUES ('useruuid3', '2014-01-01', 'iinyol@gmail.com', '2014-02-01', '2014-01-01', 'imath', '999999999', '11111111111', 'user3');
 INSERT INTO userconnect(uuid, creationdate, email, currentconnection, lastconnection, organization, phone1, phone2, username) VALUES ('useruuid4', '2014-01-01', 'ipnyol@gmail.com', '2014-02-01', '2014-01-01', 'imath', '999999999', '11111111111', 'user4');
 INSERT INTO userconnect(uuid, creationdate, email, currentconnection, lastconnection, organization, phone1, phone2, username) VALUES ('useruuid5', '2014-01-01', 'ipiyol@gmail.com', '2014-02-01', '2014-01-01', 'imath', '999999999', '11111111111', 'user5');

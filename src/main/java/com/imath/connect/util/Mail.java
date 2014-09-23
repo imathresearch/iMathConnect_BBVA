@@ -86,7 +86,7 @@ public class Mail {
         }
         br.close();
         html = html.replace("[USERNAME]", username);
-        html = html.replace("[PROJECT", project);
+        html = html.replace("[PROJECT]", project);
         String url = Constants.IMATH_HTTP + Constants.IMATH_HOST();
         if (!Constants.IMATH_PORT.equals("80")) {
             url += ":" + Constants.IMATH_PORT;
@@ -106,7 +106,7 @@ public class Mail {
         }
         br.close();
         html = html.replace("[USERNAME]", username);
-        html = html.replace("[PROJECT", project);
+        html = html.replace("[PROJECT]", project);
         html = html.replace("[PASSWORD]", password);
         
         String url = Constants.IMATH_HTTP + Constants.IMATH_HOST();

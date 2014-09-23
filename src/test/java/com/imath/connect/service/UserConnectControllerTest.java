@@ -77,7 +77,7 @@ public class UserConnectControllerTest {
     public void newUserConnectInvitationTest() throws Exception {
         String eMail = "t_e_s2t89@test.com";
         String expectedUserName = "test";
-        String expectedUserNameAlter = "testATtestcom";
+        String expectedUserNameAlter = "testATtest";
         //1.- Exception case: no valid email is passed
         try {
             pc.newUserConnectInvitation("");
@@ -105,7 +105,7 @@ public class UserConnectControllerTest {
         UserConnect user = pc.newUserConnectInvitation(eMail);
         assertEquals(expectedUserName, user.getUserName());
         assertEquals(eMail, user.getEMail());
-        assertEquals("", user.getOrganization());
+        assertEquals("test", user.getOrganization());
         assertTrue(user.getCurrentConnection()==null);
         assertTrue(user.getLastConnection()==null);
         verify(em).persist((UserConnect)Matchers.anyObject());
@@ -117,7 +117,7 @@ public class UserConnectControllerTest {
         user = pc.newUserConnectInvitation(eMail);
         assertEquals(expectedUserNameAlter, user.getUserName());
         assertEquals(eMail, user.getEMail());
-        assertEquals("", user.getOrganization());
+        assertEquals("test", user.getOrganization());
         assertTrue(user.getCurrentConnection()==null);
         assertTrue(user.getLastConnection()==null);
         verify(em, times(2)).persist((UserConnect)Matchers.anyObject());

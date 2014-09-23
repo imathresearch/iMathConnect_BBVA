@@ -50,16 +50,26 @@ public class UserConnectController extends AbstractController{
     @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
     public UserConnect newUserConnectInvitation(String eMail) throws Exception {
         String userName = findUserName(eMail);
+        String org = findOrganization(eMail);
         Date now = new Date();
         UserConnect peer = new UserConnect();
         peer.setEMail(eMail);
         peer.setLastConnection(null);
         peer.setCurrentConnection(null);
         peer.setCreationDate(now);
-        peer.setOrganization("");
+        peer.setOrganization(org);
         peer.setUserName(userName);
         this.db.makePersistent(peer);
         return peer;
+    }
+    
+    private String findOrganization(String eMail) throws Exception {
+        String errMsg = "No possible userName";
+        String [] split = eMail.split("@");
+        if (split.length!=2) throw new Exception(errMsg);
+        String []aux= split[1].split("\\.");
+        if (aux.length!=2) throw new Exception(errMsg);
+        return aux[0];
     }
     
     @TransactionAttribute(TransactionAttributeType.REQUIRED)
@@ -72,7 +82,9 @@ public class UserConnectController extends AbstractController{
         if (pre.trim().equals("")) throw new Exception(errMsg);
         UserConnect user = db.getUserConnectDB().findByUserName(potencialUserName);
         if (user!=null) {
-            potencialUserName = potencialUserName + "AT" + keepLetters(split[1]);
+            String []aux= split[1].split("\\.");
+            if (aux.length!=2) throw new Exception(errMsg);
+            potencialUserName = potencialUserName + "AT" + keepLetters(aux[0]);
             user = db.getUserConnectDB().findByUserName(potencialUserName);
             if (user!=null) throw new Exception(errMsg);
         }
