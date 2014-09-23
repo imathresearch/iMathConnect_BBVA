@@ -72,7 +72,7 @@ public class UserConnectController extends AbstractController{
         if (pre.trim().equals("")) throw new Exception(errMsg);
         UserConnect user = db.getUserConnectDB().findByUserName(potencialUserName);
         if (user!=null) {
-            potencialUserName = potencialUserName + "AT"+split[1];
+            potencialUserName = potencialUserName + "AT" + keepLetters(split[1]);
             user = db.getUserConnectDB().findByUserName(potencialUserName);
             if (user!=null) throw new Exception(errMsg);
         }
@@ -121,10 +121,10 @@ public class UserConnectController extends AbstractController{
     }
     
     @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
-    public UserConnect getUserConnectByUserName(String userName) throws EntityNotFoundException {
+    public UserConnect getUserConnectByUserName(String userName) throws Exception {
         UserConnect peer = this.db.getUserConnectDB().findByUserName(userName);
         if (peer == null) {
-            throw new EntityNotFoundException();  
+            throw new Exception();  
         }
         return peer;
     }
@@ -135,10 +135,10 @@ public class UserConnectController extends AbstractController{
     }
     
     @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
-    public UserConnect getUserByEMail(String eMail) throws EntityNotFoundException {
+    public UserConnect getUserByEMail(String eMail) throws Exception {
         UserConnect peer = db.getUserConnectDB().findByEMail(eMail);
         if (peer == null) {
-            throw new EntityNotFoundException();  
+            throw new Exception();  
         }
         return peer;
     }

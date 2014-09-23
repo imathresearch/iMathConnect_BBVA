@@ -29,7 +29,10 @@ import com.imath.connect.util.Constants;
 import com.imath.connect.util.Encryptor;
 import com.imath.connect.util.IMathCloudAccess;
 import com.imath.connect.util.IMathCloudInterface;
+import com.imath.connect.util.Mail;
 import com.imath.connect.util.Resources;
+import com.imath.connect.util.SecurityImpl;
+import com.imath.connect.util.SecurityInterface;
 import com.imath.connect.util.Util;
 
 import org.jasypt.hibernate4.type.EncryptedStringType;
@@ -52,7 +55,8 @@ public abstract class AbstractIT {
                        AbstractController.class, InstanceController.class, ProjectController.class, StandardConfigurationController.class, UserConnectController.class,
                        Constants.class, Resources.class, Util.class, Encryptor.class, AbstractIT.class, ProjectRestIT.class, InstanceRestIT.class, 
                        StandardConfigurationRestIT.class, UserConnectRestIT.class, NotificationRestIT.class, GeneralRestIT.class, 
-                       IMathCloudAccess.class, com.api.iMathCloud.class, com.exception.iMathAPIException.class, IMathCloudInterface.class)
+                       IMathCloudAccess.class, com.api.iMathCloud.class, com.exception.iMathAPIException.class, IMathCloudInterface.class,
+                       SecurityInterface.class, SecurityImpl.class, Mail.class)
                .addAsResource("META-INF/persistence.xml", "META-INF/persistence.xml")
                .addAsWebInfResource("arquillian-ds.xml")
                .addAsWebInfResource(EmptyAsset.INSTANCE, "beans.xml");

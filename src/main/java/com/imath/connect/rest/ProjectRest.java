@@ -30,6 +30,10 @@ import com.imath.connect.service.ProjectController;
 import com.imath.connect.service.UserConnectController;
 import com.imath.connect.util.Constants;
 import com.imath.connect.util.IMathCloudInterface;
+import com.imath.connect.util.Mail;
+import com.imath.connect.util.SecurityImpl;
+import com.imath.connect.util.SecurityInterface;
+import com.imath.connect.util.Util;
 import com.imath.connect.security.SecurityManager;
 
 @Path(Constants.baseURL)
@@ -40,6 +44,9 @@ public class ProjectRest {
     @Inject private UserConnectController ucc;
     @Inject private InstanceController ic;
     @Inject private IMathCloudInterface imathcloud;
+    
+    private SecurityInterface security = new SecurityImpl();
+    private Mail mail = new Mail();
     
     @Inject private Logger LOG;
     
@@ -135,7 +142,7 @@ public class ProjectRest {
                 } else {
                     collaborator = ucc.getUserConnectByUserName(other);
                 }
-            } catch (EntityNotFoundException e) {
+            } catch (Exception e) {
                 if (!isMail) throw e;   // If a user name was given but it does not exists, we throw the exception
                 // Otherwise, we create the user
                 newUser=true;
@@ -145,12 +152,38 @@ public class ProjectRest {
             uuids.add(collaborator.getUUID());
             project = pc.addCollaborators(uuid_project, uuids);
             ProjectDTO retDTO = convert(project);
+            if (newUser) {
+                try {
+                    String password = Util.randomString(10);
+                    this.security.createSystemUser(collaborator.getUserName(), password, Constants.SYSTEM_ROLE);
+                    this.mail.sendInvitationNewUserMail(collaborator.getEMail(), collaborator.getUserName(), password, project.getName());
+                } catch (Exception e) {
+                    LOG.severe("[IMATH][addCollaboratoryOther] Error while creting system user: " + collaborator.getUserName() + " for collaborator. No message sent");
+                    e.printStackTrace();
+                }
+            } else {
+                try {
+                    this.mail.sendInvitationMail(collaborator.getEMail(), collaborator.getUserName(), project.getName());
+                } catch (Exception e) {
+                    LOG.severe("[IMATH][addCollaboratoryOther] Error sending mail to collaborator. No message sent.");
+                    e.printStackTrace();
+                }
+            }
             return Response.status(Response.Status.OK).entity(retDTO).build();
         } catch (Exception e) {
+            e.printStackTrace();
             LOG.severe(e.getMessage());
             return Response.status(Response.Status.BAD_REQUEST).build();
         }
     }
+    
+    //************* Just for testing purposes to mock SecurtiyInterface and Mail 
+    public Response addCollaboratorByOther(@PathParam("uuid_user") String uuid_user, @PathParam("uuid_project") String uuid_project, @PathParam("other") String other, @Context SecurityContext sc, Mail mail, SecurityInterface security) {
+        this.security= security;
+        this.mail = mail;
+        return this.addCollaboratorByOther(uuid_user, uuid_project, other, sc);
+    }
+    //**************
     
     @POST
     @Path(Constants.removeCollaborator + "/{uuid_user}/{uuid_project}/{uuid_col}")

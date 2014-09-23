@@ -76,6 +76,8 @@ public class Constants {
     static public final String IMATH_HTTP = "http://";
     static public final String WELLCOME_TEMPLATE = "welcomeTemplate.html"; // The html template for wellcome email
     static public final String RECOVER_TEMPLATE = "recoverPassTemplate.html"; // The html template for password recovery email
+    static public final String INVITATION_TEMPLATE = "invitationTemplate.html"; // The html template for invitation mails
+    static public final String INVITATION_TEMPLATE_NEW_USER = "invitationTemplateNewUser.html"; // The html template new users through invitation
     
     static public String IMATH_HOST() {
         try {

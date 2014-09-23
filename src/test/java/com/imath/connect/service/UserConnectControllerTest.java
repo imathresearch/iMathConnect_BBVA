@@ -77,7 +77,7 @@ public class UserConnectControllerTest {
     public void newUserConnectInvitationTest() throws Exception {
         String eMail = "t_e_s2t89@test.com";
         String expectedUserName = "test";
-        String expectedUserNameAlter = "testATtest.com";
+        String expectedUserNameAlter = "testATtestcom";
         //1.- Exception case: no valid email is passed
         try {
             pc.newUserConnectInvitation("");

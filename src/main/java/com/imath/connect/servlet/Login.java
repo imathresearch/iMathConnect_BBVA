@@ -34,7 +34,7 @@ public class Login extends HttpServlet{
     		user = ucc.getUserConnectByUserName(userName);
     		ucc.setCurrentConnection(user.getUUID());    		
     		response.sendRedirect("indexNew.jsp"); 
-    	} catch(ServletException e) {
+    	} catch(Exception e) {
     	    // Login failed
     	    response.sendRedirect("loginerror.html");
     	}
