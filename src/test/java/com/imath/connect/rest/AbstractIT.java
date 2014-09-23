@@ -29,6 +29,7 @@ import com.imath.connect.util.Constants;
 import com.imath.connect.util.Encryptor;
 import com.imath.connect.util.IMathCloudAccess;
 import com.imath.connect.util.IMathCloudInterface;
+import com.imath.connect.util.Photo;
 import com.imath.connect.util.Resources;
 import com.imath.connect.util.Util;
 
@@ -52,7 +53,7 @@ public abstract class AbstractIT {
                        AbstractController.class, InstanceController.class, ProjectController.class, StandardConfigurationController.class, UserConnectController.class,
                        Constants.class, Resources.class, Util.class, Encryptor.class, AbstractIT.class, ProjectRestIT.class, InstanceRestIT.class, 
                        StandardConfigurationRestIT.class, UserConnectRestIT.class, NotificationRestIT.class,
-                       IMathCloudAccess.class, com.api.iMathCloud.class, com.exception.iMathAPIException.class, IMathCloudInterface.class)
+                       IMathCloudAccess.class, com.api.iMathCloud.class, com.exception.iMathAPIException.class, IMathCloudInterface.class, Photo.class)
                .addAsResource("META-INF/persistence.xml", "META-INF/persistence.xml")
                .addAsWebInfResource("arquillian-ds.xml")
                .addAsWebInfResource(EmptyAsset.INSTANCE, "beans.xml");

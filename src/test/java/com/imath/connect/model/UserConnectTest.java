@@ -20,6 +20,7 @@ public class UserConnectTest {
     String phone2 = "987654";
     String userName = "username";
     String org = "imath";
+    byte[] urlPhoto = new byte[2];
     
     @Before
     public void setUp() throws Exception {
@@ -33,6 +34,7 @@ public class UserConnectTest {
         user.setPhone2(phone2);
         user.setUserName(userName);
         user.setOrganization(org);
+        user.setPhoto(urlPhoto);
     }
     
     @After
@@ -77,5 +79,10 @@ public class UserConnectTest {
     @Test
     public void testGetOrganization() {
         assertEquals(org, user.getOrganization());
+    }
+    
+    @Test
+    public void testPhoto() {
+        assertEquals(urlPhoto, user.getPhoto());
     }
 }

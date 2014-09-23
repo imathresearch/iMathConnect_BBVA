@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.io.Writer;
 import java.security.MessageDigest;
 import java.util.Properties;
+import java.util.logging.Logger;
 
 import javax.inject.Inject;
 import javax.servlet.ServletException;
@@ -16,6 +17,7 @@ import javax.ws.rs.core.MediaType;
 
 import com.imath.connect.util.Constants;
 import com.imath.connect.util.Security;
+
 import org.json.JSONObject;
 
 
@@ -23,6 +25,8 @@ public class ChangePassword extends HttpServlet {
     
     @Inject
     Security security;
+    
+    @Inject private Logger LOG;
     /**
      * 
      */
@@ -32,13 +36,10 @@ public class ChangePassword extends HttpServlet {
 
         String userName = request.getUserPrincipal().getName();
 
-        BufferedReader reader = request.getReader();
-        JSONObject json = new JSONObject(reader.readLine());
-        reader.close();
-
-        String passwordOld = json.getString("passwordOld");
-        String passwordNew = json.getString("passwordNew");
-        String passwordNewConf = json.getString("passwordNewConf");
+        String passwordOld = request.getParameter("passwordOld");
+        String passwordNew = request.getParameter("passwordNew");
+        String passwordNewConf = request.getParameter("passwordNewConf");
+        LOG.info(passwordOld + " " + passwordNew);
 
         // To make sure that both new passwords are equals
         if (!passwordNew.equals(passwordNewConf)) {

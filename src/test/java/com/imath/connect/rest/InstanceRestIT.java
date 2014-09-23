@@ -17,6 +17,7 @@ import com.imath.connect.model.Instance;
 import com.imath.connect.model.UserConnect;
 import com.imath.connect.service.InstanceController;
 import com.imath.connect.service.UserConnectController;
+import com.imath.connect.util.Photo;
 import com.imath.connect.rest.InstanceRest.InstanceDTO;;
 
 @RunWith(Arquillian.class)
@@ -81,8 +82,9 @@ public class InstanceRestIT extends AbstractIT{
             assertEquals(inst.getName(), e.name);
         }
         
+        String urlImage = "logoiMath.jpg";
         // 3.- Now we ask for the private ones given a user
-        UserConnect owner = ucc.newUserConnect("myself", "hola@pepe.com", "imath", "958183402", "958183402");
+        UserConnect owner = ucc.newUserConnect("myself", "hola@pepe.com", "imath", "958183402", "958183402", null);
         rest = irEndPoint.getInstances(owner.getUUID(), null);
         assertEquals(Response.Status.OK.getStatusCode(), rest.getStatus());
         @SuppressWarnings("unchecked")
@@ -102,7 +104,7 @@ public class InstanceRestIT extends AbstractIT{
         double stg4 = 786.8;
         String name4 = "myinstance4";
         
-        UserConnect notOwner = ucc.newUserConnect("myselff", "hola2@pepe.com", "imath2", "358183402", "758183402");
+        UserConnect notOwner = ucc.newUserConnect("myselff", "hola2@pepe.com", "imath2", "358183402", "758183402", null);
         Instance instance3 = ic.newInstance(cpu3, ram3, stg3, IP3,name3, owner);
         ic.newInstance(cpu4, ram4, stg4, IP4, name4, notOwner);
         

@@ -70,6 +70,9 @@ public class UserConnect implements Serializable {
     @ManyToMany(mappedBy="collaborators")
     private Set<Project> projects;
     
+    @Column(name = "photo", unique = false, nullable = true, length = 10000000)
+    private byte[] photo;
+    
     public Set<Project> getProjects() {
         return projects;
     }
@@ -148,6 +151,13 @@ public class UserConnect implements Serializable {
 
     public void setEMail(String eMail) {
         this.eMail = eMail;
+    }
+    public byte[] getPhoto() {
+        return photo;
+    }
+
+    public void setPhoto(byte[] photo) {
+        this.photo = photo;
     }
     private static final long serialVersionUID = 1L;
 }

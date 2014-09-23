@@ -26,6 +26,7 @@ import com.imath.connect.service.InstanceController;
 import com.imath.connect.service.ProjectController;
 import com.imath.connect.service.UserConnectController;
 import com.imath.connect.util.IMathCloudAccess;
+import com.imath.connect.util.Photo;
 import com.imath.connect.rest.ProjectRest;
 import com.imath.connect.rest.ProjectRest.ProjectAdminDTO;
 import com.imath.connect.rest.ProjectRest.ProjectDTO;
@@ -64,8 +65,10 @@ public class ProjectRestIT extends AbstractIT{
         Response rest = prEndPoint.newProject("no_user", name, desc, "no_instance", null);
         assertEquals(Response.Status.BAD_REQUEST.getStatusCode(), rest.getStatus());
         
+        String photoString = "blue-arr.png";
+        
         // 2.- We add a new UserConnect, and pass it, but instance is still not there
-        UserConnect owner = ucc.newUserConnect("myselffffrghnb", "hola@pepehhgre.com", "imath", "958183402", "958183402");
+        UserConnect owner = ucc.newUserConnect("myselffffrghnb", "hola@pepehhgre.com", "imath", "958183402", "958183402", null);
         rest = prEndPoint.newProject(owner.getUUID(), name, desc, "no_instance", null);
         assertEquals(Response.Status.BAD_REQUEST.getStatusCode(), rest.getStatus());
         
@@ -99,14 +102,16 @@ public class ProjectRestIT extends AbstractIT{
         Response rest = prEndPoint.getProjectCredentials("noid", "nouuid", null);
         assertEquals(Response.Status.BAD_REQUEST.getStatusCode(), rest.getStatus());
         
+        String photoString = "blue-arr.png";
+        
         // 2.- Exception path: Project does not exists
-        UserConnect owner = ucc.newUserConnect("myselfqqqazGGG", "GGGhola@pepehhj.com", "imath", "958183402", "958183402");
+        UserConnect owner = ucc.newUserConnect("myselfqqqazGGG", "GGGhola@pepehhj.com", "imath", "958183402", "958183402", null);
         rest = prEndPoint.getProjectCredentials(owner.getUUID(), "nouuid", null);
         assertEquals(Response.Status.BAD_REQUEST.getStatusCode(), rest.getStatus());
         
         // 3.- Exception path: Project exists but petitioner is not the owner and is not a collaborator
         Instance instance = ic.newInstance(0, 0, 0, "127.0.0.1", "inst", owner);
-        UserConnect owner2 = ucc.newUserConnect("myselfffGG", "hoGGla@ppellk.com", "imath", "958183402", "958183402");
+        UserConnect owner2 = ucc.newUserConnect("myselfffGG", "hoGGla@ppellk.com", "imath", "958183402", "958183402", null);
         
         Project project = pc.newProject(name, desc, owner2, instance,imathcloud);
         rest = prEndPoint.getProjectCredentials(owner.getUUID(), project.getUUID(), null);
@@ -148,14 +153,16 @@ public class ProjectRestIT extends AbstractIT{
         Response rest = prEndPoint.addCollaborator("noid", "nouuid", "nouuid", null);
         assertEquals(Response.Status.BAD_REQUEST.getStatusCode(), rest.getStatus());
         
+        String photoString = "blue-arr.png";
+        
         // 2.- Exception path: Project does not exists
-        UserConnect owner = ucc.newUserConnect("myselfqqqaz", "hola@pepehhj.com", "imath", "958183402", "958183402");
+        UserConnect owner = ucc.newUserConnect("myselfqqqaz", "hola@pepehhj.com", "imath", "958183402", "958183402", null);
         rest = prEndPoint.addCollaborator(owner.getUUID(), "nouuid", "nouuid", null);
         assertEquals(Response.Status.BAD_REQUEST.getStatusCode(), rest.getStatus());
         
         // 3.- Exception path: Project does not belong to owner
         Instance instance = ic.newInstance(0, 0, 0, "127.0.0.1","inst", owner);
-        UserConnect owner2 = ucc.newUserConnect("myselfff", "hola@ppellk.com", "imath", "958183402", "958183402");
+        UserConnect owner2 = ucc.newUserConnect("myselfff", "hola@ppellk.com", "imath", "958183402", "958183402", null);
         Project project = pc.newProject(name, desc, owner2, instance, imathcloud);
         rest = prEndPoint.addCollaborator(owner.getUUID(), project.getUUID(), "nouuid", null);
         assertEquals(Response.Status.BAD_REQUEST.getStatusCode(), rest.getStatus());
@@ -189,14 +196,16 @@ public class ProjectRestIT extends AbstractIT{
         Response rest = prEndPoint.addCollaboratorByOther("noid", "nouuid", "nousermail", null);
         assertEquals(Response.Status.BAD_REQUEST.getStatusCode(), rest.getStatus());
         
+        String photoString = "blue-arr.png";
+        
         // 2.- Exception path: Project does not exists
-        UserConnect owner = ucc.newUserConnect("myselfqQQqqaz", "holQQa@pepehhj.com", "imath", "958183402", "958183402");
+        UserConnect owner = ucc.newUserConnect("myselfqQQqqaz", "holQQa@pepehhj.com", "imath", "958183402", "958183402", null);
         rest = prEndPoint.addCollaboratorByOther(owner.getUUID(), "nouuid", "nouuid", null);
         assertEquals(Response.Status.BAD_REQUEST.getStatusCode(), rest.getStatus());
         
         // 3.- Exception path: Project does not belong to owner
         Instance instance = ic.newInstance(0, 0, 0, "127.0.0.1", "inst", owner);
-        UserConnect owner2 = ucc.newUserConnect("myselfQQff", "holQQa@ppellk.com", "imath", "958183402", "958183402");
+        UserConnect owner2 = ucc.newUserConnect("myselfQQff", "holQQa@ppellk.com", "imath", "958183402", "958183402", null);
         Project project = pc.newProject(name, desc, owner2, instance, imathcloud);
         rest = prEndPoint.addCollaboratorByOther(owner.getUUID(), project.getUUID(), "nouuid", null);
         assertEquals(Response.Status.BAD_REQUEST.getStatusCode(), rest.getStatus());
@@ -223,7 +232,7 @@ public class ProjectRestIT extends AbstractIT{
         assertEquals(owner2.getUUID(), user.get(0).getUUID());
         
         // 7.- Happy path: Add collaborator by email
-        UserConnect owner3 = ucc.newUserConnect("myQQQselfqqqazDDD", "mygoodmail@pepemail.com", "imath", "958183402", "958183402");
+        UserConnect owner3 = ucc.newUserConnect("myQQQselfqqqazDDD", "mygoodmail@pepemail.com", "imath", "958183402", "958183402", null);
         rest = prEndPoint.addCollaboratorByOther(owner.getUUID(), project2.getUUID(), owner3.getEMail(), null);
         assertEquals(Response.Status.OK.getStatusCode(), rest.getStatus());
         projDTO = (ProjectDTO) rest.getEntity();
@@ -246,14 +255,16 @@ public class ProjectRestIT extends AbstractIT{
         Response rest = prEndPoint.removeCollaborator("noid", "nouuid", "nouuid", null);
         assertEquals(Response.Status.BAD_REQUEST.getStatusCode(), rest.getStatus());
         
+        String photoString = "blue-arr.png";
+        
         // 2.- Exception path: Project does not exists
-        UserConnect owner = ucc.newUserConnect("zmyselfqqq", "hola@pepessskk.com", "imath", "958183402", "958183402");
+        UserConnect owner = ucc.newUserConnect("zmyselfqqq", "hola@pepessskk.com", "imath", "958183402", "958183402", null);
         rest = prEndPoint.removeCollaborator(owner.getUUID(), "nouuid", "nouuid", null);
         assertEquals(Response.Status.BAD_REQUEST.getStatusCode(), rest.getStatus());
         
         // 3.- Exception path: Project does not belong to owner
         Instance instance = ic.newInstance(0, 0, 0, "127.0.0.1", "inst", owner);
-        UserConnect owner2 = ucc.newUserConnect("myselfffaaa", "hola@ppeqqq.com", "imath", "958183402", "958183402");
+        UserConnect owner2 = ucc.newUserConnect("myselfffaaa", "hola@ppeqqq.com", "imath", "958183402", "958183402", null);
         Project project = pc.newProject(name, desc, owner2, instance, imathcloud);
         rest = prEndPoint.removeCollaborator(owner.getUUID(), project.getUUID(), "nouuid", null);
         assertEquals(Response.Status.BAD_REQUEST.getStatusCode(), rest.getStatus());
@@ -264,7 +275,7 @@ public class ProjectRestIT extends AbstractIT{
         assertEquals(Response.Status.OK.getStatusCode(), rest.getStatus());
         
         // 5.- Happy path: We add two collaborator and remove one.
-        UserConnect owner3 = ucc.newUserConnect("myselfffdd", "ddhola@ppejjj.com", "imath", "958183402", "958183402");
+        UserConnect owner3 = ucc.newUserConnect("myselfffdd", "ddhola@ppejjj.com", "imath", "958183402", "958183402", null);
         rest = prEndPoint.addCollaborator(owner.getUUID(), project2.getUUID(), owner2.getUUID(), null);
         assertEquals(Response.Status.OK.getStatusCode(), rest.getStatus());
         rest = prEndPoint.addCollaborator(owner.getUUID(), project2.getUUID(), owner3.getUUID(), null);
@@ -297,8 +308,10 @@ public class ProjectRestIT extends AbstractIT{
         Response rest = prEndPoint.getOwnProjects("no user", null);
         assertEquals(Response.Status.BAD_REQUEST.getStatusCode(), rest.getStatus());
         
+        String photoString = "blue-arr.png";
+        
         // 2.- Base case: User exists but no projects yet
-        UserConnect owner = ucc.newUserConnect("ipinyol", "hola@ppe.com", "iath", "953333402", "933383402");
+        UserConnect owner = ucc.newUserConnect("ipinyol", "hola@ppe.com", "iath", "953333402", "933383402", null);
         rest = prEndPoint.getOwnProjects(owner.getUUID(), null);
         assertEquals(Response.Status.OK.getStatusCode(), rest.getStatus());
         @SuppressWarnings("unchecked")
@@ -312,7 +325,7 @@ public class ProjectRestIT extends AbstractIT{
         String desc2="gydesccc";
         String name3="otherproj";
         String desc3="descotherproj";
-        UserConnect other = ucc.newUserConnect("ramones", "ho@ppe.com", "rriath", "933333402", "944383402");
+        UserConnect other = ucc.newUserConnect("ramones", "ho@ppe.com", "rriath", "933333402", "944383402", null);
         
         Instance instance1 = ic.newInstance(0, 0, 0, "123.333.44.55", "inst", owner);
         Instance instance2 = ic.newInstance(0, 0, 0, "123.333.44.55", "inst", other);
@@ -361,8 +374,10 @@ public class ProjectRestIT extends AbstractIT{
         Response rest = prEndPoint.getColProjects("no user", null);
         assertEquals(Response.Status.BAD_REQUEST.getStatusCode(), rest.getStatus());
         
+        String photoString = "blue-arr.png";
+        
         // 2.- Base case: User exists and has private projects but does not collaborate in any
-        UserConnect owner = ucc.newUserConnect("ipinyolll", "hola@ppeppp.com", "iath", "953333402", "933383402");
+        UserConnect owner = ucc.newUserConnect("ipinyolll", "hola@ppeppp.com", "iath", "953333402", "933383402", null);
         Instance instance1 = ic.newInstance(0, 0, 0, "123.333.44.55", "inst", owner);
         Project project = pc.newProject("myprojectone", "mydesc", owner, instance1);
         rest = prEndPoint.getColProjects(owner.getUUID(), null);
@@ -372,7 +387,7 @@ public class ProjectRestIT extends AbstractIT{
         assertEquals(0,projectsDTO.size());
         
         // 3.- We add more projects and the user owner collaborates in it
-        UserConnect other = ucc.newUserConnect("ipinyolllother", "hhhb@ppeppp.com", "iath", "953333402", "933383402");
+        UserConnect other = ucc.newUserConnect("ipinyolllother", "hhhb@ppeppp.com", "iath", "953333402", "933383402", null);
         Instance instance2 = ic.newInstance(0, 0, 0, "133.366.44.55", "inst", other);
         String name1="myprojjj";
         String desc1="mydesccc";
@@ -418,20 +433,22 @@ public class ProjectRestIT extends AbstractIT{
         Response rest = prEndPoint.removeProject("nouuid", "nouuid proj", null);
         assertEquals(Response.Status.BAD_REQUEST.getStatusCode(), rest.getStatus());
         
+        String photoString = "blue-arr.png";
+        
         // 2.- Exception path: Project does not exists
-        UserConnect owner = ucc.newUserConnect("myselfqQQqqazOYEAH", "holQQaMAIL@pepehhj.com", "imath", "958183402", "958183402");
+        UserConnect owner = ucc.newUserConnect("myselfqQQqqazOYEAH", "holQQaMAIL@pepehhj.com", "imath", "958183402", "958183402", null);
         rest = prEndPoint.removeProject(owner.getUUID(), "nouuid", null);
         assertEquals(Response.Status.BAD_REQUEST.getStatusCode(), rest.getStatus());
         
         // 3.- Exception path: Project does not belong to owner
         Instance instance = ic.newInstance(0, 0, 0, "127.0.0.1", "inst", owner);
-        UserConnect owner2 = ucc.newUserConnect("myselfQQffOYEAH", "holQQMAILa@ppellk.com", "imath", "958183402", "958183402");
+        UserConnect owner2 = ucc.newUserConnect("myselfQQffOYEAH", "holQQMAILa@ppellk.com", "imath", "958183402", "958183402", null);
         Project project = pc.newProject("QQWWname", "QQWWEEdesc", owner2, instance, imathcloud);
         rest = prEndPoint.removeProject(owner.getUUID(), project.getUUID(), null);
         assertEquals(Response.Status.BAD_REQUEST.getStatusCode(), rest.getStatus());
         
         // 4.- Exception path: Project has collaborators
-        UserConnect coll = ucc.newUserConnect("myselfColqQQqqazOYEAH", "holSQQMAILaCol@pepehhj.com", "imath", "958183402", "958183402");
+        UserConnect coll = ucc.newUserConnect("myselfColqQQqqazOYEAH", "holSQQMAILaCol@pepehhj.com", "imath", "958183402", "958183402", null);
         List<String> uuids = new ArrayList<String>();
         uuids.add(coll.getUUID());
         pc.addCollaborators(project.getUUID(), uuids);

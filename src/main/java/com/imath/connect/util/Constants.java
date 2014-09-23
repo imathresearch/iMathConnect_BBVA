@@ -58,6 +58,9 @@ public class Constants {
     // remove a project
     static public final String removeProject = "/removeProject";
     
+    // update user profile
+    static public final String updateProfile = "/updateProfile";
+    
     // IMPORTANT: We assume that JBOSS is launched from JBOSS-HOME/bin
     static public final String ADD_USER_CLI = "./add-user.sh";
     static public final String ADD_USER_LINUX = "useradd";
@@ -73,6 +76,7 @@ public class Constants {
     static public final String IMATH_HTTP = "http://";
     static public final String WELLCOME_TEMPLATE = "welcomeTemplate.html"; // The html template for wellcome email
     static public final String RECOVER_TEMPLATE = "recoverPassTemplate.html"; // The html template for password recovery email
+    static public final String RECOVER_IMAGE_NAME = "blue-arr.png"; // Image example
     
     static public String IMATH_HOST() {
         try {

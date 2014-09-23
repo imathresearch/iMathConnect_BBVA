@@ -1,22 +1,34 @@
 package com.imath.connect.rest;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.logging.Logger;
 
 import javax.ejb.Stateful;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
+import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.SecurityContext;
+
+import org.apache.commons.io.IOUtils;
+import org.jboss.resteasy.plugins.providers.multipart.InputPart;
+import org.jboss.resteasy.plugins.providers.multipart.MultipartFormDataInput;
 
 import com.imath.connect.model.Project;
 import com.imath.connect.model.UserConnect;
@@ -24,6 +36,7 @@ import com.imath.connect.security.SecurityManager;
 import com.imath.connect.service.ProjectController;
 import com.imath.connect.service.UserConnectController;
 import com.imath.connect.util.Constants;
+import com.imath.connect.util.Photo;
 
 @Path(Constants.baseURL)
 @RequestScoped
@@ -111,6 +124,77 @@ public class UserConnectRest {
         return usersDTO;
     }
     
+    public UserConnectDTO convertToDTO(UserConnect users) {
+        UserConnectDTO usersDTO = new UserConnectDTO();
+        if (users!=null) {
+            UserConnectDTO userDTO = new UserConnectDTO();
+            userDTO.convert(users);
+        }
+        return usersDTO;
+    }
+    
+    /**
+     * Permits to modify user's profile
+     * @throws Exception 
+     */
+
+    @POST
+    @Path(Constants.updateProfile + "/{uuid_user}")
+    @Consumes("multipart/form-data")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response uploadUsersProfile(MultipartFormDataInput input, @Context SecurityContext sc) throws Exception {
+        //TODO: do it well! This is provisional, to see if files can be really stored
+        //TODO: warning when a filename exists. Add some flag to notify about overwriting files etc... 
+        
+        UserConnectDTO usersDTO = null;
+
+        try {
+            
+            String nameUser = sc.getUserPrincipal().getName();
+            UserConnect userConnect = ucc.getUserConnectByUserName(nameUser);
+            usersDTO = this.convertToDTO(userConnect);
+
+            Photo photo = new Photo();
+            String fileName = "";
+            Map<String, List<InputPart>> uploadForm = input.getFormDataMap();
+            List<InputPart> inputParts = uploadForm.get("uploadedFile");
+            
+            for (InputPart inputPart : inputParts) {
+
+             try {
+                
+                MultivaluedMap<String, String> header = inputPart.getHeaders();
+                fileName = getFileName(header);
+
+                //convert the uploaded file to inputstream
+                InputStream inputStream = inputPart.getBody(InputStream.class,null);
+                byte [] bytes = photo.getPhotoByte(inputStream);
+                
+                ucc.updateUserConnectByte(userConnect.getUUID(), bytes);
+                usersDTO = this.convertToDTO(userConnect);
+                return Response.status(Response.Status.OK).entity(usersDTO).build();
+
+              }
+             
+              catch (IOException e) {
+
+                  LOG.info("Error updating the photograph");
+                  return Response.status(Response.Status.BAD_REQUEST).build();
+
+              }
+            
+            }
+
+        }
+        catch (Exception e) {
+            LOG.severe(e.getMessage());
+            return Response.status(Response.Status.BAD_REQUEST).build();
+        }
+
+        return Response.status(Response.Status.BAD_REQUEST).build();
+
+    }
+    
     public static class UserConnectDTO {
         public String UUID;
         public String userName;
@@ -120,6 +204,7 @@ public class UserConnectRest {
         public String organization;
         public Date creationDate;
         public Date lastConnection;
+        public byte[] photo;
         
         public void convert(UserConnect user) {
             this.UUID = user.getUUID();
@@ -130,6 +215,49 @@ public class UserConnectRest {
             this.creationDate = user.getCreationDate();
             this.lastConnection = user.getLastConnection();
             this.organization = user.getOrganization();
+            this.photo = user.getPhoto();
         }
     }
+    
+    /**
+     * header sample
+     * {
+     *  Content-Type=[image/png], 
+     *  Content-Disposition=[form-data; name="file"; filename="filename.extension"]
+     * }
+     **/
+    //get uploaded filename, is there a easy way in RESTEasy?
+    private String getFileName(MultivaluedMap<String, String> header) {
+ 
+        String[] contentDisposition = header.getFirst("Content-Disposition").split(";");
+ 
+        for (String filename : contentDisposition) {
+            if ((filename.trim().startsWith("filename"))) {
+ 
+                String[] name = filename.split("=");
+ 
+                String finalFileName = name[1].trim().replaceAll("\"", "");
+                return finalFileName;
+            }
+        }
+        return "unknown";
+    }
+ 
+    //save to somewhere
+    private void writeFile(byte[] content, String filename) throws IOException {
+ 
+        File file = new File(filename);
+ 
+        if (!file.exists()) {
+            file.createNewFile();
+        }
+ 
+        FileOutputStream fop = new FileOutputStream(file);
+ 
+        fop.write(content);
+        fop.flush();
+        fop.close();
+ 
+    }
+    
 }

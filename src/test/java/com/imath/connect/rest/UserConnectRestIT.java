@@ -1,15 +1,27 @@
 package com.imath.connect.rest;
 
+import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
+import javax.imageio.ImageIO;
 import javax.inject.Inject;
 import javax.ws.rs.core.Response;
 
 import org.jboss.arquillian.junit.Arquillian;
+import org.jboss.resteasy.plugins.providers.multipart.InputPart;
+import org.jboss.resteasy.plugins.providers.multipart.MultipartFormDataInput;
+import org.jboss.resteasy.util.GenericType;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -27,6 +39,7 @@ import com.imath.connect.service.ProjectController;
 import com.imath.connect.service.UserConnectController;
 import com.imath.connect.util.IMathCloudAccess;
 import com.imath.connect.util.IMathCloudInterface;
+import com.imath.connect.util.Photo;
 
 @RunWith(Arquillian.class)
 public class UserConnectRestIT extends AbstractIT {
@@ -34,6 +47,7 @@ public class UserConnectRestIT extends AbstractIT {
     @Inject InstanceController ic;
     @Inject ProjectController pc;
     @Inject UserConnectRest ucrEndPoint;
+    @Inject Photo photo;
     
     // We mock iMathCloudAccess
     private IMathCloudInterface imathcloud = new Mock_IMathCloudAccess();
@@ -67,8 +81,10 @@ public class UserConnectRestIT extends AbstractIT {
         String org2 = "gro";
         String phone21 = "931111888";
         String phone22 = "334833888";
-        UserConnect user1 = ucc.newUserConnect(userName1, eMail1, org1, phone11, phone12);
-        UserConnect user2 = ucc.newUserConnect(userName2, eMail2, org2, phone21, phone22);
+        String photoString = "blue-arr.png";
+        
+        UserConnect user1 = ucc.newUserConnect(userName1, eMail1, org1, phone11, phone12, null);
+        UserConnect user2 = ucc.newUserConnect(userName2, eMail2, org2, phone21, phone22, null);
         
         rest = ucrEndPoint.getUser("noooo", null);
         assertEquals(Response.Status.BAD_REQUEST.getStatusCode(), rest.getStatus());
@@ -111,9 +127,10 @@ public class UserConnectRestIT extends AbstractIT {
         String org1 = "org";
         String phone11 = "988888888";
         String phone12 = "999999999";
+        String photoString = "blue-arr.png";
         
-        UserConnect theOne1 = ucc.newUserConnect(userName1, email1, org1, phone11, phone12);
-        UserConnect owner = ucc.newUserConnect("owner", "hla@ppe.com", "iath", "953333402", "933383402");
+        UserConnect theOne1 = ucc.newUserConnect(userName1, email1, org1, phone11, phone12, null);
+        UserConnect owner = ucc.newUserConnect("owner", "hla@ppe.com", "iath", "953333402", "933383402", null);
         Instance instance = ic.newInstance(0, 0, 0, "hola", "inst", owner);
         Project project = pc.newProject("myProject", "myProject", owner, instance, imathcloud);
         rest = ucrEndPoint.getColUsersByProject(project.getUUID(), null);
@@ -128,7 +145,7 @@ public class UserConnectRestIT extends AbstractIT {
         String org2 = "org";
         String phone21 = "988888888";
         String phone22 = "999999999";
-        UserConnect theOne2 = ucc.newUserConnect(userName2, email2, org2, phone21, phone22);
+        UserConnect theOne2 = ucc.newUserConnect(userName2, email2, org2, phone21, phone22, null);
         List<String> users_uuid = new ArrayList<String>();
         users_uuid.add(theOne1.getUUID());
         users_uuid.add(theOne2.getUUID());
@@ -154,7 +171,5 @@ public class UserConnectRestIT extends AbstractIT {
         }
         
     }
-    
-    
 
 }

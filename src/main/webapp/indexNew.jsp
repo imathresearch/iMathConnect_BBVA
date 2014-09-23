@@ -94,6 +94,7 @@
                                 <!-- Menu Footer-->
                                 <li class="user-footer">
                                     <div class="pull-left">
+                                    <!-- This link has to open a pop-up to see the user's information and for modify the password and picture. -->
                                         <a href="#" class="btn btn-default btn-flat">Profile</a>
                                     </div>
                                     <div class="pull-right">
@@ -378,6 +379,8 @@
 		<script src="js/imath/projects.js" type="text/javascript"></script>
 		<script src="js/imath/instances.js" type="text/javascript"></script>
 		<script src="js/imath/notifications.js" type="text/javascript"></script>
+		<script src="js/imath/photo.js" type="text/javascript"></script>
+		<script src="js/imath/changePassword.js" type="text/javascript"></script>
     </body>
 	
 </html>

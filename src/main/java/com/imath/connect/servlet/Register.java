@@ -35,13 +35,17 @@ public class Register extends HttpServlet {
         String passwordRep = request.getParameter("passwordsignup_confirm");
         String eMail = request.getParameter("emailsignup");
         
+        /*
+         * We have to add a recover the photo to store in the database.
+         * */
+        
         if (!password.equals(passwordRep)) {
             response.sendRedirect("registererrorPasswords.html");
             return;
         }
         
         try {
-            ucc.newUserConnect(userName, eMail, "", "", "");
+            ucc.newUserConnect(userName, eMail, "", "", "", null);
             security.createSystemUser(userName, passwordRep, Constants.SYSTEM_ROLE);
             try {
                 Mail mail = new Mail();

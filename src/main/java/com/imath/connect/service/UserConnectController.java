@@ -1,5 +1,6 @@
 package com.imath.connect.service;
 
+import java.io.IOException;
 import java.util.Date;
 import java.util.List;
 
@@ -10,6 +11,7 @@ import javax.persistence.EntityNotFoundException;
 import javax.persistence.PersistenceException;
 
 import com.imath.connect.model.UserConnect;
+import com.imath.connect.util.Photo;
 
 /**
  * @author imath
@@ -31,7 +33,7 @@ public class UserConnectController extends AbstractController{
      * @throws Exception
      */
     @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
-    public UserConnect newUserConnect(String userName, String eMail, String organization, String phone1, String phone2) throws Exception {
+    public UserConnect newUserConnect(String userName, String eMail, String organization, String phone1, String phone2, byte[] PhotoByte) throws Exception {
         Date now = new Date();
         UserConnect peer = new UserConnect();
         peer.setEMail(eMail);
@@ -42,6 +44,7 @@ public class UserConnectController extends AbstractController{
         peer.setPhone2(phone2);
         peer.setOrganization(organization);
         peer.setUserName(userName);
+        peer.setPhoto(PhotoByte);
         this.db.makePersistent(peer);
         return peer;
     }
@@ -97,6 +100,45 @@ public class UserConnectController extends AbstractController{
             throw new EntityNotFoundException();  
         }
         return peer;
+    }
+    
+    @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
+    public void updateUserConnect(String UUID, String urlPhoto) throws Exception {
+        UserConnect peer = this.getUserConnect(UUID);
+        if (peer!=null) {
+            byte[] photoByte = null;
+            if (urlPhoto!=null) {
+                photoByte = this.getBytePhoto(urlPhoto);
+            }
+            peer.setPhoto(photoByte);
+            this.db.makePersistent(peer);
+        }
+    }
+    
+    @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
+    public void updateUserConnectByte(String UUID, byte[] FileByteFormat) throws Exception {
+        UserConnect peer = this.getUserConnect(UUID);
+        if (peer!=null) {
+            peer.setPhoto(FileByteFormat);
+            this.db.makePersistent(peer);
+        }
+    }
+    
+    @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
+    public void updateUserConnectByNameByte(String name, byte[] FileByteFormat) throws Exception {
+        UserConnect peer = this.getUserConnectByUserName(name);
+        if (peer!=null) {
+            peer.setPhoto(FileByteFormat);
+            this.db.makePersistent(peer);
+        }
+    }
+    
+    public byte[] getBytePhoto(String urlPhoto) throws IOException {
+        
+        Photo photo = new Photo();
+        byte[] photoByte = photo.getPhotoByte(urlPhoto);
+        return photoByte;
+        
     }
     
 }

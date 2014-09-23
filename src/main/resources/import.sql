@@ -35,7 +35,6 @@ INSERT INTO userconnect(uuid, creationdate, email, currentconnection, lastconnec
 --IZUBIZARRETA
 INSERT INTO userconnect(uuid, creationdate, email, currentconnection, lastconnection, organization, phone1, phone2, username) VALUES ('iztuuid1', '2014-01-01', 'izubizarreta@imathresearch.com', '2014-02-01', '2014-01-01', 'imath', '999999999', '11111111111', 'izubizarreta');
 
-
 INSERT INTO instance(uuid, cpu, creationdate, ram, stg, url, name, owner_instance) VALUES ('instuuid1', 8, '2014-01-01', 8, 500, 'http://127.0.0.1:8080','Public Instance 1', null);
 INSERT INTO instance(uuid, cpu, creationdate, ram, stg, url, name, owner_instance) VALUES ('instuuid2', 1, '2014-01-01', 2, 100, 'http://127.0.0.1:8080', 'My First Instance','useruuid1');
 INSERT INTO instance(uuid, cpu, creationdate, ram, stg, url, name, owner_instance) VALUES ('instuuid3', 4, '2014-01-01', 3.5, 200, 'http://127.0.0.1:8080','Death Star', 'useruuid1');

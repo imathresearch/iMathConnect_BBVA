@@ -20,6 +20,7 @@ import com.imath.connect.rest.ProjectRest.ProjectDTO;
 import com.imath.connect.service.InstanceController;
 import com.imath.connect.service.NotificationController;
 import com.imath.connect.service.UserConnectController;
+import com.imath.connect.util.Photo;
 
 @RunWith(Arquillian.class)
 public class NotificationRestIT extends AbstractIT{
@@ -34,8 +35,10 @@ public class NotificationRestIT extends AbstractIT{
         Response rest = ntEndPoint.getNotifications("no user", null);
         assertEquals(Response.Status.BAD_REQUEST.getStatusCode(), rest.getStatus());
         
+        String photoString = "blue-arr.png";
+        
         // 2.- Base case: User exists but no notifications yet
-        UserConnect owner1 = ucc.newUserConnect("ammartinez", "amt@amt.com", "iath", "953333402", "933383402");
+        UserConnect owner1 = ucc.newUserConnect("ammartinez", "amt@amt.com", "iath", "953333402", "933383402", null);
         rest = ntEndPoint.getNotifications(owner1.getUUID(), null);
         assertEquals(Response.Status.OK.getStatusCode(), rest.getStatus());
         @SuppressWarnings("unchecked")
@@ -47,7 +50,7 @@ public class NotificationRestIT extends AbstractIT{
         // This notification should be retrieved by user owner1 (created before the notification)
         Notification n0 = nc.newNotification("Public Notification 0", "This is a public notification nº0", 0, null);
         
-        UserConnect owner2 = ucc.newUserConnect("andrea", "andrea@andrea.com", "rriath", "933333402", "944383402");
+        UserConnect owner2 = ucc.newUserConnect("andrea", "andrea@andrea.com", "rriath", "933333402", "944383402", null);
         
         // This notification should be retrieved for both users
         Notification n1 = nc.newNotification("Public Notification 1", "This is a public notification nº1", 0, null);
