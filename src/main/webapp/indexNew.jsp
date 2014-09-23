@@ -358,27 +358,29 @@
                         <h4 class="modal-title"><i class="fa fa-warning danger"></i>User Profile</h4>
                     </div>
                     <div class="modal-body">
-                        <p> 
-                            <label for="" class="" data-icon="">Username </label>
-                            <input id="username" name="username" type="text" placeholder="" disabled />
-                        </p>
-                        <p>
-                            <label for="" class="" data-icon="">Email </label>
-                            <input id="email" name="email" type="text" placeholder="" disabled />
-                        </p>
-                        <p>
-                            <label for="" class="" data-icon="">Phone 1 </label>
-                            <input id="phone1" name="phone1" type="text" placeholder="" disabled />
-                        </p>
-                        <p>
-                            <label for="" class="" data-icon="">Phone 2 </label>
-                            <input id="phone2" name="phone2" type="text" placeholder="" disabled />
-                        </p>
-                        <p>
-                            <img id="photoUser" src="" />
-                        </p>
-                        <input id="changePassButton" type="button" value="Change Password"/>
-                        <input id="changePhotograph" type="button" value="Change Photograph"/>
+                        <form id="profileForm" class="input-group" action="#" method="post" autocomplete="off" >
+                            <p> 
+                                <label for="" class="" data-icon="">Username </label>
+                                <input class="form-control" id="username" name="username" type="text" placeholder="" disabled />
+                            </p>
+                            <p>
+                                <label for="" class="" data-icon="">Email    </label>
+                                <input class="form-control" id="email" name="email" type="text" placeholder="" disabled />
+                            </p>
+                            <p>
+                                <label for="" class="" data-icon="">Phone 1  </label>
+                                <input class="form-control" id="phone1" name="phone1" type="text" placeholder="" disabled />
+                            </p>
+                            <p>
+                                <label for="" class="" data-icon="">Phone 2  </label>
+                                <input class="form-control" id="phone2" name="phone2" type="text" placeholder="" disabled />
+                            </p>
+                            <p>
+                                <img id="photoUser" src="" />
+                            </p>
+                            <input id="changePassButton" type="button" value="Change Password" class="btn btn-flat"/>
+                            <input id="changePhotograph" type="button" value="Change Photograph" class="btn btn-flat"/>
+                        </form>
                     </div>
                     <div class="modal-footer clearfix">
 
@@ -396,21 +398,21 @@
                         <h4 class="modal-title"><i class="fa fa-warning danger"></i>Password modification</h4>
                     </div>
                     <div class="modal-body">
-                        <form id="profileForm" action="#" method="post" autocomplete="off" > 
+                        <form id="userPasswordForm" class="input-group" action="#" method="post" autocomplete="off" > 
                             <p>
-                                <label for="passwordsignup" class="youpasswd" data-icon="p">Your current password </label>
-                                <input id="passwordOld" name="passwordOld" required="required" type="password" placeholder="eg. X8df!90EO"/>
+                                <label for="passwordsignup" class="youpasswd" data-icon="p">Your current password           </label>
+                                <input class="form-control" id="passwordOld" name="passwordOld" required="required" type="password" placeholder="eg. X8df!90EO"/>
                             </p>
                             <p>
-                                <label for="passwordsignup" class="youpasswd" data-icon="p">Your new password </label>
-                                <input id="passwordNew" name="passwordNew" required="required" type="password" placeholder="eg. X8df!90EO"/>
+                                <label for="passwordsignup" class="youpasswd" data-icon="p">Your new password               </label>
+                                <input class="form-control" id="passwordNew" name="passwordNew" required="required" type="password" placeholder="eg. X8df!90EO"/>
                             </p>
                             <p>
                                 <label for="passwordsignup_confirm" class="youpasswd" data-icon="p">Please confirm your new password </label>
-                                <input id="passwordNewConf" name="passwordNewConf" required="required" type="password" placeholder="eg. X8df!90EO"/>
+                                <input class="form-control" id="passwordNewConf" name="passwordNewConf" required="required" type="password" placeholder="eg. X8df!90EO"/>
                             </p>
-                            <div id="profileMsg" style="float:left"></div>
-                            <div style="float:right"> <input id="changePassButton" type="button" value="Change"/></div>
+                            <div id="profilePasswordMsg" style="float:left"></div>
+                            <div style="float:right"> <input id="changePassword" type="button" value="Change Password" class="btn btn-flat"/></div>
                         </form>
                     </div>
                     <div class="modal-footer clearfix">
@@ -429,12 +431,15 @@
                         <h4 class="modal-title"><i class="fa fa-warning danger"></i>User's Photograph Modification</h4>
                     </div>
                     <div class="modal-body">
-                        <form action="#" id="changePhoto" name="changePhoto" method="post" enctype="multipart/form-data" class="sidebar-form">
+                        <form action="#" class="form-group" id="changePhoto" name="changePhoto" method="post" enctype="multipart/form-data" class="sidebar-form">
                             <p>
                             <label for="" class="" data-icon="">Select new photograph </label>
                             <input type="file" id="uploadedFile" name="uploadedFile" size="50" multiple />
                             </p>
-                            <input type="button" name="uploadFile" id="uploadFile" value="Upload It" />
+                            <center><input type="button" name="uploadFile" id="uploadFile" value="Upload It" class="btn btn-flat" /></center>
+                            <p>
+                                <div id="profilePhotographsg" style="float:left"></div>
+                            </p>
                         </form>
                     </div>
                     <div class="modal-footer clearfix">

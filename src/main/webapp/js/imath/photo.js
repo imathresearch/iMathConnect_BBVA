@@ -3,6 +3,8 @@ $("#closeModalPhotograph").click(function() {
 });
 
 $("#changePhotograph").click(function() {
+	$("#profilePhotographsg").html("");
+	$("#uploadedFile").val("");
 	$("#imath-modify-user-photograph").modal();
 });
 
@@ -25,10 +27,11 @@ function ajaxModify() {
 	    processData : false,
 		contentType : false,
 	    success: function(user) {
-	        console.log("Correct execution");
+	    	$("#profilePhotographsg").html("<span style='color:green'>Photograph modified</span>");
+            setTimeout("$('#imath-modify-user-photograph').modal('hide')",1500);
 	    },
 	    error: function(error) {
-	        console.log("Error getting user information");
+	    	$("#profilePhotographsg").html("<span style='color:green'>Error modifying the photo</span>");
 	    }
-	});	
+	});
 }

@@ -4,6 +4,14 @@ $("#closeModalProfile").click(function() {
 
 $("#profileForm").click(function() {
 	$("#imath-profile-user").modal();
+	AjaxUserData(userName);
+});
+
+$("#close").click(function() {
+		
+});
+
+function AjaxUserData(userName) {
 	$.ajax({
 	    url: "rest/api/agora/getUserByUserName/" + userName,
 	    cache: false,
@@ -19,11 +27,7 @@ $("#profileForm").click(function() {
 			document.getElementById("photoUser").src = "data:image/png;base64," + user['photo'];
 	    },
 	    error: function(error) {
-	        console.log("Error getting user information");
+	    	$("#profilePhotographsg").html("");
 	    }
 	});
-});
-
-$("#close").click(function() {
-		
-});
+}

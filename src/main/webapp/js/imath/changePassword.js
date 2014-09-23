@@ -3,6 +3,10 @@ $("#closeModalPassword").click(function() {
 });
 
 $("#changePassButton").click(function(){
+	$("#profilePasswordMsg").html("");
+	$("#passwordOld").val("");
+	$("#passwordNew").val("");
+	$("#passwordNewConf").val("");
 	$("#imath-modify-password-user").modal();
 });
 
@@ -19,24 +23,24 @@ function serializeToJson(serializer){
     return JSON.parse(_string);
 }
 
-$("#changePassButton").click(function() {
+$("#changePassword").click(function() {
 
     var url = "changePassword";
-    var SerializedForm = $('#profileForm').serializeArray();
+    var SerializedForm = $('#userPasswordForm').serializeArray();
     //var Data = JSON.stringify(SerializedForm);
     var Data = serializeToJson(SerializedForm);
-    $("#profileMsg").html("");
+    $("#profilePasswordMsg").html("");
     $.ajax({
         url: url,
         cache: false,
         data: Data,
         type: "POST",
         success: function(data) {
-            $("#profileMsg").html("<span style='color:green'>" + data + "</span>");
-            setTimeout("$('#profilePopup').dialog('close')",1500);
+            $("#profilePasswordMsg").html("<span style='color:green'>" + data + "</span>");
+            setTimeout("$('#imath-modify-password-user').modal('hide')",1500);
         },
         error: function(data) {
-            $("#profileMsg").html("<span style='color:red'>" + data.responseText + "</span>");
+            $("#profilePasswordMsg").html("<span style='color:red'>" + data.responseText + "</span>");
         }
     });
 });
