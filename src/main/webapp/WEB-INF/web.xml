@@ -7,7 +7,6 @@
       <javaee:url-pattern>/indexNew.jsp</javaee:url-pattern>
       <javaee:url-pattern>/rest/*</javaee:url-pattern>
       <javaee:url-pattern>/changePassword</javaee:url-pattern>
-      <javaee:url-pattern>/logout</javaee:url-pattern>      
     </javaee:web-resource-collection>
     <javaee:auth-constraint>
       <javaee:role-name>WebAppUser</javaee:role-name>

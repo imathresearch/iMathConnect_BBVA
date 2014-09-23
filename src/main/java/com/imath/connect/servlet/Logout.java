@@ -20,10 +20,11 @@ public class Logout extends HttpServlet{
     private Logger LOG;
     
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String userName = request.getUserPrincipal().getName();
-        LOG.warning("User Logout: " + userName );
-        // we logout from the system
-        request.logout();
+        if(request.getUserPrincipal()!=null) {
+        	String userName = request.getUserPrincipal().getName();
+        	LOG.warning("User Logout: " + userName );
+        	request.logout();
+        }
         response.sendRedirect(".");
     }
 }
