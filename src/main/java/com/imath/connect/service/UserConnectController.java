@@ -53,8 +53,8 @@ public class UserConnectController extends AbstractController{
         Date now = new Date();
         UserConnect peer = new UserConnect();
         peer.setEMail(eMail);
-        peer.setLastConnection(now);
-        peer.setCurrentConnection(now);
+        peer.setLastConnection(null);
+        peer.setCurrentConnection(null);
         peer.setCreationDate(now);
         peer.setOrganization("");
         peer.setUserName(userName);

@@ -45,12 +45,10 @@ public class UserConnect implements Serializable {
     
     // The TIMESTAMP of the last connection
     @Temporal(TemporalType.TIMESTAMP)
-    @NotNull
     private Date currentConnection;
     
     // The TIMESTAMP of the last connection
     @Temporal(TemporalType.TIMESTAMP)
-    @NotNull
     private Date lastConnection;
     
     // The TIMESTAMP of the last connection

@@ -106,6 +106,8 @@ public class UserConnectControllerTest {
         assertEquals(expectedUserName, user.getUserName());
         assertEquals(eMail, user.getEMail());
         assertEquals("", user.getOrganization());
+        assertTrue(user.getCurrentConnection()==null);
+        assertTrue(user.getLastConnection()==null);
         verify(em).persist((UserConnect)Matchers.anyObject());
         
         //3.- Happy path. first username exists but composed no
@@ -116,6 +118,8 @@ public class UserConnectControllerTest {
         assertEquals(expectedUserNameAlter, user.getUserName());
         assertEquals(eMail, user.getEMail());
         assertEquals("", user.getOrganization());
+        assertTrue(user.getCurrentConnection()==null);
+        assertTrue(user.getLastConnection()==null);
         verify(em, times(2)).persist((UserConnect)Matchers.anyObject());
         
         //4.- Exception path. All usernames exist
