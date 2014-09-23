@@ -35,3 +35,7 @@ function ajaxModify() {
 	    }
 	});
 }
+
+$('#imath-modify-user-photograph').on('hidden.bs.modal', function () {
+    location.reload();
+});
