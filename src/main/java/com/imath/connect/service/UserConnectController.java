@@ -159,20 +159,6 @@ public class UserConnectController extends AbstractController{
     }
     
     @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
-
-    public void updateUserConnect(String UUID, String urlPhoto) throws Exception {
-        UserConnect peer = this.getUserConnect(UUID);
-        if (peer!=null) {
-            byte[] photoByte = null;
-            if (urlPhoto!=null) {
-                photoByte = this.getBytePhoto(urlPhoto);
-            }
-            peer.setPhoto(photoByte);
-            this.db.makePersistent(peer);
-        }
-    }
-    
-    @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
     public void updateUserConnectByte(String UUID, byte[] FileByteFormat) throws Exception {
         UserConnect peer = this.getUserConnect(UUID);
         if (peer!=null) {
@@ -181,21 +167,6 @@ public class UserConnectController extends AbstractController{
         }
     }
     
-    @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
-    public void updateUserConnectByNameByte(String name, byte[] FileByteFormat) throws Exception {
-        UserConnect peer = this.getUserConnectByUserName(name);
-        if (peer!=null) {
-            peer.setPhoto(FileByteFormat);
-            this.db.makePersistent(peer);
-        }
-    }
-    
-    public byte[] getBytePhoto(String urlPhoto) throws IOException {
-        
-        Photo photo = new Photo();
-        byte[] photoByte = photo.getPhotoByte(urlPhoto);
-        return photoByte;
-    }
     public long countUsers() {
         return db.getUserConnectDB().countUsers();
     }

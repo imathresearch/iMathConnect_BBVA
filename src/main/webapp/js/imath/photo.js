@@ -32,6 +32,7 @@ function ajaxModify() {
 	    },
 	    error: function(error) {
 	    	$("#profilePhotographsg").html("<span style='color:green'>Error modifying the photo</span>");
+	    	showErrorForm("Error saving the photograph");
 	    }
 	});
 }
@@ -39,3 +40,9 @@ function ajaxModify() {
 $('#imath-modify-user-photograph').on('hidden.bs.modal', function () {
     location.reload();
 });
+
+function showErrorForm(message) {
+	$('.imath-error-message').html(message);
+	$('#imath-id-error-message-col').modal('show');
+	
+}

@@ -180,7 +180,7 @@ function removeCollaborator(uuid_col) {
 		    success: function(project) {
 		    	var collaborators = project['userCol'];
 				collaboratorsHtml = generateTableOfCollaborators(collaborators);
-				$(".imath-collaborators"). html(collaboratorsHtml);
+				//$(".imath-collaborators"). html(collaboratorsHtml);
 				ajaxOwnProjects("uploadProject");
 				$("#imath-id-coll-text").val("");
 				showFlyingMessageOK(" Collaborator removed ");
@@ -384,7 +384,7 @@ function viewUploadProject(project) {
 	$(".imath-select-instance").html(instanceTableHtml);
 	var collaborators = project['userCol'];
 	collaboratorsHtml = generateTableOfCollaborators(collaborators);
-	$(".imath-collaborators"). html(collaboratorsHtml);
+	//$(".imath-collaborators"). html(collaboratorsHtml);
 	
 }
 
@@ -406,14 +406,31 @@ function ajaxUploadProject(uuid) {
 
 function generateTableOfCollaborators(collaborators) {
 	var htmlRet = htmlTableRowHead(["Pic", "User Name", "eMail", "Organization", "#"]);
+	var names = [];
+	var byteFotos = [];
 	for(var ii=0; ii< collaborators.length; ii++) {
-		var image = '<img src="img/avatar04.png" alt="' + collaborators[ii]['userName'] + '" class="offline"  height="32" width="32"/>';
+		var nameImage = "TableOfCollaborators" + ii;
+		names.push(nameImage);
+		var image = '<img src="img/avatar04.png" id="' + nameImage + '" alt="' + collaborators[ii]['userName'] + '" class="offline"  height="32" width="32"/>';
 		var name = collaborators[ii]['userName'] ;
 		var org = collaborators[ii]['organization'];
 		var email = collaborators[ii]['eMail'];
 		var uuid = collaborators[ii]['UUID'];
 		var action = "<a onclick='removeCollaborator(\"" + uuid + "\")' style='cursor: pointer;' title='Remove' )><i class='fa fa-minus-circle'></i></a>";
 		htmlRet = htmlRet + htmlTableRowData([image, name, email, org, action], uuid);
+		names.push(nameImage);
+		if (collaborators[ii]['photo']!=null) {
+			byteFotos.push(collaborators[ii]['photo']);
+		}
+		else {
+			byteFotos.push(null);
+		}
+	}
+	$(".imath-collaborators"). html(htmlRet);
+	for (ii=0; ii<names.length; ii++) {
+		if (byteFotos[ii]!=null) {
+			document.getElementById(names[ii]).src = "data:image/png;base64," + byteFotos[ii];
+		}
 	}
 	return htmlRet;
 }

@@ -89,6 +89,7 @@ INSERT INTO collaborators(projects_uuid, collaborators_uuid) VALUES ('projuuid9'
 INSERT INTO collaborators(projects_uuid, collaborators_uuid) VALUES ('projuuid10', 'useruuid5');
 INSERT INTO collaborators(projects_uuid, collaborators_uuid) VALUES ('projuuid10', 'useruuid4');
 INSERT INTO collaborators(projects_uuid, collaborators_uuid) VALUES ('projuuid10', 'useruuid1');
+INSERT INTO collaborators(projects_uuid, collaborators_uuid) VALUES ('projuuid10', 'iztuuid1');
 
 --AMMARTINEZ
 INSERT INTO notification(uuid, subject, text, creationdate, type) VALUES ('notuuid1', 'Release of iMathCloud', 'The beta release of iMathCloud will soon be released', '2014-07-01', '0');

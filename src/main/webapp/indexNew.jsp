@@ -359,7 +359,15 @@
                     </div>
                     <div class="modal-body">
                         <form id="profileForm" class="input-group" action="#" method="post" autocomplete="off" >
-                            <p> 
+                            <table>
+                            <tr>
+                            <td>
+                            <p>
+                                <center><img id="photoUser" src="img/avatar04.png" alt="No photograph" /></center>
+                            </p>
+                            </td>
+                            <td>
+                            <p>
                                 <label for="" class="" data-icon="">Username </label>
                                 <input class="form-control" id="username" name="username" type="text" placeholder="" disabled />
                             </p>
@@ -375,11 +383,22 @@
                                 <label for="" class="" data-icon="">Phone 2  </label>
                                 <input class="form-control" id="phone2" name="phone2" type="text" placeholder="" disabled />
                             </p>
-                            <p>
-                                <img id="photoUser" src="img/avatar04.png" alt="No photograph" />
-                            </p>
-                            <input id="changePassButton" type="button" value="Change Password" class="btn btn-flat"/>
-                            <input id="changePhotograph" type="button" value="Change Photograph" class="btn btn-flat"/>
+                            </td>
+                            </tr>
+                            <tr>
+                            <td>
+                            <center><input id="changePhotograph" type="button" value="Change Photograph" class="btn btn-flat"/></center>
+                            </td>
+                            <td>
+                            <center><input id="changePassButton" type="button" value="Change Password" class="btn btn-flat"/></center>
+                            </td>
+                            </tr>
+                            <tr>
+                            <td colspan="2">
+                            <center><input id="closeProfile" type="button" value="Close" class="btn btn-flat"/></center>
+                            </td>
+                            </tr>
+                            </table>
                         </form>
                     </div>
                     <div class="modal-footer clearfix">

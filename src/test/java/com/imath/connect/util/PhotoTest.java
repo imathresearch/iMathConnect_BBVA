@@ -11,8 +11,10 @@ public class PhotoTest {
     @Test
     public void testGetPhotoByte() throws IOException {
         
+        String RECOVER_IMAGE_NAME = "blue-arr.png"; // Image example
+        
         Photo photo = new Photo();
-        byte[] photoByte = photo.getPhotoByte(Constants.RECOVER_IMAGE_NAME);
+        byte[] photoByte = photo.getPhotoByte(RECOVER_IMAGE_NAME);
         assertNotNull(photoByte);
         
     }

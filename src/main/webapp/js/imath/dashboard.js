@@ -95,7 +95,7 @@ function ajaxOwnProjects(callbackString) {
 	    success: function(projects) {
 	    	unplaceWaiting("imath-waiting-own-projects");
 	    	var htmlTable = generateTableOfProjects(projects, callbackString);
-			$(".imath-own-projects").html(htmlTable);
+			//$(".imath-own-projects").html(htmlTable);
 	    },
 	    error: function(error) {
 	    	unplaceWaiting("imath-waiting-own-projects");
@@ -115,7 +115,7 @@ function ajaxColProjects() {
 	    success: function(projects) {
 	    	unplaceWaiting("imath-waiting-col-projects");
 	    	var htmlTable = generateTableOfColProjects(projects);
-			$(".imath-collaborations").html(htmlTable);
+			//$(".imath-collaborations").html(htmlTable);
 	    },
 	    error: function(error) {
 	    	unplaceWaiting("imath-waiting-col-projects");
@@ -220,6 +220,8 @@ function htmlTableRow(rows, tag, uuid) {
 
 function generateTableOfColProjects(projects) {
 	var ret = htmlTableRowHead(['', 'Name', 'Date', 'Description', 'Owner', 'Collaborators', 'Resources']);
+	var names = [];
+	var byteFotos = [];
 	for(var i=0; i<projects.length; i++) {
 		project = projects[i];
 		var creationDate = new Date(project['creationDate']);
@@ -231,7 +233,15 @@ function generateTableOfColProjects(projects) {
 		var rowCol = "";
 		for(var ii=0; ii< collaborators.length; ii++) {
 			rowCol = rowCol + "<table><tr>";
-			rowCol = rowCol + '<td><img src="img/avatar04.png" alt="' + collaborators[ii]['userName'] + '" class="offline"  height="32" width="32"/></td><td><i>' + collaborators[ii]['userName'] + "</i><br><small>" + collaborators[ii]['organization'] +'</small> </td></tr></table>'; 
+			var nameImage = "TableOfColProjects" + i + ii;
+			rowCol = rowCol + '<td><img src="img/avatar04.png" id="' + nameImage + '" alt="' + collaborators[ii]['userName'] + '" class="offline"  height="32" width="32"/></td><td><i>' + collaborators[ii]['userName'] + "</i><br><small>" + collaborators[ii]['organization'] +'</small> </td></tr></table>';
+			names.push(nameImage);
+			if (collaborators[ii]['photo']!=null) {
+				byteFotos.push(collaborators[ii]['photo']);
+			}
+			else {
+				byteFotos.push(null);
+			}
 		}
 		var rowIcon = null;
 		rowIcon = "<a onclick='runiMathCloud(\""+uuid+ "\")' style='cursor: pointer;' title='Run iMathCloud'>" + faIcon("fa-play") + "</a>";
@@ -243,14 +253,31 @@ function generateTableOfColProjects(projects) {
 		
 		var owner = project['owner'];
 		var rowOwner = "<table><tr>";
-		rowOwner = rowOwner + '<td><img src="img/avatar04.png" alt="' + owner['userName'] + '" class="offline"  height="32" width="32"/></td><td><i>' + owner['userName'] + "</i><br><small>" + owner['organization'] + '</small> </td></tr></table>';
+		var nameImage2 = "TableOfColProjects" + i;
+		names.push(nameImage2);
+		if (owner['photo']!=null) {
+			byteFotos.push(owner['photo']);
+		}
+		else {
+			byteFotos.push(null);
+		}
+		rowOwner = rowOwner + '<td><img id="' + nameImage2 + '" src="img/avatar04.png" alt="' + owner['userName'] + '" class="offline"  height="32" width="32"/></td><td><i>' + owner['userName'] + "</i><br><small>" + owner['organization'] + '</small> </td></tr></table>';
 		ret = ret + htmlTableRowData([rowIcon, rowName,dateText,desc,rowOwner,rowCol,rowInstance], uuid);	
 	}
+	$(".imath-collaborations").html(ret);
+	for (ii=0; ii<names.length; ii++) {
+		if (byteFotos[ii]!=null) {
+			document.getElementById(names[ii]).src = "data:image/png;base64," + byteFotos[ii];
+		}
+	}
+
 	return ret;
 }
 
 function generateTableOfProjects(projects, callbackString) {
 	var ret = htmlTableRowHead(['', 'Name', 'Date', 'Description', 'Collaborators', 'Resources', '#']);
+	var names = [];
+	var byteFotos = [];
 	for(var i=0; i<projects.length; i++) {
 		project = projects[i];
 		var creationDate = new Date(project['creationDate']);
@@ -262,8 +289,15 @@ function generateTableOfProjects(projects, callbackString) {
 		var rowCol = "";
 		for(var ii=0; ii< collaborators.length; ii++) {
 			rowCol = rowCol + "<table><tr>";
-			rowCol = rowCol + '<td><img src="img/avatar04.png" alt="' + collaborators[ii]['userName'] + '" class="offline"  height="32" width="32"/></td><td><i>' +
-			collaborators[ii]['userName'] + "</i><br><small>" + collaborators[ii]['organization'] + '</small> </td></tr></table>'; 
+			var nameImage = "TableOfProjects" + i + ii;
+			rowCol = rowCol + '<td><img src="img/avatar04.png" id="' + nameImage + '" alt="' + collaborators[ii]['userName'] + '" class="offline"  height="32" width="32"/></td><td><i>' + collaborators[ii]['userName'] + "</i><br><small>" + collaborators[ii]['organization'] + '</small> </td></tr></table>';
+			names.push(nameImage);
+			if (collaborators[ii]['photo']!=null) {
+				byteFotos.push(collaborators[ii]['photo']);
+			}
+			else {
+				byteFotos.push(null);
+			}
 		}
 		var rowIcon = null;
 		rowIcon = "<a onclick='runiMathCloud(\""+uuid+ "\")' style='cursor: pointer;' title='Run iMathCloud'>" + faIcon("fa-play") + "</a>";
@@ -279,6 +313,12 @@ function generateTableOfProjects(projects, callbackString) {
 		}
 		var action = "<a onclick='removeProject(\"" + uuid + "\")' style='cursor: pointer;' title='Remove' )><i class='fa fa-minus-circle'></i></a>";
 		ret = ret + htmlTableRowData([rowIcon, rowName,dateText,desc,rowCol,rowInstance, action], uuid);	
+	}
+	$(".imath-own-projects").html(ret);
+	for (ii=0; ii<names.length; ii++) {
+		if (byteFotos[ii]!=null) {
+			document.getElementById(names[ii]).src = "data:image/png;base64," + byteFotos[ii];
+		}
 	}
 	return ret;
 }

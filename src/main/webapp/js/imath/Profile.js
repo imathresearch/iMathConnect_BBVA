@@ -7,6 +7,10 @@ $("#profileForm").click(function() {
 	AjaxUserData(userName);
 });
 
+$("#closeProfile").click(function() {
+	$("#imath-profile-user").modal('hide');
+});
+
 $("#close").click(function() {
 		
 });
@@ -24,15 +28,19 @@ function AjaxUserData(userName) {
 			$("#email").val(user['eMail']);
 			$("#phone1").val(user['phone1']);
 			$("#phone2").val(user['phone2']);
-			if (user['phone2']!=null) {
+			if (user['photo']!=null) {
 				document.getElementById("photoUser").src = "data:image/png;base64," + user['photo'];
-			}
-			else {
-				document.getElementById("photoUser").src = "img/avatar04.png";
 			}
 	    },
 	    error: function(error) {
 	    	$("#profilePhotographsg").html("");
+	    	showErrorForm("Error recoverying the user data");
 	    }
 	});
+}
+
+function showErrorForm(message) {
+	$('.imath-error-message').html(message);
+	$('#imath-id-error-message-col').modal('show');
+	
 }

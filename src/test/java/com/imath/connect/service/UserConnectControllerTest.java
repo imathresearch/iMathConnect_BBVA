@@ -48,7 +48,7 @@ public class UserConnectControllerTest {
     @Mock 
     private UserConnectDB userConnectDB;
     
-    private Photo photo;
+    private Photo photo = new Photo();
     
     @Before
     public void setUp() throws Exception {
@@ -70,8 +70,8 @@ public class UserConnectControllerTest {
         String org = "imath";
         String phone1 ="933333333";
         String phone2 = "111222334";
-        String photoString = Constants.RECOVER_IMAGE_NAME;
-        byte[] photoByte = pc.getBytePhoto(photoString);
+        String RECOVER_IMAGE_NAME = "blue-arr.png"; // Image example
+        byte[] photoByte = photo.getPhotoByte(RECOVER_IMAGE_NAME);
         
         UserConnect peer = pc.newUserConnect(userName, eMail, org, phone1, phone2, photoByte);
         assertEquals(eMail, peer.getEMail());
@@ -207,7 +207,8 @@ public class UserConnectControllerTest {
         doThrow(new TransactionRequiredException()).when(em).persist(peer);
         
         try {
-            pc.updateUserConnect(UUID, "logoiMath.jpg");
+            byte[] photoByteFormat = photo.getPhotoByte("logoiMath.jpg");
+            pc.updateUserConnectByte(UUID, photoByteFormat);
             fail();
         } catch (PersistenceException e) {
             // Fine

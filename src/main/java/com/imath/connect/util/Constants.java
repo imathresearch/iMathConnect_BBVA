@@ -80,7 +80,6 @@ public class Constants {
     static public final String WELLCOME_TEMPLATE = "welcomeTemplate.html"; // The html template for wellcome email
     static public final String RECOVER_TEMPLATE = "recoverPassTemplate.html"; // The html template for password recovery email
 
-    static public final String RECOVER_IMAGE_NAME = "blue-arr.png"; // Image example
     static public final String INVITATION_TEMPLATE = "invitationTemplate.html"; // The html template for invitation mails
     static public final String INVITATION_TEMPLATE_NEW_USER = "invitationTemplateNewUser.html"; // The html template new users through invitation
     

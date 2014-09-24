@@ -101,6 +101,7 @@ public class UserConnectRestIT extends AbstractIT {
         assertEquals(user1.getOrganization(), userDTO.organization);
         assertEquals(user1.getPhone1(), userDTO.phone1);
         assertEquals(user1.getPhone2(), userDTO.phone2);
+        assertArrayEquals(user1.getPhoto(), null);
         
         rest = ucrEndPoint.getUserByUserName(user2.getUserName(), null);
         assertEquals(Response.Status.OK.getStatusCode(), rest.getStatus());
@@ -112,6 +113,8 @@ public class UserConnectRestIT extends AbstractIT {
         assertEquals(user2.getOrganization(), userDTO.organization);
         assertEquals(user2.getPhone1(), userDTO.phone1);
         assertEquals(user2.getPhone2(), userDTO.phone2);
+        assertArrayEquals(user2.getPhoto(), null);
+        
     }
     
     @Test
@@ -167,6 +170,8 @@ public class UserConnectRestIT extends AbstractIT {
         	assertEquals(u.getPhone2(), uDTO.phone2);
         	assertEquals(u.getLastConnection().getTime(), uDTO.lastConnection.getTime());
         	assertEquals(u.getCreationDate().getTime(), uDTO.creationDate.getTime());
+        	assertArrayEquals(u.getPhoto(), null);
+
         }
         
     }
