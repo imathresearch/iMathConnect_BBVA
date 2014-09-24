@@ -3,6 +3,10 @@ $("#closeModalPhotograph").click(function() {
 });
 
 $("#changePhotograph").click(function() {
+	var propertyClose=document.getElementById("closeFile");
+	var propertyUpload=document.getElementById("uploadFile");
+	propertyClose.style.backgroundColor = "FF0000";
+	propertyUpload.style.backgroundColor = "0000FF";
 	$("#profilePhotographsg").html("");
 	$("#uploadedFile").val("");
 	$("#imath-modify-user-photograph").modal();
@@ -29,6 +33,7 @@ function ajaxModify() {
 	    success: function(user) {
 	    	$("#profilePhotographsg").html("<span style='color:green'>Photograph modified</span>");
             setTimeout("$('#imath-modify-user-photograph').modal('hide')",1500);
+            location.reload();
 	    },
 	    error: function(error) {
 	    	$("#profilePhotographsg").html("<span style='color:green'>Error modifying the photo</span>");
@@ -37,8 +42,8 @@ function ajaxModify() {
 	});
 }
 
-$('#imath-modify-user-photograph').on('hidden.bs.modal', function () {
-    location.reload();
+$("#closeFile").click(function() {
+	$("#imath-modify-user-photograph").modal('hide');
 });
 
 function showErrorForm(message) {

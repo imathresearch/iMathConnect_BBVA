@@ -3,6 +3,12 @@ $("#closeModalProfile").click(function() {
 });
 
 $("#profileForm").click(function() {
+	var propertyClose=document.getElementById("closeProfile");
+	var propertyChangePassword=document.getElementById("changePassButton");
+	var propertyChangePhotograph=document.getElementById("changePhotograph");
+	propertyClose.style.backgroundColor = "FF0000";
+	propertyChangePassword.style.backgroundColor = "0000FF";
+	propertyChangePhotograph.style.backgroundColor = "0000FF";
 	$("#imath-profile-user").modal();
 	AjaxUserData(userName);
 });

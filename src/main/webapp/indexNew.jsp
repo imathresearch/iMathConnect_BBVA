@@ -355,7 +355,7 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <button id="closeModalProfile" type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                        <h4 class="modal-title"><i class="fa fa-warning danger"></i>User Profile</h4>
+                        <h4 class="modal-title">User Profile</h4>
                     </div>
                     <div class="modal-body">
                         <form id="profileForm" class="input-group" action="#" method="post" autocomplete="off" >
@@ -368,19 +368,18 @@
                             </td>
                             <td>
                             <p>
-                                <label for="" class="" data-icon="">Username </label>
+                                <label for="" class="" data-icon="">Username: </label>
                                 <input class="form-control" id="username" name="username" type="text" placeholder="" disabled />
                             </p>
-                            <p>
-                                <label for="" class="" data-icon="">Email    </label>
+                                <label for="" class="" data-icon="">Email:    </label>
                                 <input class="form-control" id="email" name="email" type="text" placeholder="" disabled />
                             </p>
                             <p>
-                                <label for="" class="" data-icon="">Phone 1  </label>
+                                <label for="" class="" data-icon="">Phone 1:  </label>
                                 <input class="form-control" id="phone1" name="phone1" type="text" placeholder="" disabled />
                             </p>
                             <p>
-                                <label for="" class="" data-icon="">Phone 2  </label>
+                                <label for="" class="" data-icon="">Phone 2:  </label>
                                 <input class="form-control" id="phone2" name="phone2" type="text" placeholder="" disabled />
                             </p>
                             </td>
@@ -393,16 +392,11 @@
                             <center><input id="changePassButton" type="button" value="Change Password" class="btn btn-flat"/></center>
                             </td>
                             </tr>
-                            <tr>
-                            <td colspan="2">
-                            <center><input id="closeProfile" type="button" value="Close" class="btn btn-flat"/></center>
-                            </td>
-                            </tr>
                             </table>
                         </form>
                     </div>
                     <div class="modal-footer clearfix">
-
+                        <div style="float:right"><input id="closeProfile" type="button" value="Close" class="btn btn-flat"/></div>
                     </div>
                 </div><!-- /.modal-content -->
             </div><!-- /.modal-dialog -->
@@ -411,60 +405,66 @@
         <!-- COMPOSE MESSAGE MODAL FOR MODIFY PASSWORD-->
         <div class="modal fade" id="imath-modify-password-user" tabindex="-1" role="dialog" aria-hidden="true">
             <div class="modal-dialog">
+                <form id="userPasswordForm" class="input-group" action="#" method="post" autocomplete="off" >
                 <div class="modal-content">
                     <div class="modal-header">
                         <button id="closeModalPassword" type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                        <h4 class="modal-title"><i class="fa fa-warning danger"></i>Password modification</h4>
+                        <h4 class="modal-title">Password modification</h4>
                     </div>
                     <div class="modal-body">
-                        <form id="userPasswordForm" class="input-group" action="#" method="post" autocomplete="off" > 
                             <p>
-                                <label for="passwordsignup" class="youpasswd" data-icon="p">Your current password           </label>
+                                <label for="passwordsignup" class="youpasswd" data-icon="p">Your current password:           </label>
                                 <input class="form-control" id="passwordOld" name="passwordOld" required="required" type="password" placeholder="eg. X8df!90EO"/>
                             </p>
                             <p>
-                                <label for="passwordsignup" class="youpasswd" data-icon="p">Your new password               </label>
+                                <label for="passwordsignup" class="youpasswd" data-icon="p">Your new password:               </label>
                                 <input class="form-control" id="passwordNew" name="passwordNew" required="required" type="password" placeholder="eg. X8df!90EO"/>
                             </p>
                             <p>
-                                <label for="passwordsignup_confirm" class="youpasswd" data-icon="p">Please confirm your new password </label>
+                                <label for="passwordsignup_confirm" class="youpasswd" data-icon="p">Please confirm your new password: </label>
                                 <input class="form-control" id="passwordNewConf" name="passwordNewConf" required="required" type="password" placeholder="eg. X8df!90EO"/>
                             </p>
-                            <div id="profilePasswordMsg" style="float:left"></div>
-                            <div style="float:right"> <input id="changePassword" type="button" value="Change Password" class="btn btn-flat"/></div>
-                        </form>
+                            <p>
+                                <div style="float:right"><input id="changePassword" type="button" value="Change Password" class="btn btn-flat"/></div>
+                            </p>
+                            <p>
+                            </p>
                     </div>
                     <div class="modal-footer clearfix">
-
+                            <div id="profilePasswordMsg" style="float:left"></div>
+                            <div style="float:right"><input id="closePassword" type="button" value="Close" class="btn btn-flat"/></div>
+                            <p>
+                            </p>
                     </div>
                 </div><!-- /.modal-content -->
+                </form>
             </div><!-- /.modal-dialog -->
         </div><!-- /.modal -->
 
         <!-- COMPOSE MESSAGE MODAL MODIFY PHOTOGRAPH-->
         <div class="modal fade" id="imath-modify-user-photograph" tabindex="-1" role="dialog" aria-hidden="true">
             <div class="modal-dialog">
+                <form action="#" class="form-group" id="changePhoto" name="changePhoto" method="post" enctype="multipart/form-data" class="sidebar-form">
                 <div class="modal-content">
                     <div class="modal-header">
                         <button id="closeModalPhotograph" type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                        <h4 class="modal-title"><i class="fa fa-warning danger"></i>User's Photograph Modification</h4>
+                        <h4 class="modal-title">User's Photograph Modification</h4>
                     </div>
                     <div class="modal-body">
-                        <form action="#" class="form-group" id="changePhoto" name="changePhoto" method="post" enctype="multipart/form-data" class="sidebar-form">
-                            <p>
-                            <label for="" class="" data-icon="">Select new photograph </label>
+                            <label for="" class="" data-icon="">Select new photograph: </label>
                             <input type="file" id="uploadedFile" name="uploadedFile" size="50" multiple />
-                            </p>
-                            <center><input type="button" name="uploadFile" id="uploadFile" value="Upload It" class="btn btn-flat" /></center>
+                            <div style="float:right"><input type="button" name="uploadFile" id="uploadFile" value="Upload It" class="btn btn-flat" /></div>
                             <p>
-                                <div id="profilePhotographsg" style="float:left"></div>
                             </p>
-                        </form>
                     </div>
                     <div class="modal-footer clearfix">
-
+                        <div id="profilePhotographsg" style="float:left"></div>
+                        <div style="float:right"><input type="button" name="closeFile" id="closeFile" value="Close" class="btn btn-flat" /></div>
+                        <p>
+                        </p>
                     </div>
                 </div><!-- /.modal-content -->
+                </form>
             </div><!-- /.modal-dialog -->
         </div><!-- /.modal -->
 

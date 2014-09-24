@@ -3,6 +3,10 @@ $("#closeModalPassword").click(function() {
 });
 
 $("#changePassButton").click(function(){
+	var propertyClose=document.getElementById("closePassword");
+	var propertyChangePassword=document.getElementById("changePassword");
+	propertyClose.style.backgroundColor = "FF0000";
+	propertyChangePassword.style.backgroundColor = "0000FF";
 	$("#profilePasswordMsg").html("");
 	$("#passwordOld").val("");
 	$("#passwordNew").val("");
@@ -51,3 +55,7 @@ function showErrorForm(message) {
 	$('#imath-id-error-message-col').modal('show');
 	
 }
+
+$("#closePassword").click(function() {
+	$("#imath-modify-password-user").modal('hide');
+});
