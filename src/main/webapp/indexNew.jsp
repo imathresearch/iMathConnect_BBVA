@@ -363,14 +363,18 @@
                             <tr>
                             <td>
                             <p>
-                                <center><img id="photoUser" src="img/avatar04.png" alt="No photograph" /></center>
+                                <br>
+                                <center><img id="photoUser" src="img/avatar04.png" alt="No photograph" height="268" width="260" /></center>
                             </p>
                             </td>
                             <td>
+                            <div class="spaceForm" style="margin-right: 10">
                             <p>
+                                <br>
                                 <label for="" class="" data-icon="">Username: </label>
                                 <input class="form-control" id="username" name="username" type="text" placeholder="" disabled />
                             </p>
+                            <p>
                                 <label for="" class="" data-icon="">Email:    </label>
                                 <input class="form-control" id="email" name="email" type="text" placeholder="" disabled />
                             </p>
@@ -378,10 +382,11 @@
                                 <label for="" class="" data-icon="">Phone 1:  </label>
                                 <input class="form-control" id="phone1" name="phone1" type="text" placeholder="" disabled />
                             </p>
-                            <p>
+                            <p  style="margin: 10 200">
                                 <label for="" class="" data-icon="">Phone 2:  </label>
                                 <input class="form-control" id="phone2" name="phone2" type="text" placeholder="" disabled />
                             </p>
+                            </div>
                             </td>
                             </tr>
                             <tr>
@@ -413,8 +418,8 @@
                     </div>
                     <div class="modal-body">
                             <p>
-                                <label for="passwordsignup" class="youpasswd" data-icon="p">Your current password:           </label>
-                                <input class="form-control" id="passwordOld" name="passwordOld" required="required" type="password" placeholder="eg. X8df!90EO"/>
+                            <label for="passwordsignup" class="youpasswd" data-icon="p">Your current password:           </label>
+                            <input class="form-control" id="passwordOld" name="passwordOld" required="required" type="password" placeholder="eg. X8df!90EO"/>
                             </p>
                             <p>
                                 <label for="passwordsignup" class="youpasswd" data-icon="p">Your new password:               </label>

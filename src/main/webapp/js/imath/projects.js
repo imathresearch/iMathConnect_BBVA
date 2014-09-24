@@ -158,7 +158,7 @@ function addCollaborator(other, uuid_project) {
 	    success: function(project) {
 	    	var collaborators = project['userCol'];
 			collaboratorsHtml = generateTableOfCollaborators(collaborators);
-			$(".imath-collaborators"). html(collaboratorsHtml);
+			//$(".imath-collaborators"). html(collaboratorsHtml);
 			ajaxOwnProjects("ajaxUploadProject");
 			$("#imath-id-coll-text").val("");
 			showFlyingMessageOK(" Collaborator added ");
@@ -405,7 +405,7 @@ function ajaxUploadProject(uuid) {
 }
 
 function generateTableOfCollaborators(collaborators) {
-	var htmlRet = htmlTableRowHead(["Pic", "User Name", "eMail", "Organization", "#"]);
+	var htmlRet = htmlTableRowHead(["Pic", "User Name", "Email", "Organization", "#"]);
 	var names = [];
 	var byteFotos = [];
 	for(var ii=0; ii< collaborators.length; ii++) {
