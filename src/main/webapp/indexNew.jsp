@@ -177,10 +177,10 @@
                             <div class="small-box bg-aqua">
                                 <div class="inner">
                                     <h3>
-                                        15
+                                        <span class="imath-num-projects">-</span>
                                     </h3>
                                     <p>
-                                        New Projects
+                                        Projects
                                     </p>
                                 </div>
                                 <div class="icon">
@@ -193,10 +193,10 @@
                             <div class="small-box bg-green">
                                 <div class="inner">
                                     <h3>
-                                        28
+                                        <span class="imath-num-instances">-</span>
                                     </h3>
                                     <p>
-                                        New Instances
+                                        Instances
                                     </p>
                                 </div>
                                 <div class="icon">
@@ -209,10 +209,10 @@
                             <div class="small-box bg-yellow">
                                 <div class="inner">
                                     <h3>
-                                        51
+                                        <span class="imath-num-users">-</span>
                                     </h3>
                                     <p>
-                                        New User Registrations
+                                        Users
                                     </p>
                                 </div>
                                 <div class="icon">
@@ -225,10 +225,10 @@
                             <div class="small-box bg-red">
                                 <div class="inner">
                                     <h3>
-                                        105
+                                        <span class="imath-num-users-col">-</span>
                                     </h3>
                                     <p>
-                                        Collaborators
+                                        Collaborations
                                     </p>
                                 </div>
                                 <div class="icon">

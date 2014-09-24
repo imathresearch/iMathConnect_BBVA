@@ -3,6 +3,8 @@ package com.imath.connect.rest;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -16,17 +18,24 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.Matchers;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 import com.imath.connect.model.Instance;
 import com.imath.connect.model.Project;
 import com.imath.connect.model.UserConnect;
+
 import com.imath.connect.service.InstanceController;
 import com.imath.connect.service.ProjectController;
 import com.imath.connect.service.UserConnectController;
+
+import com.imath.connect.util.Constants;
 import com.imath.connect.util.IMathCloudAccess;
 import com.imath.connect.util.Photo;
+import com.imath.connect.util.Mail;
+import com.imath.connect.util.SecurityInterface;
+
 import com.imath.connect.rest.ProjectRest;
 import com.imath.connect.rest.ProjectRest.ProjectAdminDTO;
 import com.imath.connect.rest.ProjectRest.ProjectDTO;
@@ -39,13 +48,16 @@ public class ProjectRestIT extends AbstractIT{
     @Inject ProjectController pc;
     @Inject ProjectRest prEndPoint;
     
-    // We mock iMathCloudAccess
+    // We mock some stuff
+    @Mock SecurityInterface securityMock;
+    @Mock Mail mailMock;
+    
     
     @Before
     public void setUp() throws Exception {
+        MockitoAnnotations.initMocks(this);
     	Mock_IMathCloudAccess imathcloud = new Mock_IMathCloudAccess();
-    	pc.setIMathCloudAccess(imathcloud);
-    	prEndPoint.getProjectController().setIMathCloudAccess(imathcloud);
+    	prEndPoint.setIMathCloud(imathcloud);
     }
     
     @After
@@ -56,8 +68,6 @@ public class ProjectRestIT extends AbstractIT{
     @Test
     public void newProjectIT() throws Exception {
     	Mock_IMathCloudAccess imathcloud = new Mock_IMathCloudAccess();
-    	pc.setIMathCloudAccess(imathcloud);
-    	prEndPoint.getProjectController().setIMathCloudAccess(imathcloud);
         String name = "myProject";
         String desc = " A very nice project";
         
@@ -93,8 +103,6 @@ public class ProjectRestIT extends AbstractIT{
     @Test
     public void getProjectCredentialsIT() throws Exception {
     	Mock_IMathCloudAccess imathcloud = new Mock_IMathCloudAccess();
-    	pc.setIMathCloudAccess(imathcloud);
-    	prEndPoint.getProjectController().setIMathCloudAccess(imathcloud);
         String name = "myProject";
         String desc = " A very nice project";
         
@@ -145,8 +153,6 @@ public class ProjectRestIT extends AbstractIT{
     @Test
     public void addCollaboratorIT() throws Exception {
     	Mock_IMathCloudAccess imathcloud = new Mock_IMathCloudAccess();
-    	pc.setIMathCloudAccess(imathcloud);
-    	prEndPoint.getProjectController().setIMathCloudAccess(imathcloud);
         String name = "myProject";
         String desc = " A very nice project";
         // 1.- Exception path: UserConnect does not exists
@@ -188,67 +194,82 @@ public class ProjectRestIT extends AbstractIT{
     @Test
     public void addCollaboratorByOtherIT() throws Exception {
     	Mock_IMathCloudAccess imathcloud = new Mock_IMathCloudAccess();
-    	pc.setIMathCloudAccess(imathcloud);
-    	prEndPoint.getProjectController().setIMathCloudAccess(imathcloud);
         String name = "myProject";
         String desc = " A very nice project";
         // 1.- Exception path: UserConnect does not exists
-        Response rest = prEndPoint.addCollaboratorByOther("noid", "nouuid", "nousermail", null);
+        Response rest = prEndPoint.addCollaboratorByOther("noid", "nouuid", "nousermail", null, mailMock, securityMock);
         assertEquals(Response.Status.BAD_REQUEST.getStatusCode(), rest.getStatus());
         
         String photoString = "blue-arr.png";
         
         // 2.- Exception path: Project does not exists
         UserConnect owner = ucc.newUserConnect("myselfqQQqqaz", "holQQa@pepehhj.com", "imath", "958183402", "958183402", null);
-        rest = prEndPoint.addCollaboratorByOther(owner.getUUID(), "nouuid", "nouuid", null);
+        rest = prEndPoint.addCollaboratorByOther(owner.getUUID(), "nouuid", "nouuid", null, mailMock, securityMock);
         assertEquals(Response.Status.BAD_REQUEST.getStatusCode(), rest.getStatus());
         
         // 3.- Exception path: Project does not belong to owner
         Instance instance = ic.newInstance(0, 0, 0, "127.0.0.1", "inst", owner);
         UserConnect owner2 = ucc.newUserConnect("myselfQQff", "holQQa@ppellk.com", "imath", "958183402", "958183402", null);
         Project project = pc.newProject(name, desc, owner2, instance, imathcloud);
-        rest = prEndPoint.addCollaboratorByOther(owner.getUUID(), project.getUUID(), "nouuid", null);
+        rest = prEndPoint.addCollaboratorByOther(owner.getUUID(), project.getUUID(), "nouuid", null, mailMock, securityMock);
         assertEquals(Response.Status.BAD_REQUEST.getStatusCode(), rest.getStatus());
         
         // 4.- Exception path: userName does not exists
         Project project2 = pc.newProject(name+"h", desc+"h", owner, instance, imathcloud);
-        rest = prEndPoint.addCollaboratorByOther(owner.getUUID(), project2.getUUID(), "nouname", null);
+        rest = prEndPoint.addCollaboratorByOther(owner.getUUID(), project2.getUUID(), "nouname", null, mailMock, securityMock);
         assertEquals(Response.Status.BAD_REQUEST.getStatusCode(), rest.getStatus());
         
-        // 5.- Exception path: email does not exists
-        rest = prEndPoint.addCollaboratorByOther(owner.getUUID(), project2.getUUID(), "noname@mail.com", null);
-        assertEquals(Response.Status.BAD_REQUEST.getStatusCode(), rest.getStatus());
-        
-        // 6.- Happy path: Add collaborator by userName
-        rest = prEndPoint.addCollaboratorByOther(owner.getUUID(), project2.getUUID(), owner2.getUserName(), null);
+        // 5.- Happy path: Add collaborator by userName
+        rest = prEndPoint.addCollaboratorByOther(owner.getUUID(), project2.getUUID(), owner2.getUserName(), null, mailMock, securityMock);
         assertEquals(Response.Status.OK.getStatusCode(), rest.getStatus());
         ProjectDTO projDTO = (ProjectDTO) rest.getEntity();
         List<UserConnectDTO> list = projDTO.userCol;
         assertEquals(1,list.size());
         assertEquals(owner2.getUUID(), list.get(0).UUID);
-        // Also, we check that we retrieve the same when we directly access the DB
+        // Also, we check that we retrieve the same when we directly access the DB and that we send the email
         List<UserConnect> user = ucc.getCollaborationUsersByProject(project2.getUUID());
         assertEquals(1,user.size());
         assertEquals(owner2.getUUID(), user.get(0).getUUID());
+        verify(mailMock,times(1)).sendInvitationMail(owner2.getEMail(), owner2.getUserName(), project2.getName());
         
-        // 7.- Happy path: Add collaborator by email
+        // 6.- Happy path: Add collaborator by email
         UserConnect owner3 = ucc.newUserConnect("myQQQselfqqqazDDD", "mygoodmail@pepemail.com", "imath", "958183402", "958183402", null);
-        rest = prEndPoint.addCollaboratorByOther(owner.getUUID(), project2.getUUID(), owner3.getEMail(), null);
+        rest = prEndPoint.addCollaboratorByOther(owner.getUUID(), project2.getUUID(), owner3.getEMail(), null, mailMock, securityMock);
+
         assertEquals(Response.Status.OK.getStatusCode(), rest.getStatus());
         projDTO = (ProjectDTO) rest.getEntity();
         list = projDTO.userCol;
         assertEquals(2,list.size());
-        // Also, we check that we retrieve the same when we directly access the DB
+        // Also, we check that we retrieve the same when we directly access the DB and that we send the email
         user = ucc.getCollaborationUsersByProject(project2.getUUID());
         assertEquals(2,user.size());
+        verify(mailMock,times(1)).sendInvitationMail(owner3.getEMail(), owner3.getUserName(), project2.getName());
+        
+        // 7 Happy path: email does not exists, but create a user anyway
+        rest = prEndPoint.addCollaboratorByOther(owner.getUUID(), project2.getUUID(), "noname@mail.com", null, mailMock, securityMock);
+        assertEquals(Response.Status.OK.getStatusCode(), rest.getStatus());
+        UserConnect owner4 = ucc.getUserConnectByUserName("noname");
+        assertEquals("mail", owner4.getOrganization());
+        user = ucc.getCollaborationUsersByProject(project2.getUUID());
+        assertEquals(3,user.size());
+        verify(mailMock,times(1)).sendInvitationNewUserMail(Matchers.eq(owner4.getEMail()), Matchers.eq(owner4.getUserName()), (String) Matchers.anyObject(),  Matchers.eq(project2.getName()));
+        verify(securityMock, times(1)).createSystemUser(Matchers.eq(owner4.getUserName()), (String) Matchers.anyObject(), Matchers.eq(Constants.SYSTEM_ROLE));
+        
+        // 8 Happy path: email does not exists, by tries to create a username that already exists, but end up creating a user
+        rest = prEndPoint.addCollaboratorByOther(owner.getUUID(), project2.getUUID(), "noname@mailyes.com", null, mailMock, securityMock);
+        assertEquals(Response.Status.OK.getStatusCode(), rest.getStatus());
+        UserConnect owner5 = ucc.getUserConnectByUserName("nonameATmailyes");
+        assertEquals("mailyes", owner5.getOrganization());
+        user = ucc.getCollaborationUsersByProject(project2.getUUID());
+        assertEquals(4,user.size());
+        verify(mailMock,times(1)).sendInvitationNewUserMail(Matchers.eq(owner5.getEMail()), Matchers.eq(owner5.getUserName()), (String) Matchers.anyObject(),  Matchers.eq(project2.getName()));
+        verify(securityMock, times(1)).createSystemUser(Matchers.eq(owner5.getUserName()), (String) Matchers.anyObject(), Matchers.eq(Constants.SYSTEM_ROLE));
     }
     
     
     @Test
     public void removeCollaboratorIT() throws Exception {
     	Mock_IMathCloudAccess imathcloud = new Mock_IMathCloudAccess();
-    	pc.setIMathCloudAccess(imathcloud);
-    	prEndPoint.getProjectController().setIMathCloudAccess(imathcloud);
         String name = "myProject";
         String desc = " A very nice project";
         // 1.- Exception path: UserConnect does not exists
@@ -302,8 +323,6 @@ public class ProjectRestIT extends AbstractIT{
     @Test
     public void getOwnProjectsIT() throws Exception {
     	Mock_IMathCloudAccess imathcloud = new Mock_IMathCloudAccess();
-    	pc.setIMathCloudAccess(imathcloud);
-    	prEndPoint.getProjectController().setIMathCloudAccess(imathcloud);
         // 1.- Base case: User does not exists
         Response rest = prEndPoint.getOwnProjects("no user", null);
         assertEquals(Response.Status.BAD_REQUEST.getStatusCode(), rest.getStatus());
@@ -368,8 +387,6 @@ public class ProjectRestIT extends AbstractIT{
     @Test
     public void getColProjectsIT() throws Exception {
     	Mock_IMathCloudAccess imathcloud = new Mock_IMathCloudAccess();
-    	pc.setIMathCloudAccess(imathcloud);
-    	prEndPoint.getProjectController().setIMathCloudAccess(imathcloud);
         // 1.- Base case: User does not exists
         Response rest = prEndPoint.getColProjects("no user", null);
         assertEquals(Response.Status.BAD_REQUEST.getStatusCode(), rest.getStatus());
@@ -379,7 +396,7 @@ public class ProjectRestIT extends AbstractIT{
         // 2.- Base case: User exists and has private projects but does not collaborate in any
         UserConnect owner = ucc.newUserConnect("ipinyolll", "hola@ppeppp.com", "iath", "953333402", "933383402", null);
         Instance instance1 = ic.newInstance(0, 0, 0, "123.333.44.55", "inst", owner);
-        Project project = pc.newProject("myprojectone", "mydesc", owner, instance1);
+        Project project = pc.newProject("myprojectone", "mydesc", owner, instance1, imathcloud);
         rest = prEndPoint.getColProjects(owner.getUUID(), null);
         assertEquals(Response.Status.OK.getStatusCode(), rest.getStatus());
         @SuppressWarnings("unchecked")
@@ -426,8 +443,6 @@ public class ProjectRestIT extends AbstractIT{
     @Test 
     public void removeProjectIT() throws Exception {
         Mock_IMathCloudAccess imathcloud = new Mock_IMathCloudAccess();
-        pc.setIMathCloudAccess(imathcloud);
-        prEndPoint.getProjectController().setIMathCloudAccess(imathcloud);
         
         // 1.- Exception path: UserConnect does not exists
         Response rest = prEndPoint.removeProject("nouuid", "nouuid proj", null);

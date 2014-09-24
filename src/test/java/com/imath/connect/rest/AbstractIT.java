@@ -30,7 +30,10 @@ import com.imath.connect.util.Encryptor;
 import com.imath.connect.util.IMathCloudAccess;
 import com.imath.connect.util.IMathCloudInterface;
 import com.imath.connect.util.Photo;
+import com.imath.connect.util.Mail;
 import com.imath.connect.util.Resources;
+import com.imath.connect.util.SecurityImpl;
+import com.imath.connect.util.SecurityInterface;
 import com.imath.connect.util.Util;
 
 import org.jasypt.hibernate4.type.EncryptedStringType;
@@ -48,12 +51,13 @@ public abstract class AbstractIT {
                .addAsLibraries(resolver.artifact("com.iMathCloud.API:iMathCloud_API:0.0.1-SNAPSHOT").resolveAsFiles())
                .addClasses(EncryptedStringType.class, MainDB.class, UserConnect.class , Project.class, StandardConfiguration.class, Instance.class, Notification.class,
                        InstanceDB.class, ProjectDB.class, StandardConfigurationDB.class, UserConnectDB.class, NotificationDB.class, 
-                       JaxRsActivator.class, ProjectRest.class, InstanceRest.class, com.imath.connect.security.SecurityManager.class, 
+                       JaxRsActivator.class, ProjectRest.class, InstanceRest.class, GeneralRest.class, com.imath.connect.security.SecurityManager.class,
                        StandardConfigurationRest.class, UserConnectRest.class, NotificationRest.class, NotificationController.class,
                        AbstractController.class, InstanceController.class, ProjectController.class, StandardConfigurationController.class, UserConnectController.class,
                        Constants.class, Resources.class, Util.class, Encryptor.class, AbstractIT.class, ProjectRestIT.class, InstanceRestIT.class, 
-                       StandardConfigurationRestIT.class, UserConnectRestIT.class, NotificationRestIT.class,
-                       IMathCloudAccess.class, com.api.iMathCloud.class, com.exception.iMathAPIException.class, IMathCloudInterface.class, Photo.class)
+                       StandardConfigurationRestIT.class, UserConnectRestIT.class, NotificationRestIT.class, GeneralRestIT.class, 
+                       IMathCloudAccess.class, com.api.iMathCloud.class, com.exception.iMathAPIException.class, IMathCloudInterface.class,
+                       SecurityInterface.class, SecurityImpl.class, Mail.class, Photo.class)
                .addAsResource("META-INF/persistence.xml", "META-INF/persistence.xml")
                .addAsWebInfResource("arquillian-ds.xml")
                .addAsWebInfResource(EmptyAsset.INSTANCE, "beans.xml");
@@ -66,7 +70,7 @@ public abstract class AbstractIT {
     		// Empty body
     	}
     	
-    	public void removeProject(String privateProjectName, String baseURL) throws Exception {
+    	public void removeProject(String privateProjectName, String key, String baseURL) throws Exception {
     	    // Empty body
     	}
     	

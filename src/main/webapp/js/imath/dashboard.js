@@ -45,12 +45,35 @@ function ajaxUserInfo() {
 			ajaxOwnNotifications();
 			ajaxPublicInstances();
 			ajaxColProjects();
+			ajaxInfo();
 			setSelectMenu("imath-id-dashboard-menu");
 	    },
 	    error: function(error) {
 	        console.log("Error getting user information");
 	    }
 	});	
+}
+
+function ajaxInfo() {
+	$.ajax({
+	    url: "rest/api/agora/getInfo/" + global_uuid_user,
+	    cache: false,
+	    dataType: "json",
+	    type: "GET",
+	    success: function(info) {
+	        var numUsers = info['numUsers'];
+	        var numProjects = info['numProjects'];
+	        var numInstances = info['numInstances'];
+	        var numUsersCol = info['numUsersCol'];
+	        $(".imath-num-users-col").html(numUsersCol);
+	        $(".imath-num-users").html(numUsers);
+	        $(".imath-num-projects").html(numProjects);
+	        $(".imath-num-instances").html(numInstances);
+	    },
+	    error: function(error) {
+	        console.log("Error getting information");
+	    }
+	});
 }
 
 function setSelectMenu(idDOM) {
@@ -216,7 +239,7 @@ function generateTableOfColProjects(projects) {
 		var rowInstance = faIcon("fa-gears") + " <b>" + project['instance']['cpu'] + "</b> <small>vCPUs</small> <br>";
 		rowInstance += faIcon("fa-film") + " <b>" + project['instance']['ram'] + "</b> <small>MiB</small><br> ";
 		rowInstance += faIcon("fa-cloud") + " <b>" + project['instance']['stg'] + "</b> <small>GiB</small> ";
-		rowName = "<a href='onclick=showProjectPage(\""+uuid+ "\")'>" + name + "</a>";
+		rowName =  name;
 		
 		var owner = project['owner'];
 		var rowOwner = "<table><tr>";
@@ -271,8 +294,8 @@ function generateTableOfInstances(instances, pub, putHeader, callbackString) {
 	var ret = "";
 	if (putHeader) {
 		ret = htmlTableRowHead(['#', 'Name', faIcon("fa-gears")+' vCPUs', 
-	                            faIcon("fa-film") + ' RAM', 
-	                            faIcon("fa-cloud") + 'Storage', 'Date']);
+	                            faIcon("fa-film") + ' RAM <small>MiB</small>', 
+	                            faIcon("fa-cloud") + 'Storage <small>GiB</small>', 'Date']);
 	}
 	
 	for(var i=0; i<instances.length; i++) {

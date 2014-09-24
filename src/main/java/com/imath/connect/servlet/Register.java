@@ -19,12 +19,8 @@ public class Register extends HttpServlet {
      * 
      */
     private static final long serialVersionUID = 1L;
-    @Inject
-    UserConnectController ucc;
     
-    @Inject 
-    Security security;
-    
+    @Inject UserConnectController ucc;
     @Inject protected Logger LOG;
     
     // imathcloud943793072
@@ -38,6 +34,7 @@ public class Register extends HttpServlet {
         /*
          * We have to add a recover the photo to store in the database.
          * */
+
         
         if (!password.equals(passwordRep)) {
             response.sendRedirect("registererrorPasswords.html");
@@ -46,7 +43,7 @@ public class Register extends HttpServlet {
         
         try {
             ucc.newUserConnect(userName, eMail, "", "", "", null);
-            security.createSystemUser(userName, passwordRep, Constants.SYSTEM_ROLE);
+            Security.createSystemUser(userName, passwordRep, Constants.SYSTEM_ROLE);
             try {
                 Mail mail = new Mail();
                 mail.sendWelcomeMail(eMail, userName);

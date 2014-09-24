@@ -6,6 +6,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import javax.annotation.Resource;
+import javax.ejb.EJBContext;
 import javax.ejb.Stateful;
 import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
@@ -32,8 +34,7 @@ public class ProjectController extends AbstractController {
     
     @Inject UserConnectController ucc;
     @Inject InstanceController ic;
-    
-    @Inject IMathCloudInterface imathcloud;
+    @Resource EJBContext ejb;
     
     /**
      * Creates and return a new Project
@@ -45,7 +46,7 @@ public class ProjectController extends AbstractController {
      * @throws Exception If persistence fails
      */
     @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
-    public Project newProject(String name, String desc, UserConnect owner, Instance instance) throws Exception {
+    public Project newProject(String name, String desc, UserConnect owner, Instance instance, IMathCloudInterface imathcloud) throws Exception {
         Encryptor.init();
         Project project = new Project();
         project.setName(name);
@@ -59,38 +60,22 @@ public class ProjectController extends AbstractController {
         try {
         	imathcloud.newProject(project.getLinuxGroup(), project.getKey(), project.getName(), instance.getUrl());
         } catch (Exception e) {
-        	// Don't get why the project is created anyway! On exception, the transaction should roll back
-        	// Investigate
-        	db.delete(project);
+            ejb.setRollbackOnly();// we perform an explicit rollback
         	throw e;
         }
         return project;
     }
     
-    //********* for testing purposes only
     @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
-    public Project newProject(String name, String desc, UserConnect owner, Instance instance, IMathCloudInterface imathcloud) throws Exception {
-    	this.imathcloud = imathcloud;
-    	return newProject(name,desc,owner,instance);
-    }
-    //*********
-    
-    @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
-    public void removeProject(String uuid) throws Exception {
+    public void removeProject(String uuid, IMathCloudInterface imathcloud) throws Exception {
         Project project = this.getProject(uuid);
         Instance instance = project.getInstance();
         String baseURL = instance.getUrl();
+        imathcloud.removeProject(project.getLinuxGroup(), project.getKey(), baseURL);
         db.delete(project);
-        imathcloud.removeProject(project.getLinuxGroup(), baseURL);
     }
     
-    //********* for testing purposes only
-    @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
-    public void removeProject(String uuid, IMathCloudInterface imathcloud) throws Exception {
-        this.imathcloud = imathcloud;
-        removeProject(uuid);
-    }
-    //*********
+
     
     /**
      * Updates the project data
@@ -200,13 +185,14 @@ public class ProjectController extends AbstractController {
         return project;
     }
     
+    @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
+    public long countProjects() {
+        return db.getProjectDB().countProjects();
+    }
+    
     // just for testing purposes
     
     public void setUserConnectController(UserConnectController ucc) {
         this.ucc = ucc;
-    }
-    
-    public void setIMathCloudAccess(IMathCloudInterface imathcloud) {
-    	this.imathcloud = imathcloud;
     }
 }

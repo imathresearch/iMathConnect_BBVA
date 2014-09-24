@@ -46,6 +46,10 @@ function initProjectView(uuid_project) {
 	global_instances = [];
 	ajaxOwnProjects("ajaxUploadProject");
 	ajaxInstancesLoad();
+	setButtonsCode();
+}
+
+function setButtonsCode() {
 	$("#imath-id-own-projects").delegate("tr", "click", function(e) {
 		if (!(typeof $(e.currentTarget).attr('id') == "undefined")){
 			var uuid = $(e.currentTarget).attr('id');
@@ -98,6 +102,7 @@ function initProjectView(uuid_project) {
 	});
 	
 	$("#imath-id-new-project-button").click(function() {
+		console.log("New project");
 		setNewProjectForm();
 	});
 	
@@ -156,6 +161,7 @@ function addCollaborator(other, uuid_project) {
 			$(".imath-collaborators"). html(collaboratorsHtml);
 			ajaxOwnProjects("ajaxUploadProject");
 			$("#imath-id-coll-text").val("");
+			showFlyingMessageOK(" Collaborator added ");
 	    },
 	    error: function(error) {
 	    	console.log("Error adding collaborator");
@@ -177,6 +183,7 @@ function removeCollaborator(uuid_col) {
 				$(".imath-collaborators"). html(collaboratorsHtml);
 				ajaxOwnProjects("uploadProject");
 				$("#imath-id-coll-text").val("");
+				showFlyingMessageOK(" Collaborator removed ");
 		    },
 		    error: function(error) {
 		    	console.log("Error removing collaborator");
@@ -195,11 +202,27 @@ function removeProject(uuid) {
 }
 
 function ajaxRemoveProject(uuid) {
+	placeWaiting("imath-waiting-creation");
+	$.ajax({
+	    url: "rest/api/agora/removeProject/" + global_uuid_user + "/" + uuid,
+	    cache: false,
+	    type: "POST",
+	    success: function() {
+	    	unplaceWaiting("imath-waiting-creation");
+	    	ajaxOwnProjects("uploadProject");
+	    	showFlyingMessageOK(" Project removed ");
+	    },
+	    error: function(error) {
+	    	unplaceWaiting("imath-waiting-creation");
+	        console.log("Error removing the project");
+	        showErrorForm("Error removing the project");
+	    }
+	});	
 }
 	
 function confirmationForm(message, func) {
 	$('.imath-conf-message').html(message);
-	$('#imath-id-ok-button-select').click(func)
+	$('#imath-id-ok-button-select').click(func);
 	$('#imath-id-conf-message').modal('show');
 }
 
@@ -214,6 +237,7 @@ function ajaxNewProject(newName, newDesc, uuid_instance) {
 	    	unplaceWaiting("imath-waiting-creation");
 	    	ajaxOwnProjects("uploadProject");
 	    	viewUploadProject(project);
+	    	showSaveProjectOKNotification();
 	    },
 	    error: function(error) {
 	    	unplaceWaiting("imath-waiting-creation");
@@ -239,6 +263,7 @@ function saveProject(uuid_project, newDesc, uuid_instance) {
 	    type: "GET",
 	    success: function(project) {
 	    	ajaxOwnProjects("uploadProject");
+	    	showSaveProjectOKNotification();
 	    },
 	    error: function(error) {
 	        console.log("Error saving project");
@@ -247,11 +272,32 @@ function saveProject(uuid_project, newDesc, uuid_instance) {
 	});	
 }
 
+function showSaveProjectOKNotification () {
+	showFlyingMessageOK(" Project saved ");
+}
+
+function showFlyingMessageOK(text) {
+	var msg = text;
+    var timeout = 2000;
+    $( ".notification" ).text(msg);
+    //$( ".notification" ).attr("style", "display:inline;");
+    $( ".notification" ).slideDown(250);
+    
+    if (timeout !== undefined) {
+        this.timeout = setTimeout(function () {
+        	$( ".notification" ).text('');
+        	//$( ".notification" ).attr("style", "display:none;");
+        	$( ".notification" ).slideUp(250);
+        }, timeout);
+    }
+} 
+
 function keepIntancesGlobal(instances, pub) {
 	var j = global_instances.length;
 	for(var i=0; i<instances.length; i++) {
 		global_instances[i+j]=[];
 		global_instances[i+j]['pub'] = pub;
+		global_instances[i+j]['name'] = instances[i]['name'];
 		global_instances[i+j]['cpu'] = instances[i]['cpu'];
 		global_instances[i+j]['ram'] = instances[i]['ram'];
 		global_instances[i+j]['stg'] = instances[i]['stg'];
@@ -383,10 +429,16 @@ function runiMathCloud(uuid_project) {
 	    	var key = project['key'];
 	    	var url = project['url'] + "/iMathCloud/login.jsp";
 	    	// Ugly... but it works
+	    	//var form = '<form target="_blank" id="fakeForm" action="' + url + '" method="post"><input type="hidden" name="j_username" value="' + linux + '"><input type="hidden" name="j_password" value="' + key + '"></form>';
+	    	//$("#imath-id-fake-form").html(form);
+	    	//$("#fakeForm").submit();
+	    	//$('#imath-id-fake-form').html("");
 	    	document.body.innerHTML += '<form target="_blank" id="fakeForm" action="' + url + '" method="post"><input type="hidden" name="j_username" value="' + linux + '"><input type="hidden" name="j_password" value="' + key + '"></form>';
 	    	document.getElementById("fakeForm").submit();
 	    	document.getElementById("fakeForm").remove();
-	    	//win.focus();
+	    	// For whatever reason, all events set up programatically are dismished when doing submit. 
+	    	setButtonsCode();
+	    	
 	    },
 	    error: function(error) {
 	        console.log("Error opening iMathCloud");

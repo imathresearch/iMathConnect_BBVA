@@ -25,7 +25,7 @@ public class Login extends HttpServlet{
     @Inject UserConnectController ucc;
     
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-    	System.out.println("New login servlet");
+    	LOG.info("[IMATH][Login.jsp] doPost");
     	try { 
     		String userName = request.getParameter("j_username");
     		String passWord = request.getParameter("j_password");
@@ -34,7 +34,7 @@ public class Login extends HttpServlet{
     		user = ucc.getUserConnectByUserName(userName);
     		ucc.setCurrentConnection(user.getUUID());    		
     		response.sendRedirect("indexNew.jsp"); 
-    	} catch(ServletException e) {
+    	} catch(Exception e) {
     	    // Login failed
     	    response.sendRedirect("loginerror.html");
     	}

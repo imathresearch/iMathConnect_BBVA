@@ -39,7 +39,7 @@ public class NotificationController extends AbstractController {
 	 */
     @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
     public Notification newNotification(String subject, String text, Integer type, List<String> uuids) throws Exception {
-    	if (type.intValue() < 0 || type.intValue() >1) throw new Exception("Bad Type");
+    	if (type.intValue() < 0 || type.intValue() >1) throw new Exception("Bad Type");    // Transaction OK
     	Notification notif = new Notification();
     	Set<UserConnect> users = new HashSet<UserConnect>();
     	if (uuids != null) {
@@ -60,7 +60,7 @@ public class NotificationController extends AbstractController {
     @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
     public Notification getNotification(String uuid_notification) throws EntityNotFoundException{
     	Notification notif = db.getNotificationDB().findById(uuid_notification);
-    	if (notif == null) throw new EntityNotFoundException("Notification not found uuid: " + uuid_notification);
+    	if (notif == null) throw new EntityNotFoundException("Notification not found uuid: " + uuid_notification); // Transaction OK
     	return notif;
     }
     

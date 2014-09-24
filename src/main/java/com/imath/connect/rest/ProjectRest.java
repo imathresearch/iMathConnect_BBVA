@@ -9,6 +9,7 @@ import java.util.logging.Logger;
 import javax.ejb.Stateful;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
+import javax.persistence.EntityNotFoundException;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -29,6 +30,10 @@ import com.imath.connect.service.ProjectController;
 import com.imath.connect.service.UserConnectController;
 import com.imath.connect.util.Constants;
 import com.imath.connect.util.IMathCloudInterface;
+import com.imath.connect.util.Mail;
+import com.imath.connect.util.SecurityImpl;
+import com.imath.connect.util.SecurityInterface;
+import com.imath.connect.util.Util;
 import com.imath.connect.security.SecurityManager;
 
 @Path(Constants.baseURL)
@@ -38,6 +43,11 @@ public class ProjectRest {
     @Inject private ProjectController pc;
     @Inject private UserConnectController ucc;
     @Inject private InstanceController ic;
+    @Inject private IMathCloudInterface imathcloud;
+    
+    private SecurityInterface security = new SecurityImpl();
+    private Mail mail = new Mail();
+    
     @Inject private Logger LOG;
     
     @GET
@@ -50,7 +60,7 @@ public class ProjectRest {
             UserConnect owner = ucc.getUserConnect(uuid_user);
             SecurityManager.secureBasic(owner.getUserName(), sc);
             Instance instance = ic.getInstance(uuid_instance);
-            Project project = pc.newProject(name, desc, owner, instance);
+            Project project = pc.newProject(name, desc, owner, instance, imathcloud);
             projectDTO = new ProjectDTO();
             projectDTO.convert(project, null);
             return Response.status(Response.Status.OK).entity(projectDTO).build();
@@ -123,22 +133,57 @@ public class ProjectRest {
             if (!project.getOwner().getUUID().equals(owner.getUUID())) {
                 throw new Exception("Not enough privileges");
             }
-            UserConnect collaborator;
-            if(other.contains("@")) {
-                collaborator = ucc.getUserByEMail(other);
-            } else {
-                collaborator = ucc.getUserConnectByUserName(other);
+            UserConnect collaborator = null;
+            boolean newUser = false;
+            boolean isMail = other.contains("@");
+            try {
+                if(isMail) {
+                    collaborator = ucc.getUserByEMail(other);
+                } else {
+                    collaborator = ucc.getUserConnectByUserName(other);
+                }
+            } catch (Exception e) {
+                if (!isMail) throw e;   // If a user name was given but it does not exists, we throw the exception
+                // Otherwise, we create the user
+                newUser=true;
+                collaborator = ucc.newUserConnectInvitation(other);
             }
             List<String> uuids = new ArrayList<String>();
             uuids.add(collaborator.getUUID());
             project = pc.addCollaborators(uuid_project, uuids);
             ProjectDTO retDTO = convert(project);
+            if (newUser) {
+                try {
+                    String password = Util.randomString(10);
+                    this.security.createSystemUser(collaborator.getUserName(), password, Constants.SYSTEM_ROLE);
+                    this.mail.sendInvitationNewUserMail(collaborator.getEMail(), collaborator.getUserName(), password, project.getName());
+                } catch (Exception e) {
+                    LOG.severe("[IMATH][addCollaboratoryOther] Error while creting system user: " + collaborator.getUserName() + " for collaborator. No message sent");
+                    e.printStackTrace();
+                }
+            } else {
+                try {
+                    this.mail.sendInvitationMail(collaborator.getEMail(), collaborator.getUserName(), project.getName());
+                } catch (Exception e) {
+                    LOG.severe("[IMATH][addCollaboratoryOther] Error sending mail to collaborator. No message sent.");
+                    e.printStackTrace();
+                }
+            }
             return Response.status(Response.Status.OK).entity(retDTO).build();
         } catch (Exception e) {
+            e.printStackTrace();
             LOG.severe(e.getMessage());
             return Response.status(Response.Status.BAD_REQUEST).build();
         }
     }
+    
+    //************* Just for testing purposes to mock SecurtiyInterface and Mail 
+    public Response addCollaboratorByOther(@PathParam("uuid_user") String uuid_user, @PathParam("uuid_project") String uuid_project, @PathParam("other") String other, @Context SecurityContext sc, Mail mail, SecurityInterface security) {
+        this.security= security;
+        this.mail = mail;
+        return this.addCollaboratorByOther(uuid_user, uuid_project, other, sc);
+    }
+    //**************
     
     @POST
     @Path(Constants.removeCollaborator + "/{uuid_user}/{uuid_project}/{uuid_col}")
@@ -177,10 +222,11 @@ public class ProjectRest {
             if (users.size()>0) {
                 throw new Exception("Not possible to remove the project if it has collaborators");
             }
-            pc.removeProject(project.getUUID());
+            pc.removeProject(project.getUUID(), imathcloud);
             return Response.status(Response.Status.OK).build();
             
         } catch (Exception e) {
+            e.printStackTrace();
             LOG.severe(e.getMessage());
             return Response.status(Response.Status.BAD_REQUEST).build();
         }
@@ -345,5 +391,9 @@ public class ProjectRest {
     
     public ProjectController getProjectController() {
     	return this.pc;
+    }
+    
+    public void setIMathCloud(IMathCloudInterface imathcloud) {
+        this.imathcloud = imathcloud;
     }
 }

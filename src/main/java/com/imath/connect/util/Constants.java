@@ -60,6 +60,9 @@ public class Constants {
     
     // update user profile
     static public final String updateProfile = "/updateProfile";
+
+    // Gets general information of the system
+    static public final String getInfo = "/getInfo";
     
     // IMPORTANT: We assume that JBOSS is launched from JBOSS-HOME/bin
     static public final String ADD_USER_CLI = "./add-user.sh";
@@ -76,15 +79,20 @@ public class Constants {
     static public final String IMATH_HTTP = "http://";
     static public final String WELLCOME_TEMPLATE = "welcomeTemplate.html"; // The html template for wellcome email
     static public final String RECOVER_TEMPLATE = "recoverPassTemplate.html"; // The html template for password recovery email
+
     static public final String RECOVER_IMAGE_NAME = "blue-arr.png"; // Image example
+    static public final String INVITATION_TEMPLATE = "invitationTemplate.html"; // The html template for invitation mails
+    static public final String INVITATION_TEMPLATE_NEW_USER = "invitationTemplateNewUser.html"; // The html template new users through invitation
     
     static public String IMATH_HOST() {
+        return "127.0.0.1"; // To be changed in production!!!!!!!
+        /*
         try {
             InetAddress addr = InetAddress.getLocalHost();            
             return addr.getHostAddress();
           } catch (UnknownHostException e) {
               return "127.0.0.1";
           }
+        }*/
     }
-
 }

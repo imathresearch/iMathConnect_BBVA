@@ -49,6 +49,62 @@ public class UserConnectController extends AbstractController{
         return peer;
     }
     
+    
+    @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
+    public UserConnect newUserConnectInvitation(String eMail) throws Exception {
+        String userName = findUserName(eMail);
+        String org = findOrganization(eMail);
+        Date now = new Date();
+        UserConnect peer = new UserConnect();
+        peer.setEMail(eMail);
+        peer.setLastConnection(null);
+        peer.setCurrentConnection(null);
+        peer.setCreationDate(now);
+        peer.setOrganization(org);
+        peer.setUserName(userName);
+        this.db.makePersistent(peer);
+        return peer;
+    }
+    
+    private String findOrganization(String eMail) throws Exception {
+        String errMsg = "No possible userName";
+        String [] split = eMail.split("@");
+        if (split.length!=2) throw new Exception(errMsg);
+        String []aux= split[1].split("\\.");
+        if (aux.length!=2) throw new Exception(errMsg);
+        return aux[0];
+    }
+    
+    @TransactionAttribute(TransactionAttributeType.REQUIRED)
+    private String findUserName(String eMail) throws Exception {
+        String errMsg = "No possible userName";
+        String [] split = eMail.split("@");
+        if (split.length!=2) throw new Exception(errMsg);
+        String pre = split[0];
+        String potencialUserName = keepLetters(pre);
+        if (pre.trim().equals("")) throw new Exception(errMsg);
+        UserConnect user = db.getUserConnectDB().findByUserName(potencialUserName);
+        if (user!=null) {
+            String []aux= split[1].split("\\.");
+            if (aux.length!=2) throw new Exception(errMsg);
+            potencialUserName = potencialUserName + "AT" + keepLetters(aux[0]);
+            user = db.getUserConnectDB().findByUserName(potencialUserName);
+            if (user!=null) throw new Exception(errMsg);
+        }
+        return potencialUserName;
+    }
+    
+    private String keepLetters(String pre) {
+        StringBuffer out = new StringBuffer("");
+        for(int i=0; i<pre.length(); i++) {
+            char ch = pre.charAt(i);
+            if (Character.isLetter(ch)) {
+                out.append(ch);
+            }
+        }
+        return out.toString();
+    }
+    
     /**
      * Updates the date of the last connection
      * @param UUID
@@ -80,10 +136,10 @@ public class UserConnectController extends AbstractController{
     }
     
     @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
-    public UserConnect getUserConnectByUserName(String userName) throws EntityNotFoundException {
+    public UserConnect getUserConnectByUserName(String userName) throws Exception {
         UserConnect peer = this.db.getUserConnectDB().findByUserName(userName);
         if (peer == null) {
-            throw new EntityNotFoundException();  
+            throw new Exception();  
         }
         return peer;
     }
@@ -94,15 +150,16 @@ public class UserConnectController extends AbstractController{
     }
     
     @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
-    public UserConnect getUserByEMail(String eMail) throws EntityNotFoundException {
+    public UserConnect getUserByEMail(String eMail) throws Exception {
         UserConnect peer = db.getUserConnectDB().findByEMail(eMail);
         if (peer == null) {
-            throw new EntityNotFoundException();  
+            throw new Exception();  
         }
         return peer;
     }
     
     @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
+
     public void updateUserConnect(String UUID, String urlPhoto) throws Exception {
         UserConnect peer = this.getUserConnect(UUID);
         if (peer!=null) {
@@ -138,7 +195,13 @@ public class UserConnectController extends AbstractController{
         Photo photo = new Photo();
         byte[] photoByte = photo.getPhotoByte(urlPhoto);
         return photoByte;
-        
+    }
+    public long countUsers() {
+        return db.getUserConnectDB().countUsers();
     }
     
+    @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
+    public long countUsersCol() {
+        return db.getUserConnectDB().countUsersCol();
+    }
 }

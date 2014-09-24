@@ -22,13 +22,38 @@
 		<!-- link rel="stylesheet" type="text/css" href="css/animate-custom.css" /-->
 		<link rel="stylesheet" type="text/css" href="css/login.css" />
 		
+		<style type="text/css">    
+			body {
+				background: url(img/background7.jpg) no-repeat center center fixed #000; 
+				-webkit-background-size: cover;
+				-moz-background-size: cover;
+				-o-background-size: cover;
+				background-size: cover;
+			}
+			.container-centered {
+				position: absolute;
+                top: 0;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                display: flex;
+                justify-content: space-around;
+                align-items: center;
+                flex-wrap: wrap;
+    		}
+		</style>
+		
     </head>
-    <br><br>
     <body>
-    <br><br>
+    <%
+    if (request.getUserPrincipal() != null) {
+    	// It means we are already authenticated!
+    	response.sendRedirect("indexNew.jsp");     	
+    }
+	%>
         <div class="container">
             <section>				
-                <div id="container_demo" >
+                <div id="container_demo" class="container-centered" >
                     <!-- hidden anchor to stop jump http://www.css3create.com/Astuce-Empecher-le-scroll-avec-l-utilisation-de-target#wrap4  -->
                     <a class="hiddenanchor" id="torecover"></a>
                     <a class="hiddenanchor" id="toregister"></a>

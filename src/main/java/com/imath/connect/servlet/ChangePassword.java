@@ -30,6 +30,7 @@ public class ChangePassword extends HttpServlet {
     /**
      * 
      */
+
     private static final long serialVersionUID = 1L;
 
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -62,7 +63,7 @@ public class ChangePassword extends HttpServlet {
         
         // Here everything is fine, so we proceed with the password change
         try {
-            security.updateSystemPassword(userName, passwordNew);
+            Security.updateSystemPassword(userName, passwordNew);
         } catch (Exception e) {
             e.printStackTrace();
             sendCustomResponse(response, HttpServletResponse.SC_BAD_REQUEST, "New password not valid");

@@ -11,7 +11,6 @@ import javax.persistence.criteria.Join;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
-import com.imath.connect.model.Instance;
 import com.imath.connect.model.Project;
 import com.imath.connect.model.UserConnect;
 
@@ -89,6 +88,31 @@ public class UserConnectDB {
         Predicate p1 = cb.equal(userJoin.get("UUID"), UUID_project);      
         criteria.select(userConnect).where(p1);
         List<UserConnect> out = em.createQuery(criteria).getResultList();
+        return out;
+    }
+    
+    /**
+     * Returns the number of users
+     * @return
+     */
+    public Long countUsers() {
+        CriteriaBuilder qb = em.getCriteriaBuilder();
+        CriteriaQuery<Long> cq = qb.createQuery(Long.class);
+        cq.select(qb.count(cq.from(UserConnect.class)));
+        return em.createQuery(cq).getSingleResult();
+    }
+    
+    /**
+     * Returns the number of collaborators
+     * @return
+     */
+    public Long countUsersCol() {
+        CriteriaBuilder qb = em.getCriteriaBuilder();
+        CriteriaQuery<Long> cq = qb.createQuery(Long.class);
+        Root<UserConnect> userConnect = cq.from(UserConnect.class);
+        Join<UserConnect, Project> userJoin = userConnect.join("projects");
+        cq.select(qb.count(userJoin));
+        Long out = em.createQuery(cq).getSingleResult();
         return out;
     }
     

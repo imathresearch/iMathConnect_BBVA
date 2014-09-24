@@ -54,7 +54,6 @@ public class UserConnectRestIT extends AbstractIT {
     
     @Before
     public void setUp() throws Exception {
-    	pc.setIMathCloudAccess(imathcloud);
     }
     
     @After

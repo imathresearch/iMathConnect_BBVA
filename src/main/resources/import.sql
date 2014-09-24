@@ -23,8 +23,8 @@ INSERT INTO standardconfiguration(uuid, cpu, ram, stg) VALUES ('stda2', 1, 0.5, 
 INSERT INTO standardconfiguration(uuid, cpu, ram, stg) VALUES ('stda3', 2, 2, 300);
 INSERT INTO standardconfiguration(uuid, cpu, ram, stg) VALUES ('stda4', 8, 16, 5000);
 
-INSERT INTO userconnect(uuid, creationdate, email, currentconnection, lastconnection, organization, phone1, phone2, username) VALUES ('useruuid1', '2014-01-01', 'ipinyol@gmail.com', '2014-02-01', '2014-01-01', 'imath', '999999999', '11111111111', 'ipinyolTest');
-INSERT INTO userconnect(uuid, creationdate, email, currentconnection, lastconnection, organization, phone1, phone2, username) VALUES ('useruuid2', '2014-01-01', 'pinyol@gmail.com', '2014-02-01', '2014-01-01', 'imath', '999999999', '11111111111', 'user2');
+INSERT INTO userconnect(uuid, creationdate, email, currentconnection, lastconnection, organization, phone1, phone2, username) VALUES ('useruuid1', '2014-01-01', 'rap@rup.com', '2014-02-01', '2014-01-01', 'imath', '999999999', '11111111111', 'ipinyolTest');
+INSERT INTO userconnect(uuid, creationdate, email, currentconnection, lastconnection, organization, phone1, phone2, username) VALUES ('useruuid2', '2014-01-01', 'ipinyol@gmail.com', '2014-02-01', '2014-01-01', 'imath', '999999999', '11111111111', 'ipinyol');
 INSERT INTO userconnect(uuid, creationdate, email, currentconnection, lastconnection, organization, phone1, phone2, username) VALUES ('useruuid3', '2014-01-01', 'iinyol@gmail.com', '2014-02-01', '2014-01-01', 'imath', '999999999', '11111111111', 'user3');
 INSERT INTO userconnect(uuid, creationdate, email, currentconnection, lastconnection, organization, phone1, phone2, username) VALUES ('useruuid4', '2014-01-01', 'ipnyol@gmail.com', '2014-02-01', '2014-01-01', 'imath', '999999999', '11111111111', 'user4');
 INSERT INTO userconnect(uuid, creationdate, email, currentconnection, lastconnection, organization, phone1, phone2, username) VALUES ('useruuid5', '2014-01-01', 'ipiyol@gmail.com', '2014-02-01', '2014-01-01', 'imath', '999999999', '11111111111', 'user5');
@@ -41,8 +41,8 @@ INSERT INTO instance(uuid, cpu, creationdate, ram, stg, url, name, owner_instanc
 INSERT INTO instance(uuid, cpu, creationdate, ram, stg, url, name, owner_instance) VALUES ('instuuid4', 4, '2014-01-01', 8, 300, 'http://127.0.0.1:8080', 'Public Instance 2', null);
 
 --AMMARTINEZ
-INSERT INTO instance(uuid, cpu, creationdate, ram, stg, url, name, owner_instance) VALUES ('instuuid5', 4, '2014-01-01', 8, 300, '127.0.0.1', 'Barcelona', 'amtuuid1');
-INSERT INTO instance(uuid, cpu, creationdate, ram, stg, url, name, owner_instance) VALUES ('instuuid6', 1, '2014-01-01', 8, 300, '127.0.0.1', 'Granada', 'amtuuid1');
+INSERT INTO instance(uuid, cpu, creationdate, ram, stg, url, name, owner_instance) VALUES ('instuuid5', 4, '2014-01-01', 8, 300, 'http://127.0.0.1:8080', 'Barcelona', 'amtuuid1');
+INSERT INTO instance(uuid, cpu, creationdate, ram, stg, url, name, owner_instance) VALUES ('instuuid6', 1, '2014-01-01', 8, 300, 'http://127.0.0.1:8080', 'Granada', 'amtuuid1');
 
 --IZUBIZARRETA
 INSERT INTO instance(uuid, cpu, creationdate, ram, stg, url, name, owner_instance) VALUES ('instuuid7', 4, '2014-01-01', 8, 300, '127.0.0.1', 'Barcelona', 'iztuuid1');
@@ -58,6 +58,8 @@ INSERT INTO project(uuid, creationdate, description, key, name, instance, owner,
 --AMMARTINEZ
 INSERT INTO project(uuid, creationdate, description, key, name, instance, owner, linux_group) VALUES ('projuuid7', '2014-01-01', 'My first project', 'IV0p34cDmXFCzA3p9V7/Hg==', 'Cassandra', 'instuuid5', 'amtuuid1', 'conanc');
 INSERT INTO project(uuid, creationdate, description, key, name, instance, owner, linux_group) VALUES ('projuuid8', '2014-01-01', 'Search Engine', 'IV0p34cDmXFCzA3p9V7/Hg==', 'Searcher', 'instuuid6', 'amtuuid1', 'conanc');
+INSERT INTO project(uuid, creationdate, description, key, name, instance, owner, linux_group) VALUES ('ff8081814887817d014888a6ebd80055', '2014-09-18 14:05:13.815', 'ddd', 'gY/bBSQSVXOcilB/JkfwrndC3UNcDI/pIJZJd6ZdLQFcpC6dnynn8Q==', 'dd', 'instuuid1', 'amtuuid1', 'ddXYZamtTest');
+
 
 --IZUBIZARRETA
 INSERT INTO project(uuid, creationdate, description, key, name, instance, owner, linux_group) VALUES ('projuuid9', '2014-01-01', 'My first project', 'IV0p34cDmXFCzA3p9V7/Hg==', 'Cassandra', 'instuuid7', 'iztuuid1', 'conanc');

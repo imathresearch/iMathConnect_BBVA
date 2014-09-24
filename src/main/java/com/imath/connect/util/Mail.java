@@ -73,7 +73,49 @@ public class Mail {
         }
         url += "/iMathConnect";
         html = html.replace("[URL_IMATHCLOUD]", url);
-        Mail.sendHTMLMail(to, "Welcome to iMathCloud", html);
+        Mail.sendHTMLMail(to, "Welcome to iMathCloud! The Cloud Platform for Data Scientists", html);
+    }
+    
+    public void sendInvitationMail(String to, String username, String project) throws Exception {
+        String html="";
+        InputStream in = this.getClass().getResourceAsStream(Constants.INVITATION_TEMPLATE);
+        BufferedReader br = new BufferedReader(new InputStreamReader(in));
+        String line;
+        while((line = br.readLine()) != null) {
+            html += line + "\n";
+        }
+        br.close();
+        html = html.replace("[USERNAME]", username);
+        html = html.replace("[PROJECT]", project);
+        String url = Constants.IMATH_HTTP + Constants.IMATH_HOST();
+        if (!Constants.IMATH_PORT.equals("80")) {
+            url += ":" + Constants.IMATH_PORT;
+        }
+        url += "/iMathConnect";
+        html = html.replace("[URL_IMATHCLOUD]", url);
+        Mail.sendHTMLMail(to, "[iMathCloud] Invitation to participate in the project " + project, html);
+    }
+    
+    public void sendInvitationNewUserMail(String to, String username, String password, String project) throws Exception {
+        String html="";
+        InputStream in = this.getClass().getResourceAsStream(Constants.INVITATION_TEMPLATE_NEW_USER);
+        BufferedReader br = new BufferedReader(new InputStreamReader(in));
+        String line;
+        while((line = br.readLine()) != null) {
+            html += line + "\n";
+        }
+        br.close();
+        html = html.replace("[USERNAME]", username);
+        html = html.replace("[PROJECT]", project);
+        html = html.replace("[PASSWORD]", password);
+        
+        String url = Constants.IMATH_HTTP + Constants.IMATH_HOST();
+        if (!Constants.IMATH_PORT.equals("80")) {
+            url += ":" + Constants.IMATH_PORT;
+        }
+        url += "/iMathConnect";
+        html = html.replace("[URL_IMATHCLOUD]", url);
+        Mail.sendHTMLMail(to, "Welcome to iMathCloud! The Cloud Platform for Data Scientists", html);
     }
     
     public void sendRecoverPasswordMail(String to, String username, String newPassword) throws Exception {
@@ -93,7 +135,7 @@ public class Mail {
         }
         url += "/iMathConnect";
         html = html.replace("[URL_IMATHCLOUD]", url);
-        Mail.sendHTMLMail(to, "Recover iMathCloud Password", html);
+        Mail.sendHTMLMail(to, "[iMathCloud] Recover Password", html);
     }
     
     private static Session getSession() {

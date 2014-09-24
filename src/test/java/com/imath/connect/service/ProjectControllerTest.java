@@ -62,7 +62,6 @@ public class ProjectControllerTest {
         
         pc = new ProjectController();
         pc.setUserConnectController(ucc);
-        pc.setIMathCloudAccess(imathcloud);
         pc.setMainDB(db);
         pc.setLog(LOG);
     }
@@ -76,7 +75,7 @@ public class ProjectControllerTest {
         owner.setUserName(userName);
         Instance instance = new Instance();
         
-        Project project = pc.newProject(name, desc, owner, instance);
+        Project project = pc.newProject(name, desc, owner, instance, imathcloud);
         
         assertEquals(name, project.getName());
         assertEquals(desc, project.getDescription());
