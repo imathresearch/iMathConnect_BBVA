@@ -42,8 +42,10 @@ public class Register extends HttpServlet {
         }
         
         try {
-            ucc.newUserConnect(userName, eMail, "", "", "", null);
+            ucc.newUserConnect(userName, eMail, "", null, null, null);
+            System.out.println("after newUserConnect");
             Security.createSystemUser(userName, passwordRep, Constants.SYSTEM_ROLE);
+            System.out.println("after create system user");
             try {
                 Mail mail = new Mail();
                 mail.sendWelcomeMail(eMail, userName);
