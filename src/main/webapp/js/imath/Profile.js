@@ -37,7 +37,7 @@ function AjaxUserData(userName) {
 			if (user['photo']!=null) {
 				document.getElementById("photoUser").src = "data:image/png;base64," + user['photo'];
 				document.getElementById("photoUser").height = "268";
-				document.getElementById("photoUser").width = "260";
+				document.getElementById("photoUser").width = "250";
 			}
 	    },
 	    error: function(error) {

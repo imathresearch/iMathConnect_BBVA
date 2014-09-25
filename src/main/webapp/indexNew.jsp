@@ -95,10 +95,10 @@
                                 <li class="user-footer">
                                     <div class="pull-left">
                                     <!-- This link has to open a pop-up to see the user's information and for modify the password and picture. -->
-                                        <a class="btn btn-default btn-flat" id="profileForm">Profile</a>
+                                        <a class="btn btn-primary active" id="profileForm">Profile</a>
                                     </div>
                                     <div class="pull-right">
-                                        <a href="logout" class="btn btn-default btn-flat">Sign out</a>
+                                        <a href="logout" class="btn btn-primary active">Sign out</a>
                                     </div>
                                 </li>
                             </ul>
@@ -364,26 +364,26 @@
                             <td>
                             <p>
                                 <br>
-                                <center><img id="photoUser" src="img/avatar04.png" alt="No photograph" height="268" width="260" /></center>
+                                <center><img id="photoUser" src="img/avatar04.png" alt="No photograph" height="268" width="250" /></center>
                             </p>
                             </td>
                             <td>
-                            <div class="spaceForm" style="margin-right: 10">
+                            <div>
                             <p>
                                 <br>
-                                <label for="" class="" data-icon="">Username: </label>
+                                <label for="" class="youpasswd" data-icon="">Username: </label>
                                 <input class="form-control" id="username" name="username" type="text" placeholder="" disabled />
                             </p>
                             <p>
-                                <label for="" class="" data-icon="">Email:    </label>
+                                <label for="" class="youpasswd" data-icon="">Email:    </label>
                                 <input class="form-control" id="email" name="email" type="text" placeholder="" disabled />
                             </p>
                             <p>
-                                <label for="" class="" data-icon="">Phone 1:  </label>
+                                <label for="" class="youpasswd" data-icon="">Phone 1:  </label>
                                 <input class="form-control" id="phone1" name="phone1" type="text" placeholder="" disabled />
                             </p>
                             <p  style="margin: 10 200">
-                                <label for="" class="" data-icon="">Phone 2:  </label>
+                                <label for="" class="youpasswd" data-icon="">Phone 2:  </label>
                                 <input class="form-control" id="phone2" name="phone2" type="text" placeholder="" disabled />
                             </p>
                             </div>
@@ -391,17 +391,17 @@
                             </tr>
                             <tr>
                             <td>
-                            <center><input id="changePhotograph" type="button" value="Change Photograph" class="btn btn-flat"/></center>
+                            <center><input id="changePhotograph" type="button" value="Change Photograph" class="btn btn-primary active"/></center>
                             </td>
                             <td>
-                            <center><input id="changePassButton" type="button" value="Change Password" class="btn btn-flat"/></center>
+                            <center><input id="changePassButton" type="button" value="Change Password" class="btn btn-primary active"/></center>
                             </td>
                             </tr>
                             </table>
                         </form>
                     </div>
                     <div class="modal-footer clearfix">
-                        <div style="float:right"><input id="closeProfile" type="button" value="Close" class="btn btn-flat"/></div>
+                        <div style="float:right"><input id="closeProfile" type="button" value="Close" class="btn btn-danger"/></div>
                     </div>
                 </div><!-- /.modal-content -->
             </div><!-- /.modal-dialog -->
@@ -430,14 +430,14 @@
                                 <input class="form-control" id="passwordNewConf" name="passwordNewConf" required="required" type="password" placeholder="eg. X8df!90EO"/>
                             </p>
                             <p>
-                                <div style="float:right"><input id="changePassword" type="button" value="Change Password" class="btn btn-flat"/></div>
+                                <div style="float:right"><input id="changePassword" type="button" value="Change Password" class="btn btn-primary active"/></div>
                             </p>
                             <p>
                             </p>
                     </div>
                     <div class="modal-footer clearfix">
                             <div id="profilePasswordMsg" style="float:left"></div>
-                            <div style="float:right"><input id="closePassword" type="button" value="Close" class="btn btn-flat"/></div>
+                            <div style="float:right"><input id="closePassword" type="button" value="Close" class="btn btn-danger"/></div>
                             <p>
                             </p>
                     </div>
@@ -453,18 +453,18 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <button id="closeModalPhotograph" type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                        <h4 class="modal-title">User's Photograph Modification</h4>
+                        <h4 class="modal-title">Photograph Modification</h4>
                     </div>
                     <div class="modal-body">
-                            <label for="" class="" data-icon="">Select new photograph: </label>
+                            <label for="passwordsignup" class="youpasswd" data-icon="">Select new photograph: </label>
                             <input type="file" id="uploadedFile" name="uploadedFile" size="50" multiple />
-                            <div style="float:right"><input type="button" name="uploadFile" id="uploadFile" value="Upload It" class="btn btn-flat" /></div>
+                            <div style="float:right"><input type="button" name="uploadFile" id="uploadFile" value="Upload It" class="btn btn-primary active" /></div>
                             <p>
                             </p>
                     </div>
                     <div class="modal-footer clearfix">
                         <div id="profilePhotographsg" style="float:left"></div>
-                        <div style="float:right"><input type="button" name="closeFile" id="closeFile" value="Close" class="btn btn-flat" /></div>
+                        <div style="float:right"><input type="button" name="closeFile" id="closeFile" value="Close" class="btn btn-danger" /></div>
                         <p>
                         </p>
                     </div>
