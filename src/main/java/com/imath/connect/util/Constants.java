@@ -83,6 +83,8 @@ public class Constants {
     static public final String INVITATION_TEMPLATE = "invitationTemplate.html"; // The html template for invitation mails
     static public final String INVITATION_TEMPLATE_NEW_USER = "invitationTemplateNewUser.html"; // The html template new users through invitation
     
+    static public final String LOG_PREFIX_SYSTEM = "[IMATH][CONNECT]";    // The prefix of the system
+    
     static public String IMATH_HOST() {
         return "127.0.0.1"; // To be changed in production!!!!!!!
 

@@ -35,13 +35,13 @@ public class NotificationRest {
 	@Inject private UserConnectController ucc;
     @Inject private InstanceController ic;
     @Inject private Logger LOG;
+    private static String LOG_PRE = Constants.LOG_PREFIX_SYSTEM + "[NotificationRest]";
     
     @GET
     @Path(Constants.getNotifications + "/{uuid_user}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getNotifications(@PathParam("uuid_user") String uuid_user, @Context SecurityContext sc) {
-        //TODO: IT
-        LOG.info("getNotifications called with uuid: " + uuid_user);
+        LOG.info(LOG_PRE + "[" + Constants.getNotifications + "]" + uuid_user);
         try {
             UserConnect owner = ucc.getUserConnect(uuid_user);
             List<Notification> myNotifications = nc.getNotificationsByUser(uuid_user);

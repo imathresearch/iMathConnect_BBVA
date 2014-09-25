@@ -45,6 +45,8 @@ public class ProjectRest {
     @Inject private InstanceController ic;
     @Inject private IMathCloudInterface imathcloud;
     
+    private static String LOG_PRE = Constants.LOG_PREFIX_SYSTEM + "[ProjectRest]";
+    
     private SecurityInterface security = new SecurityImpl();
     private Mail mail = new Mail();
     
@@ -55,6 +57,7 @@ public class ProjectRest {
     @Produces(MediaType.APPLICATION_JSON)
     public Response newProject(@PathParam("uuid_user") String uuid_user, @PathParam("name") String name, @PathParam("desc") String desc, 
             @PathParam("uuid_instance") String uuid_instance, @Context SecurityContext sc) {
+        LOG.info(LOG_PRE + "[" + Constants.newProject + "]" + uuid_user + " " + name + " " + desc + " " + uuid_instance);
         ProjectDTO projectDTO = null;
         try {
             UserConnect owner = ucc.getUserConnect(uuid_user);
@@ -74,6 +77,7 @@ public class ProjectRest {
     @Path(Constants.updateProject + "/{uuid_user}/{uuid_project}/{desc}/{uuid_instance}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response updateProject(@PathParam("uuid_user") String uuid_user, @PathParam("uuid_project") String uuid_project, @PathParam("desc") String desc, @PathParam("uuid_instance") String uuid_instance, @Context SecurityContext sc) {
+        LOG.info(LOG_PRE + "[" + Constants.updateProject + "]" + uuid_user + " " + desc + " " + uuid_instance);
         try {
             UserConnect owner = ucc.getUserConnect(uuid_user);
             SecurityManager.secureBasic(owner.getUserName(), sc);
@@ -95,6 +99,7 @@ public class ProjectRest {
     @Path(Constants.addCollaborator + "/{uuid_user}/{uuid_project}/{uuid_col}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response addCollaborator(@PathParam("uuid_user") String uuid_user, @PathParam("uuid_project") String uuid_project, @PathParam("uuid_col") String uuid_col, @Context SecurityContext sc) {
+        LOG.info(LOG_PRE + "[" + Constants.addCollaborator + "]" + uuid_user + " " + uuid_project);
         try {
             UserConnect owner = ucc.getUserConnect(uuid_user);
             SecurityManager.secureBasic(owner.getUserName(), sc);
@@ -126,6 +131,7 @@ public class ProjectRest {
     @Path(Constants.addCollaboratorByUserNameOrEmail + "/{uuid_user}/{uuid_project}/{other}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response addCollaboratorByOther(@PathParam("uuid_user") String uuid_user, @PathParam("uuid_project") String uuid_project, @PathParam("other") String other, @Context SecurityContext sc) {
+        LOG.info(LOG_PRE + "[" + Constants.addCollaboratorByUserNameOrEmail + "]" + uuid_user + " " + uuid_project + " " + other);
         try {
             UserConnect owner = ucc.getUserConnect(uuid_user);
             SecurityManager.secureBasic(owner.getUserName(), sc);
@@ -189,6 +195,7 @@ public class ProjectRest {
     @Path(Constants.removeCollaborator + "/{uuid_user}/{uuid_project}/{uuid_col}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response removeCollaborator(@PathParam("uuid_user") String uuid_user, @PathParam("uuid_project") String uuid_project, @PathParam("uuid_col") String uuid_col, @Context SecurityContext sc) {
+        LOG.info(LOG_PRE + "[" + Constants.removeCollaborator + "]" + uuid_user + " " + uuid_project + " " + uuid_col);
         try {
             UserConnect owner = ucc.getUserConnect(uuid_user);
             SecurityManager.secureBasic(owner.getUserName(), sc);
@@ -209,6 +216,7 @@ public class ProjectRest {
     @Path(Constants.removeProject + "/{uuid_user}/{uuid_project}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response removeProject(@PathParam("uuid_user") String uuid_user, @PathParam("uuid_project") String uuid_project, @Context SecurityContext sc) {
+        LOG.info(LOG_PRE + "[" + Constants.removeProject + "]" + uuid_user + " " + uuid_project);
         try {
             UserConnect owner = ucc.getUserConnect(uuid_user);
             SecurityManager.secureBasic(owner.getUserName(), sc);
@@ -236,8 +244,7 @@ public class ProjectRest {
     @Path(Constants.getProject + "/{uuid_user}/{uuid_project}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getProject(@PathParam("uuid_user") String uuid_user, @PathParam("uuid_project") String uuid_project, @Context SecurityContext sc) {
-        //TODO: IT
-        LOG.info("getProject called with uuid: " + uuid_user + " and uuid_project:" + uuid_project);
+        LOG.info(LOG_PRE + "[" + Constants.getProject + "]" + uuid_user + " " + uuid_project);
         try {
             UserConnect owner = ucc.getUserConnect(uuid_user);
             Project project = pc.getProject(uuid_project);
@@ -259,7 +266,7 @@ public class ProjectRest {
     @Path(Constants.getProjectCredentials + "/{uuid_user}/{uuid_project}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getProjectCredentials(@PathParam("uuid_user") String uuid_user, @PathParam("uuid_project") String uuid_project, @Context SecurityContext sc) {
-        // TODO IT
+        LOG.info(LOG_PRE + "[" + Constants.getProjectCredentials + "]" + uuid_user + " " + uuid_project);
         try {
             UserConnect user = ucc.getUserConnect(uuid_user);
             Project project = pc.getProject(uuid_project);
@@ -292,7 +299,7 @@ public class ProjectRest {
     @Path(Constants.ownProjects + "/{uuid_user}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getOwnProjects(@PathParam("uuid_user") String uuid_user, @Context SecurityContext sc) {
-    	LOG.info("getOwnProjects called with uuid: " + uuid_user);
+        LOG.info(LOG_PRE + "[" + Constants.ownProjects + "]" + uuid_user);
         try {
             UserConnect owner = ucc.getUserConnect(uuid_user);
             SecurityManager.secureBasic(owner.getUserName(), sc);
@@ -309,6 +316,7 @@ public class ProjectRest {
     @Path(Constants.colProjects + "/{uuid_user}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getColProjects(@PathParam("uuid_user") String uuid_user, @Context SecurityContext sc) {
+        LOG.info(LOG_PRE + "[" + Constants.colProjects + "]" + uuid_user);
         try {
             UserConnect owner = ucc.getUserConnect(uuid_user);
             SecurityManager.secureBasic(owner.getUserName(), sc);

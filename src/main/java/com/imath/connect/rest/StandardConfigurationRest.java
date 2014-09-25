@@ -27,11 +27,13 @@ public class StandardConfigurationRest {
     
     @Inject StandardConfigurationController scc; 
     @Inject private Logger LOG;
+    private static String LOG_PRE = Constants.LOG_PREFIX_SYSTEM + "[StandardConfigurationRest]";
     
     @GET
     @Path(Constants.configurations)
     @Produces(MediaType.APPLICATION_JSON)
     public Response getConfigurations(@Context SecurityContext sc) {
+        LOG.info(LOG_PRE + "[" + Constants.getNotifications + "] nothing" );
         try {
             List<StandardConfiguration> listSC = scc.getConfigurations();
             List<StandardConfigurationDTO> listDTO = new ArrayList<StandardConfigurationDTO>();

@@ -32,12 +32,13 @@ public class InstanceRest {
     @Inject private UserConnectController ucc;
     @Inject private InstanceController ic;
     @Inject private Logger LOG;
+    private static String LOG_PRE = Constants.LOG_PREFIX_SYSTEM + "[InstanceRest]";
     
     @GET
     @Path(Constants.instances + "/{uuid_user}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getInstances(@PathParam("uuid_user") String uuid_user, @Context SecurityContext sc) {
-        LOG.info("instances called with uuis_user:" + uuid_user);
+        LOG.info(LOG_PRE + "[" + Constants.instances + "]" + uuid_user);
     	try {
     		if (uuid_user==null) uuid_user="";
     		uuid_user=uuid_user.trim();
