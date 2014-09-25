@@ -45,11 +45,13 @@ public class UserConnectRest {
     @Inject private Logger LOG;
     @Inject private UserConnectController ucc;
     @Inject private ProjectController pc;
+    private static String LOG_PRE = Constants.LOG_PREFIX_SYSTEM + "[UserConnectRest]";
     
     @GET
     @Path(Constants.getUserByUserName + "/{userName}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getUserByUserName(@PathParam("userName") String userName, @Context SecurityContext sc) {
+        LOG.info(LOG_PRE + "[" + Constants.getUserByUserName + "]" + userName);
         try {
             UserConnect user = ucc.getUserConnectByUserName(userName);
             SecurityManager.secureBasic(user.getUserName(), sc);
@@ -66,6 +68,7 @@ public class UserConnectRest {
     @Path(Constants.getUser + "/{uuid_user}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getUser(@PathParam("uuid_user") String uuid, @Context SecurityContext sc) {
+        LOG.info(LOG_PRE + "[" + Constants.getUser + "]" + uuid);
         try {
             UserConnect user = ucc.getUserConnect(uuid);
             SecurityManager.secureBasic(user.getUserName(), sc);
@@ -82,6 +85,7 @@ public class UserConnectRest {
     @Path(Constants.getColUsersByProjectUser + "/{uuid_project}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getColUsersByProject(@PathParam("uuid_project") String uuid_project, @Context SecurityContext sc) {
+        LOG.info(LOG_PRE + "[" + Constants.getColUsersByProjectUser + "]" + uuid_project);
         try {
             String userName = null;
             UserConnect owner = null;
@@ -143,9 +147,8 @@ public class UserConnectRest {
     @Consumes("multipart/form-data")
     @Produces(MediaType.APPLICATION_JSON)
     public Response uploadUsersProfile(MultipartFormDataInput input, @Context SecurityContext sc) throws Exception {
-        //TODO: do it well! This is provisional, to see if files can be really stored
         //TODO: warning when a filename exists. Add some flag to notify about overwriting files etc... 
-        
+        LOG.info(LOG_PRE + "[" + Constants.updateProfile + "]");
         UserConnectDTO usersDTO = null;
 
         try {

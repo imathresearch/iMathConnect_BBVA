@@ -31,11 +31,13 @@ public class GeneralRest {
     @Inject private ProjectController pc;
     @Inject private Logger LOG;
     
+    private static String LOG_PRE = Constants.LOG_PREFIX_SYSTEM + "[GeneralRest]";
+    
     @GET
     @Path(Constants.getInfo + "/{uuid_user}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getInfo(@PathParam("uuid_user") String uuid_user, @Context SecurityContext sc) {
-        LOG.info("[iMath][" + Constants.getInfo + "]");
+        LOG.info(LOG_PRE + "[" + Constants.getInfo + "]" + uuid_user);
         try {
             UserConnect owner = ucc.getUserConnect(uuid_user);
             SecurityManager.secureBasic(owner.getUserName(), sc);
