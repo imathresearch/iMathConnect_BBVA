@@ -234,7 +234,7 @@ function generateTableOfColProjects(projects) {
 		for(var ii=0; ii< collaborators.length; ii++) {
 			rowCol = rowCol + "<table><tr>";
 			var nameImage = "TableOfColProjects" + i + ii;
-			rowCol = rowCol + '<td><img src="img/avatar04.png" id="' + nameImage + '" alt="' + collaborators[ii]['userName'] + '" class="offline"  height="32" width="32"/></td><td><i>' + collaborators[ii]['userName'] + "</i><br><small>" + collaborators[ii]['organization'] +'</small> </td></tr></table>';
+			rowCol = rowCol + '<td><div class="wrapImgTable"><img src="img/avatar04.png" id="' + nameImage + '" alt="' + collaborators[ii]['userName'] + '" class="offline"  /></td><td><i>' + collaborators[ii]['userName'] + "</i><br><small>" + collaborators[ii]['organization'] +'</small></div></td></tr></table>';
 			names.push(nameImage);
 			if (collaborators[ii]['photo']!=null) {
 				byteFotos.push(collaborators[ii]['photo']);
@@ -261,7 +261,7 @@ function generateTableOfColProjects(projects) {
 		else {
 			byteFotos.push(null);
 		}
-		rowOwner = rowOwner + '<td><img id="' + nameImage2 + '" src="img/avatar04.png" alt="' + owner['userName'] + '" class="offline"  height="32" width="32"/></td><td><i>' + owner['userName'] + "</i><br><small>" + owner['organization'] + '</small> </td></tr></table>';
+		rowOwner = rowOwner + '<td><div class="wrapImgTable"><img id="' + nameImage2 + '" src="img/avatar04.png" alt="' + owner['userName'] + '" class="offline"/></td><td><i>' + owner['userName'] + "</i><br><small>" + owner['organization'] + '</small></div></td></tr></table>';
 		ret = ret + htmlTableRowData([rowIcon, rowName,dateText,desc,rowOwner,rowCol,rowInstance], uuid);	
 	}
 	$(".imath-collaborations").html(ret);
@@ -290,7 +290,7 @@ function generateTableOfProjects(projects, callbackString) {
 		for(var ii=0; ii< collaborators.length; ii++) {
 			rowCol = rowCol + "<table><tr>";
 			var nameImage = "TableOfProjects" + i + ii;
-			rowCol = rowCol + '<td><img src="img/avatar04.png" id="' + nameImage + '" alt="' + collaborators[ii]['userName'] + '" class="offline"  height="32" width="32"/></td><td><i>' + collaborators[ii]['userName'] + "</i><br><small>" + collaborators[ii]['organization'] + '</small> </td></tr></table>';
+			rowCol = rowCol + '<td><div class="wrapImgTable"><img src="img/avatar04.png" id="' + nameImage + '" alt="' + collaborators[ii]['userName'] + '" class="offline"/></td><td><i>' + collaborators[ii]['userName'] + "</i><br><small>" + collaborators[ii]['organization'] + '</small> </div></td></tr></table>';
 			names.push(nameImage);
 			if (collaborators[ii]['photo']!=null) {
 				byteFotos.push(collaborators[ii]['photo']);

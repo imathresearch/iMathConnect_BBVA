@@ -32,6 +32,67 @@
           <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
         <![endif]-->
         
+        <style>
+        
+        
+		.wrapImgProfile {
+			width: 250px;
+			height: 268px; 
+			overflow: hidden;
+			background: #fff;
+			margin: 10px;
+			text-align: center;
+			line-height: 150px;			
+			position: relative
+		}
+		
+		.wrapImgTable {
+			width: 32px;
+			height: 32px; 
+			overflow: hidden;
+			background: #fff;
+			margin: 10px;
+			text-align: center;
+			line-height: 150px;			
+			position: relative
+		}
+		
+		.wrapImgUserAccount {
+			width: 90px;
+			height: 90px; 
+			overflow: hidden;
+			background: #3c8dbc;
+			margin: 10px;
+			text-align: center;
+			line-height: 150px;			
+			position: relative
+		
+		}
+		
+		.wrapImgUserState {
+			width: 45px;
+			height: 45px; 
+			overflow: hidden;
+			margin: 10px;
+			text-align: center;
+			line-height: 150px;			
+			position: relative		
+		}
+		
+		.wrapImgProfile img, .wrapImgTable img, .wrapImgUserAccount img, .wrapImgUserState img {
+			max-width: 100%;
+			max-height: 100%;
+			vertical-align: middle;
+			margin:0;
+			position: absolute;
+    		top: 50%;
+    		left: 50%;
+    		margin-right: -50%;
+    		transform: translate(-50%, -50%)
+		
+		}
+        
+        </style>
         
     </head>
     <body class="skin-blue">
@@ -87,7 +148,7 @@
                             <ul class="dropdown-menu">
                                 <!-- User image -->
                                 <li class="user-header bg-light-blue">
-                                    <img id="userphoto" src="img/avatar04.png" class="img-circle" alt="User Image" />
+                                    <div class="wrapImgUserAccount"><img id="userphoto" src="img/avatar04.png" class="img-circle" alt="User Image" /></div>
                                     <p class="username">-</p>
                                     <p class="usercreationdate">-</p>
                                 </li>
@@ -115,7 +176,7 @@
                     <!-- Sidebar user panel -->
                     <div class="user-panel">
                         <div class="pull-left image">
-                            <img id="userphoto2" src="img/avatar04.png" class="img-circle" alt="User Image" />
+                            <div class="wrapImgUserState"><img id="userphoto2" src="img/avatar04.png" class="img-circle" alt="User Image" /></div>
                         </div>
                         <div class="pull-left info">
                             <p class="username">-</p>
@@ -363,20 +424,27 @@
                             <tr>
                             <td>
                             <p>
-                                <br>
-                                <center><img id="photoUser" src="img/avatar04.png" alt="No photograph" height="268" width="250" /></center>
+                                <br/>
+                                <center><div class="wrapImgProfile"><img id="photoUser" src="img/avatar04.png" alt="No photograph"/></div></center>
                             </p>
                             </td>
                             <td>
                             <div>
                             <p>
-                                <br>
+                                <br/>
+                                <!-- div class="form-group">
+                                	<label>Username</label-->
                                 <label for="" class="youpasswd" data-icon="">Username: </label>
-                                <input class="form-control" id="username" name="username" type="text" placeholder="" disabled />
+                                	<input class="form-control" id="username" name="username" type="text" placeholder="" disabled />
+                                <!-- >/div-->
                             </p>
                             <p>
+                            	<!-- div class="form-group">
+                                <label>Username</label--->
                                 <label for="" class="youpasswd" data-icon="">Email:    </label>
+                                
                                 <input class="form-control" id="email" name="email" type="text" placeholder="" disabled />
+                            	<!-- /div-->
                             </p>
                             <p>
                                 <label for="" class="youpasswd" data-icon="">Phone 1:  </label>
