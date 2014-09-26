@@ -77,11 +77,11 @@ public class Constants {
     static public final String IMATHSYSTEMGROUP = "imathuser";      // The linux system group. All imath users will belong to this group.
     static public final String IMATH_PORT = "8080";
     static public final String IMATH_HTTP = "http://";
-    static public final String WELLCOME_TEMPLATE = "newWelcome.html"; // The html template for wellcome email
-    static public final String RECOVER_TEMPLATE = "recoverPassTemplate.html"; // The html template for password recovery email
+    static public final String WELLCOME_TEMPLATE = "welcomeEmail.html"; // The html template for wellcome email
+    static public final String RECOVER_TEMPLATE = "recoverPassEMail.html"; // The html template for password recovery email
 
-    static public final String INVITATION_TEMPLATE = "invitationTemplate.html"; // The html template for invitation mails
-    static public final String INVITATION_TEMPLATE_NEW_USER = "invitationTemplateNewUser.html"; // The html template new users through invitation
+    static public final String INVITATION_TEMPLATE = "projectInvitationEmail.html"; // The html template for invitation mails
+    static public final String INVITATION_TEMPLATE_NEW_USER = "newUserInvitationEmail.html"; // The html template new users through invitation
     
     static public final String LOG_PREFIX_SYSTEM = "[IMATH][CONNECT]";    // The prefix of the system
     
