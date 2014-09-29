@@ -91,6 +91,18 @@
     		transform: translate(-50%, -50%)
 		
 		}
+		
+		td.profile {
+		    padding: 8px;		    
+		    display: inline-block;
+		    margin: 0;
+		    border: 0;
+		    width: 250px;
+		}
+		
+		td.spaced {
+			margin-left: 40px;
+		}
         
         </style>
         
@@ -363,9 +375,7 @@
 						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
 						<h3 class="modal-title"><i class="fa fa-info-circle"></i>  Notification Details</h3>
 					</div>
-					<div class= "notification-info">
-					<!-- div class="modal-body notification-info" >						
-					</div-->
+					<div class= "notification-info">					
 					</div>					
 				</div><!-- /.modal-content -->
             </div><!-- /.modal-dialog -->
@@ -416,56 +426,65 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <button id="closeModalProfile" type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                        <h4 class="modal-title">User Profile</h4>
+                        <h3 class="modal-title"><i class="fa fa-user"></i>   Profile</h3>
                     </div>
                     <div class="modal-body">
                         <form id="profileForm" class="input-group" action="#" method="post" autocomplete="off" >
+                            <center>
                             <table>
                             <tr>
-                            <td>
-                            <p>
-                                <br/>
+                            <td class="profile">
+                            <p>                                
                                 <center><div class="wrapImgProfile"><img id="photoUser" src="img/avatar04.png" alt="No photograph"/></div></center>
-                            </p>
-                            </td>
-                            <td>
+                            </p>                           
+                            </td>                           
+                            <td  class="profile spaced">                          
                             <div>
                             <p>
                                 <br/>
-                                <!-- div class="form-group">
-                                	<label>Username</label-->
-                                <label for="" class="youpasswd" data-icon="">Username: </label>
-                                	<input class="form-control" id="username" name="username" type="text" placeholder="" disabled />
-                                <!-- >/div-->
+                                <div class="form-group">
+                                <label>Username</label>                                
+                                <input class="form-control" id="username" name="username" type="text" placeholder="" disabled />
+                                </div>
                             </p>
                             <p>
-                            	<!-- div class="form-group">
-                                <label>Username</label--->
-                                <label for="" class="youpasswd" data-icon="">Email:    </label>
-                                
-                                <input class="form-control" id="email" name="email" type="text" placeholder="" disabled />
-                            	<!-- /div-->
+                            	<div class="form-group">
+                                <label>Email</label>                                                              
+                                <input class="form-control" id="email" name="email" type="text" placeholder="" disabled />                                
+                            	</div>
                             </p>
-                            <p>
-                                <label for="" class="youpasswd" data-icon="">Phone 1:  </label>
-                                <input class="form-control" id="phone1" name="phone1" type="text" placeholder="" disabled />
-                            </p>
-                            <p  style="margin: 10 200">
-                                <label for="" class="youpasswd" data-icon="">Phone 2:  </label>
-                                <input class="form-control" id="phone2" name="phone2" type="text" placeholder="" disabled />
-                            </p>
+                            
+                                                     
                             </div>
                             </td>
                             </tr>
                             <tr>
-                            <td>
-                            <center><input id="changePhotograph" type="button" value="Change Photograph" class="btn btn-primary active"/></center>
+                            <td class="profile">
+                            	<div>
+                            	<center><input id="changePhotograph" type="button" value="Change Photograph" class="btn btn-primary active"/></center>
+                            	</div>
                             </td>
-                            <td>
-                            <center><input id="changePassButton" type="button" value="Change Password" class="btn btn-primary active"/></center>
+                            <td class="profile spaced">
+                            	<div>
+                            	<center><input id="changePassButton" type="button" value="Change Password" class="btn btn-primary active"/></center>
+                            	</div>
                             </td>
                             </tr>
                             </table>
+                            </center>
+                            
+                            <!-- center>                            
+                            <table>
+                            <tr>
+                            <td class="profile">
+                            	<center><input id="changePhotograph" type="button" value="Change Photograph" class="btn btn-primary active"/></center>
+                            </td>
+                            <td class="profile spaced">
+                            	<center><input id="changePassButton" type="button" value="Change Password" class="btn btn-primary active"/></center>
+                            </td>
+                            </tr>                            
+                            </table>
+                            </center-->
                         </form>
                     </div>
                     <div class="modal-footer clearfix">
