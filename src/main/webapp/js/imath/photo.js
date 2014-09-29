@@ -38,8 +38,8 @@ function ajaxModify() {
             //location.reload();
 	    },
 	    error: function(error) {
-	    	$("#profilePhotographsg").html("<span style='color:green'>Error modifying the photo</span>");
-	    	showErrorForm("Error saving the photograph");
+	    	$("#profilePhotographsg").html("<span style='color:red'>Error modifying the photo</span>");
+	    	//showErrorForm("Error saving the photograph");
 	    }
 	});
 }
