@@ -160,7 +160,7 @@
                             <ul class="dropdown-menu">
                                 <!-- User image -->
                                 <li class="user-header bg-light-blue">
-                                    <div class="wrapImgUserAccount"><img id="userphoto" src="img/avatar04.png" class="img-circle" alt="User Image" /></div>
+                                    <div class="wrapImgUserAccount"><img id="userphoto" src="img/avatar04.png" class="img-circle userImg" alt="User Image" /></div>
                                     <p class="username">-</p>
                                     <p class="usercreationdate">-</p>
                                 </li>
@@ -188,7 +188,7 @@
                     <!-- Sidebar user panel -->
                     <div class="user-panel">
                         <div class="pull-left image">
-                            <div class="wrapImgUserState"><img id="userphoto2" src="img/avatar04.png" class="img-circle" alt="User Image" /></div>
+                            <div class="wrapImgUserState"><img id="userphoto2" src="img/avatar04.png" class="img-circle userImg" alt="User Image" /></div>
                         </div>
                         <div class="pull-left info">
                             <p class="username">-</p>
@@ -435,7 +435,7 @@
                             <tr>
                             <td class="profile">
                             <p>                                
-                                <center><div class="wrapImgProfile"><img id="photoUser" src="img/avatar04.png" alt="No photograph"/></div></center>
+                                <center><div class="wrapImgProfile"><img class ="userImg" id="photoUser" src="img/avatar04.png" alt="User Image"/></div></center>
                             </p>                           
                             </td>                           
                             <td  class="profile spaced">                          

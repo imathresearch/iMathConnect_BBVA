@@ -411,7 +411,7 @@ function generateTableOfCollaborators(collaborators) {
 	for(var ii=0; ii< collaborators.length; ii++) {
 		var nameImage = "TableOfCollaborators" + ii;
 		names.push(nameImage);
-		var image = '<div class="wrapImgTable"><img src="img/avatar04.png" id="' + nameImage + '" alt="' + collaborators[ii]['userName'] + '" class="offline"/></div>';
+		var image = '<div class="wrapImgTable"><img src="img/avatar04.png" id="' + nameImage + '" alt="' + collaborators[ii]['userName'] + '" class="offline userImg"/></div>';
 		var name = collaborators[ii]['userName'] ;
 		var org = collaborators[ii]['organization'];
 		var email = collaborators[ii]['eMail'];

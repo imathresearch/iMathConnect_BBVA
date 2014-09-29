@@ -149,13 +149,14 @@ public class UserConnectRest {
     public Response uploadUsersProfile(MultipartFormDataInput input, @Context SecurityContext sc) throws Exception {
         //TODO: warning when a filename exists. Add some flag to notify about overwriting files etc... 
         LOG.info(LOG_PRE + "[" + Constants.updateProfile + "]");
-        UserConnectDTO usersDTO = null;
+        UserConnectDTO usersDTO = new UserConnectDTO();
 
         try {
             
             String nameUser = sc.getUserPrincipal().getName();
-            UserConnect userConnect = ucc.getUserConnectByUserName(nameUser);
-            usersDTO = this.convertToDTO(userConnect);
+            UserConnect userConnect = ucc.getUserConnectByUserName(nameUser);          
+            
+            //usersDTO = this.convertToDTO(userConnect);
 
             Photo photo = new Photo();
             String fileName = "";
@@ -174,7 +175,9 @@ public class UserConnectRest {
                 byte [] bytes = photo.getPhotoByte(inputStream);
                 
                 ucc.updateUserConnectByte(userConnect.getUUID(), bytes);
-                usersDTO = this.convertToDTO(userConnect);
+                userConnect = ucc.getUserConnectByUserName(nameUser);
+                usersDTO.convert(userConnect);
+                //usersDTO = this.convertToDTO(userConnect);                
                 return Response.status(Response.Status.OK).entity(usersDTO).build();
 
               }

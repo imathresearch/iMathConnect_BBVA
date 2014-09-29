@@ -32,8 +32,10 @@ function ajaxModify() {
 		contentType : false,
 	    success: function(user) {
 	    	$("#profilePhotographsg").html("<span style='color:green'>Photograph modified</span>");
-            setTimeout("$('#imath-modify-user-photograph').modal('hide')",1500);
-            location.reload();
+            setTimeout("$('#imath-modify-user-photograph').modal('hide')",1000);            
+            $('.userImg[alt="User Image"]').attr("src", "data:image/png;base64," + user['photo']);
+            $('.userImg[alt=\"' + user['userName'] + '\"]').attr("src", "data:image/png;base64," + user['photo']);
+            //location.reload();
 	    },
 	    error: function(error) {
 	    	$("#profilePhotographsg").html("<span style='color:green'>Error modifying the photo</span>");
