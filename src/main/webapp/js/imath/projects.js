@@ -404,7 +404,7 @@ function ajaxUploadProject(uuid) {
 	});	
 }
 
-function generateTableOfCollaborators(collaborators) {
+function generateTableOfCollaborators(collaborators) {	
 	var htmlRet = htmlTableRowHead(["Pic", "User Name", "Email", "Organization", "#"]);
 	var names = [];
 	var byteFotos = [];
@@ -418,7 +418,7 @@ function generateTableOfCollaborators(collaborators) {
 		var uuid = collaborators[ii]['UUID'];
 		var action = "<a onclick='removeCollaborator(\"" + uuid + "\")' style='cursor: pointer;' title='Remove' )><i class='fa fa-minus-circle'></i></a>";
 		htmlRet = htmlRet + htmlTableRowData([image, name, email, org, action], uuid);
-		names.push(nameImage);
+		//names.push(nameImage);
 		if (collaborators[ii]['photo']!=null) {
 			byteFotos.push(collaborators[ii]['photo']);
 		}
@@ -426,9 +426,9 @@ function generateTableOfCollaborators(collaborators) {
 			byteFotos.push(null);
 		}
 	}
-	$(".imath-collaborators"). html(htmlRet);
+	$(".imath-collaborators"). html(htmlRet);	
 	for (ii=0; ii<names.length; ii++) {
-		if (byteFotos[ii]!=null) {
+		if (byteFotos[ii]!=null) {			
 			document.getElementById(names[ii]).src = "data:image/png;base64," + byteFotos[ii];
 		}
 	}
