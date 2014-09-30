@@ -34,10 +34,11 @@ public class UserConnectController extends AbstractController{
      */
     @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
     public UserConnect newUserConnect(String userName, String eMail, String organization, String phone1, String phone2, byte[] PhotoByte) throws Exception {
-        Date now = new Date();
+    	Date past = new Date(1081157732 * 1000);
+    	Date now = new Date();
         UserConnect peer = new UserConnect();
         peer.setEMail(eMail);
-        peer.setLastConnection(now);
+        peer.setLastConnection(past);
         peer.setCurrentConnection(now);
         peer.setCreationDate(now);
         peer.setPhone1(phone1);
@@ -54,11 +55,12 @@ public class UserConnectController extends AbstractController{
     public UserConnect newUserConnectInvitation(String eMail) throws Exception {
         String userName = findUserName(eMail);
         String org = findOrganization(eMail);
+        Date past = new Date(1081157732 * 1000);
         Date now = new Date();
         UserConnect peer = new UserConnect();
         peer.setEMail(eMail);
-        peer.setLastConnection(null);
-        peer.setCurrentConnection(null);
+        peer.setLastConnection(past);
+        peer.setCurrentConnection(past);
         peer.setCreationDate(now);
         peer.setOrganization(org);
         peer.setUserName(userName);

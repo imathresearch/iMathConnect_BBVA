@@ -26,6 +26,7 @@ import com.imath.connect.model.UserConnect;
 import com.imath.connect.rest.InstanceRest.InstanceDTO;
 import com.imath.connect.rest.UserConnectRest.UserConnectDTO;
 import com.imath.connect.service.InstanceController;
+import com.imath.connect.service.NotificationController;
 import com.imath.connect.service.ProjectController;
 import com.imath.connect.service.UserConnectController;
 import com.imath.connect.util.Constants;
@@ -43,6 +44,7 @@ public class ProjectRest {
     @Inject private ProjectController pc;
     @Inject private UserConnectController ucc;
     @Inject private InstanceController ic;
+    @Inject private NotificationController ntc;
     @Inject private IMathCloudInterface imathcloud;
     
     private static String LOG_PRE = Constants.LOG_PREFIX_SYSTEM + "[ProjectRest]";
@@ -175,6 +177,10 @@ public class ProjectRest {
                     e.printStackTrace();
                 }
             }
+            String subject = "New collaboration";
+            String text = "You have been invited to collaborate in the project " + project.getName();
+            Integer type = new Integer(1);            
+            ntc.newNotification(subject, text, type, uuids); 
             return Response.status(Response.Status.OK).entity(retDTO).build();
         } catch (Exception e) {
             e.printStackTrace();

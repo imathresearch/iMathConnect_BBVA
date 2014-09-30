@@ -1,6 +1,8 @@
 package com.imath.connect.servlet;
 
 import java.io.IOException;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.logging.Logger;
 
 import javax.inject.Inject;
@@ -9,6 +11,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.imath.connect.model.Notification;
+import com.imath.connect.model.UserConnect;
+import com.imath.connect.service.NotificationController;
 import com.imath.connect.service.UserConnectController;
 import com.imath.connect.util.Mail;
 import com.imath.connect.util.Security;
@@ -21,6 +26,7 @@ public class Register extends HttpServlet {
     private static final long serialVersionUID = 1L;
     
     @Inject UserConnectController ucc;
+    @Inject NotificationController notc;
     @Inject protected Logger LOG;
     
     // imathcloud943793072
@@ -42,10 +48,9 @@ public class Register extends HttpServlet {
         }
         
         try {
-            ucc.newUserConnect(userName, eMail, "", null, null, null);
-            System.out.println("after newUserConnect");
-            Security.createSystemUser(userName, passwordRep, Constants.SYSTEM_ROLE);
-            System.out.println("after create system user");
+        	UserConnect user = ucc.newUserConnect(userName, eMail, "", null, null, null);            
+            Security.createSystemUser(userName, passwordRep, Constants.SYSTEM_ROLE);            
+                        
             try {
                 Mail mail = new Mail();
                 mail.sendWelcomeMail(eMail, userName);
