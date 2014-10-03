@@ -45,7 +45,7 @@ $("#changePassword").click(function() {
         },
         error: function(data) {
             $("#profilePasswordMsg").html("<span style='color:red'>" + data.responseText + "</span>");
-            showErrorForm("Error saving the new password");
+            //showErrorForm("Error saving the new password");
         }
     });
 });

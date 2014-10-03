@@ -471,20 +471,7 @@
                             </td>
                             </tr>
                             </table>
-                            </center>
-                            
-                            <!-- center>                            
-                            <table>
-                            <tr>
-                            <td class="profile">
-                            	<center><input id="changePhotograph" type="button" value="Change Photograph" class="btn btn-primary active"/></center>
-                            </td>
-                            <td class="profile spaced">
-                            	<center><input id="changePassButton" type="button" value="Change Password" class="btn btn-primary active"/></center>
-                            </td>
-                            </tr>                            
-                            </table>
-                            </center-->
+                            </center>                                                     
                         </form>
                     </div>
                     <div class="modal-footer clearfix">
@@ -501,26 +488,26 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <button id="closeModalPassword" type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                        <h4 class="modal-title">Password modification</h4>
+                        <h3 class="modal-title"><i class="fa fa-lock"></i>   Password Modification</h3>
                     </div>
                     <div class="modal-body">
                             <p>
-                            <label for="passwordsignup" class="youpasswd" data-icon="p">Your current password:           </label>
+                            <label for="passwordsignup" class="youpasswd" data-icon="p">Your current password           </label>
                             <input class="form-control" id="passwordOld" name="passwordOld" required="required" type="password" placeholder="eg. X8df!90EO"/>
                             </p>
                             <p>
-                                <label for="passwordsignup" class="youpasswd" data-icon="p">Your new password:               </label>
+                                <label for="passwordsignup" class="youpasswd" data-icon="p">Your new password               </label>
                                 <input class="form-control" id="passwordNew" name="passwordNew" required="required" type="password" placeholder="eg. X8df!90EO"/>
                             </p>
                             <p>
-                                <label for="passwordsignup_confirm" class="youpasswd" data-icon="p">Please confirm your new password: </label>
+                                <label for="passwordsignup_confirm" class="youpasswd" data-icon="p">Please confirm your new password </label>
                                 <input class="form-control" id="passwordNewConf" name="passwordNewConf" required="required" type="password" placeholder="eg. X8df!90EO"/>
                             </p>
+                            <br/>
                             <p>
                                 <div style="float:right"><input id="changePassword" type="button" value="Change Password" class="btn btn-primary active"/></div>
                             </p>
-                            <p>
-                            </p>
+                            <br/>
                     </div>
                     <div class="modal-footer clearfix">
                             <div id="profilePasswordMsg" style="float:left"></div>
