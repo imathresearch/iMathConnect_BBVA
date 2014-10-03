@@ -29,7 +29,6 @@ public class RecoverPassword extends HttpServlet {
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         
     	//Encryptor.init();
-    	
         String eMail = request.getParameter("emailsignup");
         UserConnect user=null;
 		try {
