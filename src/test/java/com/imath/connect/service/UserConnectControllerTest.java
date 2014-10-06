@@ -75,7 +75,7 @@ public class UserConnectControllerTest {
         
         UserConnect peer = pc.newUserConnect(userName, eMail, org, phone1, phone2, photoByte);
         assertEquals(eMail, peer.getEMail());
-        assertEquals(peer.getCreationDate(), peer.getLastConnection());
+        assertEquals(Constants.EPOCH_MIL, peer.getLastConnection().getTime());
         assertNotNull(peer.getCreationDate());
         assertEquals(phone1, peer.getPhone1());
         assertEquals(phone2, peer.getPhone2());
@@ -119,8 +119,8 @@ public class UserConnectControllerTest {
         assertEquals(expectedUserName, user.getUserName());
         assertEquals(eMail, user.getEMail());
         assertEquals("test", user.getOrganization());
-        assertTrue(user.getCurrentConnection()==null);
-        assertTrue(user.getLastConnection()==null);
+        assertTrue(user.getCurrentConnection()!=null);
+        assertEquals(Constants.EPOCH_MIL, user.getLastConnection().getTime());
         verify(em).persist((UserConnect)Matchers.anyObject());
         
         //3.- Happy path. first username exists but composed no
@@ -131,8 +131,8 @@ public class UserConnectControllerTest {
         assertEquals(expectedUserNameAlter, user.getUserName());
         assertEquals(eMail, user.getEMail());
         assertEquals("test", user.getOrganization());
-        assertTrue(user.getCurrentConnection()==null);
-        assertTrue(user.getLastConnection()==null);
+        assertTrue(user.getCurrentConnection()!=null);
+        assertEquals(Constants.EPOCH_MIL, user.getLastConnection().getTime());
         verify(em, times(2)).persist((UserConnect)Matchers.anyObject());
         
         //4.- Exception path. All usernames exist
@@ -210,10 +210,8 @@ public class UserConnectControllerTest {
             byte[] photoByteFormat = photo.getPhotoByte("logoiMath.jpg");
             pc.updateUserConnectByte(UUID, photoByteFormat);
             fail();
-        } catch (PersistenceException e) {
-            // Fine
         } catch (Exception e) {
-            fail();
+            // Fine
         }
 
         
