@@ -108,7 +108,7 @@ public class Security {
         // We add the system user
         //Process p = Runtime.getRuntime().exec(Constants.ADD_USER_CLI + " -a " + userName + " " + password + " > /dev/tty");
         synchronized(lock) {
-            ProcessBuilder pb = new ProcessBuilder(Constants.ADD_USER_CLI, "-a",  userName, password);
+            /*ProcessBuilder pb = new ProcessBuilder(Constants.ADD_USER_CLI, "-a",  userName, password);
     
             pb.redirectInput(Redirect.INHERIT);
             pb.redirectOutput(Redirect.INHERIT);
@@ -118,6 +118,20 @@ public class Security {
             int signal = p.waitFor();
             
             System.out.println("SIGNAL " + signal);
+            
+            // We add the role of the user if role is not null
+            if (role != null) {
+                String line = userName + "=" + role;
+                Writer writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(Constants.ROLES_FILE, true), "UTF-8"));
+                writer.append(line + "\n");
+                writer.close();
+            }*/
+        	
+        	String hexPass = generateHexMd5Password(userName, password);
+            
+            // Here the pass in hex(md5) is set as property
+            updateProperty(userName, hexPass.toString(), Constants.USERS_FILE);
+            updateProperty(userName, hexPass.toString(), Constants.USERS_DOMAIN_FILE);
             
             // We add the role of the user if role is not null
             if (role != null) {
