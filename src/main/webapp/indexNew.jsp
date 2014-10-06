@@ -531,7 +531,7 @@
                     </div>
                     <div class="modal-body">
                             <label for="passwordsignup" class="youpasswd" data-icon="">Select new photograph: </label>
-                            <input type="file" id="uploadedFile" name="uploadedFile" size="50" multiple />
+                            <input type="file" id="uploadedFile" name="uploadedFile" size="50" />
                             <div style="float:right"><input type="button" name="uploadFile" id="uploadFile" value="Upload It" class="btn btn-primary active" /></div>
                             <p>
                             </p>
