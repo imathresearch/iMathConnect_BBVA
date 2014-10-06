@@ -306,12 +306,14 @@ function generateTableOfProjects(projects, callbackString) {
 		rowInstance += faIcon("fa-film") + " <b>" + project['instance']['ram'] + "</b> <small>MiB</small><br> ";
 		rowInstance += faIcon("fa-cloud") + " <b>" + project['instance']['stg'] + "</b> <small>GiB</small> ";
 		var rowName = "";
+		var action = "";
 		if (typeof callbackString == "undefined") {
 			rowName = "<a onclick='placeLayoutProjects(\""+uuid+ "\")' style='color:blue;cursor: pointer;text-decoration: underline;'>" + name + "</a>";
+			action = "<a onclick='removeProject(\"" + uuid + "\")' style='cursor: pointer;' title='Remove' )><i class='fa fa-minus-circle'></i></a>";
 		} else {
 			rowName = "<a onclick='" + callbackString + "(\""+uuid+ "\")' style='color:blue;cursor: pointer;text-decoration: underline;'>" + name + "</a>";
-		}
-		var action = "<a onclick='removeProject(\"" + uuid + "\")' style='cursor: pointer;' title='Remove' )><i class='fa fa-minus-circle'></i></a>";
+			action = "<a onclick='removeProject(\"" + uuid + "\",\"" + callbackString + "\")' style='cursor: pointer;' title='Remove' )><i class='fa fa-minus-circle'></i></a>";
+		}		
 		ret = ret + htmlTableRowData([rowIcon, rowName,dateText,desc,rowCol,rowInstance, action], uuid);	
 	}
 	$(".imath-own-projects").html(ret);

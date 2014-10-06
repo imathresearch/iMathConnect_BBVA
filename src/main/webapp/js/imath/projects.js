@@ -193,15 +193,15 @@ function removeCollaborator(uuid_col) {
 	}
 }
 
-function removeProject(uuid) {
+function removeProject(uuid, callBackString) {
 	var message = "Are you sure you want to remove the project? The process is irreversible.";
 	var func = function() {
-		ajaxRemoveProject(uuid);
+		ajaxRemoveProject(uuid, callBackString);
 	};
 	confirmationForm(message, func);
 }
 
-function ajaxRemoveProject(uuid) {
+function ajaxRemoveProject(uuid, callBackString) {
 	placeWaiting("imath-waiting-creation");
 	$.ajax({
 	    url: "rest/api/agora/removeProject/" + global_uuid_user + "/" + uuid,
@@ -209,7 +209,8 @@ function ajaxRemoveProject(uuid) {
 	    type: "POST",
 	    success: function() {
 	    	unplaceWaiting("imath-waiting-creation");
-	    	ajaxOwnProjects("uploadProject");
+	    	//ajaxOwnProjects("uploadProject");
+	    	ajaxOwnProjects(callBackString);
 	    	showFlyingMessageOK(" Project removed ");
 	    },
 	    error: function(error) {
