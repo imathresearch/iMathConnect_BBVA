@@ -214,7 +214,6 @@ function ajaxRemoveProject(uuid) {
 	    },
 	    error: function(error) {
 	    	unplaceWaiting("imath-waiting-creation");
-	        console.log("Error removing the project");
 	        showErrorForm("Error removing the project");
 	    }
 	});	
@@ -222,7 +221,7 @@ function ajaxRemoveProject(uuid) {
 	
 function confirmationForm(message, func) {
 	$('.imath-conf-message').html(message);
-	$('#imath-id-ok-button-select').click(func);
+	$('#imath-id-ok-button-select').off('click').click(func);
 	$('#imath-id-conf-message').modal('show');
 }
 
