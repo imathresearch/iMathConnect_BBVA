@@ -2,6 +2,7 @@ $("#closeModalProfile").click(function() {
 	
 });
 
+
 $("#profileForm").click(function() {
 	var propertyClose=document.getElementById("closeProfile");
 	var propertyChangePassword=document.getElementById("changePassButton");

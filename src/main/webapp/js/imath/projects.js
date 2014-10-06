@@ -446,13 +446,16 @@ function runiMathCloud(uuid_project) {
 	    	var key = project['key'];
 	    	var url = project['url'] + "/iMathCloud/login.jsp";
 	    	// Ugly... but it works
-	    	//var form = '<form target="_blank" id="fakeForm" action="' + url + '" method="post"><input type="hidden" name="j_username" value="' + linux + '"><input type="hidden" name="j_password" value="' + key + '"></form>';
+	    	var form = '<form target="_blank" id="fakeForm" action="' + url + '" method="post"><input type="hidden" name="j_username" value="' + linux + '"><input type="hidden" name="j_password" value="' + key + '"></form>';
 	    	//$("#imath-id-fake-form").html(form);
 	    	//$("#fakeForm").submit();
 	    	//$('#imath-id-fake-form').html("");
-	    	document.body.innerHTML += '<form target="_blank" id="fakeForm" action="' + url + '" method="post"><input type="hidden" name="j_username" value="' + linux + '"><input type="hidden" name="j_password" value="' + key + '"></form>';
+	    	//document.body.innerHTML += '<form target="_blank" id="fakeForm" action="' + url + '" method="post"><input type="hidden" name="j_username" value="' + linux + '"><input type="hidden" name="j_password" value="' + key + '"></form>';	    		    
+	    	
+	    	$(form).appendTo('body');  	 
 	    	document.getElementById("fakeForm").submit();
 	    	document.getElementById("fakeForm").remove();
+	    	
 	    	// For whatever reason, all events set up programatically are dismished when doing submit. 
 	    	setButtonsCode();
 	    	
