@@ -11,6 +11,7 @@ import javax.persistence.EntityNotFoundException;
 import javax.persistence.PersistenceException;
 
 import com.imath.connect.model.UserConnect;
+import com.imath.connect.util.Constants;
 import com.imath.connect.util.Photo;
 
 /**
@@ -34,7 +35,7 @@ public class UserConnectController extends AbstractController{
      */
     @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
     public UserConnect newUserConnect(String userName, String eMail, String organization, String phone1, String phone2, byte[] PhotoByte) throws Exception {
-    	Date past = new Date(1081157732 * 1000);
+    	Date past = new Date(Constants.EPOCH_MIL);
     	Date now = new Date();
         UserConnect peer = new UserConnect();
         peer.setEMail(eMail);
@@ -55,7 +56,7 @@ public class UserConnectController extends AbstractController{
     public UserConnect newUserConnectInvitation(String eMail) throws Exception {
         String userName = findUserName(eMail);
         String org = findOrganization(eMail);
-        Date past = new Date(1081157732 * 1000);
+        Date past = new Date(Constants.EPOCH_MIL);
         Date now = new Date();
         UserConnect peer = new UserConnect();
         peer.setEMail(eMail);

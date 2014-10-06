@@ -70,7 +70,7 @@ public class NotificationRestIT extends AbstractIT{
         
         assertEquals(Response.Status.OK.getStatusCode(), rest.getStatus());
         notificationsDTO = (List<NotificationDTO>) rest.getEntity();       
-        assertEquals(3,notificationsDTO.size());
+        assertEquals(4,notificationsDTO.size());
         for(NotificationDTO ntDTO: notificationsDTO) {
             Notification n = null;
             if (ntDTO.UUID.equals(n1.getUUID())) {
@@ -82,6 +82,10 @@ public class NotificationRestIT extends AbstractIT{
                 else{
                 	if (ntDTO.UUID.equals(n3.getUUID())){
                 		n = n3;
+                	} else {
+                	    if (ntDTO.UUID.equals(n0.getUUID())) {
+                	        n = n0;
+                	    }
                 	}
                 	
                 }
@@ -108,7 +112,6 @@ public class NotificationRestIT extends AbstractIT{
                 	if (ntDTO.UUID.equals(n3.getUUID())){
                 		n = n3;
                 	}
-                	
                 }
             }
             assertEquals(n.getSubject(), ntDTO.subject);

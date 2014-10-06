@@ -85,6 +85,8 @@ public class Constants {
     
     static public final String LOG_PREFIX_SYSTEM = "[IMATH][CONNECT]";    // The prefix of the system
     
+    static public final long EPOCH_SEC  = 1081157732;
+    static public final long EPOCH_MIL = EPOCH_SEC * 1000; 
     static public String IMATH_HOST() {
         return "127.0.0.1"; // To be changed in production!!!!!!!
 
