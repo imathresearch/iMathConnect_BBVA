@@ -46,10 +46,6 @@ function initProjectView(uuid_project) {
 	global_instances = [];
 	ajaxOwnProjects("ajaxUploadProject");
 	ajaxInstancesLoad();
-	setButtonsCode();
-}
-
-function setButtonsCode() {
 	$("#imath-id-own-projects").delegate("tr", "click", function(e) {
 		if (!(typeof $(e.currentTarget).attr('id') == "undefined")){
 			var uuid = $(e.currentTarget).attr('id');
@@ -73,6 +69,11 @@ function setButtonsCode() {
 			}
 		}
 	});
+	setButtonsCode();
+}
+
+function setButtonsCode() {
+	$('#imath-id-save-buton-project').unbind('click');
 	$( "#imath-id-save-buton-project" ).click(function() {
 		var uuid_instance = $('#imath-id-instances tr').eq(1).attr("id");	// We get the id of the second tr of the table
 		var newDesc = $("#imath-id-project-desc").val();
@@ -87,6 +88,7 @@ function setButtonsCode() {
 		}
 	});
 	
+	$('#imath-id-add-colls-button').unbind('click');
 	$("#imath-id-add-colls-button").click(function() {
 		if (global_uuid_project_selected!==null) {
 			var other = $("#imath-id-coll-text").val();
@@ -97,10 +99,12 @@ function setButtonsCode() {
 		}
 	});
 	
+	$('#imath-id-select-resource-button').unbind('click');
 	$("#imath-id-select-resource-button").click(function() {
 		$('#instance-select').modal('show');
 	});
 	
+	$('#imath-id-new-project-button').unbind('click');
 	$("#imath-id-new-project-button").click(function() {
 		console.log("New project");
 		setNewProjectForm();
@@ -114,6 +118,7 @@ function setButtonsCode() {
 function setNewProjectForm() {
 	// We set the cancel button to upload the previous uploaded project
 	global_uuid_project_selected_prev = global_uuid_project_selected;
+	$('#imath-id-cancel-buton-project').unbind('click');
 	$("#imath-id-cancel-buton-project").click(function () {
 		if (global_uuid_project_selected_prev !== null) {
 			ajaxUploadProject(global_uuid_project_selected_prev);
@@ -181,7 +186,7 @@ function removeCollaborator(uuid_col) {
 		    	var collaborators = project['userCol'];
 				collaboratorsHtml = generateTableOfCollaborators(collaborators);
 				//$(".imath-collaborators"). html(collaboratorsHtml);
-				ajaxOwnProjects("uploadProject");
+				ajaxOwnProjects("ajaxUploadProject");
 				$("#imath-id-coll-text").val("");
 				showFlyingMessageOK(" Collaborator removed ");
 		    },
@@ -235,7 +240,7 @@ function ajaxNewProject(newName, newDesc, uuid_instance) {
 	    type: "GET",
 	    success: function(project) {
 	    	unplaceWaiting("imath-waiting-creation");
-	    	ajaxOwnProjects("uploadProject");
+	    	ajaxOwnProjects("ajaxUploadProject");
 	    	viewUploadProject(project);
 	    	showSaveProjectOKNotification();
 	    },
@@ -262,7 +267,7 @@ function saveProject(uuid_project, newDesc, uuid_instance) {
 	    dataType: "json",
 	    type: "GET",
 	    success: function(project) {
-	    	ajaxOwnProjects("uploadProject");
+	    	ajaxOwnProjects("ajaxUploadProject");
 	    	showSaveProjectOKNotification();
 	    },
 	    error: function(error) {
