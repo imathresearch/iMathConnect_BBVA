@@ -35,7 +35,7 @@ function generateNumNotifications(numNotifications){
 function generateListNotifications(notifications){
 	var dicTypeNotification = [];
 	dicTypeNotification[0] = '<i class="fa fa-users info"></i>';
-	dicTypeNotification[1] = '<i class="fa fa-lock success"></i>';
+	dicTypeNotification[1] = '<i class="fa fa-users success"></i>';
 	
 	var numNotifications = notifications.length;	
 	var code = '<li class="header">You have ' + numNotifications + ' notifications</li>';
