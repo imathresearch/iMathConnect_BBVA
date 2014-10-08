@@ -216,7 +216,9 @@ function ajaxRemoveProject(uuid, callBackString) {
 	    	unplaceWaiting("imath-waiting-creation");
 	    	//ajaxOwnProjects("uploadProject");
 	    	ajaxOwnProjects(callBackString);
-	    	showFlyingMessageOK(" Project removed ");
+	    	showFlyingMessageOK(" Project removed ");	
+	    	unselectProject();
+	    	
 	    },
 	    error: function(error) {
 	    	unplaceWaiting("imath-waiting-creation");
