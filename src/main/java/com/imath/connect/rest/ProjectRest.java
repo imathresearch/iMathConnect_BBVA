@@ -165,6 +165,7 @@ public class ProjectRest {
                     String password = Util.randomString(10);
                     this.security.createSystemUser(collaborator.getUserName(), password, Constants.SYSTEM_ROLE);
                     this.mail.sendInvitationNewUserMail(collaborator.getEMail(), collaborator.getUserName(), password, project.getName());
+                    this.mail.sendNewUserMailToAdmin(collaborator.getEMail(), collaborator.getUserName());
                 } catch (Exception e) {
                     LOG.severe("[IMATH][addCollaboratoryOther] Error while creting system user: " + collaborator.getUserName() + " for collaborator. No message sent");
                     e.printStackTrace();

@@ -54,6 +54,7 @@ public class Register extends HttpServlet {
             try {
                 Mail mail = new Mail();
                 mail.sendWelcomeMail(eMail, userName);
+                mail.sendNewUserMailToAdmin(eMail, userName);
             } catch (Exception e) {
                 // Nothing happens so far...
             }

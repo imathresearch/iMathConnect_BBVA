@@ -1,8 +1,13 @@
 package com.imath.connect.util;
 
 import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.List;
 import
 java.util.Properties;
 
@@ -116,6 +121,41 @@ public class Mail {
         url += "/iMathConnect";
         html = html.replace("[URL_IMATHCLOUD]", url);
         Mail.sendHTMLMail(to, "Welcome to iMathCloud! The Cloud Platform for Data Scientists", html);
+    }
+    
+    public void sendNewUserMailToAdmin(String useremail, String username) throws Exception { 
+        String html="";
+        InputStream in = this.getClass().getResourceAsStream(Constants.NEW_USER_ADMIN_NOTIFICATION_TEMPLATE);
+        BufferedReader br = new BufferedReader(new InputStreamReader(in));
+        String line;
+        while((line = br.readLine()) != null) {
+            html += line + "\n";
+        }
+        br.close();
+
+        html = html.replace("[USERNAME]", username);
+        html = html.replace("[EMAIL]", useremail);
+                               
+        List<String> listEmails = readAdminEmail();
+        for(String st: listEmails){
+        	Mail.sendHTMLMail(st, "[newUser][iMathCloud] A new user is registered to iMathCloud!", html);
+        }
+        
+    }
+    
+    
+    private List<String> readAdminEmail() throws IOException {
+    	File adminEmail = new File(Constants.ADMIN_FILE_EMAIL);
+    	BufferedReader br = new BufferedReader(new FileReader(adminEmail));
+     
+    	String line = null;
+    	List<String> listEmails = new ArrayList<String>();
+    	while ((line = br.readLine()) != null) {
+    		listEmails.add(line);
+    	}
+    	
+    	br.close();
+    	return listEmails;
     }
     
     public void sendRecoverPasswordMail(String to, String username, String newPassword) throws Exception {
