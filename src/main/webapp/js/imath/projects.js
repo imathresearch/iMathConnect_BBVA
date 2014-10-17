@@ -90,7 +90,12 @@ function setButtonsCode() {
 			// if global_uuid_project_selected === null, we create a new project!
 			var newName = $("#imath-id-project-name").val();
 			if(newName && newDesc && uuid_instance){
-				ajaxNewProject(newName, newDesc, uuid_instance);
+				if(checkProjectName(newName)){
+					ajaxNewProject(newName, newDesc, uuid_instance);
+				}
+				else{
+					showErrorForm("The project name should contain only letters (a-zA-Z)");
+				}
 			}
 			else{
 				showErrorForm("The project should have a name, a description and an associated resource");
@@ -123,6 +128,12 @@ function setButtonsCode() {
 	$('#imath-id-project-name').on('input', function() {
 		$(".imath-project-name").html($("#imath-id-project-name").val());
 	});
+}
+
+
+function checkProjectName(str) {
+	// The project name should contain only letters
+	return /^[a-zA-Z()]+$/.test(str);
 }
 
 function setNewProjectForm() {

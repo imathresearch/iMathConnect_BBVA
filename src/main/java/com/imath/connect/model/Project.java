@@ -46,7 +46,7 @@ public class Project implements Serializable{
     @Column(name = "uuid", unique = true)
     private String UUID;
     
-    @Pattern(regexp = "[A-Za-z_]*", message = "Only letters and _")
+    @Pattern(regexp = "[A-Za-z]*", message = "Only letters")
     @NotNull
     @NotEmpty
     private String name;
