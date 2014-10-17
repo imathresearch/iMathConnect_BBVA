@@ -5,6 +5,11 @@
 		display: none;
 		float: left;
 	}
+	
+	.red{
+		color:#FF0000;
+		font-size: 8px; 
+	}
 
 </style>
 
@@ -40,19 +45,19 @@
 		<form role="form">		
 			<div class="box-body">
 				<div class="form-group">
-					<label for="exampleInputEmail1">Project Name</label>
+					<label for="exampleInputEmail1">Project Name  <i class="red fa fa-asterisk"></i></label>
 					<input type="text" class="form-control" id="imath-id-project-name" placeholder="Enter project name" disabled>
 				</div>
 				<div class="form-group">
-					<label for="exampleInputPassword1">Description</label>
-					<input type="text" class="form-control" id="imath-id-project-desc" placeholder="Enter project description">
+					<label for="exampleInputPassword1">Description  <i class="red fa fa-asterisk"></i></label>
+					<input type="text" class="form-control" id="imath-id-project-desc" placeholder="Enter project description" >
 				</div>
 				<div class="form-group">
 					<label for="exampleInputPassword1">Creation date</label>
 					<input type="text" class="form-control" id="imath-id-project-date" disabled>
 				</div>
 				<div class="form-group">
-					<label>Resources</label>
+					<label>Resources  <i class="red fa fa-asterisk"></i></label>
 					<table id="imath-id-instances" class="table table-bordered table-hover imath-select-instance">
 					</table>
 					<div class="box-tools pull-right">

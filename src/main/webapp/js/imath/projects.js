@@ -80,11 +80,21 @@ function setButtonsCode() {
 		if (global_uuid_project_selected!==null) {
 			// saving the project
 			var uuid_project = global_uuid_project_selected;
-			saveProject(uuid_project, newDesc, uuid_instance);
+			if(newDesc){
+				saveProject(uuid_project, newDesc, uuid_instance);
+			}
+			else{
+				showErrorForm("The project should have a description");
+			}
 		} else {
 			// if global_uuid_project_selected === null, we create a new project!
 			var newName = $("#imath-id-project-name").val();
-			ajaxNewProject(newName, newDesc, uuid_instance);
+			if(newName && newDesc && uuid_instance){
+				ajaxNewProject(newName, newDesc, uuid_instance);
+			}
+			else{
+				showErrorForm("The project should have a name, a description and an associated resource");
+			}
 		}
 	});
 	
@@ -129,6 +139,7 @@ function setNewProjectForm() {
 	});
 	
 	global_uuid_project_selected=null;	// We "unselect" any possible current selected project
+		
 	
 	enable('imath-id-cancel-buton-project');	// We enable the cancel button;
 	$('#imath-id-instances').html("");			// We empty out the instance tables
@@ -142,6 +153,8 @@ function setNewProjectForm() {
 	$(".imath-collaborators").html("");			// We empty out the table of collaborators
 	$(".imath-project-name").html("");			// we empty the head project name
 	enable('imath-id-save-buton-project');		// We enable the save button
+		
+	
 
 }
 
