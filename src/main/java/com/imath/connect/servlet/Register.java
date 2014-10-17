@@ -48,6 +48,13 @@ public class Register extends HttpServlet {
         }
         
         try {
+        	
+        	boolean OKuserName = checkUserName(userName);        	
+        	if(!OKuserName){
+        		response.sendRedirect("registerErrorUserName.html");
+        		return;
+        	}
+        	
         	UserConnect user = ucc.newUserConnect(userName, eMail, "", null, null, null);            
             Security.createSystemUser(userName, passwordRep, Constants.SYSTEM_ROLE);            
                         
@@ -71,5 +78,10 @@ public class Register extends HttpServlet {
             response.sendRedirect("registererror.html");
             return;
         }
+    }
+    
+    private boolean checkUserName(String userName){
+    	 return (userName.matches("[a-zA-Z]+") && userName.length()>= 4 && userName.length() <= 25);
+    	
     }
 }
