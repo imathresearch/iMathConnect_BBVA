@@ -43,25 +43,32 @@ public class RecoverPassword extends HttpServlet {
         	return;
         }
         
-        // Generate an random password
-        String randomPassword = Util.randomString(10);
-        
-        String userName = user.getUserName();
-        try {
-            Security.updateSystemPassword(userName, randomPassword);
-        } catch (Exception e) {
-            
-            response.sendRedirect("loginerror.html");
-            return;
+        //Check if the user was registered using a third-party account
+        if(user.getUserAccess().getPassword() == null){
+        	// Generate an random password
+	        String randomPassword = Util.randomString(10);
+	        
+	        String userName = user.getUserName();
+	        try {
+	            Security.updateSystemPassword(userName, randomPassword);
+	        } catch (Exception e) {
+	            
+	            response.sendRedirect("loginerror.html");
+	            return;
+	        }
+	        
+	        try {
+	            Mail mail = new Mail();
+	            mail.sendRecoverPasswordMail(eMail, userName, randomPassword);
+	            response.sendRedirect("recoverPasswordInfo.html");
+	            
+	        } catch (Exception e) {
+	            // Nothing happens here...
+	        }
         }
-        
-        try {
-            Mail mail = new Mail();
-            mail.sendRecoverPasswordMail(eMail, userName, randomPassword);
-            response.sendRedirect("recoverPasswordInfo.html");
-            
-        } catch (Exception e) {
-            // Nothing happens here...
+        else{
+        	response.sendRedirect("notAllowRecoverPassword.html");
+        	return;
         }
         
              
