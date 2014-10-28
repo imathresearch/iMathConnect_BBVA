@@ -10,9 +10,12 @@ import javax.ejb.TransactionAttributeType;
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.PersistenceException;
 
+import com.imath.connect.model.UserAccess;
 import com.imath.connect.model.UserConnect;
 import com.imath.connect.util.Constants;
+import com.imath.connect.util.Encryptor;
 import com.imath.connect.util.Photo;
+import com.imath.connect.util.Util;
 
 /**
  * @author imath
@@ -47,6 +50,10 @@ public class UserConnectController extends AbstractController{
         peer.setOrganization(organization);
         peer.setUserName(userName);
         peer.setPhoto(PhotoByte);
+        UserAccess access = new UserAccess();
+        access.setAccessSource("iMathCloud");        
+        access.setUser(peer);
+        peer.setUserAccess(access);
         this.db.makePersistent(peer);
         return peer;
     }
@@ -65,6 +72,33 @@ public class UserConnectController extends AbstractController{
         peer.setCreationDate(now);
         peer.setOrganization(org);
         peer.setUserName(userName);
+        UserAccess access = new UserAccess();
+        access.setAccessSource("iMathCloud");        
+        access.setUser(peer);
+        peer.setUserAccess(access);
+        this.db.makePersistent(peer);
+        return peer;
+    }
+    
+    @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
+    public UserConnect newUserConnectThirdParty(String eMail, String externalSource) throws Exception {
+    	Encryptor.init();
+        String userName = findUserName(eMail);
+        String org = findOrganization(eMail);
+        Date past = new Date(Constants.EPOCH_MIL);
+        Date now = new Date();
+        UserConnect peer = new UserConnect();
+        peer.setEMail(eMail);
+        peer.setLastConnection(past);
+        peer.setCurrentConnection(past);
+        peer.setCreationDate(now);
+        peer.setOrganization(org);
+        peer.setUserName(userName);
+        UserAccess access = new UserAccess();
+        access.setAccessSource(externalSource);
+        access.setPassword(Util.randomString(10));
+        access.setUser(peer);
+        peer.setUserAccess(access);
         this.db.makePersistent(peer);
         return peer;
     }
@@ -107,6 +141,8 @@ public class UserConnectController extends AbstractController{
         }
         return out.toString();
     }
+    
+   
     
     /**
      * Updates the date of the last connection

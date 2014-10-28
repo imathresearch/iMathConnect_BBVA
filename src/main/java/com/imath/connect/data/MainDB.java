@@ -4,6 +4,8 @@ import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 
+import com.imath.connect.model.UserAccess;
+
 @RequestScoped
 public class MainDB {
 
@@ -13,6 +15,7 @@ public class MainDB {
 	@Inject private StandardConfigurationDB standardConfiguration;
 	@Inject private InstanceDB instanceDB;
 	@Inject private NotificationDB notificationDB;
+	@Inject private UserAccessDB userAccessDB;
 	
 	public void makePersistent(Object obj) throws Exception {
 	    em.persist(obj);
@@ -43,6 +46,11 @@ public class MainDB {
 	public NotificationDB getNotificationDB() {
 		return this.notificationDB;
 	}
+	
+	public UserAccessDB getUserAccessDB(){
+		return this.userAccessDB;
+	}
+	
 	// For testing purposes only
 	public void setEntityManager(EntityManager em) {
 	    this.em = em;

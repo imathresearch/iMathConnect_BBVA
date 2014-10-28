@@ -72,6 +72,7 @@ public class UserConnectControllerTest {
         String phone2 = "111222334";
         String RECOVER_IMAGE_NAME = "blue-arr.png"; // Image example
         byte[] photoByte = photo.getPhotoByte(RECOVER_IMAGE_NAME);
+        String accessSource = "iMathCloud";
         
         UserConnect peer = pc.newUserConnect(userName, eMail, org, phone1, phone2, photoByte);
         assertEquals(eMail, peer.getEMail());
@@ -81,6 +82,7 @@ public class UserConnectControllerTest {
         assertEquals(phone2, peer.getPhone2());
         assertEquals(userName, peer.getUserName());
         assertEquals(org, peer.getOrganization());
+        assertEquals(accessSource, peer.getUserAccess().getAccessSource());
         assertArrayEquals(photoByte, peer.getPhoto());
         verify(em).persist((UserConnect)Matchers.anyObject());
     }
@@ -91,6 +93,9 @@ public class UserConnectControllerTest {
         String eMail = "t_e_s2t89@test.com";
         String expectedUserName = "test";
         String expectedUserNameAlter = "testATtest";
+        String accessSource = "iMathCloud";
+        
+        
         //1.- Exception case: no valid email is passed
         try {
             pc.newUserConnectInvitation("");
@@ -120,8 +125,10 @@ public class UserConnectControllerTest {
         assertEquals(eMail, user.getEMail());
         assertEquals("test", user.getOrganization());
         assertTrue(user.getCurrentConnection()!=null);
+        assertEquals(accessSource, user.getUserAccess().getAccessSource());
         assertEquals(Constants.EPOCH_MIL, user.getLastConnection().getTime());
         verify(em).persist((UserConnect)Matchers.anyObject());
+        
         
         //3.- Happy path. first username exists but composed no
         UserConnect userExist = new UserConnect();
@@ -133,6 +140,7 @@ public class UserConnectControllerTest {
         assertEquals("test", user.getOrganization());
         assertTrue(user.getCurrentConnection()!=null);
         assertEquals(Constants.EPOCH_MIL, user.getLastConnection().getTime());
+        assertEquals(accessSource, user.getUserAccess().getAccessSource());
         verify(em, times(2)).persist((UserConnect)Matchers.anyObject());
         
         //4.- Exception path. All usernames exist

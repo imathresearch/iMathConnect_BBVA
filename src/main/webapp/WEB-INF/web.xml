@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:javaee="http://xmlns.jcp.org/xml/ns/javaee" xmlns:web="http://xmlns.jcp.org/xml/ns/javaee" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
+<javaee:web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:javaee="http://xmlns.jcp.org/xml/ns/javaee" xmlns:web="http://xmlns.jcp.org/xml/ns/javaee" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
   <javaee:security-constraint>
     <javaee:web-resource-collection>
       <javaee:web-resource-name>All resources</javaee:web-resource-name>
@@ -19,15 +19,7 @@
   <javaee:security-role>
     <javaee:role-name>WebAppUser</javaee:role-name>
   </javaee:security-role>
-  <!-- javaee:login-config>
-    <javaee:auth-method>BASIC</javaee:auth-method>
-    <javaee:realm-name>ApplicationRealm</javaee:realm-name>
-    <javaee:form-login-config>
-    	<javaee:form-login-page>/loginform.html</javaee:form-login-page>
-		<javaee:form-error-page>/loginerror.html</javaee:form-error-page>
-	</javaee:form-login-config>
-  </javaee:login-config-->
-    <javaee:servlet>
+  <javaee:servlet>
     <javaee:servlet-name>register</javaee:servlet-name>
     <javaee:servlet-class>com.imath.connect.servlet.Register</javaee:servlet-class>
   </javaee:servlet>
@@ -46,6 +38,14 @@
   <javaee:servlet>
     <javaee:servlet-name>recoverpassword</javaee:servlet-name>
     <javaee:servlet-class>com.imath.connect.servlet.RecoverPassword</javaee:servlet-class>
+  </javaee:servlet>
+  <javaee:servlet>
+    <javaee:servlet-name>logingoogle</javaee:servlet-name>
+    <javaee:servlet-class>com.imath.connect.servlet.LoginGoogle</javaee:servlet-class>
+  </javaee:servlet>
+  <javaee:servlet>
+    <javaee:servlet-name>callbackgoogle</javaee:servlet-name>
+    <javaee:servlet-class>com.imath.connect.servlet.CallbackGoogle</javaee:servlet-class>
   </javaee:servlet>
   <javaee:servlet-mapping>
     <javaee:servlet-name>recoverpassword</javaee:servlet-name>
@@ -67,4 +67,12 @@
     <javaee:servlet-name>login</javaee:servlet-name>
     <javaee:url-pattern>/login</javaee:url-pattern>
   </javaee:servlet-mapping>
-</web-app>
+    <javaee:servlet-mapping>
+    <javaee:servlet-name>logingoogle</javaee:servlet-name>
+    <javaee:url-pattern>/logingoogle</javaee:url-pattern>
+  </javaee:servlet-mapping>
+    <javaee:servlet-mapping>
+    <javaee:servlet-name>callbackgoogle</javaee:servlet-name>
+    <javaee:url-pattern>/callbackgoogle</javaee:url-pattern>
+  </javaee:servlet-mapping>
+</javaee:web-app>

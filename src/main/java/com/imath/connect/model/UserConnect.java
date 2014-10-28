@@ -4,11 +4,14 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToOne;
+import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.Digits;
@@ -70,6 +73,9 @@ public class UserConnect implements Serializable {
     
     @Column(name = "photo", unique = false, nullable = true, length = 10000000)
     private byte[] photo;
+    
+    @OneToOne(mappedBy="user", cascade=CascadeType.ALL)
+    private UserAccess access;
     
     public Set<Project> getProjects() {
         return projects;
@@ -156,6 +162,15 @@ public class UserConnect implements Serializable {
 
     public void setPhoto(byte[] photo) {
         this.photo = photo;
+    }
+    
+    public UserAccess getUserAccess(){
+    	return access;
+    }
+    
+    public void setUserAccess(UserAccess access){
+    	this.access = access;
+    	
     }
     private static final long serialVersionUID = 1L;
 }

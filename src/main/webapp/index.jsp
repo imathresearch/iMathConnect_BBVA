@@ -16,6 +16,11 @@
         <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>      
         <script src="js/loginInitialization.js" type="text/javascript"></script>
         
+        <link href="css/font-awesome.css" rel="stylesheet" type="text/css" />
+        <!-- link href="css/AdminLTE.css" rel="stylesheet" type="text/css" /-->
+        <!-- link href="css/bootstrap.min.css" rel="stylesheet" type="text/css" /-->
+        <link href="css/ionicons.min.css" rel="stylesheet" type="text/css" />
+        
         <link rel="shortcut icon" href="images/favicon.ico"> 
         <link rel="stylesheet" type="text/css" href="css/demo.css" />
         <link rel="stylesheet" type="text/css" href="css/style2.css" />
@@ -41,6 +46,29 @@
                 align-items: center;
                 flex-wrap: wrap;
     		}
+    		
+    		.google-login{    		
+    			color: rgb(57, 191, 215);
+				background: rgb(247, 247, 247);
+				border: 1px solid rgb(74, 179, 198);
+				font-weight: bold;
+				padding: 5px 6px;
+				margin-left: 10px;
+				text-decoration: none;
+				border-radius: 4px;
+				font-size: 16px;
+				text-align: right;
+				font-family: "Trebuchet MS","Myriad Pro",Arial,sans-serif;
+				outline: none;
+				transition: all 0.4s linear;
+				transition-property: all;
+				transition-duration: 0.4s;
+				transition-timing-function: linear;
+				transition-delay: initial;	
+				cursor:pointer;			
+    			
+    		}
+    		button.google-login i { font-size: 20pt; }
 		</style>
 		
     </head>
@@ -73,13 +101,24 @@
                                 <p class="keeplogin"> 
 									<input type="checkbox" name="loginkeeping" id="loginkeeping" value="loginkeeping" /> 
 									<label for="loginkeeping">Keep me logged in</label>
-								</p>
+								</p>								
                                 <p class="login button"> 
+                                	
                                     <input type="submit" value="Login" /> 
 								</p>
 								<p>
 								  <a href="javascript:gotobox('recover');" class="to_register">Did you forget your password ?</a>
 								</p>
+								
+								<p align="right">									
+									<button type="button" class="btn btn-primary google-login" onclick="location.href='logingoogle';">
+										<i class="fa fa-google-plus"></i> Login with Google
+									</button>
+								</p>
+								<!-- p>									
+									<a class="btn btn-social-icon btn-google-plus"><i class="fa fa-google-plus"></i></a>								
+								</p-->
+								
                                 <p class="change_link">
 									Not a member yet ?
 									<a href="javascript:gotobox('register');" class="to_register">Join us</a>
