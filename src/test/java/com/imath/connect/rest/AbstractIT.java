@@ -13,11 +13,13 @@ import com.imath.connect.data.MainDB;
 import com.imath.connect.data.NotificationDB;
 import com.imath.connect.data.ProjectDB;
 import com.imath.connect.data.StandardConfigurationDB;
+import com.imath.connect.data.UserAccessDB;
 import com.imath.connect.data.UserConnectDB;
 import com.imath.connect.model.Instance;
 import com.imath.connect.model.Notification;
 import com.imath.connect.model.Project;
 import com.imath.connect.model.StandardConfiguration;
+import com.imath.connect.model.UserAccess;
 import com.imath.connect.model.UserConnect;
 import com.imath.connect.service.AbstractController;
 import com.imath.connect.service.InstanceController;
@@ -49,8 +51,8 @@ public abstract class AbstractIT {
                .addAsLibraries(resolver.artifact("org.jasypt:jasypt:1.9.0").resolveAsFiles())
                .addAsLibraries(resolver.artifact("org.jasypt:jasypt-hibernate4:1.9.0").resolveAsFiles())
                .addAsLibraries(resolver.artifact("com.iMathCloud.API:iMathCloud_API:0.0.1-SNAPSHOT").resolveAsFiles())
-               .addClasses(EncryptedStringType.class, MainDB.class, UserConnect.class , Project.class, StandardConfiguration.class, Instance.class, Notification.class,
-                       InstanceDB.class, ProjectDB.class, StandardConfigurationDB.class, UserConnectDB.class, NotificationDB.class, 
+               .addClasses(EncryptedStringType.class, MainDB.class, UserConnect.class , Project.class, StandardConfiguration.class, Instance.class, Notification.class,UserAccess.class,
+                       InstanceDB.class, ProjectDB.class, StandardConfigurationDB.class, UserConnectDB.class, NotificationDB.class, UserAccessDB.class, 
                        JaxRsActivator.class, ProjectRest.class, InstanceRest.class, GeneralRest.class, com.imath.connect.security.SecurityManager.class,
                        StandardConfigurationRest.class, UserConnectRest.class, NotificationRest.class, NotificationController.class,
                        AbstractController.class, InstanceController.class, ProjectController.class, StandardConfigurationController.class, UserConnectController.class,
