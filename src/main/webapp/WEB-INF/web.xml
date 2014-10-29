@@ -80,10 +80,10 @@
     <javaee:url-pattern>/logingoogle</javaee:url-pattern>
   </javaee:servlet-mapping>
   <javaee:servlet-mapping>
-    <javaee:servlet-mapping>
     <javaee:servlet-name>logingithub</javaee:servlet-name>
     <javaee:url-pattern>/logingithub</javaee:url-pattern>
   </javaee:servlet-mapping>
+  <javaee:servlet-mapping>
     <javaee:servlet-name>callbackgoogle</javaee:servlet-name>
     <javaee:url-pattern>/callbackgoogle</javaee:url-pattern>
   </javaee:servlet-mapping>
@@ -91,5 +91,4 @@
     <javaee:servlet-name>callbackgithub</javaee:servlet-name>
     <javaee:url-pattern>/callbackgithub</javaee:url-pattern>
   </javaee:servlet-mapping>
-  
 </javaee:web-app>
