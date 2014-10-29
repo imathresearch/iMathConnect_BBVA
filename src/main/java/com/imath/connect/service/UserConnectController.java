@@ -38,6 +38,7 @@ public class UserConnectController extends AbstractController{
      */
     @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
     public UserConnect newUserConnect(String userName, String eMail, String organization, String phone1, String phone2, byte[] PhotoByte) throws Exception {
+        Encryptor.init();
     	Date past = new Date(Constants.EPOCH_MIL);
     	Date now = new Date();
         UserConnect peer = new UserConnect();
@@ -61,6 +62,7 @@ public class UserConnectController extends AbstractController{
     
     @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
     public UserConnect newUserConnectInvitation(String eMail) throws Exception {
+        Encryptor.init();
         String userName = findUserName(eMail);
         String org = findOrganization(eMail);
         Date past = new Date(Constants.EPOCH_MIL);
