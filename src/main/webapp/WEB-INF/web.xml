@@ -47,6 +47,14 @@
     <javaee:servlet-name>callbackgoogle</javaee:servlet-name>
     <javaee:servlet-class>com.imath.connect.servlet.CallbackGoogle</javaee:servlet-class>
   </javaee:servlet>
+  <javaee:servlet>
+    <javaee:servlet-name>logingithub</javaee:servlet-name>
+    <javaee:servlet-class>com.imath.connect.servlet.LoginGitHub</javaee:servlet-class>
+  </javaee:servlet>
+  <javaee:servlet>
+    <javaee:servlet-name>callbackgithub</javaee:servlet-name>
+    <javaee:servlet-class>com.imath.connect.servlet.CallbackGitHub</javaee:servlet-class>
+  </javaee:servlet>
   <javaee:servlet-mapping>
     <javaee:servlet-name>recoverpassword</javaee:servlet-name>
     <javaee:url-pattern>/recoverpassword</javaee:url-pattern>
@@ -67,12 +75,21 @@
     <javaee:servlet-name>login</javaee:servlet-name>
     <javaee:url-pattern>/login</javaee:url-pattern>
   </javaee:servlet-mapping>
-    <javaee:servlet-mapping>
+  <javaee:servlet-mapping>
     <javaee:servlet-name>logingoogle</javaee:servlet-name>
     <javaee:url-pattern>/logingoogle</javaee:url-pattern>
   </javaee:servlet-mapping>
+  <javaee:servlet-mapping>
     <javaee:servlet-mapping>
+    <javaee:servlet-name>logingithub</javaee:servlet-name>
+    <javaee:url-pattern>/logingithub</javaee:url-pattern>
+  </javaee:servlet-mapping>
     <javaee:servlet-name>callbackgoogle</javaee:servlet-name>
     <javaee:url-pattern>/callbackgoogle</javaee:url-pattern>
   </javaee:servlet-mapping>
+  <javaee:servlet-mapping>
+    <javaee:servlet-name>callbackgithub</javaee:servlet-name>
+    <javaee:url-pattern>/callbackgithub</javaee:url-pattern>
+  </javaee:servlet-mapping>
+  
 </javaee:web-app>
