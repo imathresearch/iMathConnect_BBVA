@@ -27,8 +27,8 @@ public class LoginGoogle extends HttpServlet {
 	   .append("&scope=email") // scope is the api permissions we are requesting
 	   .append("&redirect_uri=http://localhost:" + Constants.IMATH_PORT + "/iMathConnect/callbackgoogle") // the servlet that google redirects to after authorization
 	   .append("&state=this_can_be_anything_to_help_correlate_the_response%3Dlike_session_id")
-	   .append("&access_type=offline") // here we are asking to access to user's data while they are not signed in
-	   .append("&approval_prompt=force"); // this requires them to verify which account to use, if they are already signed in	  
+	   .append("&access_type=online") // here we are asking to access to user's data while they are not signed in
+	   .append("&approval_prompt=auto"); // this requires them to verify which account to use, if they are already signed in	  
 	   resp.sendRedirect(oauthUrl.toString());
   }  
 }
