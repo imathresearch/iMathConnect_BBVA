@@ -68,7 +68,7 @@
 				cursor:pointer;			
     			
     		}
-    		button.google-login i { font-size: 20pt; }
+    		button.google-login i { font-size: 20pt; width: 22px; }
 		</style>
 		
     </head>
@@ -110,11 +110,34 @@
 								  <a href="javascript:gotobox('recover');" class="to_register">Did you forget your password ?</a>
 								</p>
 								
-								<p align="right">									
-									<button type="button" class="btn btn-primary google-login" onclick="location.href='logingoogle';">
-										<i class="fa fa-google-plus"></i> Login with Google
-									</button>
+								<p align="right" style="font-size:14px; color: rgb(127, 124, 124);">
+									Login using a third-party account
 								</p>
+								<div class="list-group">
+								<p align="right">
+																	
+										<button type="button" class="btn btn-primary google-login" onclick="location.href='logingoogle';">
+											<i class="fa fa-google-plus fa-fw"></i> 
+										</button>
+									
+										<button type="button" class="btn btn-primary google-login" onclick="location.href='loginlinkedin';">
+											<i class="fa fa-linkedin fa-fw"></i>
+										</button>
+									
+									
+										<button type="button" class="btn btn-primary google-login" onclick="location.href='loginlinkedin';">
+											<i class="fa fa-github fa-fw"></i>
+										</button>
+									
+								</p>
+								</div>
+								<br/>
+								
+								<!-- p align="right">									
+									<button type="button" class="btn btn-primary google-login" onclick="location.href='loginlinkedin';">
+										<i class="fa fa-linkedin"></i> Login with LinkedIn
+									</button>
+								</p-->
 								<!-- p>									
 									<a class="btn btn-social-icon btn-google-plus"><i class="fa fa-google-plus"></i></a>								
 								</p-->

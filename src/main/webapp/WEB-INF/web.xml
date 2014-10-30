@@ -47,6 +47,14 @@
     <javaee:servlet-name>callbackgoogle</javaee:servlet-name>
     <javaee:servlet-class>com.imath.connect.servlet.CallbackGoogle</javaee:servlet-class>
   </javaee:servlet>
+   <javaee:servlet>
+    <javaee:servlet-name>loginlinkedin</javaee:servlet-name>
+    <javaee:servlet-class>com.imath.connect.servlet.LoginLinkedin</javaee:servlet-class>
+  </javaee:servlet>
+  <javaee:servlet>
+    <javaee:servlet-name>callbacklinkedin</javaee:servlet-name>
+    <javaee:servlet-class>com.imath.connect.servlet.CallbackLinkedin</javaee:servlet-class>
+  </javaee:servlet>
   <javaee:servlet-mapping>
     <javaee:servlet-name>recoverpassword</javaee:servlet-name>
     <javaee:url-pattern>/recoverpassword</javaee:url-pattern>
@@ -67,12 +75,20 @@
     <javaee:servlet-name>login</javaee:servlet-name>
     <javaee:url-pattern>/login</javaee:url-pattern>
   </javaee:servlet-mapping>
-    <javaee:servlet-mapping>
+  <javaee:servlet-mapping>
     <javaee:servlet-name>logingoogle</javaee:servlet-name>
     <javaee:url-pattern>/logingoogle</javaee:url-pattern>
   </javaee:servlet-mapping>
-    <javaee:servlet-mapping>
+  <javaee:servlet-mapping>
     <javaee:servlet-name>callbackgoogle</javaee:servlet-name>
     <javaee:url-pattern>/callbackgoogle</javaee:url-pattern>
+  </javaee:servlet-mapping>
+  <javaee:servlet-mapping>
+    <javaee:servlet-name>loginlinkedin</javaee:servlet-name>
+    <javaee:url-pattern>/loginlinkedin</javaee:url-pattern>
+  </javaee:servlet-mapping>
+  <javaee:servlet-mapping>
+    <javaee:servlet-name>callbacklinkedin</javaee:servlet-name>
+    <javaee:url-pattern>/callbacklinkedin</javaee:url-pattern>
   </javaee:servlet-mapping>
 </javaee:web-app>
