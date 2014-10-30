@@ -2,6 +2,7 @@ package com.imath.connect.servlet;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.logging.Logger;
@@ -67,9 +68,13 @@ public class CallbackGitHub extends HttpServlet{
         .put("code", code)
         .put("client_id", clientId)
         .put("client_secret", clientSecret)
-        .put("redirect_uri", "http://localhost:" + Constants.IMATH_PORT + "/iMathConnect/callbackgoogle").build());
-                            
-         JSONObject jsonObject = null;          
+        .put("redirect_uri", "http://localhost:" + Constants.IMATH_PORT + "/iMathConnect/callbackgithub").build());
+        
+        // Response is not in JSON!
+        Map<String, String> params = parseResponseNonJSON(body);
+        
+        /*
+        JSONObject jsonObject = null;          
          // get the access token from json and request info from Google
          try {
              jsonObject = (JSONObject) new JSONParser().parse(body);
@@ -77,9 +82,11 @@ public class CallbackGitHub extends HttpServlet{
              LOG.severe(e.getMessage());
              throw new RuntimeException("Unable to parse json " + body);
          }
+         */
             
          // google tokens expire after an hour, but since we requested offline access we can get a new token without user involvement via the refresh token
-         String accessToken = (String) jsonObject.get("access_token");
+         //String accessToken = (String) jsonObject.get("access_token");
+        String accessToken = params.get("access_token");
         
         // you may want to store the access token in session
         request.getSession().setAttribute("access_token", accessToken);
@@ -87,9 +94,17 @@ public class CallbackGitHub extends HttpServlet{
         // get some info about the user with the access token
         String json = get(new StringBuilder("https://api.github.com/user?access_token=").append(accessToken).toString());
         
+        System.out.println("JSON EXIT?: " + json);
         // now we could get the email address 
         org.json.JSONObject jsonObj = new org.json.JSONObject(json);
-        String email = jsonObj.getString("email");                  
+        String email="";
+        try {
+            email = jsonObj.getString("email");
+        } catch (Exception e) {
+            // There is no public email in github. So, login is not possible 
+            response.sendRedirect("githuberror.html");
+            return;
+        }
         UserConnect user;       
         try {       
             
@@ -108,7 +123,6 @@ public class CallbackGitHub extends HttpServlet{
                         response.sendRedirect("loginerror.html");
                         return;
                     }
-                    
                 }
                 else{
                     // The user has not password, so this is not its login way
@@ -162,14 +176,26 @@ public class CallbackGitHub extends HttpServlet{
          return execute(request);
      }
       
+     private Map<String, String> parseResponseNonJSON(String response) {
+         String [] elems = response.split("&");
+         Map<String, String> out = new HashMap<String,String>();
+         for(String e:elems) {
+             String [] val = e.split("=");
+             if (val.length==2) {
+                 out.put(val[0], val[1]);
+             }
+         }
+         return out;
+     }
+     
      // makes request and checks response code for 200
      private String execute(HttpRequestBase request) throws ClientProtocolException, IOException {
          HttpClient httpClient = new DefaultHttpClient();
          HttpResponse response = httpClient.execute(request);
           
          HttpEntity entity = response.getEntity();
-         String body = EntityUtils.toString(entity);
-     
+         String body = EntityUtils.toString(entity, "utf-8");
+         
          if (response.getStatusLine().getStatusCode() != 200) {
              throw new RuntimeException("Expected 200 but got " + response.getStatusLine().getStatusCode() + ", with body " + body);
          }
