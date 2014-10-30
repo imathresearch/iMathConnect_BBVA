@@ -125,7 +125,7 @@
 										</button>
 									
 									
-										<button type="button" class="btn btn-primary google-login" onclick="location.href='loginlinkedin';">
+										<button type="button" class="btn btn-primary google-login" onclick="location.href='logingithub';">
 											<i class="fa fa-github fa-fw"></i>
 										</button>
 									
