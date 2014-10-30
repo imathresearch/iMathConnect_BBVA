@@ -90,6 +90,11 @@ public class Constants {
     
     static public final long EPOCH_SEC  = 1081157732;
     static public final long EPOCH_MIL = EPOCH_SEC * 1000; 
+    
+    static public final String GOOGLE_ACCOUNT="google";
+    static public final String GITHUB_ACCOUNT="github";
+    static public final String LINKEDIN_ACCOUNT="linkedin";
+    
     static public String IMATH_HOST() {
         return "127.0.0.1"; // To be changed in production!!!!!!!
 

@@ -18,8 +18,6 @@ public class LoginGoogle extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException,IOException {
 	    
-		System.out.println("LoginGoogle servlet");
-		
 	   // redirect to google for authorization
 	   StringBuilder oauthUrl = new StringBuilder().append("https://accounts.google.com/o/oauth2/auth")
 	   .append("?client_id=").append(clientId) // the client id from the api console registration

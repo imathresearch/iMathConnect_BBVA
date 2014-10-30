@@ -24,8 +24,6 @@ public class LoginLinkedin extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-		System.out.println("LoginLinkeding servlet");
 		
 	   // redirect to linkedin for authorization
 	   StringBuilder oauthUrl = new StringBuilder().append("https://www.linkedin.com/uas/oauth2/authorization")
@@ -38,7 +36,6 @@ public class LoginLinkedin extends HttpServlet {
 	   .append("&approval_prompt=force"); // this requires them to verify which account to use, if they are already signed in	  
 	   response.sendRedirect(oauthUrl.toString());
 		
-	
 	}
 
 	/**

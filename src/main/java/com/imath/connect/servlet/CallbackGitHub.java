@@ -139,7 +139,7 @@ public class CallbackGitHub extends HttpServlet{
             // New user
             try{
             
-                user = ucc.newUserConnectThirdParty(email, "Google");
+                user = ucc.newUserConnectThirdParty(email, Constants.GITHUB_ACCOUNT);
                 this.security.createSystemUser(user.getUserName(), user.getUserAccess().getPassword(), Constants.SYSTEM_ROLE);
                 this.mail.sendWelcomeMail(user.getEMail(), user.getUserName());
                 this.mail.sendNewUserMailToAdmin(user.getEMail(), user.getUserName()); 

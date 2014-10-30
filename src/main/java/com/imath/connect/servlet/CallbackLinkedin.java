@@ -161,7 +161,7 @@ public class CallbackLinkedin extends HttpServlet {
 			// New user
 			try{
 			
-				user = ucc.newUserConnectThirdParty(email, "LinkedIn");
+				user = ucc.newUserConnectThirdParty(email, Constants.LINKEDIN_ACCOUNT);
 				this.security.createSystemUser(user.getUserName(), user.getUserAccess().getPassword(), Constants.SYSTEM_ROLE);
 				this.mail.sendWelcomeMail(user.getEMail(), user.getUserName());
 	            this.mail.sendNewUserMailToAdmin(user.getEMail(), user.getUserName()); 
