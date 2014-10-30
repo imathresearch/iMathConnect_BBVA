@@ -54,6 +54,7 @@
   <javaee:servlet>
     <javaee:servlet-name>callbacklinkedin</javaee:servlet-name>
     <javaee:servlet-class>com.imath.connect.servlet.CallbackLinkedin</javaee:servlet-class>
+  </javaee:servlet>
   <javaee:servlet>
     <javaee:servlet-name>logingithub</javaee:servlet-name>
     <javaee:servlet-class>com.imath.connect.servlet.LoginGitHub</javaee:servlet-class>
