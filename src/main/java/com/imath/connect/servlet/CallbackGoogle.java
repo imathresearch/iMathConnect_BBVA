@@ -44,8 +44,8 @@ import com.imath.connect.util.SecurityInterface;
 @WebServlet("/CallbackGoogle")
 public class CallbackGoogle extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private final String clientId = "230432612246-dpbgp99e9n17tvki2v5dtg5n6qilajfs.apps.googleusercontent.com";
-	private final String clientSecret = "bR-dClMFs2g7aLtGI_JIQCRv";  
+	//private final String clientId = "230432612246-dpbgp99e9n17tvki2v5dtg5n6qilajfs.apps.googleusercontent.com";
+	//private final String clientSecret = "bR-dClMFs2g7aLtGI_JIQCRv";  
     
 	@Inject UserConnectController ucc;
 	@Inject UserAccessController uac;
@@ -59,7 +59,8 @@ public class CallbackGoogle extends HttpServlet {
 		System.out.println("CallbackGoogle servlet");
 		
 		if (request.getParameter("error") != null) {
-			response.getWriter().println(request.getParameter("error"));
+			//response.getWriter().println(request.getParameter("error"));
+			response.sendRedirect("loginErrorThirdAccount.html");
 		    return;
 		}
 		    
@@ -69,9 +70,9 @@ public class CallbackGoogle extends HttpServlet {
 		// get the access token by post to Google
 		String body = post("https://accounts.google.com/o/oauth2/token", ImmutableMap.<String,String>builder()
 		.put("code", code)
-		.put("client_id", clientId)
-		.put("client_secret", clientSecret)
-		.put("redirect_uri", "http://localhost:" + Constants.IMATH_PORT + "/iMathConnect/callbackgoogle")
+		.put("client_id", Constants.CLIENTID_GOOGLE)
+		.put("client_secret", Constants.CLIENTSECRET_GOOGLE)
+		.put("redirect_uri", "http://" + Constants.IMATH_HOST() +":" + Constants.IMATH_PORT + "/iMathConnect/callbackgoogle")
 		.put("grant_type", "authorization_code").build());
 		 		 		    
 		 JSONObject jsonObject = null;		    

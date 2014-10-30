@@ -63,10 +63,7 @@ public class CallbackLinkedin extends HttpServlet {
 	private SecurityInterface security = new SecurityImpl();
 	private Mail mail = new Mail();
        
-	private String APIKey = "77pga05qmz9bu7";
-	private String secretKey = "eyRRhGSBdG1MnXPk";
-	private String userOAuthCredential = "6e593f2e-a462-4983-8db5-c90fab340c1c";
-	private String userOAuthSecret = "70d4ee4c-1b53-4a6d-977a-9c67bb4ad76e";
+	
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
@@ -76,7 +73,8 @@ public class CallbackLinkedin extends HttpServlet {
 		
 		
 		if (request.getParameter("error") != null) {
-			response.getWriter().println(request.getParameter("error"));
+			//response.getWriter().println(request.getParameter("error"));
+			response.sendRedirect("loginErrorThirdAccount.html");
 		    return;
 		}
 		    
@@ -86,9 +84,9 @@ public class CallbackLinkedin extends HttpServlet {
 		// get the access token by post to Google
 		String body = post("https://www.linkedin.com/uas/oauth2/accessToken", ImmutableMap.<String,String>builder()
 		.put("code", code)
-		.put("client_id", APIKey)
-		.put("client_secret", secretKey)
-		.put("redirect_uri", "http://localhost:" + Constants.IMATH_PORT + "/iMathConnect/callbacklinkedin")
+		.put("client_id", Constants.CLIENTID_LINKEDIN)
+		.put("client_secret", Constants.CLIENTSECRET_LINKEDIN)
+		.put("redirect_uri", "http://" + Constants.IMATH_HOST() + ":" + Constants.IMATH_PORT + "/iMathConnect/callbacklinkedin")
 		.put("grant_type", "authorization_code").build());
 		 		 		    
 		 JSONObject jsonObject = null;		    

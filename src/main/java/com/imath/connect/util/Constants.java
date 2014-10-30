@@ -94,9 +94,35 @@ public class Constants {
     static public final String GOOGLE_ACCOUNT="google";
     static public final String GITHUB_ACCOUNT="github";
     static public final String LINKEDIN_ACCOUNT="linkedin";
+        
+    static public final String CLIENTID_GOOGLE_DEVELOPMENT = "249154387346-7gbn63lqnvu5t36pjgvdt3pol6cpsrrn.apps.googleusercontent.com";
+    static public final String CLIENTSECRET_GOOGLE_DEVELOPMENT = "WrxDPHUttLa89PuzNtVFnEEA";
+    static public final String CLIENTID_GOOGLE_PRODUCTION = "249154387346-ss5gal7drl94lae8no254qeph8l0nbdl.apps.googleusercontent.com";
+    static public final String CLIENTSECRET_GOOGLE_PRODUCTION = "V6unIux0QBhFVIrc2WiBkBqk";
+    
+    static public final String CLIENTID_GOOGLE = CLIENTID_GOOGLE_DEVELOPMENT; // It must be changed in production
+    static public final String CLIENTSECRET_GOOGLE = CLIENTSECRET_GOOGLE_DEVELOPMENT; // It must be change in production
+        
+    static public final String CLIENTID_LINKEDIN_DEVELOPMENT = "756jsh07iqy4ej";
+    static public final String CLIENTSECRET_LINKEDIN_DEVELOPMENT = "T8sITuOxF6XnesqU";
+    static public final String CLIENTID_LINKEDIN_PRODUCTION = "75y40x21uoekuj";
+    static public final String CLIENTSECRET_LINKEDIN_PRODUCTION = "Fux7NpqdwYUDUCTm";
+    
+    static public final String CLIENTID_LINKEDIN = CLIENTID_LINKEDIN_DEVELOPMENT; // It must be changed in production
+    static public final String CLIENTSECRET_LINKEDIN = CLIENTSECRET_LINKEDIN_DEVELOPMENT; // It must be change in production
+    
+    static public final String CLIENTID_GITHUB_DEVELOPMENT = "1a219ace0063d4c2358f";
+    static public final String CLIENTSECRET_GITHUB_DEVELOPMENT = "90e3c2ef1d39f584250f17ae8e5c7df2e3f27ef5";
+    static public final String CLIENTID_GITHUB_PRODUCTION = "690cba2489d8c0285e43";
+    static public final String CLIENTSECRET_GITHUB_PRODUCTION = "25e83fd44b5950d758c9375b77fdbd58875db658";
+    
+    static public final String CLIENTID_GITHUB = CLIENTID_GITHUB_DEVELOPMENT; // It must be changed in production
+    static public final String CLIENTSECRET_GITHUB = CLIENTSECRET_GITHUB_DEVELOPMENT; // It must be change in production
+    
     
     static public String IMATH_HOST() {
         return "127.0.0.1"; // To be changed in production!!!!!!!
+    	
 
         /*
         try {

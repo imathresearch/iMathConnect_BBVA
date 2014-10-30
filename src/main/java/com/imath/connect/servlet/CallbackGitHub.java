@@ -40,9 +40,7 @@ import com.imath.connect.util.SecurityInterface;
 
 public class CallbackGitHub extends HttpServlet{
 
-    private final String clientId = "1a219ace0063d4c2358f"; //From GitHub
-    private final String clientSecret = "90e3c2ef1d39f584250f17ae8e5c7df2e3f27ef5"; //From GitHub
-
+   
     @Inject UserConnectController ucc;
     @Inject UserAccessController uac;
     @Inject protected Logger LOG;
@@ -66,9 +64,9 @@ public class CallbackGitHub extends HttpServlet{
         // get the access token by post to Google
         String body = post("https://github.com/login/oauth/access_token", ImmutableMap.<String,String>builder()
         .put("code", code)
-        .put("client_id", clientId)
-        .put("client_secret", clientSecret)
-        .put("redirect_uri", "http://localhost:" + Constants.IMATH_PORT + "/iMathConnect/callbackgithub").build());
+        .put("client_id", Constants.CLIENTID_GITHUB)
+        .put("client_secret", Constants.CLIENTSECRET_GITHUB)
+        .put("redirect_uri", "http://"+ Constants.IMATH_HOST() + ":" + Constants.IMATH_PORT + "/iMathConnect/callbackgithub").build());
         
         // Response is not in JSON!
         Map<String, String> params = parseResponseNonJSON(body);
