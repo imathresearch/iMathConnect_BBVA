@@ -318,6 +318,11 @@
  							<div class="box imath-waiting-creation imath-waiting-own-projects">
                                 <div class="box-header">
                                     <h3 class="box-title"><i class="fa fa-bar-chart-o"></i>&nbsp;&nbsp;&nbsp; My Projects</h3>
+                                    <div class="box-tools pull-right">
+										<div class="btn-group" data-toggle="btn-toggle">
+											<button id="imath-id-new-project-button-dashboard" type="button" class="btn btn-primary active">New</button>
+										</div>
+									</div>
                                 </div><!-- /.box-header -->
                                 <div class="box-body">
                                     <table class="table table-bordered imath-own-projects">

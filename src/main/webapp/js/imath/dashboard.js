@@ -22,6 +22,12 @@ function numberToMonth(i) {
 	return ret; 
 }
 
+$("#imath-id-new-project-button-dashboard").click(function() {
+	var uuid = undefined;
+	var source = "dashboard";
+	placeLayoutProjects(uuid, source);
+});
+
 function ajaxUserInfo() {
 	$.ajax({
 	    url: "rest/api/agora/getUserByUserName/" + userName,

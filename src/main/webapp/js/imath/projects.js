@@ -8,11 +8,11 @@ var global_uuid_project_selected_prev = null;
 var global_instances = [];
 var global_ok = false;
 
-function placeLayoutProjects(uuid_project) {
+function placeLayoutProjects(uuid_project, source) {
 	setSelectMenu("imath-id-projects-menu");
 	jQuery.get('projects.html', function(data) {
 		$(".imath-main-row").html(data);
-		initProjectView(uuid_project);
+		initProjectView(uuid_project, source);
 	});
 }
 
@@ -38,7 +38,7 @@ function unselectProject() {
 	$(".imath-project-name").html("");
 }
 
-function initProjectView(uuid_project) {
+function initProjectView(uuid_project, source) {
 	unselectProject();
 	if (!(typeof uuid_project =="undefined")) {
 		ajaxUploadProject(uuid_project);
@@ -70,6 +70,10 @@ function initProjectView(uuid_project) {
 		}
 	});
 	setButtonsCode();
+	if(source == "dashboard"){
+		setNewProjectForm();
+	}
+	
 }
 
 function setButtonsCode() {
@@ -136,7 +140,7 @@ function checkProjectName(str) {
 	return /^[a-zA-Z()]+$/.test(str);
 }
 
-function setNewProjectForm() {
+function setNewProjectForm() {	
 	// We set the cancel button to upload the previous uploaded project
 	global_uuid_project_selected_prev = global_uuid_project_selected;
 	$('#imath-id-cancel-buton-project').unbind('click');
@@ -151,7 +155,7 @@ function setNewProjectForm() {
 	
 	global_uuid_project_selected=null;	// We "unselect" any possible current selected project
 		
-	
+	console.log("enabling buttons");
 	enable('imath-id-cancel-buton-project');	// We enable the cancel button;
 	$('#imath-id-instances').html("");			// We empty out the instance tables
 	$("#imath-id-project-name").val("");		// We empty the project name input
