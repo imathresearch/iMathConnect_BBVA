@@ -168,7 +168,9 @@ function setNewProjectForm() {
 	$(".imath-collaborators").html("");			// We empty out the table of collaborators
 	$(".imath-project-name").html("");			// we empty the head project name
 	enable('imath-id-save-buton-project');		// We enable the save button
-		
+	
+	$('#imath-id-run-buton-project').off('click');
+	$("#imath-id-run-buton-project").hide();	
 	
 
 }
@@ -246,6 +248,8 @@ function ajaxRemoveProject(uuid, callBackString) {
 	    	ajaxOwnProjects(callBackString);
 	    	showFlyingMessageOK(" Project removed ");	
 	    	unselectProject();
+	    	$('#imath-id-run-buton-project').off('click');
+	    	$("#imath-id-run-buton-project").hide();
 	    	
 	    },
 	    error: function(error) {
@@ -263,6 +267,8 @@ function confirmationForm(message, func) {
 
 function ajaxNewProject(newName, newDesc, uuid_instance) {
 	placeWaiting("imath-waiting-creation");
+	$('#imath-id-run-buton-project').off('click');
+	$("#imath-id-run-buton-project").hide();
 	$.ajax({
 	    url: "rest/api/agora/newProject/" + global_uuid_user + "/" + newName + "/" + newDesc + "/" + uuid_instance,
 	    cache: false,
@@ -419,6 +425,13 @@ function viewUploadProject(project) {
 	$(".imath-select-instance").html(instanceTableHtml);
 	var collaborators = project['userCol'];
 	collaboratorsHtml = generateTableOfCollaborators(collaborators);
+	
+	$("#imath-id-run-buton-project").off('click');
+	$("#imath-id-run-buton-project").click(function() {
+		runiMathCloud(global_uuid_project_selected);
+	});
+	
+	$("#imath-id-run-buton-project").show();
 	//$(".imath-collaborators"). html(collaboratorsHtml);
 	
 }
