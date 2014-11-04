@@ -44,7 +44,7 @@ public class RecoverPassword extends HttpServlet {
         }
         
         //Check if the user was registered using a third-party account
-        if(user.getUserAccess().getPassword() == null){
+        if(user.getUserAccess() == null){
         	// Generate an random password
 	        String randomPassword = Util.randomString(10);
 	        
