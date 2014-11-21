@@ -217,6 +217,11 @@
                                 <i class="fa fa-bar-chart-o"></i> <span>My Projects</span>
                             </a>
                         </li>
+                         <li id="imath-iMathCloud-menu" class="imath-menu">
+                            <a  style='cursor: pointer;')>
+                                <i class="fa fa-bar-chart-o"></i> <span>My iMathCloud</span>
+                            </a>
+                        </li>
 
                         <!-- li id="imath-id-instances-menu" class="imath-menu">
                             <a onclick='placeLayoutInstances()')>
@@ -229,7 +234,7 @@
             </aside>
 
             <!-- Right side column. Contains the navbar and content of the page -->
-            <aside class="right-side">
+            <aside class="right-side" >
                 <!-- Content Header (Page header) -->
                 <section class="content-header">
                     <h1 class="imath-title-menu">
@@ -589,6 +594,12 @@
 		<script src="js/imath/photo.js" type="text/javascript"></script>
 		<script src="js/imath/changePassword.js" type="text/javascript"></script>
 		<script src="js/imath/Profile.js" type="text/javascript"></script>
+		<script>
+			function getProperHeight() {
+				var gheight = $(window).height();
+				return gheight;
+			}
+		</script>
     </body>
 	
 </html>

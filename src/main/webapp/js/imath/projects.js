@@ -428,7 +428,8 @@ function viewUploadProject(project) {
 	
 	$("#imath-id-run-buton-project").off('click');
 	$("#imath-id-run-buton-project").click(function() {
-		runiMathCloud(global_uuid_project_selected);
+		//runiMathCloud(global_uuid_project_selected);
+		runEmbebediMathCloud(global_uuid_project_selected);
 	});
 	
 	$("#imath-id-run-buton-project").show();
@@ -513,6 +514,55 @@ function runiMathCloud(uuid_project) {
 	        showErrorForm("Error opening iMath Cloud. Try again in few minutes.");
 	    }
 	});	
+}
+
+function runEmbebediMathCloud(uuid_project){
+	$.ajax({
+	    url: "rest/api/agora/getProjectCredentials/" + global_uuid_user + "/" + uuid_project,
+	    cache: false,
+	    dataType: "json",
+	    type: "GET",
+	    success: function(project) {
+	    	
+	    	setSelectMenu("imath-iMathCloud-menu");
+	    	jQuery.get('iMathCloud.html', function(data) {	    			    		
+	    		$(".right-side").html(data);	    		
+	    		
+	    		/*var linux = project['linuxGroup'];
+		    	var key = project['key'];
+		    	var url = project['url'] + "/iMathCloud/login.jsp";
+	    		var iMathCloudCall = url + "?j_username=" + linux + "&j_password=" + key;
+	    		$( "#embebed_imath").attr('src', iMathCloudCall);*/
+	    		
+	    		var linux = project['linuxGroup'];
+		    	var key = project['key'];
+		    	var url = project['url'] + "/iMathCloud/login.jsp";
+		    	// Ugly... but it works
+		    	var form = '<form target="imath_iframe" id="fakeForm" action="' + url + '" method="post"><input type="hidden" name="j_username" value="' + linux + '"><input type="hidden" name="j_password" value="' + key + '"></form>';
+		    	//$("#imath-id-fake-form").html(form);
+		    	//$("#fakeForm").submit();
+		    	//$('#imath-id-fake-form').html("");
+		    	//document.body.innerHTML += '<form target="_blank" id="fakeForm" action="' + url + '" method="post"><input type="hidden" name="j_username" value="' + linux + '"><input type="hidden" name="j_password" value="' + key + '"></form>';	    		    
+		    	
+		    	$( "#embebed_imath").height(getProperHeight()-50);
+		    	//console.log("aside size");
+		    	//console.log($('aside.right-side').height());
+		    	//$('aside.right-side').css('height', '100%');
+		    	//$('#embebed_imath').css('height', $('aside.right-side').height() + 'px');
+		    	$(form).appendTo('#embebed_imath');  	 
+		    	document.getElementById("fakeForm").submit();
+		    	document.getElementById("fakeForm").remove();
+	    		
+	    	});
+	    	
+	    		    		    
+	    	
+	    },
+	    error: function(error) {
+	        console.log("Error opening iMathCloud");
+	        showErrorForm("Error opening iMath Cloud. Try again in few minutes.");
+	    }
+	});
 }
 
 function disable(id) {
