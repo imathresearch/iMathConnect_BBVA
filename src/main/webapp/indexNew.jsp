@@ -103,7 +103,11 @@
 		td.spaced {
 			margin-left: 40px;
 		}
-        
+		
+        body, html {
+			height:100%;
+			overflow: hidden;
+		}
         </style>
         
     </head>
