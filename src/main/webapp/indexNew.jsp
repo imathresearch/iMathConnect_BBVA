@@ -131,23 +131,7 @@
                                 <!-- i class="fa fa-warning"></i>
                                 <span class="label label-warning">2</span-->
                             </a>
-                            <ul class="dropdown-menu list-notifications">
-                                <!--li class="header">You have 2 notifications</li>
-                                <li>                                 
-                                    <ul class="menu">
-                                        <li>
-                                            <a href="#">
-                                                <i class="ion ion-ios7-people info"></i> Beta release of iMath Cloud is a reality
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="#">
-                                                <i class="fa fa-warning danger"></i> Welcome to iMath Cloud, the Data Scientist community
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </li-->
-
+                            <ul class="dropdown-menu list-notifications">                                
                             </ul>
                         </li>
                         
@@ -206,9 +190,9 @@
                     </form>
                     <!-- /.search form -->
                     <!-- sidebar menu: : style can be found in sidebar.less -->
-                    <ul class="sidebar-menu">
+                    <ul id="left_tabs" class="sidebar-menu">
                         <li id="imath-id-dashboard-menu" class="imath-menu">
-                            <a href="indexNew.jsp">
+                            <a onclick='placeDashboard()' style='cursor: pointer;')>
                                 <i class="fa fa-dashboard"></i> <span>Dashboard</span>
                             </a>
                         </li>
@@ -217,11 +201,11 @@
                                 <i class="fa fa-bar-chart-o"></i> <span>My Projects</span>
                             </a>
                         </li>
-                         <li id="imath-iMathCloud-menu" class="imath-menu">
-                            <a  style='cursor: pointer;')>
+                         <!--li id="imath-iMathCloud-menu" class="imath-menu">
+                            <a  onclick='placeiMathCloud()' style='cursor: pointer;')>
                                 <i class="fa fa-bar-chart-o"></i> <span>My iMathCloud</span>
                             </a>
-                        </li>
+                        </li-->
 
                         <!-- li id="imath-id-instances-menu" class="imath-menu">
                             <a onclick='placeLayoutInstances()')>
@@ -373,6 +357,15 @@
                    	</div><!-- /.row (main row) -->
 
                 </section><!-- /.content -->
+                	
+                <section id="section_iMathCloud">
+	                <div id="wrap_iMathCloud">
+			        	<div id="div_embebed_imath">
+							<iframe id="embebed_imath" height="100%" width="100%" name="imath_iframe"></iframe>
+						</div>
+					</div>
+                </section> <!-- /.section iMathCloud -->
+            
             </aside><!-- /.right-side -->
         </div><!-- ./wrapper -->
         
@@ -556,6 +549,8 @@
                 </form>
             </div><!-- /.modal-dialog -->
         </div><!-- /.modal -->
+        
+        
 
 
         <!-- jQuery 2.0.2 -->

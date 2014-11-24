@@ -22,11 +22,20 @@ function numberToMonth(i) {
 	return ret; 
 }
 
-$("#imath-id-new-project-button-dashboard").click(function() {
-	var uuid = undefined;
-	var source = "dashboard";
-	placeLayoutProjects(uuid, source);
-});
+
+function placeDashboard(){
+	console.log("Go to dashboard");
+	setSelectMenu("imath-id-dashboard-menu");
+	jQuery.get('dashboard.html', function(data) {
+		$(".imath-main-row").html(data);		
+		$("#section_iMathCloud").css("display", "none");
+		$(".content").css("display", "block");
+		$(".content-header").css("display", "block");
+		ajaxUserInfo();
+		
+	});
+	
+}
 
 function ajaxUserInfo() {
 	$.ajax({
@@ -53,6 +62,13 @@ function ajaxUserInfo() {
 			ajaxColProjects();
 			ajaxInfo();
 			setSelectMenu("imath-id-dashboard-menu");
+			$("#section_iMathCloud").css("display", "none");
+			$("#imath-id-new-project-button-dashboard").click(function() {
+				var uuid = undefined;
+				var source = "dashboard";
+				placeLayoutProjects(uuid, source);
+			});
+
 	    },
 	    error: function(error) {
 	        console.log("Error getting user information");
