@@ -103,7 +103,11 @@
 		td.spaced {
 			margin-left: 40px;
 		}
-        
+		
+        body, html {
+			height:100%;
+			overflow: hidden;
+		}
         </style>
         
     </head>
@@ -125,19 +129,26 @@
                 </a>
                 <div class="navbar-right">
                     <ul class="nav navbar-nav">
+                    	<li>
+                    		<a href="http://wiki.imathresearch.com/doku.php?id=public:imathcloud" title="Acess to the wiki"> 
+                                <i class="fa fa-question-circle"></i>
+                            </a>
+                    	</li>
                         <!-- Notifications: style can be found in dropdown.less -->
                         <li class="dropdown notifications-menu">
-                            <a href="#" class="dropdown-toggle number-notifications" data-toggle="dropdown">
+                            <a href="#" class="dropdown-toggle number-notifications" data-toggle="dropdown" title="Notifications">
                                 <!-- i class="fa fa-warning"></i>
                                 <span class="label label-warning">2</span-->
-                            </a>
-                            <ul class="dropdown-menu list-notifications">                                
+                            </a>                               
+
+                            <ul class="dropdown-menu list-notifications">
+
                             </ul>
                         </li>
                         
                         <!-- User Account: style can be found in dropdown.less -->
                         <li class="dropdown user user-menu">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown"> 
                                 <i class="glyphicon glyphicon-user"></i>
                                 <span class="username"></span> <i class="caret"></i>
                             </a>
