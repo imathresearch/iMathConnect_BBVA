@@ -129,35 +129,24 @@
                 </a>
                 <div class="navbar-right">
                     <ul class="nav navbar-nav">
+                    	<li>
+                    		<a href="http://wiki.imathresearch.com/doku.php?id=public:imathcloud" title="Acess to the wiki"> 
+                                <i class="fa fa-question-circle"></i>
+                            </a>
+                    	</li>
                         <!-- Notifications: style can be found in dropdown.less -->
                         <li class="dropdown notifications-menu">
-                            <a href="#" class="dropdown-toggle number-notifications" data-toggle="dropdown">
+                            <a href="#" class="dropdown-toggle number-notifications" data-toggle="dropdown" title="Notifications">
                                 <!-- i class="fa fa-warning"></i>
                                 <span class="label label-warning">2</span-->
                             </a>
                             <ul class="dropdown-menu list-notifications">
-                                <!--li class="header">You have 2 notifications</li>
-                                <li>                                 
-                                    <ul class="menu">
-                                        <li>
-                                            <a href="#">
-                                                <i class="ion ion-ios7-people info"></i> Beta release of iMath Cloud is a reality
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="#">
-                                                <i class="fa fa-warning danger"></i> Welcome to iMath Cloud, the Data Scientist community
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </li-->
-
                             </ul>
                         </li>
                         
                         <!-- User Account: style can be found in dropdown.less -->
                         <li class="dropdown user user-menu">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown"> 
                                 <i class="glyphicon glyphicon-user"></i>
                                 <span class="username"></span> <i class="caret"></i>
                             </a>
