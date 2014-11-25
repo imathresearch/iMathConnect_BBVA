@@ -14,8 +14,10 @@ function placeLayoutProjects(uuid_project, source) {
 	setSelectMenu("imath-id-projects-menu" );
 	jQuery.get('projects.html', function(data) {
 		$(".imath-main-row").html(data);	
-		$("#angle" ).toggleClass( "fa-angle-down" );
-		$("#angle" ).toggleClass( "fa-angle-left" );
+		if ($( "#angle" ).hasClass( "fa-angle-down" )){
+			$("#angle" ).toggleClass( "fa-angle-down" );
+			$("#angle" ).toggleClass( "fa-angle-left" );
+		}
 		$(".treeview-menu").css("display", "none");
 		$(".imath-section").css("display", "none");
 		$(".content").css("display", "block");

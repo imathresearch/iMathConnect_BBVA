@@ -27,9 +27,11 @@ function placeDashboard(){
 	console.log("Go to dashboard");
 	setSelectMenu("imath-id-dashboard-menu");
 	jQuery.get('dashboard.html', function(data) {
-		$(".imath-main-row").html(data);
-		$("#angle" ).toggleClass( "fa-angle-down" );
-		$("#angle" ).toggleClass( "fa-angle-left" );
+		$(".imath-main-row").html(data);		
+		if ($( "#angle" ).hasClass( "fa-angle-down" )){
+			$("#angle" ).toggleClass( "fa-angle-down" );
+			$("#angle" ).toggleClass( "fa-angle-left" );
+		}
 		$(".treeview-menu").css("display", "none");
 		$(".imath-section").css("display", "none");
 		$(".content").css("display", "block");
