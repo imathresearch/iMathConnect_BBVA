@@ -108,6 +108,24 @@
 			height:100%;
 			overflow: hidden;
 		}
+		
+		.close {
+			  font-size: 20px;
+			  font-weight: bold;
+			  line-height: 18px;
+			  color: #000000;
+			  text-shadow: 0 1px 0 #ffffff;
+			  opacity: 0.2;
+			  filter: alpha(opacity=20);
+			  text-decoration: none;
+		}
+		.close:hover {
+			  color: #000000;
+			  text-decoration: none;
+			  opacity: 0.4;
+			  filter: alpha(opacity=40);
+			  cursor: pointer;
+		}
         </style>
         
     </head>
@@ -203,26 +221,16 @@
                     <!-- sidebar menu: : style can be found in sidebar.less -->
                     <ul id="left_tabs" class="sidebar-menu">
                         <li id="imath-id-dashboard-menu" class="imath-menu">
-                            <a onclick='placeDashboard()' style='cursor: pointer;')>
+                            <a onclick='placeDashboard()' style='cursor: pointer;'>
                                 <i class="fa fa-dashboard"></i> <span>Dashboard</span>
                             </a>
                         </li>
                         <li id="imath-id-projects-menu" class="imath-menu">
-                            <a onclick='placeLayoutProjects()' style='cursor: pointer;')>
+                            <a onclick='placeLayoutProjects()' style='cursor: pointer;'>
                                 <i class="fa fa-bar-chart-o"></i> <span>My Projects</span>
                             </a>
-                        </li>
-                         <!--li id="imath-iMathCloud-menu" class="imath-menu">
-                            <a  onclick='placeiMathCloud()' style='cursor: pointer;')>
-                                <i class="fa fa-bar-chart-o"></i> <span>My iMathCloud</span>
-                            </a>
-                        </li-->
-
-                        <!-- li id="imath-id-instances-menu" class="imath-menu">
-                            <a onclick='placeLayoutInstances()')>
-                                <i class="fa fa-cog"></i> <span>My Instances</span>
-                            </a>
-                        </li-->
+                        </li>                                             
+                        
                     </ul>
                 </section>
                 <!-- /.sidebar -->
@@ -369,7 +377,7 @@
 
                 </section><!-- /.content -->
                 	
-                <section id="section_iMathCloud">
+                <!--section id="section_iMathCloud">
 	                <div id="wrap_iMathCloud">
 			        	<div id="div_embebed_imath">
 							<iframe id="embebed_imath" height="100%" width="100%" name="imath_iframe"></iframe>

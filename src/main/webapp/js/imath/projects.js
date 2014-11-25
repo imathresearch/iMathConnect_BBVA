@@ -11,13 +11,16 @@ var imathCloud_container = null;
 
 function placeLayoutProjects(uuid_project, source) {
 	console.log("Go to projects");
-	setSelectMenu("imath-id-projects-menu");
+	setSelectMenu("imath-id-projects-menu" );
 	jQuery.get('projects.html', function(data) {
 		$(".imath-main-row").html(data);
 		//$(".right-side").html(data);
 		//setSelectMenu("imath-id-projects-menu");
 		//ajaxInfo();
-		$("#section_iMathCloud").css("display", "none");
+		$("#angle" ).toggleClass( "fa-angle-down" );
+		$("#angle" ).toggleClass( "fa-angle-left" );
+		$(".treeview-menu").css("display", "none");
+		$(".imath-section").css("display", "none");
 		$(".content").css("display", "block");
 		$(".content-header").css("display", "block");
 		initProjectView(uuid_project, source);
@@ -538,26 +541,59 @@ function runEmbebediMathCloud(uuid_project){
 	    type: "GET",
 	    success: function(project) {
 	    	
-	    	var left_tab = "<li id='imath-iMathCloud-menu' class='imath-menu'><a  onclick='placeiMathCloud()' style='cursor: pointer;')><i class='fa fa-bar-chart-o'></i> <span>My iMathCloud</span></a></li>";
+	    	var left_tab = "<li id='imath-iMathCloud-menu_" + uuid_project + "' class='treeview imath-menu'>";
+	    	left_tab += "<a  onclick='placeiMathCloud(\"" + uuid_project + "\")' style='cursor: pointer;'>";
+	    	left_tab += "<i class='fa fa-bar-chart-o'></i> <span> Project " + project['name'] +"</span>";
+	    	left_tab += " <i id='angle' class='fa pull-right fa-angle-down'></i>";
+	    	left_tab += "</a>";
+	    	left_tab += "<ul class='treeview-menu'>";
+	    	left_tab += "<li><a onclick='closeiMathCloud(\"" + uuid_project + "\")' style='margin-left: 10px; cursor: pointer;'><i class='fa fa-angle-double-right'></i> Close</a></li>" 
+	    	left_tab += "</ul>";
+	    	left_tab += "</li>";
+	    	
+	    	
+	    	/*var left_tab = '<li class="treeview">';
+            left_tab += '<a href="#">';
+            left_tab += '<i class="fa fa-edit"></i> <span>Forms</span>';
+            left_tab += '<i class="fa pull-right fa-angle-down"></i>';
+            left_tab += '</a>';
+            left_tab += '<ul class="treeview-menu">';
+            left_tab += '<li><a href="../forms/general.html" style="margin-left: 10px;"><i class="fa fa-angle-double-right"></i> General Elements</a></li>';
+            left_tab += '<li><a href="../forms/advanced.html" style="margin-left: 10px;"><i class="fa fa-angle-double-right"></i> Advanced Elements</a></li>';
+            left_tab += '<li><a href="../forms/editors.html" style="margin-left: 10px;"><i class="fa fa-angle-double-right"></i> Editors</a></li>';
+            left_tab += '</ul>';
+            left_tab += '</li>';
+	    	*/
+	    	
+	    	console.log(left_tab);
 	    	$("#left_tabs").append(left_tab);
 	    	
-	    	setSelectMenu("imath-iMathCloud-menu");
+	    	setSelectMenu("imath-iMathCloud-menu_" + uuid_project);
 	    	$(".content").css("display", "none");
 	    	$(".content-header").css("display", "none");	    	
-	    	
+
 	    	var linux = project['linuxGroup'];
 		    var key = project['key'];
 		    var url = project['url'] + "/iMathCloud/login.jsp";
-		    var form = '<form target="imath_iframe" id="fakeForm" action="' + url + '" method="post"><input type="hidden" name="j_username" value="' + linux + '"><input type="hidden" name="j_password" value="' + key + '"></form>';
-		    
+		    var form = '<form target="imath_iframe_' + uuid_project + '"id="fakeForm" action="' + url + '" method="post"><input type="hidden" name="j_username" value="' + linux + '"><input type="hidden" name="j_password" value="' + key + '"></form>';
+	    	
+	    	var aux = "<section id='section_iMathCloud_" + uuid_project + "' class='imath-section'>" ;
+            aux += "<div id='wrap_iMathCloud'>";
+            aux += "<div id='div_embebed_imath'>";
+			aux += "<iframe id='embebed_imath_" + uuid_project + "' height='100%' width='100%' name='imath_iframe_" + uuid_project +"'>";			
+			aux += "</iframe></div></div></section>";
+	    		    			    
 		    console.log("Form");
 		    console.log(form);
-		    $( "#embebed_imath").height(getProperHeight()-50);
-		    $(form).appendTo('#embebed_imath');  	 
+		    $(aux).appendTo(".right-side");
+		    $( "#embebed_imath_" + uuid_project).height(getProperHeight()-50);
+		    $(form).appendTo('#embebed_imath_' + uuid_project);  	 
 		    document.getElementById("fakeForm").submit();
 		    document.getElementById("fakeForm").remove();
-		    		    			    			   
-		    $("#section_iMathCloud").css("display", "block");
+		    
+		    $(".imath-section").css("display", "none");		    			    			   
+		    $("#section_iMathCloud_" + uuid_project).css("display", "block");
+		    $(".sidebar .treeview").tree();
 	    	
 	    },
 	    error: function(error) {
@@ -589,11 +625,18 @@ function showErrorForm(message) {
 	
 }
 
-function placeiMathCloud(){
+function placeiMathCloud(uuid_project){
 	console.log("placeiMathCloud");
-	setSelectMenu("imath-iMathCloud-menu");
-	$("#section_iMathCloud").css("display", "block")
-	$(".content").css("display", "none")
-	$(".content-header").css("display", "none")
+	setSelectMenu("imath-iMathCloud-menu_" + uuid_project);
+	$(".imath-section").css("display", "none");
+	$("#section_iMathCloud_" + uuid_project).css("display", "block");
+	$(".content").css("display", "none");
+	$(".content-header").css("display", "none");
 	
+}
+
+function closeiMathCloud(uuid_project){
+	document.getElementById("section_iMathCloud_" + uuid_project).remove();
+	document.getElementById("imath-iMathCloud-menu_" + uuid_project).remove();
+	placeDashboard();
 }
