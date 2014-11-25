@@ -269,7 +269,7 @@ function generateTableOfColProjects(projects) {
 			}
 		}
 		var rowIcon = null;
-		rowIcon = "<a onclick='runiMathCloud(\""+uuid+ "\")' style='cursor: pointer;' title='Run iMathCloud'>" + faIcon("fa-play") + "</a>";
+		rowIcon = "<a onclick='runEmbebediMathCloud(\""+uuid+ "\")' style='cursor: pointer;' title='Run iMathCloud'>" + faIcon("fa-play") + "</a>";
 		
 		var rowInstance = faIcon("fa-gears") + " <b>" + project['instance']['cpu'] + "</b> <small>vCPUs</small> <br>";
 		rowInstance += faIcon("fa-film") + " <b>" + project['instance']['ram'] + "</b> <small>MiB</small><br> ";
@@ -325,7 +325,7 @@ function generateTableOfProjects(projects, callbackString) {
 			}
 		}
 		var rowIcon = null;
-		rowIcon = "<a onclick='runiMathCloud(\""+uuid+ "\")' style='cursor: pointer;' title='Run iMathCloud'>" + faIcon("fa-play") + "</a>";
+		rowIcon = "<a onclick='runEmbebediMathCloud(\""+uuid+ "\")' style='cursor: pointer;' title='Run iMathCloud'>" + faIcon("fa-play") + "</a>";
 		
 		var rowInstance = faIcon("fa-gears") + " <b>" + project['instance']['cpu'] + "</b> <small>vCPUs</small> <br>";
 		rowInstance += faIcon("fa-film") + " <b>" + project['instance']['ram'] + "</b> <small>MiB</small><br> ";

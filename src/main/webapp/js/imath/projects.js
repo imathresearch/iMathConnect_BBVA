@@ -13,10 +13,7 @@ function placeLayoutProjects(uuid_project, source) {
 	console.log("Go to projects");
 	setSelectMenu("imath-id-projects-menu" );
 	jQuery.get('projects.html', function(data) {
-		$(".imath-main-row").html(data);
-		//$(".right-side").html(data);
-		//setSelectMenu("imath-id-projects-menu");
-		//ajaxInfo();
+		$(".imath-main-row").html(data);	
 		$("#angle" ).toggleClass( "fa-angle-down" );
 		$("#angle" ).toggleClass( "fa-angle-left" );
 		$(".treeview-menu").css("display", "none");
@@ -550,22 +547,7 @@ function runEmbebediMathCloud(uuid_project){
 	    	left_tab += "<li><a onclick='closeiMathCloud(\"" + uuid_project + "\")' style='margin-left: 10px; cursor: pointer;'><i class='fa fa-angle-double-right'></i> Close</a></li>" 
 	    	left_tab += "</ul>";
 	    	left_tab += "</li>";
-	    	
-	    	
-	    	/*var left_tab = '<li class="treeview">';
-            left_tab += '<a href="#">';
-            left_tab += '<i class="fa fa-edit"></i> <span>Forms</span>';
-            left_tab += '<i class="fa pull-right fa-angle-down"></i>';
-            left_tab += '</a>';
-            left_tab += '<ul class="treeview-menu">';
-            left_tab += '<li><a href="../forms/general.html" style="margin-left: 10px;"><i class="fa fa-angle-double-right"></i> General Elements</a></li>';
-            left_tab += '<li><a href="../forms/advanced.html" style="margin-left: 10px;"><i class="fa fa-angle-double-right"></i> Advanced Elements</a></li>';
-            left_tab += '<li><a href="../forms/editors.html" style="margin-left: 10px;"><i class="fa fa-angle-double-right"></i> Editors</a></li>';
-            left_tab += '</ul>';
-            left_tab += '</li>';
-	    	*/
-	    	
-	    	console.log(left_tab);
+	    		    		    	
 	    	$("#left_tabs").append(left_tab);
 	    	
 	    	setSelectMenu("imath-iMathCloud-menu_" + uuid_project);
