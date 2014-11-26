@@ -568,7 +568,25 @@
                 </form>
             </div><!-- /.modal-dialog -->
         </div><!-- /.modal -->
-        
+
+		<!-- COMPOSE MESSAGE MODAL FOR RUNNING ANOTHER PROJECT-->
+        <div class="modal fade" id="imath-id-running-project" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+						<h4 class="modal-title"><i class="fa fa-warning danger"></i> Confirmation! </h4>
+					</div>
+					<div class="modal-body">
+						<p id="imath-id-openclose-project-msg" class="imath-conf-message">The project XXXX is open. Only one project can be open at the same time. Do you want to close the project XXXX and open project YYYY</p>
+					</div>
+					<div class="modal-footer clearfix">
+						<button id="imath-id-ok-button-openclose-project" type="button" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-times"></i> OK</button>
+						<button id="imath-id-cancel-button-select" type="button" class="btn" data-dismiss="modal"><i class="fa fa-times"></i> Cancel</button>
+					</div>
+				</div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div><!-- /.modal -->        
         
 
 

@@ -8,7 +8,8 @@ var global_uuid_project_selected_prev = null;
 var global_instances = [];
 var global_ok = false;
 var imathCloud_container = null;
-var running_project = null;
+var uuid_running_project = null;
+var name_running_project = null;
 
 function placeLayoutProjects(uuid_project, source) {
 	console.log("Go to projects");
@@ -444,7 +445,7 @@ function viewUploadProject(project) {
 	$("#imath-id-run-buton-project").unbind('click');
 	$("#imath-id-run-buton-project").click(function() {
 		//runiMathCloud(global_uuid_project_selected);
-		runEmbebediMathCloud(global_uuid_project_selected);
+		runEmbebediMathCloud(global_uuid_project_selected, project['name']);
 	});
 	
 	$("#imath-id-run-buton-project").show();
@@ -533,11 +534,24 @@ function runiMathCloud(uuid_project) {
 	});	
 }
 
-function runEmbebediMathCloud(uuid_project){
+function initiliseCloseOpenProjectModal(uuid_project_toOpen, name_project_toOpen){
+	$("#imath-id-ok-button-openclose-project").attr("onclick","closeProjectOpenProject('" + uuid_project_toOpen + "', '" + name_project_toOpen + "')");
+	var msg = "The project " +  name_running_project + " is open. Only one project can be open at the same time. Do you want to close the project " + name_running_project + " and open project " +  name_project_toOpen + "?"
+	$("#imath-id-openclose-project-msg").text(msg);
+}
+
+function runEmbebediMathCloud(uuid_project, name_project){
 	
-	if(running_project == uuid_project){
+	if(uuid_running_project == uuid_project){
 		placeiMathCloud(uuid_project);
 		return;
+	}
+	else{
+		if(uuid_running_project != null){
+			initiliseCloseOpenProjectModal(uuid_project, name_project);
+			$("#imath-id-running-project").modal('show');
+			return;
+		}
 	}
 	
 	$.ajax({
@@ -549,7 +563,7 @@ function runEmbebediMathCloud(uuid_project){
 	    	
 	    	var left_tab = "<li id='imath-iMathCloud-menu_" + uuid_project + "' class='treeview imath-menu'>";
 	    	left_tab += "<a  onclick='placeiMathCloud(\"" + uuid_project + "\")' style='cursor: pointer;'>";
-	    	left_tab += "<i class='fa fa-bar-chart-o'></i> <span> Project " + project['name'] +"</span>";
+	    	left_tab += "<i class='fa fa-desktop'></i> <span> Project " + project['name'] +"</span>";
 	    	left_tab += " <i id='angle' class='fa pull-right fa-angle-down'></i>";
 	    	left_tab += "</a>";
 	    	left_tab += "<ul class='treeview-menu'>";
@@ -585,7 +599,9 @@ function runEmbebediMathCloud(uuid_project){
 		    $(".imath-section").css("display", "none");		    			    			   
 		    $("#section_iMathCloud_" + uuid_project).css("display", "block");
 		    $(".sidebar .treeview").tree();
-		    running_project = uuid_project;
+		    uuid_running_project = uuid_project;
+		    name_running_project = project['name']
+		    
 	    	
 	    },
 	    error: function(error) {
@@ -629,7 +645,7 @@ function placeiMathCloud(uuid_project){
 
 function closeiMathCloud(uuid_project){
 	$("#embebed_imath_" + uuid_project).attr("src", "about:blank"); 	// to fire unload event in the iframe
-	setTimeout(function () {
+	setTimeout(function () {						// For Chrome:To leave some time to execute the events
 		document.getElementById("section_iMathCloud_" + uuid_project).remove();
 		document.getElementById("imath-iMathCloud-menu_" + uuid_project).remove();
 		running_project = null;
@@ -637,3 +653,13 @@ function closeiMathCloud(uuid_project){
 	}, 1500);
 }
 
+function closeProjectOpenProject(uuid_project_toOpen, name_project_toOpen){
+	$("#embebed_imath_" + uuid_project).attr("src", "about:blank"); 	// to fire unload event in the iframe
+	setTimeout(function () {						// For Chrome:To leave some time to execute the events
+		document.getElementById("section_iMathCloud_" + uuid_running_project).remove();
+		document.getElementById("imath-iMathCloud-menu_" + uuid_running_project).remove();
+		uuid_running_project = null;
+		name_ruuning_project = null;
+		runEmbebediMathCloud(uuid_project_toOpen);
+	}, 1500);
+}
