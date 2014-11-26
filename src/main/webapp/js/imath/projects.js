@@ -648,13 +648,14 @@ function closeiMathCloud(uuid_project){
 	setTimeout(function () {						// For Chrome:To leave some time to execute the events
 		document.getElementById("section_iMathCloud_" + uuid_project).remove();
 		document.getElementById("imath-iMathCloud-menu_" + uuid_project).remove();
-		running_project = null;
+		uuid_running_project = null;
+		name_ruuning_project = null;
 		placeDashboard();
 	}, 1500);
 }
 
 function closeProjectOpenProject(uuid_project_toOpen, name_project_toOpen){
-	$("#embebed_imath_" + uuid_project).attr("src", "about:blank"); 	// to fire unload event in the iframe
+	$("#embebed_imath_" + uuid_running_project).attr("src", "about:blank"); 	// to fire unload event in the iframe
 	setTimeout(function () {						// For Chrome:To leave some time to execute the events
 		document.getElementById("section_iMathCloud_" + uuid_running_project).remove();
 		document.getElementById("imath-iMathCloud-menu_" + uuid_running_project).remove();
