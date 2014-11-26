@@ -563,7 +563,7 @@ function runEmbebediMathCloud(uuid_project, name_project){
 	    	
 	    	var left_tab = "<li id='imath-iMathCloud-menu_" + uuid_project + "' class='treeview imath-menu'>";
 	    	left_tab += "<a  onclick='placeiMathCloud(\"" + uuid_project + "\")' style='cursor: pointer;'>";
-	    	left_tab += "<i class='fa fa-bar-chart-o'></i> <span> Project " + project['name'] +"</span>";
+	    	left_tab += "<i class='fa fa-desktop'></i> <span> Project " + project['name'] +"</span>";
 	    	left_tab += " <i id='angle' class='fa pull-right fa-angle-down'></i>";
 	    	left_tab += "</a>";
 	    	left_tab += "<ul class='treeview-menu'>";
