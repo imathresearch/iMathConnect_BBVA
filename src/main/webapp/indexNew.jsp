@@ -148,7 +148,7 @@
                 <div class="navbar-right">
                     <ul class="nav navbar-nav">
                     	<li>
-                    		<a href="http://wiki.imathresearch.com/doku.php?id=public:imathcloud" title="Acess to the wiki"> 
+                    		<a href="http://wiki.imathresearch.com/doku.php?id=public:imathcloud" target="_blank" title="Acess to the wiki"> 
                                 <i class="fa fa-question-circle"></i>
                             </a>
                     	</li>
