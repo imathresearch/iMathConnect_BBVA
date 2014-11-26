@@ -8,6 +8,7 @@ var global_uuid_project_selected_prev = null;
 var global_instances = [];
 var global_ok = false;
 var imathCloud_container = null;
+var running_project = null;
 
 function placeLayoutProjects(uuid_project, source) {
 	console.log("Go to projects");
@@ -533,6 +534,12 @@ function runiMathCloud(uuid_project) {
 }
 
 function runEmbebediMathCloud(uuid_project){
+	
+	if(running_project == uuid_project){
+		placeiMathCloud(uuid_project);
+		return;
+	}
+	
 	$.ajax({
 	    url: "rest/api/agora/getProjectCredentials/" + global_uuid_user + "/" + uuid_project,
 	    cache: false,
@@ -578,6 +585,7 @@ function runEmbebediMathCloud(uuid_project){
 		    $(".imath-section").css("display", "none");		    			    			   
 		    $("#section_iMathCloud_" + uuid_project).css("display", "block");
 		    $(".sidebar .treeview").tree();
+		    running_project = uuid_project;
 	    	
 	    },
 	    error: function(error) {
@@ -622,5 +630,6 @@ function placeiMathCloud(uuid_project){
 function closeiMathCloud(uuid_project){
 	document.getElementById("section_iMathCloud_" + uuid_project).remove();
 	document.getElementById("imath-iMathCloud-menu_" + uuid_project).remove();
+	running_project = null;
 	placeDashboard();
 }
