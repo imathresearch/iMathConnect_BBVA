@@ -21,11 +21,6 @@ function ajaxModify() {
     var file = document.getElementById('uploadedFile').files;
     formData.append('uploadedFile', file[0]);
     
-    /*for (i = 0, j = file.length; i < j; i++) {
-    	console.log(file[i].size);
-    	console.log(file[i].type);
-        formData.append('uploadedFile', file[i]);
-    }*/   
     var formatOK = checkImage(file[0]);
     
     if (formatOK){

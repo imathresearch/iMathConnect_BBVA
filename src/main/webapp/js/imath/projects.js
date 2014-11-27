@@ -12,7 +12,6 @@ var uuid_running_project = null;
 var name_running_project = null;
 
 function placeLayoutProjects(uuid_project, source) {
-	console.log("Go to projects");
 	setSelectMenu("imath-id-projects-menu" );
 	jQuery.get('projects.html', function(data) {
 		$(".imath-main-row").html(data);	
@@ -139,7 +138,6 @@ function setButtonsCode() {
 	
 	$('#imath-id-new-project-button').unbind('click');
 	$("#imath-id-new-project-button").click(function() {
-		console.log("New project");
 		setNewProjectForm();
 	});
 	
@@ -169,7 +167,6 @@ function setNewProjectForm() {
 	
 	global_uuid_project_selected=null;	// We "unselect" any possible current selected project
 		
-	console.log("enabling buttons");
 	enable('imath-id-cancel-buton-project');	// We enable the cancel button;
 	$('#imath-id-instances').html("");			// We empty out the instance tables
 	$("#imath-id-project-name").val("");		// We empty the project name input
@@ -413,9 +410,7 @@ function generateTableOfInstancesSelect(instances, pub) {
 }
 
 function viewUploadProject(project) {
-	console.log("viewUploadProject");
 	global_uuid_project_selected = project['UUID'];
-	console.log(global_uuid_project_selected);
 	$(".imath-project-name").html(project['name']);
 	$("#imath-id-project-name").val(project['name']);
 	disable("imath-id-project-name");
@@ -454,8 +449,6 @@ function viewUploadProject(project) {
 }
 
 function ajaxUploadProject(uuid) {
-	console.log("ajaxUploadProject");
-	console.log(uuid);
 	$.ajax({
 	    url: "rest/api/agora/getProject/" + global_uuid_user + "/" + uuid,
 	    cache: false,
@@ -588,8 +581,6 @@ function runEmbebediMathCloud(uuid_project, name_project){
 			aux += "<iframe id='embebed_imath_" + uuid_project + "' height='100%' width='100%' name='imath_iframe_" + uuid_project +"'>";			
 			aux += "</iframe></div></div></section>";
 	    		    			    
-		    console.log("Form");
-		    console.log(form);
 		    $(aux).appendTo(".right-side");
 		    $( "#embebed_imath_" + uuid_project).height(getProperHeight()-50);
 		    $(form).appendTo('#embebed_imath_' + uuid_project);  	 
@@ -634,7 +625,6 @@ function showErrorForm(message) {
 }
 
 function placeiMathCloud(uuid_project){
-	console.log("placeiMathCloud");
 	setSelectMenu("imath-iMathCloud-menu_" + uuid_project);
 	$(".imath-section").css("display", "none");
 	$("#section_iMathCloud_" + uuid_project).css("display", "block");

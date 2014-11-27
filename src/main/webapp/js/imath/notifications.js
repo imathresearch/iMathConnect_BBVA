@@ -16,8 +16,6 @@ function ajaxOwnNotifications(){
 	    	$(".list-notifications").html(listNotificationsHTML);
 	    	for(var i=0; i<notifications.length; i++) {
 	    		notification = notifications[i];
-	    		console.log(notification['subject']);
-	    		console.log(notification['creationDate']);
 	    	}
 	    },
 	    error: function(error) {
@@ -53,7 +51,6 @@ function generateListNotifications(notifications){
 	}
 	
 	code = code + '</ul></li>';
-	console.log(code);
 	return code;
 	
 }
