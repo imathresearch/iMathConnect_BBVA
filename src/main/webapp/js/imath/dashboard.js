@@ -35,6 +35,16 @@ function placeDashboard(){
 		$(".imath-section").css("display", "none");
 		$(".content").css("display", "block");
 		$(".content-header").css("display", "block");
+		$(".connectedSortable").sortable({
+	        placeholder: "sort-highlight",
+	        connectWith: ".connectedSortable",
+	        handle: ".box-header, .nav-tabs",
+	        forcePlaceholderSize: true,
+	        zIndex: 999999
+	    }).disableSelection();
+	    $(".connectedSortable .box-header, .connectedSortable .nav-tabs-custom").css("cursor", "move");
+	    $("body").css("overflow", "hidden");
+		$("html").css("overflow", "auto");
 		ajaxUserInfo();
 		
 	});

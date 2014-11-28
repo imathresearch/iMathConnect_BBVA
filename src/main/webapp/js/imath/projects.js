@@ -23,6 +23,8 @@ function placeLayoutProjects(uuid_project, source) {
 		$(".imath-section").css("display", "none");
 		$(".content").css("display", "block");
 		$(".content-header").css("display", "block");
+		$("body").css("overflow", "hidden");
+		$("html").css("overflow", "auto");
 		initProjectView(uuid_project, source);
 	});
 }
@@ -568,7 +570,9 @@ function runEmbebediMathCloud(uuid_project, name_project){
 	    	
 	    	setSelectMenu("imath-iMathCloud-menu_" + uuid_project);
 	    	$(".content").css("display", "none");
-	    	$(".content-header").css("display", "none");	    	
+	    	$(".content-header").css("display", "none");
+	    	$("body").css("overflow", "hidden");
+	    	$("html").css("overflow", "hidden");
 
 	    	var linux = project['linuxGroup'];
 		    var key = project['key'];
@@ -630,6 +634,8 @@ function placeiMathCloud(uuid_project){
 	$("#section_iMathCloud_" + uuid_project).css("display", "block");
 	$(".content").css("display", "none");
 	$(".content-header").css("display", "none");
+	$("body").css("overflow", "hidden");
+	$("html").css("overflow", "hidden");
 	
 }
 
