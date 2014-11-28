@@ -260,9 +260,19 @@ function ajaxRemoveProject(uuid, callBackString) {
 	    	//ajaxOwnProjects("uploadProject");
 	    	ajaxOwnProjects(callBackString);
 	    	showFlyingMessageOK(" Project removed ");	
-	    	unselectProject();
+	    	unselectProject();	    
 	    	$('#imath-id-run-buton-project').unbind('click');
 	    	$("#imath-id-run-buton-project").hide();
+	    	// Check if the project is opened
+	    	if(uuid == uuid_running_project){
+	    		$("#embebed_imath_" + uuid).attr("src", "about:blank"); 	// to fire unload event in the iframe
+	    		setTimeout(function () {						// For Chrome:To leave some time to execute the events
+	    			document.getElementById("section_iMathCloud_" + uuid).remove();
+	    			document.getElementById("imath-iMathCloud-menu_" + uuid).remove();
+	    			uuid_running_project = null;
+	    			name_ruuning_project = null;	    			
+	    		}, 1500);	    		
+	    	}
 	    	
 	    },
 	    error: function(error) {
