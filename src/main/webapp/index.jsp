@@ -198,10 +198,11 @@
                     </div>
                 </div>
                 <p>  
-                	<script type="text/javascript">
+                	<script>
                 		var FF = !(window.mozInnerScreenX == null);
-						if (!FF) {
-							document.write("<b>Get a better experience with <a href='http://www.firefox.com'>Mozilla Firefox<a></b>");
+                		var GC = (navigator.userAgent.search("Chrome") >= 0);                		
+						if (!FF && !GC){														 						
+							document.write("<b>Get a better experience with <a href='http://www.firefox.com'>Mozilla Firefox</a> or <a href='http://www.google.com/chrome'>Google Chrome</a></b>");
 						}                	
                 	</script>
                 </p>
