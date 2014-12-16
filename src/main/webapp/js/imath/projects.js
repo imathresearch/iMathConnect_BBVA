@@ -587,7 +587,7 @@ function runEmbebediMathCloud(uuid_project, name_project){
 	    	var linux = project['linuxGroup'];
 		    var key = project['key'];
 		    var url = project['url'] + "/iMathCloud/login.jsp";
-		    var form = '<form target="imath_iframe_' + uuid_project + '"id="fakeForm" action="' + url + '" method="post"><input type="hidden" name="j_username" value="' + linux + '"><input type="hidden" name="j_password" value="' + key + '"></form>';
+		    var form = '<form target="imath_iframe_' + uuid_project + '"id="fakeForm" action="' + url + '" method="post"><input type="hidden" name="j_username" value="' + linux + '"><input type="hidden" name="j_password" value="' + key + '"><input type="hidden" name="iMathConnectUser" value="' + userName + '"></form>';
 	    	
 	    	var aux = "<section id='section_iMathCloud_" + uuid_project + "' class='imath-section'>" ;
             aux += "<div id='wrap_iMathCloud'>";
