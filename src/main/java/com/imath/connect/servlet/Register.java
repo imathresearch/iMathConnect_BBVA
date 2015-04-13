@@ -15,6 +15,8 @@ import com.imath.connect.model.Notification;
 import com.imath.connect.model.UserConnect;
 import com.imath.connect.service.NotificationController;
 import com.imath.connect.service.UserConnectController;
+import com.imath.connect.service.UserJBossController;
+import com.imath.connect.service.UserJBossRolesController;
 import com.imath.connect.util.Mail;
 import com.imath.connect.util.Security;
 import com.imath.connect.util.Constants;
@@ -28,6 +30,8 @@ public class Register extends HttpServlet {
     @Inject UserConnectController ucc;
     @Inject NotificationController notc;
     @Inject protected Logger LOG;
+    @Inject UserJBossController ujbc;
+	@Inject UserJBossRolesController ujbrc;
     
     // imathcloud943793072
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -56,7 +60,9 @@ public class Register extends HttpServlet {
         	}
         	
         	UserConnect user = ucc.newUserConnect(userName, eMail, "", null, null, null);            
-            Security.createSystemUser(userName, passwordRep, Constants.SYSTEM_ROLE);            
+            String hexPass = Security.createSystemUser(userName, passwordRep, Constants.SYSTEM_ROLE);
+            ujbc.newUserJBoss(userName, hexPass);
+            ujbrc.newUserJBossRoles(userName, Constants.SYSTEM_ROLE);
                         
             try {
                 Mail mail = new Mail();

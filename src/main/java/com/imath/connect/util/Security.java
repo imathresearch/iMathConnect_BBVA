@@ -11,6 +11,11 @@ import java.lang.ProcessBuilder.Redirect;
 import java.security.MessageDigest;
 import java.util.Properties;
 
+import javax.inject.Inject;
+
+import com.imath.connect.service.UserJBossController;
+import com.imath.connect.service.UserJBossRolesController;
+
 /**
  * Implements a set of utilities to create users in the jboss 
  * @author iMath
@@ -104,7 +109,7 @@ public class Security {
         }
     }
     
-    public static void createSystemUser(String userName, String password, String role) throws Exception {
+    public static String createSystemUser(String userName, String password, String role) throws Exception {
         // We add the system user
         //Process p = Runtime.getRuntime().exec(Constants.ADD_USER_CLI + " -a " + userName + " " + password + " > /dev/tty");
         synchronized(lock) {
@@ -128,7 +133,8 @@ public class Security {
             }*/
         	
         	String hexPass = generateHexMd5Password(userName, password);
-            
+        	
+        	/*
             // Here the pass in hex(md5) is set as property
             updateProperty(userName, hexPass.toString(), Constants.USERS_FILE);
             updateProperty(userName, hexPass.toString(), Constants.USERS_DOMAIN_FILE);
@@ -139,7 +145,9 @@ public class Security {
                 Writer writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(Constants.ROLES_FILE, true), "UTF-8"));
                 writer.append(line + "\n");
                 writer.close();
-            }
+            }*/
+            
+            return hexPass;
         }
     }
 }

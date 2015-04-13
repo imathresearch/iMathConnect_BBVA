@@ -51,10 +51,10 @@ public class UserConnectController extends AbstractController{
         peer.setOrganization(organization);
         peer.setUserName(userName);
         peer.setPhoto(PhotoByte);
-        //UserAccess access = new UserAccess();
-        //access.setAccessSource("iMathCloud");        
-        //access.setUser(peer);
-        //peer.setUserAccess(access);
+        UserAccess access = new UserAccess();
+        access.setAccessSource("iMathCloud");        
+        access.setUser(peer);
+        peer.setUserAccess(access);
         this.db.makePersistent(peer);
         return peer;
     }
@@ -74,10 +74,10 @@ public class UserConnectController extends AbstractController{
         peer.setCreationDate(now);
         peer.setOrganization(org);
         peer.setUserName(userName);
-        //UserAccess access = new UserAccess();
-        //access.setAccessSource("iMathCloud");        
-        //access.setUser(peer);
-        //peer.setUserAccess(access);
+        UserAccess access = new UserAccess();
+        access.setAccessSource("iMathCloud");        
+        access.setUser(peer);
+        peer.setUserAccess(access);
         this.db.makePersistent(peer);
         return peer;
     }
