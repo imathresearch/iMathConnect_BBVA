@@ -32,6 +32,7 @@ public class Register extends HttpServlet {
     // imathcloud943793072
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         
+    	System.out.println("Register new user");
         String userName = request.getParameter("usernamesignup");
         String password = request.getParameter("passwordsignup");
         String passwordRep = request.getParameter("passwordsignup_confirm");

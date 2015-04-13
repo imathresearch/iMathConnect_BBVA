@@ -5,11 +5,14 @@ import java.util.List;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.PersistenceUnit;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 
 import com.imath.connect.model.StandardConfiguration;
+import com.imath.connect.util.EntityManagerUtil;
 
 @RequestScoped
 public class StandardConfigurationDB {
@@ -18,8 +21,10 @@ public class StandardConfigurationDB {
      * @author imath
      *
      */
-    @Inject
-    private EntityManager em;
+    
+    @PersistenceContext(unitName="model")
+    @PersistenceUnit(unitName="model")
+    private EntityManager emModel = EntityManagerUtil.getEntityManager("model");
     
     /**
      * Returns a {@link StandardConfiguration} from the given UUID
@@ -27,9 +32,9 @@ public class StandardConfigurationDB {
      * @author imath
      */
     public StandardConfiguration findById(String UUID) {
-        em.flush();
+        emModel.flush();
         try {
-            return em.find(StandardConfiguration.class, UUID);
+            return emModel.find(StandardConfiguration.class, UUID);
         } catch (Exception e) {
             return null;
         }
@@ -40,11 +45,11 @@ public class StandardConfigurationDB {
      */
     
     public List<StandardConfiguration> findAll() {
-        CriteriaBuilder cb = em.getCriteriaBuilder();
+        CriteriaBuilder cb = emModel.getCriteriaBuilder();
         CriteriaQuery<StandardConfiguration> criteria = cb.createQuery(StandardConfiguration.class);
         Root<StandardConfiguration> standardConfiguration = criteria.from(StandardConfiguration.class);
         criteria.select(standardConfiguration);
-        List<StandardConfiguration> out = em.createQuery(criteria).getResultList();
+        List<StandardConfiguration> out = emModel.createQuery(criteria).getResultList();
         return out;
     }
 }

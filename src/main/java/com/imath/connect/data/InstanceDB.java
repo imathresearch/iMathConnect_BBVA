@@ -5,12 +5,15 @@ import java.util.List;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.PersistenceUnit;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
 import com.imath.connect.model.Instance;
+import com.imath.connect.util.EntityManagerUtil;
 
 /**
  * The Instance DB repository
@@ -20,8 +23,10 @@ import com.imath.connect.model.Instance;
 
 @RequestScoped
 public class InstanceDB {
-    @Inject
-    private EntityManager em;
+	
+	@PersistenceContext(unitName="model")
+	@PersistenceUnit(unitName="model")
+	private EntityManager emModel = EntityManagerUtil.getEntityManager("model");
     
     /**
      * Returns a {@link Instance} from the given UUID
@@ -29,9 +34,9 @@ public class InstanceDB {
      * @author imath
      */
     public Instance findById(String UUID) {
-        em.flush();
+        emModel.flush();
         try {
-            return em.find(Instance.class, UUID);
+            return emModel.find(Instance.class, UUID);
         } catch (Exception e) {
             return null;
         }
@@ -43,12 +48,12 @@ public class InstanceDB {
      */
     
     public List<Instance> findByOwner(String UUID) {
-        CriteriaBuilder cb = em.getCriteriaBuilder();
+        CriteriaBuilder cb = emModel.getCriteriaBuilder();
         CriteriaQuery<Instance> criteria = cb.createQuery(Instance.class);
         Root<Instance> instance = criteria.from(Instance.class);
         Predicate p1 = cb.equal(instance.get("owner").get("UUID"), UUID);      
         criteria.select(instance).where(p1);
-        List<Instance> out = em.createQuery(criteria).getResultList();
+        List<Instance> out = emModel.createQuery(criteria).getResultList();
         return out;
     }
     
@@ -57,19 +62,19 @@ public class InstanceDB {
      */
     
     public List<Instance> findByPublic() {
-        CriteriaBuilder cb = em.getCriteriaBuilder();
+        CriteriaBuilder cb = emModel.getCriteriaBuilder();
         CriteriaQuery<Instance> criteria = cb.createQuery(Instance.class);
         Root<Instance> instance = criteria.from(Instance.class);
         Predicate p1 = cb.isNull(instance.get("owner").get("UUID"));      
         criteria.select(instance).where(p1);
-        List<Instance> out = em.createQuery(criteria).getResultList();
+        List<Instance> out = emModel.createQuery(criteria).getResultList();
         return out;
     }
     
     public Long countInstances() {
-        CriteriaBuilder qb = em.getCriteriaBuilder();
+        CriteriaBuilder qb = emModel.getCriteriaBuilder();
         CriteriaQuery<Long> cq = qb.createQuery(Long.class);
         cq.select(qb.count(cq.from(Instance.class)));
-        return em.createQuery(cq).getSingleResult();
+        return emModel.createQuery(cq).getSingleResult();
     }
 }

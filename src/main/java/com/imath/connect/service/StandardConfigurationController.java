@@ -34,7 +34,7 @@ public class StandardConfigurationController extends AbstractController {
         sc.setCpu(cpu);
         sc.setRam(ram);
         sc.setStg(stg);
-        em.persist(sc);
+        emModel.persist(sc);
         return sc;
     }
     

@@ -3,13 +3,22 @@ package com.imath.connect.data;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.PersistenceUnit;
 
 import com.imath.connect.model.UserAccess;
+import com.imath.connect.util.EntityManagerUtil;
 
 @RequestScoped
 public class MainDB {
+	
+	
+	@PersistenceContext(unitName="model")
+	@PersistenceUnit(unitName="model")
+	private EntityManager emModel = EntityManagerUtil.getEntityManager("model");
+   
 
-	@Inject private EntityManager em;
+	
 	@Inject private UserConnectDB userConnectDB;
 	@Inject private ProjectDB projectDB;
 	@Inject private StandardConfigurationDB standardConfiguration;
@@ -18,13 +27,13 @@ public class MainDB {
 	@Inject private UserAccessDB userAccessDB;
 	
 	public void makePersistent(Object obj) throws Exception {
-	    em.persist(obj);
-	    em.flush();
+		emModel.persist(obj);
+		emModel.flush();
 	 }
 	
 	public void delete(Object obj) throws Exception {
-	    em.remove(obj);
-	    em.flush();
+		emModel.remove(obj);
+		emModel.flush();
 	}
 
 	public UserConnectDB getUserConnectDB() {
@@ -53,7 +62,7 @@ public class MainDB {
 	
 	// For testing purposes only
 	public void setEntityManager(EntityManager em) {
-	    this.em = em;
+	    this.emModel = em;
 	}
 	
 	public void setUserConnectDB(UserConnectDB userConnectDB) {

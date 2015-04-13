@@ -20,9 +20,11 @@ import java.util.logging.Logger;
 
 import javax.enterprise.inject.Produces;
 import javax.enterprise.inject.spi.InjectionPoint;
+import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.PersistenceContextType;
+import javax.persistence.PersistenceUnit;
 
 /**
  * This class uses CDI to alias Java EE resources, such as the persistence context, to CDI beans
@@ -37,9 +39,19 @@ import javax.persistence.PersistenceContextType;
  * </pre>
  */
 public class Resources {
-   @Produces
-   @PersistenceContext//(type=PersistenceContextType.TRANSACTION)
-   private EntityManager em;
+   
+	
+	@Produces
+	//@PersistenceContext//(type=PersistenceContextType.TRANSACTION)
+	@PersistenceContext(unitName="model")
+	@PersistenceUnit(unitName="model")
+	private EntityManager emModel= EntityManagerUtil.getEntityManager("model");
+   
+	@Produces
+	@PersistenceContext(unitName="authentication")
+	@PersistenceUnit(unitName="authentication")
+	private  EntityManager emAuth = EntityManagerUtil.getEntityManager("authentication");
+   
    
    @Produces
    public Logger produceLog(InjectionPoint injectionPoint) {

@@ -6,6 +6,8 @@ import java.util.List;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.PersistenceUnit;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Expression;
@@ -15,6 +17,7 @@ import javax.persistence.criteria.Root;
 
 import com.imath.connect.model.Notification;
 import com.imath.connect.model.UserConnect;
+import com.imath.connect.util.EntityManagerUtil;
 
 /**
  * The Notification DB repository
@@ -24,8 +27,10 @@ import com.imath.connect.model.UserConnect;
 
 @RequestScoped
 public class NotificationDB {
-    @Inject
-    private EntityManager em;
+    
+    @PersistenceContext(unitName="model")
+    @PersistenceUnit(unitName="model")
+    private EntityManager emModel = EntityManagerUtil.getEntityManager("model");
     
     /**
      * Returns a {@link Notification} from the given UUID
@@ -33,9 +38,9 @@ public class NotificationDB {
      * @author imath
      */
     public Notification findById(String UUID) {
-        em.flush();
+        emModel.flush();
         try {
-            return em.find(Notification.class, UUID);
+            return emModel.find(Notification.class, UUID);
         } catch (Exception e) {
             return null;
         }
@@ -47,13 +52,13 @@ public class NotificationDB {
      * @return
      */
     public List<Notification> findPrivateByUser(String UUID) {
-        CriteriaBuilder cb = em.getCriteriaBuilder();
+        CriteriaBuilder cb = emModel.getCriteriaBuilder();
         CriteriaQuery<Notification> criteria = cb.createQuery(Notification.class);
         Root<Notification> notification = criteria.from(Notification.class);
         Join<Notification,UserConnect> join = notification.join("notificationUsers");
         Predicate p1 = cb.equal(join.get("UUID"), UUID);      
         criteria.select(notification).where(p1);
-        List<Notification> out = em.createQuery(criteria).getResultList();
+        List<Notification> out = emModel.createQuery(criteria).getResultList();
         return out;
     }
     
@@ -64,14 +69,14 @@ public class NotificationDB {
      * @return
      */
     public List<Notification> findPrivateByUserDate(String UUID, Date date) {
-    	CriteriaBuilder cb = em.getCriteriaBuilder();
+    	CriteriaBuilder cb = emModel.getCriteriaBuilder();
         CriteriaQuery<Notification> criteria = cb.createQuery(Notification.class);
         Root<Notification> notification = criteria.from(Notification.class);
         Join<Notification,UserConnect> join = notification.join("notificationUsers");
         Predicate p1 = cb.equal(join.get("UUID"), UUID);
         Predicate p2 = cb.greaterThanOrEqualTo(notification.get("creationDate").as(Date.class),date);
         criteria.select(notification).where(cb.and(p1,p2));
-        List<Notification> out = em.createQuery(criteria).getResultList();
+        List<Notification> out = emModel.createQuery(criteria).getResultList();
         return out;
     }
     
@@ -81,13 +86,13 @@ public class NotificationDB {
      * @return
      */
     public List<Notification> findPublicByDate(Date date){
-    	CriteriaBuilder cb = em.getCriteriaBuilder();
+    	CriteriaBuilder cb = emModel.getCriteriaBuilder();
         CriteriaQuery<Notification> criteria = cb.createQuery(Notification.class);
         Root<Notification> notification = criteria.from(Notification.class);
         Predicate p1 = cb.equal(notification.get("type"), 0);
         Predicate p2 = cb.greaterThanOrEqualTo(notification.get("creationDate").as(Date.class),date);
         criteria.select(notification).where(cb.and(p1,p2));
-        List<Notification> out = em.createQuery(criteria).getResultList();
+        List<Notification> out = emModel.createQuery(criteria).getResultList();
         return out;
     }
 }
