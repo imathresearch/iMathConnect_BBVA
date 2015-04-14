@@ -13,12 +13,7 @@ import org.hibernate.annotations.Type;
 import org.hibernate.annotations.TypeDef;
 import org.jasypt.hibernate4.type.EncryptedStringType;
 
-@TypeDef(
-        name = "encryptedString",
-        typeClass = EncryptedStringType.class,
-        parameters = { @Parameter(name = "encryptorRegisteredName", value = "STRING_ENCRYPTOR")
-        }
-      )
+
 
 @Entity
 public class UserJBoss implements Serializable {
@@ -32,7 +27,6 @@ public class UserJBoss implements Serializable {
     private String userName;
 	
 	@Size(min = 2, max = 200, message = "2-200")
-    @Type(type = "encryptedString")
 	private String password;
 	
 	public void setUsername(String userName){

@@ -15,6 +15,13 @@ public class SecurityImpl implements SecurityInterface {
         // TODO Auto-generated method stub
         return Security.generateHexMd5Password(userName, password);
     }
+    
+    @Override
+    public String encryptHexMd5Password(String password)
+            throws Exception {
+        // TODO Auto-generated method stub
+        return Security.encryptHexMd5Password(password);
+    }
 
     @Override
     public void createLinuxUser(String userName) throws Exception {

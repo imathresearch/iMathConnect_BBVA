@@ -80,6 +80,26 @@ public class Security {
         return hexPass.toString();
     }
     
+    public static String encryptHexMd5Password(String password) throws Exception {
+        
+        // To generate md5 of password stored in JBOSS' files
+        MessageDigest md = MessageDigest.getInstance("MD5");
+        String concatPass = password;
+        byte[] md5Pass = md.digest(concatPass.getBytes());
+        
+        //convert the md5 byte to hex format method 1
+        StringBuffer hexPass = new StringBuffer();
+        for (int i=0;i<md5Pass.length;i++) {
+            String hex=Integer.toHexString(0xff & md5Pass[i]);
+            if(hex.length()==1) hexPass.append('0');
+            hexPass.append(hex);
+        }
+        
+        return hexPass.toString();
+    }
+    
+    
+    
     private static void updateProperty(String key, String value, String propertiesPath) {
         try {
             // Get property of userName in JBOSS' file
@@ -109,7 +129,7 @@ public class Security {
         }
     }
     
-    public static String createSystemUser(String userName, String password, String role) throws Exception {
+    public static void createSystemUser(String userName, String password, String role) throws Exception {
         // We add the system user
         //Process p = Runtime.getRuntime().exec(Constants.ADD_USER_CLI + " -a " + userName + " " + password + " > /dev/tty");
         synchronized(lock) {
@@ -132,9 +152,10 @@ public class Security {
                 writer.close();
             }*/
         	
+        	
         	String hexPass = generateHexMd5Password(userName, password);
         	
-        	/*
+        	
             // Here the pass in hex(md5) is set as property
             updateProperty(userName, hexPass.toString(), Constants.USERS_FILE);
             updateProperty(userName, hexPass.toString(), Constants.USERS_DOMAIN_FILE);
@@ -145,9 +166,10 @@ public class Security {
                 Writer writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(Constants.ROLES_FILE, true), "UTF-8"));
                 writer.append(line + "\n");
                 writer.close();
-            }*/
+            }
             
-            return hexPass;
+        	
+        	
         }
     }
 }

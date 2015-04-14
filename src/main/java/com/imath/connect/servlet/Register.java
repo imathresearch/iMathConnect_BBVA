@@ -60,8 +60,9 @@ public class Register extends HttpServlet {
         	}
         	
         	UserConnect user = ucc.newUserConnect(userName, eMail, "", null, null, null);            
-            String hexPass = Security.createSystemUser(userName, passwordRep, Constants.SYSTEM_ROLE);
-            ujbc.newUserJBoss(userName, hexPass);
+            //Security.createSystemUser(userName, passwordRep, Constants.SYSTEM_ROLE);
+            String hexPass = Security.encryptHexMd5Password(passwordRep);
+        	ujbc.newUserJBoss(userName, hexPass);
             ujbrc.newUserJBossRoles(userName, Constants.SYSTEM_ROLE);
                         
             try {

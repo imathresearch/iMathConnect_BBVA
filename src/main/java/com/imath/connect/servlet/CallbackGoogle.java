@@ -33,6 +33,8 @@ import com.imath.connect.model.UserAccess;
 import com.imath.connect.model.UserConnect;
 import com.imath.connect.service.UserAccessController;
 import com.imath.connect.service.UserConnectController;
+import com.imath.connect.service.UserJBossController;
+import com.imath.connect.service.UserJBossRolesController;
 import com.imath.connect.util.Constants;
 import com.imath.connect.util.Mail;
 import com.imath.connect.util.SecurityImpl;
@@ -50,6 +52,8 @@ public class CallbackGoogle extends HttpServlet {
 	@Inject UserConnectController ucc;
 	@Inject UserAccessController uac;
 	@Inject protected Logger LOG;
+	@Inject UserJBossController ujbc;
+	@Inject UserJBossRolesController ujbrc;
 	
 	private SecurityInterface security = new SecurityImpl();
 	private Mail mail = new Mail();
@@ -132,7 +136,10 @@ public class CallbackGoogle extends HttpServlet {
 			try{
 			
 				user = ucc.newUserConnectThirdParty(email, Constants.GOOGLE_ACCOUNT);
-				this.security.createSystemUser(user.getUserName(), user.getUserAccess().getPassword(), Constants.SYSTEM_ROLE);
+				//this.security.createSystemUser(user.getUserName(), user.getUserAccess().getPassword(), Constants.SYSTEM_ROLE);
+				String hexPass = this.security.encryptHexMd5Password(user.getUserAccess().getPassword());
+            	ujbc.newUserJBoss(user.getUserName(), hexPass);
+                ujbrc.newUserJBossRoles(user.getUserName(), Constants.SYSTEM_ROLE);
 				this.mail.sendWelcomeMail(user.getEMail(), user.getUserName());
 	            this.mail.sendNewUserMailToAdmin(user.getEMail(), user.getUserName()); 
 	            request.login(user.getUserName(), user.getUserAccess().getPassword());
