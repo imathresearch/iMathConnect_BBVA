@@ -30,8 +30,7 @@ public class Register extends HttpServlet {
     @Inject UserConnectController ucc;
     @Inject NotificationController notc;
     @Inject protected Logger LOG;
-    @Inject UserJBossController ujbc;
-	@Inject UserJBossRolesController ujbrc;
+	@Inject Security sc;
     
     // imathcloud943793072
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -61,9 +60,8 @@ public class Register extends HttpServlet {
         	
         	UserConnect user = ucc.newUserConnect(userName, eMail, "", null, null, null);            
             //Security.createSystemUser(userName, passwordRep, Constants.SYSTEM_ROLE);
-            String hexPass = Security.encryptHexMd5Password(passwordRep);
-        	ujbc.newUserJBoss(userName, hexPass);
-            ujbrc.newUserJBossRoles(userName, Constants.SYSTEM_ROLE);
+        	sc.createSystemUserDB(userName, passwordRep, Constants.SYSTEM_ROLE);
+
                         
             try {
                 Mail mail = new Mail();

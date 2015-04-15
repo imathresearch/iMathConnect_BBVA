@@ -47,8 +47,7 @@ public class CallbackGitHub extends HttpServlet{
     @Inject UserConnectController ucc;
     @Inject UserAccessController uac;
     @Inject protected Logger LOG;
-    @Inject UserJBossController ujbc;
-	@Inject UserJBossRolesController ujbrc;
+	@Inject Security sc;
     
     private SecurityInterface security = new SecurityImpl();
     private Mail mail = new Mail();
@@ -74,21 +73,9 @@ public class CallbackGitHub extends HttpServlet{
         .put("redirect_uri", "http://"+ Constants.IMATH_HOST() + ":" + Constants.IMATH_PORT + "/iMathConnect/callbackgithub").build());
         
         // Response is not in JSON!
-        Map<String, String> params = parseResponseNonJSON(body);
-        
-        /*
-        JSONObject jsonObject = null;          
-         // get the access token from json and request info from Google
-         try {
-             jsonObject = (JSONObject) new JSONParser().parse(body);
-         } catch (org.json.simple.parser.ParseException e) {
-             LOG.severe(e.getMessage());
-             throw new RuntimeException("Unable to parse json " + body);
-         }
-         */
+        Map<String, String> params = parseResponseNonJSON(body);           
             
          // google tokens expire after an hour, but since we requested offline access we can get a new token without user involvement via the refresh token
-         //String accessToken = (String) jsonObject.get("access_token");
         String accessToken = params.get("access_token");
         
         // you may want to store the access token in session
@@ -144,9 +131,7 @@ public class CallbackGitHub extends HttpServlet{
             
                 user = ucc.newUserConnectThirdParty(email, Constants.GITHUB_ACCOUNT);
                 //this.security.createSystemUser(user.getUserName(), user.getUserAccess().getPassword(), Constants.SYSTEM_ROLE);
-                String hexPass = this.security.encryptHexMd5Password(user.getUserAccess().getPassword());
-            	ujbc.newUserJBoss(user.getUserName(), hexPass);
-                ujbrc.newUserJBossRoles(user.getUserName(), Constants.SYSTEM_ROLE);
+                sc.createSystemUserDB(user.getUserName(), user.getUserAccess().getPassword(), Constants.SYSTEM_ROLE);               
                 this.mail.sendWelcomeMail(user.getEMail(), user.getUserName());
                 this.mail.sendNewUserMailToAdmin(user.getEMail(), user.getUserName()); 
                 request.login(user.getUserName(), user.getUserAccess().getPassword());

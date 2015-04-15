@@ -13,6 +13,7 @@ import java.util.Properties;
 
 import javax.inject.Inject;
 
+import com.imath.connect.model.UserJBoss;
 import com.imath.connect.service.UserJBossController;
 import com.imath.connect.service.UserJBossRolesController;
 
@@ -35,9 +36,12 @@ public class Security {
      * @throws Exception
      */
     
+	@Inject UserJBossController ujbc;
+    @Inject UserJBossRolesController ujbrc;
+    
     private static Object lock = new Object();
     
-    public static void updateSystemPassword(String userName, String password) throws Exception {
+    public void updateSystemPassword(String userName, String password) throws Exception {
         synchronized(lock) {
             String hexPass = generateHexMd5Password(userName, password);
             
@@ -49,7 +53,13 @@ public class Security {
             updateProperty(userName, "WebAppUser", Constants.ROLES_FILE);
             updateProperty(userName, "WebAppUser", Constants.ROLES_DOMAIN_FILE);
         }
-
+    }
+    
+    public void updateSystemPasswordDB(String userName, String password) throws Exception {
+        synchronized(lock) {
+            String hexPass = encryptHexMd5Password(password);
+            ujbc.updatePassword(userName, hexPass);
+        }
     }
     
     /**
@@ -62,7 +72,7 @@ public class Security {
      * @return the hex(md5) generated from the password
      * @throws Exception
      */
-    public static String generateHexMd5Password(String userName, String password) throws Exception {
+    public String generateHexMd5Password(String userName, String password) throws Exception {
        
         // To generate md5 of password stored in JBOSS' files
         MessageDigest md = MessageDigest.getInstance("MD5");
@@ -80,7 +90,7 @@ public class Security {
         return hexPass.toString();
     }
     
-    public static String encryptHexMd5Password(String password) throws Exception {
+    public String encryptHexMd5Password(String password) throws Exception {
         
         // To generate md5 of password stored in JBOSS' files
         MessageDigest md = MessageDigest.getInstance("MD5");
@@ -100,7 +110,7 @@ public class Security {
     
     
     
-    private static void updateProperty(String key, String value, String propertiesPath) {
+    private void updateProperty(String key, String value, String propertiesPath) {
         try {
             // Get property of userName in JBOSS' file
             FileReader reader = new FileReader(propertiesPath);
@@ -118,7 +128,7 @@ public class Security {
         }
     }
     
-    public static void createLinuxUser(String userName) throws Exception {
+    public void createLinuxUser(String userName) throws Exception {
         synchronized(lock) {
             ProcessBuilder pb = new ProcessBuilder(Constants.ADD_USER_LINUX, "-d",  "/home/" + userName, "-m", userName, "-g", Constants.IMATHSYSTEMGROUP);
             pb.redirectInput(Redirect.INHERIT);
@@ -129,32 +139,11 @@ public class Security {
         }
     }
     
-    public static void createSystemUser(String userName, String password, String role) throws Exception {
+    public void createSystemUser(String userName, String password, String role) throws Exception {
         // We add the system user
-        //Process p = Runtime.getRuntime().exec(Constants.ADD_USER_CLI + " -a " + userName + " " + password + " > /dev/tty");
         synchronized(lock) {
-            /*ProcessBuilder pb = new ProcessBuilder(Constants.ADD_USER_CLI, "-a",  userName, password);
-    
-            pb.redirectInput(Redirect.INHERIT);
-            pb.redirectOutput(Redirect.INHERIT);
-            pb.redirectError(Redirect.INHERIT);
-    
-            Process p = pb.start();
-            int signal = p.waitFor();
-            
-            System.out.println("SIGNAL " + signal);
-            
-            // We add the role of the user if role is not null
-            if (role != null) {
-                String line = userName + "=" + role;
-                Writer writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(Constants.ROLES_FILE, true), "UTF-8"));
-                writer.append(line + "\n");
-                writer.close();
-            }*/
-        	
-        	
+           
         	String hexPass = generateHexMd5Password(userName, password);
-        	
         	
             // Here the pass in hex(md5) is set as property
             updateProperty(userName, hexPass.toString(), Constants.USERS_FILE);
@@ -167,9 +156,17 @@ public class Security {
                 writer.append(line + "\n");
                 writer.close();
             }
-            
-        	
-        	
+            	
+        }
+    }
+    
+    public void createSystemUserDB(String userName, String password, String role) throws Exception {
+        // We add the system user
+        synchronized(lock) {
+        	String hexPass = encryptHexMd5Password(password);
+        	ujbc.newUserJBoss(userName, hexPass);
+            ujbrc.newUserJBossRoles(userName, role);
+            	
         }
     }
 }

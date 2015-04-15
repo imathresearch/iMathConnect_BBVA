@@ -24,6 +24,7 @@ public class RecoverPassword extends HttpServlet {
     private static final long serialVersionUID = 1L;
     @Inject UserConnectController ucc;
     @Inject Logger LOG;
+    @Inject Security sc;
     
     // imathcloud943793072
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -50,7 +51,8 @@ public class RecoverPassword extends HttpServlet {
 	        
 	        String userName = user.getUserName();
 	        try {
-	            Security.updateSystemPassword(userName, randomPassword);
+	            //sc.updateSystemPassword(userName, randomPassword);
+	        	sc.updateSystemPasswordDB(userName, randomPassword);
 	        } catch (Exception e) {
 	            
 	            response.sendRedirect("loginerror.html");

@@ -5,6 +5,7 @@ import javax.inject.Inject;
 import javax.persistence.EntityManager;
 
 import com.imath.connect.model.UserAccess;
+import com.imath.connect.model.UserJBoss;
 
 @RequestScoped
 public class MainDB {
@@ -16,6 +17,7 @@ public class MainDB {
 	@Inject private InstanceDB instanceDB;
 	@Inject private NotificationDB notificationDB;
 	@Inject private UserAccessDB userAccessDB;
+	@Inject private UserJBossDB userJBossDB;
 	
 	public void makePersistent(Object obj) throws Exception {
 	    em.persist(obj);
@@ -50,6 +52,11 @@ public class MainDB {
 	public UserAccessDB getUserAccessDB(){
 		return this.userAccessDB;
 	}
+	
+	public UserJBossDB getUserJBossDB(){
+		return this.userJBossDB;
+	}
+	
 	
 	// For testing purposes only
 	public void setEntityManager(EntityManager em) {

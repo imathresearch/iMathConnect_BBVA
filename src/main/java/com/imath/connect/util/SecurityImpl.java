@@ -1,11 +1,22 @@
 package com.imath.connect.util;
 
+import javax.inject.Inject;
+
 public class SecurityImpl implements SecurityInterface {
 
+	@Inject Security sc;
+	
     @Override
     public void updateSystemPassword(String userName, String password)
             throws Exception {
-        Security.updateSystemPassword(userName, password);
+        sc.updateSystemPassword(userName, password);
+
+    }
+    
+    @Override
+    public void updateSystemPasswordDB(String userName, String password)
+            throws Exception {
+        sc.updateSystemPasswordDB(userName, password);
 
     }
 
@@ -13,27 +24,35 @@ public class SecurityImpl implements SecurityInterface {
     public String generateHexMd5Password(String userName, String password)
             throws Exception {
         // TODO Auto-generated method stub
-        return Security.generateHexMd5Password(userName, password);
+        return sc.generateHexMd5Password(userName, password);
     }
     
     @Override
     public String encryptHexMd5Password(String password)
             throws Exception {
         // TODO Auto-generated method stub
-        return Security.encryptHexMd5Password(password);
+        return sc.encryptHexMd5Password(password);
     }
 
     @Override
     public void createLinuxUser(String userName) throws Exception {
         // TODO Auto-generated method stub
-        Security.createLinuxUser(userName);
+        sc.createLinuxUser(userName);
     }
 
     @Override
     public void createSystemUser(String userName, String password, String role)
             throws Exception {
-        Security.createSystemUser(userName, password, role);
+        sc.createSystemUser(userName, password, role);
         
     }
+    
+    @Override
+    public void createSystemUserDB(String userName, String password, String role)
+            throws Exception {
+        sc.createSystemUserDB(userName, password, role);
+        
+    }
+    
 
 }

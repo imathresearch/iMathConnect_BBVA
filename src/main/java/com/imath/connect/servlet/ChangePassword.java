@@ -15,6 +15,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.core.MediaType;
 
+import com.imath.connect.model.UserJBoss;
+import com.imath.connect.service.UserJBossController;
 import com.imath.connect.util.Constants;
 import com.imath.connect.util.Security;
 
@@ -23,8 +25,8 @@ import org.json.JSONObject;
 
 public class ChangePassword extends HttpServlet {
     
-    @Inject
-    Security security;
+    @Inject Security sc;
+    @Inject UserJBossController ujbc;
     
     @Inject private Logger LOG;
     /**
@@ -63,7 +65,8 @@ public class ChangePassword extends HttpServlet {
         
         // Here everything is fine, so we proceed with the password change
         try {
-            Security.updateSystemPassword(userName, passwordNew);
+            //sc.updateSystemPassword(userName, passwordNew);
+        	sc.updateSystemPasswordDB(userName, passwordNew);
         } catch (Exception e) {
             e.printStackTrace();
             sendCustomResponse(response, HttpServletResponse.SC_BAD_REQUEST, "New password not valid");
@@ -83,16 +86,20 @@ public class ChangePassword extends HttpServlet {
         FileReader reader = null;
 
         try {
-            String hexPass = Security.generateHexMd5Password(userName, password);
+            //String hexPass = sc.generateHexMd5Password(userName, password);
+        	String hexPass = sc.encryptHexMd5Password(password);
+        	UserJBoss user = ujbc.getUserJBoss(userName);
+        	
+        	return hexPass.equals(user.getPassword());
 
             // Get property of userName in JBOSS' file
-            reader = new FileReader(Constants.USERS_FILE);
+            /*reader = new FileReader(Constants.USERS_FILE);
             Properties props = new Properties();
             props.load(reader);
             String origProp = props.getProperty(userName);
 
             // Return if md5 are equals
-            return hexPass.toString().equals(origProp);
+            return hexPass.toString().equals(origProp);*/
 
         } catch (Exception e) {
             e.printStackTrace();

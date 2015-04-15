@@ -48,6 +48,7 @@ import com.imath.connect.service.UserJBossController;
 import com.imath.connect.service.UserJBossRolesController;
 import com.imath.connect.util.Constants;
 import com.imath.connect.util.Mail;
+import com.imath.connect.util.Security;
 import com.imath.connect.util.SecurityImpl;
 import com.imath.connect.util.SecurityInterface;
 
@@ -61,8 +62,7 @@ public class CallbackLinkedin extends HttpServlet {
 	@Inject protected Logger LOG;
 	@Inject UserConnectController ucc;
 	@Inject UserAccessController uac;
-	@Inject UserJBossController ujbc;
-	@Inject UserJBossRolesController ujbrc;
+	@Inject Security sc;
 	
 	private SecurityInterface security = new SecurityImpl();
 	private Mail mail = new Mail();
@@ -165,9 +165,7 @@ public class CallbackLinkedin extends HttpServlet {
 			
 				user = ucc.newUserConnectThirdParty(email, Constants.LINKEDIN_ACCOUNT);
 				//this.security.createSystemUser(user.getUserName(), user.getUserAccess().getPassword(), Constants.SYSTEM_ROLE);
-				String hexPass = this.security.encryptHexMd5Password(user.getUserAccess().getPassword());
-            	ujbc.newUserJBoss(user.getUserName(), hexPass);
-                ujbrc.newUserJBossRoles(user.getUserName(), Constants.SYSTEM_ROLE);
+                sc.createSystemUserDB(user.getUserName(), user.getUserAccess().getPassword(), Constants.SYSTEM_ROLE);               
 				this.mail.sendWelcomeMail(user.getEMail(), user.getUserName());
 	            this.mail.sendNewUserMailToAdmin(user.getEMail(), user.getUserName()); 
 	            request.login(user.getUserName(), user.getUserAccess().getPassword());
