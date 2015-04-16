@@ -29,6 +29,7 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
 import com.google.common.collect.ImmutableMap;
+import com.imath.connect.config.AppConfig;
 import com.imath.connect.model.UserAccess;
 import com.imath.connect.model.UserConnect;
 import com.imath.connect.service.UserAccessController;
@@ -68,9 +69,9 @@ public class CallbackGitHub extends HttpServlet{
         // get the access token by post to Google
         String body = post("https://github.com/login/oauth/access_token", ImmutableMap.<String,String>builder()
         .put("code", code)
-        .put("client_id", Constants.CLIENTID_GITHUB)
-        .put("client_secret", Constants.CLIENTSECRET_GITHUB)
-        .put("redirect_uri", "http://"+ Constants.IMATH_HOST() + ":" + Constants.IMATH_PORT + "/iMathConnect/callbackgithub").build());
+        .put("client_id", AppConfig.getProp(AppConfig.CLIENTID_GITHUB))
+        .put("client_secret", AppConfig.getProp(AppConfig.CLIENTSECRET_GITHUB))
+        .put("redirect_uri", "http://"+ AppConfig.getProp(AppConfig.IMATH_HOST) + ":" + AppConfig.getProp(AppConfig.IMATH_PORT) + "/iMathConnect/callbackgithub").build());
         
         // Response is not in JSON!
         Map<String, String> params = parseResponseNonJSON(body);           

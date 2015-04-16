@@ -8,8 +8,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
-import
-java.util.Properties;
+import java.util.Properties;
 
 import javax.mail.Message;
 import javax.mail.MessagingException;
@@ -22,6 +21,7 @@ import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
 
+import com.imath.connect.config.AppConfig;
 
 public class Mail {
     // TODO: put this into protected external files
@@ -72,9 +72,9 @@ public class Mail {
         }
         br.close();
         html = html.replace("[USERNAME]", username);
-        String url = Constants.IMATH_HTTP + Constants.IMATH_HOST();
-        if (!Constants.IMATH_PORT.equals("80")) {
-            url += ":" + Constants.IMATH_PORT;
+        String url = Constants.IMATH_HTTP + AppConfig.getProp(AppConfig.IMATH_HOST);
+        if (!AppConfig.getProp(AppConfig.IMATH_PORT).equals("80")) {
+            url += ":" + AppConfig.getProp(AppConfig.IMATH_PORT);
         }
         url += "/iMathConnect";
         html = html.replace("[URL_IMATHCLOUD]", url);
@@ -92,9 +92,9 @@ public class Mail {
         br.close();
         html = html.replace("[USERNAME]", username);
         html = html.replace("[PROJECT]", project);
-        String url = Constants.IMATH_HTTP + Constants.IMATH_HOST();
-        if (!Constants.IMATH_PORT.equals("80")) {
-            url += ":" + Constants.IMATH_PORT;
+        String url = Constants.IMATH_HTTP + AppConfig.getProp(AppConfig.IMATH_HOST);
+        if (!AppConfig.getProp(AppConfig.IMATH_PORT).equals("80")) {
+            url += ":" + AppConfig.getProp(AppConfig.IMATH_PORT);
         }
         url += "/iMathConnect";
         html = html.replace("[URL_IMATHCLOUD]", url);
@@ -114,9 +114,9 @@ public class Mail {
         html = html.replace("[PROJECT]", project);
         html = html.replace("[PASSWORD]", password);
         
-        String url = Constants.IMATH_HTTP + Constants.IMATH_HOST();
-        if (!Constants.IMATH_PORT.equals("80")) {
-            url += ":" + Constants.IMATH_PORT;
+        String url = Constants.IMATH_HTTP + AppConfig.getProp(AppConfig.IMATH_HOST);
+        if (!AppConfig.getProp(AppConfig.IMATH_PORT).equals("80")) {
+            url += ":" + AppConfig.getProp(AppConfig.IMATH_PORT);
         }
         url += "/iMathConnect";
         html = html.replace("[URL_IMATHCLOUD]", url);
@@ -169,9 +169,9 @@ public class Mail {
         br.close();
         html = html.replace("[USERNAME]", username);
         html = html.replace("[PASSWORD]", newPassword);
-        String url = Constants.IMATH_HTTP + Constants.IMATH_HOST();
-        if (!Constants.IMATH_PORT.equals("80")) {
-            url += ":" + Constants.IMATH_PORT;
+        String url = Constants.IMATH_HTTP + AppConfig.getProp(AppConfig.IMATH_HOST);
+        if (!AppConfig.getProp(AppConfig.IMATH_PORT).equals("80")) {
+            url += ":" + AppConfig.getProp(AppConfig.IMATH_PORT);
         }
         url += "/iMathConnect";
         html = html.replace("[URL_IMATHCLOUD]", url);

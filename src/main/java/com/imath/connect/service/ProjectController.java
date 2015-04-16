@@ -54,7 +54,8 @@ public class ProjectController extends AbstractController {
         project.setCreationDate(new Date());
         project.setOwner(owner);
         project.setInstance(instance);
-        project.setKey(Util.randomString());
+        String password = Util.randomString();
+        project.setKey(password);
         project.setLinuxGroup(name+"XYZ"+owner.getUserName());
         db.makePersistent(project);
         try {

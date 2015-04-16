@@ -36,6 +36,7 @@ import com.imath.connect.util.SecurityImpl;
 import com.imath.connect.util.SecurityInterface;
 import com.imath.connect.util.Util;
 import com.imath.connect.security.SecurityManager;
+import com.imath.connect.config.AppConfig;
 
 @Path(Constants.baseURL)
 @RequestScoped

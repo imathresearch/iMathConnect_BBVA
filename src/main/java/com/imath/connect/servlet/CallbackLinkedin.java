@@ -40,6 +40,7 @@ import org.xml.sax.SAXException;
 import org.w3c.dom.CharacterData;
 
 import com.google.common.collect.ImmutableMap;
+import com.imath.connect.config.AppConfig;
 import com.imath.connect.model.UserAccess;
 import com.imath.connect.model.UserConnect;
 import com.imath.connect.service.UserAccessController;
@@ -88,9 +89,9 @@ public class CallbackLinkedin extends HttpServlet {
 		// get the access token by post to Google
 		String body = post("https://www.linkedin.com/uas/oauth2/accessToken", ImmutableMap.<String,String>builder()
 		.put("code", code)
-		.put("client_id", Constants.CLIENTID_LINKEDIN)
-		.put("client_secret", Constants.CLIENTSECRET_LINKEDIN)
-		.put("redirect_uri", "http://" + Constants.IMATH_HOST() + ":" + Constants.IMATH_PORT + "/iMathConnect/callbacklinkedin")
+		.put("client_id", AppConfig.getProp(AppConfig.CLIENTID_LINKEDIN))
+		.put("client_secret", AppConfig.getProp(AppConfig.CLIENTSECRET_LINKEDIN))
+		.put("redirect_uri", "http://" + AppConfig.getProp(AppConfig.IMATH_HOST) + ":" + AppConfig.getProp(AppConfig.IMATH_PORT) + "/iMathConnect/callbacklinkedin")
 		.put("grant_type", "authorization_code").build());
 		 		 		    
 		 JSONObject jsonObject = null;		    

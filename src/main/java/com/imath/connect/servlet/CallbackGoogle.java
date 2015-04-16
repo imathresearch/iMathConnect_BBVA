@@ -29,6 +29,7 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
 import com.google.common.collect.ImmutableMap;
+import com.imath.connect.config.AppConfig;
 import com.imath.connect.model.UserAccess;
 import com.imath.connect.model.UserConnect;
 import com.imath.connect.service.UserAccessController;
@@ -40,6 +41,7 @@ import com.imath.connect.util.Mail;
 import com.imath.connect.util.Security;
 import com.imath.connect.util.SecurityImpl;
 import com.imath.connect.util.SecurityInterface;
+import com.imath.connect.config.AppConfig;
 
 /**
  * Servlet implementation class CallbackGoogle
@@ -61,6 +63,7 @@ public class CallbackGoogle extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		System.out.println("CallbackGoogle servlet");
+		System.out.println(AppConfig.getProp(AppConfig.TEST));
 		
 		if (request.getParameter("error") != null) {
 			//response.getWriter().println(request.getParameter("error"));
@@ -74,9 +77,9 @@ public class CallbackGoogle extends HttpServlet {
 		// get the access token by post to Google
 		String body = post("https://accounts.google.com/o/oauth2/token", ImmutableMap.<String,String>builder()
 		.put("code", code)
-		.put("client_id", Constants.CLIENTID_GOOGLE)
-		.put("client_secret", Constants.CLIENTSECRET_GOOGLE)
-		.put("redirect_uri", "http://" + Constants.IMATH_HOST() +":" + Constants.IMATH_PORT + "/iMathConnect/callbackgoogle")
+		.put("client_id", AppConfig.getProp(AppConfig.CLIENTID_GOOGLE))
+		.put("client_secret",AppConfig.getProp(AppConfig.CLIENTSECRET_GOOGLE))
+		.put("redirect_uri", "http://" + AppConfig.getProp(AppConfig.IMATH_HOST) +":" + AppConfig.getProp(AppConfig.IMATH_PORT) + "/iMathConnect/callbackgoogle")
 		.put("grant_type", "authorization_code").build());
 		 		 		    
 		 JSONObject jsonObject = null;		    
