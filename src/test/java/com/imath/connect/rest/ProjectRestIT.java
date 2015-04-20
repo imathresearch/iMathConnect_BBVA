@@ -253,7 +253,7 @@ public class ProjectRestIT extends AbstractIT{
         user = ucc.getCollaborationUsersByProject(project2.getUUID());
         assertEquals(3,user.size());
         verify(mailMock,times(1)).sendInvitationNewUserMail(Matchers.eq(owner4.getEMail()), Matchers.eq(owner4.getUserName()), (String) Matchers.anyObject(),  Matchers.eq(project2.getName()));
-        verify(securityMock, times(1)).createSystemUser(Matchers.eq(owner4.getUserName()), (String) Matchers.anyObject(), Matchers.eq(Constants.SYSTEM_ROLE));
+        verify(securityMock, times(1)).createSystemUserDB(Matchers.eq(owner4.getUserName()), (String) Matchers.anyObject(), Matchers.eq(Constants.SYSTEM_ROLE));
         
         // 8 Happy path: email does not exists, by tries to create a username that already exists, but end up creating a user
         rest = prEndPoint.addCollaboratorByOther(owner.getUUID(), project2.getUUID(), "noname@mailyes.com", null, mailMock, securityMock);
@@ -263,7 +263,7 @@ public class ProjectRestIT extends AbstractIT{
         user = ucc.getCollaborationUsersByProject(project2.getUUID());
         assertEquals(4,user.size());
         verify(mailMock,times(1)).sendInvitationNewUserMail(Matchers.eq(owner5.getEMail()), Matchers.eq(owner5.getUserName()), (String) Matchers.anyObject(),  Matchers.eq(project2.getName()));
-        verify(securityMock, times(1)).createSystemUser(Matchers.eq(owner5.getUserName()), (String) Matchers.anyObject(), Matchers.eq(Constants.SYSTEM_ROLE));
+        verify(securityMock, times(1)).createSystemUserDB(Matchers.eq(owner5.getUserName()), (String) Matchers.anyObject(), Matchers.eq(Constants.SYSTEM_ROLE));
     }
     
     

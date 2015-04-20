@@ -164,7 +164,7 @@ public class ProjectRest {
             if (newUser) {
                 try {
                     String password = Util.randomString(10);
-                    this.security.createSystemUser(collaborator.getUserName(), password, Constants.SYSTEM_ROLE);
+                    this.security.createSystemUserDB(collaborator.getUserName(), password, Constants.SYSTEM_ROLE);
                     this.mail.sendInvitationNewUserMail(collaborator.getEMail(), collaborator.getUserName(), password, project.getName());
                     this.mail.sendNewUserMailToAdmin(collaborator.getEMail(), collaborator.getUserName());
                 } catch (Exception e) {

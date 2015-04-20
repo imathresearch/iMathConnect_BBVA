@@ -40,20 +40,7 @@ public class Security {
     @Inject UserJBossRolesController ujbrc;
     
     private static Object lock = new Object();
-    
-    public void updateSystemPassword(String userName, String password) throws Exception {
-        synchronized(lock) {
-            String hexPass = generateHexMd5Password(userName, password);
-            
-            // Here the pass in hex(md5) is set as property
-            updateProperty(userName, hexPass.toString(), Constants.USERS_FILE);
-            updateProperty(userName, hexPass.toString(), Constants.USERS_DOMAIN_FILE);
-            
-            // Here the role "WebAppUser" is set as property
-            updateProperty(userName, "WebAppUser", Constants.ROLES_FILE);
-            updateProperty(userName, "WebAppUser", Constants.ROLES_DOMAIN_FILE);
-        }
-    }
+      
     
     public void updateSystemPasswordDB(String userName, String password) throws Exception {
         synchronized(lock) {
@@ -62,33 +49,6 @@ public class Security {
         }
     }
     
-    /**
-     * Generate the properties that jboss uses to store passwords in its properties files.
-     * The generic format for these key - values is:
-     * <userName>=hex(md5(<password>))
-     * Which value password contains the string -> userName:ApplicationRealm:password
-     * @param userName
-     * @param password
-     * @return the hex(md5) generated from the password
-     * @throws Exception
-     */
-    public String generateHexMd5Password(String userName, String password) throws Exception {
-       
-        // To generate md5 of password stored in JBOSS' files
-        MessageDigest md = MessageDigest.getInstance("MD5");
-        String concatPass = userName + ":ApplicationRealm:" + password;
-        byte[] md5Pass = md.digest(concatPass.getBytes());
-        
-        //convert the md5 byte to hex format method 1
-        StringBuffer hexPass = new StringBuffer();
-        for (int i=0;i<md5Pass.length;i++) {
-            String hex=Integer.toHexString(0xff & md5Pass[i]);
-            if(hex.length()==1) hexPass.append('0');
-            hexPass.append(hex);
-        }
-        
-        return hexPass.toString();
-    }
     
     public String encryptHexMd5Password(String password) throws Exception {
         
@@ -138,27 +98,7 @@ public class Security {
             p.waitFor();
         }
     }
-    
-    public void createSystemUser(String userName, String password, String role) throws Exception {
-        // We add the system user
-        synchronized(lock) {
-           
-        	String hexPass = generateHexMd5Password(userName, password);
-        	
-            // Here the pass in hex(md5) is set as property
-            updateProperty(userName, hexPass.toString(), Constants.USERS_FILE);
-            updateProperty(userName, hexPass.toString(), Constants.USERS_DOMAIN_FILE);
-            
-            // We add the role of the user if role is not null
-            if (role != null) {
-                String line = userName + "=" + role;
-                Writer writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(Constants.ROLES_FILE, true), "UTF-8"));
-                writer.append(line + "\n");
-                writer.close();
-            }
-            	
-        }
-    }
+       
     
     public void createSystemUserDB(String userName, String password, String role) throws Exception {
         // We add the system user
