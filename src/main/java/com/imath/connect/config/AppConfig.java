@@ -9,6 +9,7 @@ public class AppConfig {
 	// iMath Port and iMath Host
     static public String IMATH_PORT = 								"imath.port";
     static public String IMATH_HOST = 								"imath.host";
+    public static String IMATH_ROOT =								"imath.root";
     
     static public String TEST = 									"test.profile";
     
@@ -21,7 +22,11 @@ public class AppConfig {
     static public String CLIENTID_GITHUB = 						"client.id.github"; // It must be changed in production
     static public String CLIENTSECRET_GITHUB = 					"client.secret.github"; // It must be change in production
     
+    static public String ADMIN_FILE_EMAIL = 						"admin.file.email";
+    
     public static String CONFIG_PROPERTIES_FILE = 					"config.properties";
+    
+    
     
     private static PropertyParser prop = new PropertyParser();
     

@@ -145,7 +145,7 @@ public class Mail {
     
     
     private List<String> readAdminEmail() throws IOException {
-    	File adminEmail = new File(Constants.ADMIN_FILE_EMAIL);
+    	File adminEmail = new File(AppConfig.getProp(AppConfig.ADMIN_FILE_EMAIL));
     	BufferedReader br = new BufferedReader(new FileReader(adminEmail));
      
     	String line = null;

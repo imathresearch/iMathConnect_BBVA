@@ -76,7 +76,7 @@ public class Constants {
     
     static public final String LOG_PREFIX_SYSTEM = "[IMATH][CONNECT]";    // The prefix of the system
     
-    static public final String ADMIN_FILE_EMAIL = "/iMathCloud/adminFileEmail.txt";
+    //static public final String ADMIN_FILE_EMAIL = "/iMathCloud/adminFileEmail.txt";
     static public final String NEW_USER_ADMIN_NOTIFICATION_TEMPLATE = "adminEmail.html";
     
     static public final long EPOCH_SEC  = 1081157732;
