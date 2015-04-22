@@ -104,3 +104,5 @@ INSERT INTO notifications_user(notification_uuid, notificationusers_uuid) VALUES
 
 --ADD A PRIVATE NOTIFICATION FOR IZUBIZARRETA USER
 INSERT INTO notifications_user(notification_uuid, notificationusers_uuid) VALUES ('notuuid3', 'iztuuid1');
+
+
