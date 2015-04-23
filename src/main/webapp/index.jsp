@@ -13,7 +13,7 @@
         <meta name="keywords" content="iMath Clound, iMath Connect, Data Science, Analytics, Python, R, Octave" />
         <meta name="author" content="iMath" />
         
-        <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>      
+        <script src="https://code.jquery.com/jquery-1.9.1.min.js"></script>      
         <script src="js/loginInitialization.js" type="text/javascript"></script>
         
         <link href="css/font-awesome.css" rel="stylesheet" type="text/css" />
